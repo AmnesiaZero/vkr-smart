@@ -459,7 +459,7 @@ class WorksService
             $works = [];
             foreach ($imports as $import)
             {
-                $workData = array_merge($data,$import);
+                $workData = array_merge($data,$import->toArray());
                 $work = $this->workRepository->create($workData);
                 if(!isset($work) or !isset($work->id))
                 {
