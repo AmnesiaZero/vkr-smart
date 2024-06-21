@@ -154,7 +154,7 @@
             <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 w-75 me-3"
                     onclick="openModal('add_work_modal')">добавить<img
                     src="/images/pl-green.svg" alt="" class="ps-2"></button>
-            <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25">импорт из файла<img
+            <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25" onclick="openModal('import_work_modal')">импорт из файла<img
                     src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
         </div>
 
@@ -196,6 +196,7 @@
         @include('layouts.dashboard.include.modal.add.work')
         @include('layouts.dashboard.include.modal.update.work_specialty')
         @include('layouts.dashboard.include.modal.other.additional_file')
+        @include('layouts.dashboard.include.modal.add.import-work')
         @endsection
 
         @section('scripts')

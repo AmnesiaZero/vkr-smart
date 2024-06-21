@@ -15,6 +15,8 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use WorksImport;
+use Maatwebsite\Excel\Validators\ValidationException;
 
 class WorksService
 {
@@ -90,7 +92,7 @@ class WorksService
         {
             //Вообще,можно в отдельную функцию вынести разбиение по директориям,но лучше не надо
             $workId = $work->id;
-            if (isset($data['work_file']) and is_file($data['work_file']) and FilesHelper::acceptable($data['work_file']))
+            if (isset($data['work_file']) and is_file($data['work_file']) and FilesHelper::acceptableFile($data['work_file']))
             {
                 $workFile = $data['work_file'];
                 $directoryNumber = ceil($workId/1000);
@@ -109,7 +111,7 @@ class WorksService
             }
             if(isset($data['certificate_file']))
             {
-                if(is_file($data['certificate_file']) and FilesHelper::acceptable($data['certificate_file']))
+                if(is_file($data['certificate_file']) and FilesHelper::acceptableFile($data['certificate_file']))
                 {
                     $certificateFile = $data['certificate_file'];
                     $certificateFileName = $workId.'.'.$certificateFile->extension();
@@ -221,7 +223,7 @@ class WorksService
                     ]);
                 }
             }
-            if(!isset($workFile) or !is_file($workFile) or !FilesHelper::acceptable($workFile))
+            if(!isset($workFile) or !is_file($workFile) or !FilesHelper::acceptableFile($workFile))
             {
                 return JsonHelper::sendJsonResponse(false,[
                     'title' => 'Ошибка',
@@ -408,6 +410,51 @@ class WorksService
             }
         }
         return back();
+    }
+
+    public function import(array $data): JsonResponse
+    {
+        if(isset($data['import_file']) and is_file($data['import_file']) and FilesHelper::acceptableImport($data['import_file']))
+        {
+            $importFile = $data['import_file'];
+            try{
+                $imports = Excel::toCollection(new WorksImport(), $importFile);
+            }
+            catch (ValidationException  $e)
+            {
+                return JsonHelper::sendJsonResponse(false,[
+                    'title' => 'Ошибка',
+                    'message' => 'Возникла ошибка при обработке импорта'
+                ]);
+            }
+            $you = Auth::user();
+            $userId = $you->id;
+            $organizationId = $you->organization_id;
+            $data = array_merge($data,['organization_id' => $organizationId,'user_id' => $userId]);
+            $works = [];
+            foreach ($imports as $import)
+            {
+                $workData = array_merge($data,$import);
+                $work = $this->workRepository->create($workData);
+                if(!isset($work) or !isset($work->id))
+                {
+                    return JsonHelper::sendJsonResponse(false,[
+                        'title' => 'Ошибка',
+                        'message' => 'Возникла ошибка при импорте работы'
+                    ]);
+                }
+                $works[] = $work;
+            }
+            return JsonHelper::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'message' => 'Работы были успешно импортированы',
+                'works' => $works
+            ]);
+        }
+        return JsonHelper::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Файл импорта некорректный. Проверьте целостность и расширение файла'
+        ]);
     }
 
 }

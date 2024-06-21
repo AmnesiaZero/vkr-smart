@@ -182,6 +182,7 @@ Route::group([
             Route::post('destroy',[WorksController::class,'destroy']);
             Route::post('update-self-check-status',[WorksController::class, 'updateSelfCheckStatus']);
             Route::post('restore',[WorksController::class,'restore']);
+            Route::post('import',[WorksController::class,'import']);
             Route::group([
                 'prefix' => 'certificates'
             ],function (){

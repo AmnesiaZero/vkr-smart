@@ -60,6 +60,32 @@ $(document).ready(function () {
         specialties(data,'update_specialties_list');
     });
 
+    $('#import_years_list').change(function () {
+        const yearId = $(this).val();
+        const data = {
+            year_id: yearId
+        };
+        console.log('изменение');
+        faculties(data,'import_faculties_list');
+    });
+
+    $('#import_faculties_list').change(function () {
+        const facultyId = $(this).val();
+        const data = {
+            faculty_id: facultyId
+        };
+        departments(data,'import_departments_list');
+    });
+
+    $('#import_departments_list').change(function () {
+        const departmentId = $(this).val();
+        const data = {
+            department_id: departmentId
+        };
+        specialties(data,'import_specialties_list');
+    });
+
+
     $('#upload_button').on('click', function() {
         $('#file_input').click(); // Открываем диалог выбора файла
     });
@@ -310,10 +336,11 @@ function faculties(data,htmlId) {
             if (response.success) {
                 const faculties = response.data.faculties;
                 const facultiesList = $("#" + htmlId);
-                console.log(facultiesList);
-                facultiesList.empty();
+                console.log('faculties = ');
+                console.log(faculties);
                 facultiesList.html($("#faculty_tmpl").tmpl(faculties));
                 facultiesList.prepend('<option value="" selected>Выберите.......</option>');
+                console.log('')
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -445,7 +472,6 @@ $("#addWorkForm").on('submit', function(e) {
                 const work = response.data.work;
                 $("#works_table").append($("#work_tmpl").tmpl(work));
                 updateWorksCount();
-                closeModal('add_work_modal');
             }
             else
             {
@@ -457,9 +483,72 @@ $("#addWorkForm").on('submit', function(e) {
 
         }
     });
-
-
 });
+
+$("#import_work_form").on('submit', function(e) {
+    e.preventDefault(); // Предотвращаем стандартное поведение формы
+
+    // Создаем объект FormData и добавляем в него данные формы
+    const formData = new FormData(this);
+
+    $.ajax({
+        url: '/dashboard/works/employees/import',
+        type: 'POST',
+        data: formData,
+        processData: false, // Не обрабатываем файлы (не превращаем в строку)
+        contentType: false, // Не устанавливаем заголовок Content-Type
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            if (response.success)
+            {
+                const works = response.data.works;
+                $("#works_table").append($("#work_tmpl").tmpl(works));
+                updateWorksCount();
+            }
+            else
+            {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function() {
+            $.notify("Ошибка при добавлении работы. Обратитесь к системному администратору", "error");
+
+        }
+    });
+});
+
+
+function addWork(formData)
+{
+    $.ajax({
+        url: '/dashboard/works/employees/create',
+        type: 'POST',
+        data: formData,
+        processData: false, // Не обрабатываем файлы (не превращаем в строку)
+        contentType: false, // Не устанавливаем заголовок Content-Type
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            if (response.success)
+            {
+                const work = response.data.work;
+                $("#works_table").append($("#work_tmpl").tmpl(work));
+                updateWorksCount();
+            }
+            else
+            {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function() {
+            $.notify("Ошибка при добавлении работы. Обратитесь к системному администратору", "error");
+
+        }
+    });
+}
 
 function getAssessmentDescription(assessment)
 {
@@ -951,6 +1040,11 @@ function deleteAdditionalFile(additionalFileId)
            $.notify("Ошибка при получении дополнительных файлов. Обратитесь к системному администратору", "error");
        }
    });
+}
+
+function importWork()
+{
+
 }
 
 

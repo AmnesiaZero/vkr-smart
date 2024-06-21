@@ -7,11 +7,17 @@ use Illuminate\Support\Facades\Log;
 
 class FilesHelper
 {
-   public static function acceptable(UploadedFile $file): bool
+   public static function acceptableFile(UploadedFile $file): bool
    {
        $extension = $file->extension();
-       Log::debug('extension = '.$extension);
        $acceptableExtension = ['doc','docx','pdf','txt'];
+       return in_array($extension,$acceptableExtension);
+   }
+
+   public static function acceptableImport(UploadedFile $file):bool
+   {
+       $extension = $file->extension();
+       $acceptableExtension = ['xls','csv','xlsx'];
        return in_array($extension,$acceptableExtension);
    }
 }

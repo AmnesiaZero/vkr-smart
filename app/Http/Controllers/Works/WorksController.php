@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
+
 class WorksController extends Controller
 {
 
@@ -33,7 +34,8 @@ class WorksController extends Controller
         'selected_faculties',
         'selected_years',
         'verification_method',
-        'delete_type'
+        'delete_type',
+        'import_file'
     ];
 
     protected WorksService $worksService;
@@ -92,6 +94,24 @@ class WorksController extends Controller
         }
         $data = $request->only($this->fillable);
         return $this->worksService->create($data);
+    }
+
+    public function import(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(),[
+            'year_id' => ['integer','required',Rule::exists('organizations_years','id')],
+            'faculty_id' => ['integer','required',Rule::exists('faculties','id')],
+            'department_id' => ['integer','required',Rule::exists('departments','id')],
+            'specialty_id' => ['integer','required',Rule::exists('programs_specialties','id')],
+            'verification_method' => 'required|integer|in:0,1,2',
+            'import_file' => 'required|file'
+        ]);
+        if ($validator->fails())
+        {
+            return ValidatorHelper::validatorError($validator);
+        }
+        $data = $request->only($this->fillable);
+        return $this->worksService->import($data);
     }
 
     public function search(Request $request): JsonResponse
