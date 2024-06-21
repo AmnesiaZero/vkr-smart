@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 
-class WorksImport implements ToModel,WithHeadingRow
+class WorksImport implements ToModel
 {
     /**
      * @param array $row
@@ -47,4 +47,5 @@ class WorksImport implements ToModel,WithHeadingRow
             ]);
         }
     }
+
 }
