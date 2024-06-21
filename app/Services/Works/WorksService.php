@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use WorksImport;
 use Maatwebsite\Excel\Validators\ValidationException;
+use Maatwebsite\Excel\Facades\Excel;
 
 class WorksService
 {
