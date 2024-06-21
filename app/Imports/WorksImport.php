@@ -20,12 +20,12 @@ class WorksImport implements ToModel
     public function model(array $row)
     {
         return new Work([
-            'student'                => $row['student'],
-            'group'                  => $row['group'],
-            'name'                   => $row['name'],
-            'scientific_supervisor'  => $row['scientific_supervisor'],
-            'work_type'              => $row['work_type'],
-            'assessment'             => $row['assessment'],
+            'student'              => $row[0],
+            'group'                => $row[1],
+            'name'                 => $row[2],
+            'scientific_supervisor'=> $row[3],
+            'work_type'            => $row[4],
+            'assessment'           => $row[5],
         ]);
     }
 
