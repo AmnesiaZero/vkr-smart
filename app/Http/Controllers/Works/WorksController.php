@@ -35,7 +35,8 @@ class WorksController extends Controller
         'selected_years',
         'verification_method',
         'delete_type',
-        'import_file'
+        'import_file',
+        'date_range'
     ];
 
     protected WorksService $worksService;

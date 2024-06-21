@@ -11,7 +11,7 @@
                     <div class="form-group">
                         <label class="col-sm-4">Год выпуска</label>
                         <div class="col-sm-8">
-                            <select name="year_id" class="form-control" id="add_years_list" data-width="100%">
+                            <select name="year_id" class="form-control" id="years_list" data-width="100%">
                                 <option value="">Выбрать...</option>
                                 @if(isset($years) and is_iterable($years))
                                     @foreach($years as $year)
@@ -24,7 +24,7 @@
                     <div class="form-group">
                         <label class="col-sm-4">Подразделение</label>
                         <div class="col-sm-8">
-                            <select name="faculty_id" class="form-control" id="add_faculties_list" data-width="100%">
+                            <select name="faculty_id" class="form-control" id="faculties_list" data-width="100%">
                                 <option value="" disabled="" selected="selected">Уточните год выпуска</option>
                             </select>
                         </div>
@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <label class="col-sm-4">Кафедра</label>
                         <div class="col-sm-8">
-                            <select name="department_id" class="form-control" id="add_departments_list" data-width="100%">
+                            <select name="department_id" class="form-control" id="departments_list" data-width="100%">
                                 <option value="" disabled="" selected="selected">Уточните подразделение</option>
                             </select>
                         </div>

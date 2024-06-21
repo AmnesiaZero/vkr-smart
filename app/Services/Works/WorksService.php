@@ -10,12 +10,13 @@ use App\Services\ScientificSupervisors\Repositories\ScientificSupervisorReposito
 use App\Services\Specialties\Repositories\SpecialtyRepositoryInterface;
 use App\Services\Works\Repositories\WorkRepositoryInterface;
 use App\Services\WorksTypes\Repositories\WorksTypeRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use WorksImport;
+use App\Imports\WorksImport;
 use Maatwebsite\Excel\Validators\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -145,6 +146,29 @@ class WorksService
 
     public function search(array $data): JsonResponse
     {
+        if(isset($data['date_range']))
+        {
+            Log::debug($data['date_range']);
+            $protectDateRange = $data['date_range'];
+            // Разделение строки на начальную и конечную даты
+            $dateParts = explode(" - ", $protectDateRange);
+            if (count($dateParts) != 2) {
+                return JsonHelper::sendJsonResponse(false,[
+                    'title' => 'Ошибка',
+                    'message' => 'Некорректные даты защиты'
+                ]);
+            }
+            $startDateString = trim($dateParts[0]); // "21 июнь 2024"
+            $endDateString = trim($dateParts[1]);   // "20 июль 2024"
+            $startDate = Carbon::createFromFormat('d.m.Y', $startDateString);
+            $endDate = Carbon::createFromFormat('d.m.Y', $endDateString);
+            $formattedStartDate = $startDate->toDateString();
+            $formattedEndDate = $endDate->toDateString();
+            Log::debug('start date = '.$formattedStartDate.' end date =  '.$formattedEndDate);
+            $data['start_date'] = $formattedStartDate;
+            $data['end_date'] = $formattedEndDate;
+
+        }
         $works = $this->workRepository->search($data);
         if ($works)
         {
