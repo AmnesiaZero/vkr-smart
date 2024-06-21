@@ -15,7 +15,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use App\Imports\WorksImport;
+use WorksImport;
 use Maatwebsite\Excel\Validators\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
 
