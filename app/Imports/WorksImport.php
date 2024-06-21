@@ -1,17 +1,35 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Support\Collection;
+use App\Models\Work;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+
 
 class WorksImport implements ToModel,WithHeadingRow
 {
     /**
      * @param array $row
      *
-     * @return User|null
+     * @return Work
+     */
+    public function model(array $row)
+    {
+        return new Work([
+            'student'     => $row[0],
+            'group'    => $row[1],
+            'name' => $row[2],
+            'scientific_supervisor' => $row[3],
+            'work_type' => $row[4],
+            'assessment' => $row[5],
+        ]);
+    }
+
+    /**
+     * @param array $row
+     *
+     * @return Work|null
      */
     public function collection(Collection $rows):void
     {
