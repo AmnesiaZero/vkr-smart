@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Bkwld\Cloner\Cloneable;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
+use Illuminate\Database\Eloquent\BroadcastsEvents;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Work extends Model
 {
-    use HasFactory,SoftDeletes,CascadeSoftDeletes,Cloneable;
+    use HasFactory,SoftDeletes,CascadeSoftDeletes,Cloneable,BroadcastsEvents;
 
     protected $fillable = [
         'created',
@@ -74,5 +75,15 @@ class Work extends Model
     public function year():HasOne
     {
         return $this->hasOne(OrganizationYear::class,'id','year_id');
+    }
+
+    /**
+     * Get the channels that model events should broadcast on.
+     *
+     * @return array<int, \Illuminate\Broadcasting\Channel|\Illuminate\Database\Eloquent\Model>
+     */
+    public function broadcastOn(string $event): array
+    {
+        return [$this, $this];
     }
 }

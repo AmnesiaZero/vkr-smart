@@ -460,7 +460,17 @@ class WorksService
             foreach ($imports as $import)
             {
                 $workData = array_merge($data,$import->toArray());
-                $work = $this->workRepository->create($workData);
+                try {
+                    $work = $this->workRepository->create($workData);
+                }
+                catch (\Exception $exception)
+                {
+                    return JsonHelper::sendJsonResponse(false,[
+                        'title' => 'Ошибка',
+                        'message' => 'При создании работы произошла ошибка',
+                        'import' => $import
+                    ]);
+                }
                 if(!isset($work) or !isset($work->id))
                 {
                     return JsonHelper::sendJsonResponse(false,[
