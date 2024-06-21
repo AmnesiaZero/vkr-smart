@@ -444,6 +444,8 @@ class WorksService
             $importFile = $data['import_file'];
             try{
                 $imports = Excel::toCollection(new WorksImport(), $importFile);
+                $imports = $imports->toArray();
+                array_shift($imports);
             }
             catch (ValidationException  $e)
             {
@@ -459,7 +461,16 @@ class WorksService
             $works = [];
             foreach ($imports as $import)
             {
-                $workData = array_merge($data,$import->toArray());
+                $student = $import[0];
+                $group = $import[1];
+                $name = $import[2];
+                $scientificSupervisor = $import[3];
+                $workType = $import[4];
+                $protectDate = $import[5];
+                $assessment = $import[6];
+                $workData = array_merge($data,['student' => $student,'group' => $group,
+                    'name' => $name,'scientific_supervisor' => $scientificSupervisor,'work_type' => $workType,
+                   'protect_date' => $protectDate,'assessment' => $assessment]);
                 try {
                     $work = $this->workRepository->create($workData);
                 }
