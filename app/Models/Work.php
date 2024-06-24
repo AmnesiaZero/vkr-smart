@@ -49,7 +49,8 @@ class Work extends Model
         'report_status',
         'percent_person',
         'check_code',
-        'verification_method'
+        'verification_method',
+        'user_type'
     ];
 
     public function specialty(): HasOne

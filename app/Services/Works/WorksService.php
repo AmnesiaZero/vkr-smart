@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Imports\WorksImport;
 use Maatwebsite\Excel\Validators\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
+use Vkrsmart\Sdk\clients\MasterClient;
+use Vkrsmart\Sdk\Models\Document;
 
 class WorksService
 {
@@ -52,16 +54,15 @@ class WorksService
         $you = Auth::user();
         $organizationId = $you->organization_id;
         $years = $this->yearRepository->get($organizationId);
-        $works = $this->workRepository->get($organizationId);
-        $specialties = $this->specialtyRepository->all();
-        return view('templates.dashboard.works.students', ['years' => $years, 'works' => $works, 'specialties' => $specialties]);
+        $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
+        return view('templates.dashboard.works.students', ['years' => $years,'program_specialties' => $programSpecialties]);
     }
 
-    public function get(int $pageNumber): JsonResponse
+    public function get(int $pageNumber,int $userType): JsonResponse
     {
         $you = Auth::user();
         $organizationId = $you->organization_id;
-        $works = $this->workRepository->get($organizationId,$pageNumber);
+        $works = $this->workRepository->get($organizationId,$pageNumber,$userType);
         return JsonHelper::sendJsonResponse(true, [
             'title' => 'Успешно',
             'works' => $works
@@ -85,13 +86,14 @@ class WorksService
 
     }
 
-    public function create( array $data):JsonResponse
+    public function create(array $data):JsonResponse
     {
         $you = Auth::user();
         $userId = $you->id;
         $organizationId = $you->organization_id;
         $data = array_merge($data,['user_id' => $userId,'organization_id' => $organizationId]);
         $work = $this->workRepository->create($data);
+        $updatedData = [];
         if($work and $work->id)
         {
             //Вообще,можно в отдельную функцию вынести разбиение по директориям,но лучше не надо
@@ -104,7 +106,19 @@ class WorksService
                 Storage::makeDirectory($workDirectory);
                 $workFileName = $workId.'.'.$workFile->extension();
                 $workPath =  $workFile->storeAs($workDirectory,$workFileName);
-                $work->path = $workPath;
+                $documentId = $this->uploadWork($workFile);
+                if($documentId and is_numeric($documentId))
+                {
+                    $updatedData['report_id'] = $documentId;
+                }
+                else
+                {
+                    return JsonHelper::sendJsonResponse(false,[
+                        'title' => 'Ошибка',
+                        'message' => 'Возникла ошибка при отправке работы на проверочный сервер'
+                    ]);
+                }
+                $updatedData['path'] = $workPath;
             }
             else
             {
@@ -122,7 +136,7 @@ class WorksService
                     $certificateDirectory = 'certificates/'.$directoryNumber;
                     Storage::makeDirectory($certificateDirectory);
                     $certificatePath = $certificateFile->storeAs($certificateDirectory,$certificateFileName);
-                    $work->certificate = $certificatePath;
+                    $updatedData['certificate'] = $certificatePath;
                 }
                 else
                 {
@@ -132,13 +146,16 @@ class WorksService
                     ]);
                 }
             }
-            $work->save();
-            //Подгружаю через find,чтобы связь specialty сохранилась
-            $workWithRelations = $this->workRepository->find($workId);
-            return JsonHelper::sendJsonResponse(true,[
-                'title' => 'Успешно',
-                'work' => $workWithRelations
-            ]);
+            $result = $this->workRepository->update($workId,$updatedData);
+            if($result)
+            {
+                //Подгружаю через find,чтобы связь specialty сохранилась
+                $workWithRelations = $this->workRepository->find($workId);
+                return JsonHelper::sendJsonResponse(true,[
+                    'title' => 'Успешно',
+                    'work' => $workWithRelations
+                ]);
+            }
         }
         return JsonHelper::sendJsonResponse(false,[
            'title' => 'Ошибка',
@@ -457,36 +474,6 @@ class WorksService
                     'message' => 'Возникла ошибка при обработке импорта'
                 ]);
             }
-//            $you = Auth::user();
-//            $userId = $you->id;
-//            $organizationId = $you->organization_id;
-//            $data = array_merge($data,['organization_id' => $organizationId,'user_id' => $userId]);
-//            $works = [];
-//            foreach ($imports as $import)
-//            {
-//                $student = $import[0];
-//                Log::debug('student = '.$student);
-//                $group = $import[1];
-//                $name = $import[2];
-//                $scientificSupervisor = $import[3];
-//                $workType = $import[4];
-//                $protectDate = $import[5];
-//                $protectDate =   Carbon::createFromFormat('d.m.Y', $protectDate)->toDateString();
-//                $assessment = $import[6];
-//                Log::debug('prtotect date = '.$protectDate);
-//                $workData = array_merge($data,['student' => $student,'group' => $group,
-//                    'name' => $name,'scientific_supervisor' => $scientificSupervisor,'work_type' => $workType,
-//                   'protect_date' => $protectDate,'assessment' => $assessment]);
-//                    $work = $this->workRepository->create($workData);
-//                if(!isset($work) or !isset($work->id))
-//                {
-//                    return JsonHelper::sendJsonResponse(false,[
-//                        'title' => 'Ошибка',
-//                        'message' => 'Возникла ошибка при импорте работы'
-//                    ]);
-//                }
-//                $works[] = $work;
-//            }
             return JsonHelper::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'message' => 'Работы были успешно импортированы'
@@ -522,6 +509,18 @@ class WorksService
             $data['end_date'] = $formattedEndDate;
         }
         return Excel::download(new WorksExport($data), 'Экспорт работ.xlsx');
+    }
+
+    public function uploadWork(UploadedFile $workFile)
+    {
+        $masterKey = config('sdk.master_key');
+        $client = new MasterClient($masterKey);
+        $document = new Document($client,true);
+        if(!$document->uploadDocument($workFile))
+        {
+            return false;
+        }
+        return $document->getId();
     }
 
 }

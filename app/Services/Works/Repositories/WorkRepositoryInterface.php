@@ -12,9 +12,10 @@ interface WorkRepositoryInterface
     /**
      * @param int $organizationId
      * @param int $pageNumber
+     * @param int $userType
      * @return LengthAwarePaginator
      */
-    public function get(int $organizationId,int $pageNumber): LengthAwarePaginator;
+    public function get(int $organizationId,int $pageNumber,int $userType): LengthAwarePaginator;
 
     /**
      * @param array $data
@@ -29,10 +30,10 @@ interface WorkRepositoryInterface
     public function find(int $id):Model;
 
     /**
-     * @param array $data
+     * @param array $datae
      * @return LengthAwarePaginator
      */
-    public function search(array $data):LengthAwarePaginator;
+    public function search(array $datae):LengthAwarePaginator;
 
     /**
      * @param int $id

@@ -36,7 +36,8 @@ class WorksController extends Controller
         'verification_method',
         'delete_type',
         'import_file',
-        'date_range'
+        'date_range',
+        'user_type'
     ];
 
     protected WorksService $worksService;
@@ -60,19 +61,22 @@ class WorksController extends Controller
     public function get(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(),[
-            'page' => 'required|integer'
+            'page' => 'required|integer',
+            'user_type' => 'required|integer|in:1,2'
         ]);
         if ($validator->fails())
         {
             return ValidatorHelper::error($validator);
         }
         $pageNumber = $request->page;
-        return $this->worksService->get($pageNumber);
+        $userType = $request->user_type;
+        return $this->worksService->get($pageNumber,$userType);
     }
 
     public function create(Request $request):JsonResponse
     {
         $validator = Validator::make($request->all(),[
+            'user_type' => 'required|integer|in:1,2',
             'year_id' => ['integer','required',Rule::exists('organizations_years','id')],
             'faculty_id' => ['integer','required',Rule::exists('faculties','id')],
             'department_id' => ['integer','required',Rule::exists('departments','id')],
@@ -118,6 +122,7 @@ class WorksController extends Controller
     public function search(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(),[
+            'user_type' => 'required|integer|in:1,2',
             'specialty_id' => ['integer',Rule::exists('programs_specialties','id')],
             'delete_type' => 'integer|in:0,1,2',
             'student' => 'max:250',

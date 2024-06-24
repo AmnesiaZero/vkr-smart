@@ -415,7 +415,6 @@
                 <a onclick="deleteAdditionalFile(${id}); return false;" href="#" class="btn btn-sm btn-danger btn-block">Удалить</a>
             </td>
         </tr>
-
             </script>
 
 @endsection

@@ -1,4 +1,19 @@
+var userType = '';
+
 $(document).ready(function () {
+
+    const siteUrl = window.location.href;
+    console.log('site url = ' + siteUrl);
+    if(siteUrl.includes('employees'))
+    {
+        userType = 2;
+    }
+    else
+    {
+        userType = 1;
+    }
+
+    console.log('works type = ' + userType);
 
     works();
     localStorage.setItem('selected_years', '');
@@ -456,6 +471,7 @@ $("#addWorkForm").on('submit', function(e) {
 
     // Создаем объект FormData и добавляем в него данные формы
     const formData = new FormData(this);
+    formData.append('user_type',userType);
 
     $.ajax({
         url: '/dashboard/works/employees/create',
@@ -594,7 +610,7 @@ function getSelfCheckDescription(selfCheck)
 function works(page= 1)
 {
     const data = {
-      page:page
+      page:page, user_type:userType
     };
     $.ajax({
         url: "/dashboard/works/employees/get",
@@ -639,6 +655,7 @@ function searchWorks() {
     const additionalData = {
         selected_years: selectedYears,
         selected_faculties: selectedFaculties,
+        user_type:userType
     };
     data += '&' + $.param(additionalData);
     $.ajax({

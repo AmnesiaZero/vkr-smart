@@ -2,6 +2,7 @@
 
 namespace App\Services\Works\Repositories;
 
+use App\Models\StudentWork;
 use App\Models\Work;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -11,9 +12,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class EloquentWorkRepository implements WorkRepositoryInterface
 {
 
-    public function get(int $organizationId,int $pageNumber): LengthAwarePaginator
+    public function get(int $organizationId, int $pageNumber, int $userType): LengthAwarePaginator
     {
-        return Work::withTrashed()->with(['faculty','specialty'])->where('organization_id', '=', $organizationId)->paginate(config('pagination.per_page'),'*','page',$pageNumber);
+        return Work::withTrashed()->with(['faculty','specialty'])->where('organization_id', '=', $organizationId)->where('user_type','=',$userType)->paginate(config('pagination.per_page'),'*','page',$pageNumber);
     }
 
     public function create(array $data): Model
@@ -41,7 +42,10 @@ class EloquentWorkRepository implements WorkRepositoryInterface
                 $query = Work::withTrashed();
             }
         }
-        $query = $query->with(['specialty','faculty']);
+        if(isset($data['user_type']))
+        {
+            $query = $query->where('user_type','=',$data['user_type']);
+        }
         if (isset($data['scientific_supervisor']))
         {
             $query->where('scientific_supervisor','like','%'.$data['scientific_supervisor']);
@@ -88,7 +92,7 @@ class EloquentWorkRepository implements WorkRepositoryInterface
     }
 
 
-    public function update(int $id,array $data)
+    public function update(int $id, array $data)
     {
         return $this->find($id)->update($data);
     }
