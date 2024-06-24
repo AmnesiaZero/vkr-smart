@@ -54,7 +54,7 @@
                 <div class="br-green-light-2 br-15 p-3">
                     <div class="d-flex inline-flex justify-content-between mb-3" id="students_list_head">
                         <p class="m-0 fw-600">Для студентов</p>
-                        <a href="/dashboard/invite-codes/load?type=1"
+                        <a href="#" onclick="downloadStudentsCodes()"
                            class="badge bg-green br-100 text-grey fs-14 cursor-p ps-3">выгрузить <img
                                 src="/images/File_Download.svg" alt="" class="ps-1 pe-2"></a>
                     </div>
@@ -63,19 +63,6 @@
                     </div>
                     <nav aria-label="Page navigation example" class="custom_pagination" id="students_codes_pagination">
                         <ul class="pagination m-0" id="students_pages">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>
-                                </a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>
-                                </a>
-                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -84,7 +71,7 @@
                 <div class="br-green-light-2 br-15 p-3">
                     <div class="d-flex inline-flex justify-content-between mb-3" id="teachers_list_head">
                         <p class="m-0 fw-600">Для преподавателей</p>
-                        <a href="/dashboard/invite-codes/load?type=2"
+                        <a href="#" onclick="downloadTeachersCodes()"
                            class="badge bg-green br-100 text-grey fs-14 cursor-p ps-3">выгрузить <img
                                 src="/images/File_Download.svg" alt="" class="ps-1 pe-2"></a>
 
@@ -121,7 +108,7 @@
     </script>
 
     <script id="empty_tmpl" type="text/x-jquery-tmpl">
-                    <div class="text-center h-100 d-flex flex-column justify-content-center" class="empty_codes">
+                    <div class="text-center h-100 d-flex flex-column justify-content-center" class="empty_codes" id="${id}">
                         <p>Пока здесь пусто</p>
                         <p class="m-0">Сгенерируйте код доступа</p>
                     </div>

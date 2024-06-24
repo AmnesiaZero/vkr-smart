@@ -40,4 +40,11 @@ interface InviteCodeRepositoryInterface
      * @return bool
      */
     public function login(int $id, int $code): bool;
+
+    /**
+     * @param int $organizationId
+     * @param int $type
+     * @return bool
+     */
+    public function delete(int $organizationId, int $type):bool;
 }

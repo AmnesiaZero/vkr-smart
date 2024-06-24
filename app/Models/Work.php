@@ -77,6 +77,9 @@ class Work extends Model
         return $this->hasOne(OrganizationYear::class,'id','year_id');
     }
 
+
+
+
     /**
      * Get the channels that model events should broadcast on.
      *
@@ -86,4 +89,5 @@ class Work extends Model
     {
         return [$this, $this];
     }
+
 }

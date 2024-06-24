@@ -45,7 +45,7 @@ class ProgramsSpecialtiesController extends Controller
             'program_id' => ['required','integer',Rule::exists('programs','id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $programId = $request->program_id;
         return $this->programsSpecialtiesService->get($programId);
@@ -57,7 +57,7 @@ class ProgramsSpecialtiesController extends Controller
             'organization_id' => ['required','integer',Rule::exists('organizations','id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $organizationId = $request->organization_id;
         return $this->programsSpecialtiesService->getByOrganizationId($organizationId);
@@ -71,7 +71,7 @@ class ProgramsSpecialtiesController extends Controller
             'specialty_id' => [Rule::exists('specialties', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
         $user = Auth::user();
@@ -92,7 +92,7 @@ class ProgramsSpecialtiesController extends Controller
             'id' => 'required|integer'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $facultyDepartment = $request->id;
         $data = $request->only($this->fillable);
@@ -106,7 +106,7 @@ class ProgramsSpecialtiesController extends Controller
             'id' => ['required', Rule::exists('programs_specialties', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         $data = $request->only($this->fillable);

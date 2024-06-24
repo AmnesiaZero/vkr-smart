@@ -503,9 +503,8 @@ $("#import_work_form").on('submit', function(e) {
         success: function(response) {
             if (response.success)
             {
-                const works = response.data.works;
-                $("#works_table").append($("#work_tmpl").tmpl(works));
-                updateWorksCount();
+                $.notify(response.data.title + ":" + response.data.message, "success");
+                works();
             }
             else
             {
@@ -1042,9 +1041,18 @@ function deleteAdditionalFile(additionalFileId)
    });
 }
 
-function importWork()
+function exportWorks()
 {
-
+    let data = $("#search_form").serialize();
+    data = serializeRemoveNull(data);
+    const selectedYears = getArrayFromLocalStorage('selected_years');
+    const selectedFaculties = getArrayFromLocalStorage('selected_faculties');
+    const additionalData = {
+        selected_years: selectedYears,
+        selected_faculties: selectedFaculties,
+    };
+    data += '&' + $.param(additionalData);
+    window.location.href = '/dashboard/works/employees/export?' + data;
 }
 
 

@@ -4,11 +4,15 @@ namespace App\Exports;
 
 use App\Models\InviteCode;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class InviteCodesExport implements FromCollection
+class InviteCodesExport implements FromView
 {
     use HasFactory;
+
 
     public function __construct(int $organizationId, int $type)
     {
@@ -16,11 +20,10 @@ class InviteCodesExport implements FromCollection
         $this->type = $type;
     }
 
-    public function collection()
+
+    public function view(): \Illuminate\Contracts\View\View
     {
         $query = InviteCode::query();
-
-        $query->select(['id', 'code']);
 
         if ($this->organization_id) {
             $query->where('organization_id', '=', $this->organization_id);
@@ -30,30 +33,11 @@ class InviteCodesExport implements FromCollection
             $query->where('type', '=', $this->type);
         }
 
-        return $query->get();
+        $inviteCodes = $query->get();
+        Log::debug('invite codes = '.$inviteCodes);
+        return view('exports.codes', [
+            'invite_codes' => $inviteCodes
+        ]);
     }
 
-    public function headings(): array
-    {
-        return [
-            'Код приглашения',
-            'Дата окончания',
-            'Тип приглашения'
-        ];
-    }
-
-    public function map($code): array
-    {
-        $codeExport = $code->id . '-' . $code->code;
-        if ($code->type == 1) {
-            $type = 'Для студентов';
-        } else {
-            $type = 'Для преподавателей';
-        }
-        return [
-            $codeExport,
-            $code->expires_at,
-            $type
-        ];
-    }
 }

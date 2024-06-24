@@ -64,7 +64,7 @@ class WorksController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $pageNumber = $request->page;
         return $this->worksService->get($pageNumber);
@@ -91,7 +91,7 @@ class WorksController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
         return $this->worksService->create($data);
@@ -109,7 +109,7 @@ class WorksController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
         return $this->worksService->import($data);
@@ -131,7 +131,7 @@ class WorksController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
         return $this->worksService->search($data);
@@ -144,7 +144,7 @@ class WorksController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->worksService->delete($id);
@@ -157,7 +157,7 @@ class WorksController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->worksService->destroy($id);
@@ -181,7 +181,7 @@ class WorksController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         Log::debug('id = '.$id);
@@ -196,7 +196,7 @@ class WorksController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->worksService->find($id);
@@ -209,7 +209,7 @@ class WorksController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->worksService->download($id);
@@ -222,7 +222,7 @@ class WorksController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->worksService->downloadCertificate($id);
@@ -236,7 +236,7 @@ class WorksController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         $workFile = $request->work_file;
@@ -251,7 +251,7 @@ class WorksController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         $certificate = $request->file('certificate_file');
@@ -265,7 +265,7 @@ class WorksController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->worksService->copy($id);
@@ -278,7 +278,7 @@ class WorksController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->worksService->updateSelfCheckStatus($id);
@@ -291,10 +291,32 @@ class WorksController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->worksService->restore($id);
+    }
+
+    public function export(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'specialty_id' => ['integer',Rule::exists('programs_specialties','id')],
+            'delete_type' => 'integer|in:0,1,2',
+            'student' => 'max:250',
+            'group' => 'max:250',
+            'scientific_supervisor' => 'max:250',
+            'protect_date' => 'max:250',
+            'work_type' => 'max:250',
+            'name' => 'max:250',
+            'selected_faculties.*' => ['integer', Rule::exists('faculties', 'id')],
+            'selected_years.*' => ['integer', Rule::exists('organizations_years', 'id')]
+        ]);
+        if ($validator->fails())
+        {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $data = $request->only($this->fillable);
+        return $this->worksService->export($data);
     }
 
 

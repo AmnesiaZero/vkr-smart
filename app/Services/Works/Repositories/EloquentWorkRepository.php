@@ -84,9 +84,9 @@ class EloquentWorkRepository implements WorkRepositoryInterface
             $yearsIds = $data['selected_years'];
             $query = $query->whereIn('year_id', $yearsIds);
         }
-        $worksPagination = $query->paginate(config('pagination.per_page'),'*','page',1);
-        return $worksPagination;
+        return $query->paginate(config('pagination.per_page'),'*','page',1);
     }
+
 
     public function update(int $id,array $data)
     {

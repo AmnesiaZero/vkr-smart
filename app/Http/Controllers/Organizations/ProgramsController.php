@@ -37,7 +37,7 @@ class ProgramsController extends Controller
             'department_id' => ['required', 'integer']
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $departmentId = $request->department_id;
         return $this->programsService->get($departmentId);
@@ -49,7 +49,7 @@ class ProgramsController extends Controller
             'name' => 'required'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
         $user = Auth::user();
@@ -64,7 +64,7 @@ class ProgramsController extends Controller
             'id' => ['required', 'integer', Rule::exists('programs', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         $data = $request->only($this->fillable);
@@ -78,7 +78,7 @@ class ProgramsController extends Controller
             'id' => ['required', 'integer', Rule::exists('programs', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->programsService->delete($id);
@@ -90,7 +90,7 @@ class ProgramsController extends Controller
             'id' => 'required|integer'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->programsService->find($id);

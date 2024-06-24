@@ -30,7 +30,7 @@ class WorksTypesController extends Controller
             'name' => 'required|max:250'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
         $you = Auth::user();
@@ -53,7 +53,7 @@ class WorksTypesController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->worksTypesService->delete($id);

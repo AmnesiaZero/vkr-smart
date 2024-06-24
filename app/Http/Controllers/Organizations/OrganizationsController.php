@@ -34,7 +34,7 @@ class OrganizationsController extends Controller
             'specialties_ids' => 'required|array'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $user = Auth::user();
         $organizationId = $user->organization_id;

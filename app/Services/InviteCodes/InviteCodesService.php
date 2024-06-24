@@ -2,11 +2,13 @@
 
 namespace App\Services\InviteCodes;
 
+use App\Exports\InviteCodesExport;
 use App\Helpers\JsonHelper;
 use App\Services\InviteCodes\Repositories\InviteCodeRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InviteCodesService
 {
@@ -61,5 +63,15 @@ class InviteCodesService
             'title' => 'Успешно получены коды регистраций',
             'invite_codes' => $inviteCodes
         ]);
+    }
+
+    public function load(int $type)
+    {
+        $you = Auth::user();
+        $organizationId = $you->organization_id;
+        //сначала вызываю библиотечную функцию,а потом удаляю из БД(чтобы вообще было что удалять)
+        $result =  Excel::download(new InviteCodesExport($organizationId, $type), 'Экспорт кодов приглашений.xlsx');
+        $this->_repository->delete($organizationId,$type);
+        return $result;
     }
 }

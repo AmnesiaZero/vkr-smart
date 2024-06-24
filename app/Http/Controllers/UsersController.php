@@ -73,7 +73,7 @@ class UsersController extends Controller
             'code' => 'required'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $fullCode = $request->code;
         $codeArray = explode('-', $fullCode);
@@ -88,7 +88,7 @@ class UsersController extends Controller
             'email' => ['required', 'email', Rule::exists('users', 'email')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $email = $request->email;
         return $this->usersService->resetPassword($email);
@@ -112,7 +112,7 @@ class UsersController extends Controller
             'gender' => 'required|integer',
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $code = session('invite_code');
         $data = $request->only($this->fillable);
@@ -142,7 +142,7 @@ class UsersController extends Controller
             'roles.*' => ['required', Rule::exists('roles', 'slug')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $roles = $request->roles;
         return $this->usersService->get($roles);
@@ -159,7 +159,7 @@ class UsersController extends Controller
             'is_active' => 'required|integer',
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
         Log::debug('request data =' . print_r($data, true));
@@ -176,7 +176,7 @@ class UsersController extends Controller
             'id' => ['required', 'integer', Rule::exists('users', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->usersService->delete($id);
@@ -188,7 +188,7 @@ class UsersController extends Controller
             'id' => ['required', 'integer', Rule::exists('users', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->usersService->find($id);
@@ -207,7 +207,7 @@ class UsersController extends Controller
             'role' => [Rule::exists('roles', 'slug')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         $data = $request->only($this->fillable);
@@ -221,7 +221,7 @@ class UsersController extends Controller
             'departments_ids' => ['required', 'array'],
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $userId = $request->user_id;
         $departmentsIds = $request->departments_ids;
@@ -241,7 +241,7 @@ class UsersController extends Controller
             'selected_years.*' => ['integer', Rule::exists('organizations_years', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $you = Auth::user();
 
@@ -260,7 +260,7 @@ class UsersController extends Controller
             'departments_ids' => ['required', 'array'],
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $userId = $request->user_id;
         $departmentsIds = $request->departments_ids;
@@ -283,7 +283,7 @@ class UsersController extends Controller
             'secret_key' => ['required', Rule::exists('users', 'secret_key')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         $apiKey = $request->api_key;

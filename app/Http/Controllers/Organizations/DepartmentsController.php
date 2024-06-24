@@ -35,7 +35,7 @@ class DepartmentsController extends Controller
             'faculty_id' => 'required|integer'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $faculty_id = $request->faculty_id;
         return $this->departmentsService->get($faculty_id);
@@ -47,7 +47,7 @@ class DepartmentsController extends Controller
             'name' => 'required'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
         $user = Auth::user();
@@ -62,7 +62,7 @@ class DepartmentsController extends Controller
             'id' => ['required', 'integer']
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         $data = $request->only($this->fillable);
@@ -76,7 +76,7 @@ class DepartmentsController extends Controller
             'id' => ['required', 'integer', Rule::exists('departments', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $facultyId = $request->id;
         Log::debug('Вошёл в create у faculties');
@@ -91,7 +91,7 @@ class DepartmentsController extends Controller
             'user_id' => ['required', 'integer', Rule::exists('users', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $userId = $request->user_id;
         return $this->departmentsService->getByUserId($userId);
@@ -103,7 +103,7 @@ class DepartmentsController extends Controller
             'id' => ['required', 'integer', Rule::exists('departments', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->departmentsService->find($id);
@@ -116,7 +116,7 @@ class DepartmentsController extends Controller
             'department_id' => ['required', 'integer', Rule::exists('departments', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->department_id;
         return $this->departmentsService->getProgramSpecialties($id);

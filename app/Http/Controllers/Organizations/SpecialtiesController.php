@@ -33,7 +33,7 @@ class SpecialtiesController extends Controller
             'name' => 'required'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $user = Auth::user();
         $data = array_merge($data, ['user_id' => $user->id, 'organization_id' => $user->organization_id]);
@@ -47,7 +47,7 @@ class SpecialtiesController extends Controller
             'id' => 'required|integer'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $facultyDepartment = $request->id;
         $data = $request->only($this->fillable);
@@ -66,7 +66,7 @@ class SpecialtiesController extends Controller
             'id' => 'required|integer'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $facultyId = $request->id;
         Log::debug('Вошёл в create у faculties');

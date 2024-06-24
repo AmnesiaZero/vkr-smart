@@ -183,13 +183,13 @@ Route::group([
             Route::post('update-self-check-status',[WorksController::class, 'updateSelfCheckStatus']);
             Route::post('restore',[WorksController::class,'restore']);
             Route::post('import',[WorksController::class,'import']);
+            Route::get('export',[WorksController::class,'export']);
             Route::group([
                 'prefix' => 'certificates'
             ],function (){
                 Route::post('upload',[WorksController::class,'uploadCertificate']);
                 Route::get('download',[WorksController::class,'downloadCertificate']);
             });
-
             Route::group([
                 'prefix' => 'additional-files'
             ],function (){

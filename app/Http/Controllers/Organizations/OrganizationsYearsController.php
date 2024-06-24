@@ -55,7 +55,7 @@ class OrganizationsYearsController extends Controller
             'students_count' => 'required|integer'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $user = Auth::user();
         $data = array_merge($data, ['organization_id' => $user->organization_id, 'user_id' => $user->id]);
@@ -71,7 +71,7 @@ class OrganizationsYearsController extends Controller
             'id' => ['required', 'integer', Rule::exists('organizations_years', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $yearId = $request->id;
         Log::debug('Вошёл в create у organizations years');
@@ -86,7 +86,7 @@ class OrganizationsYearsController extends Controller
             'id' => ['required', 'integer', Rule::exists('organizations_years', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $yearId = $request->id;
         Log::debug('Вошёл в create у organizations years');
@@ -101,7 +101,7 @@ class OrganizationsYearsController extends Controller
             'id' => ['required', 'integer', Rule::exists('organizations_years', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $yearId = $request->id;
 
@@ -114,7 +114,7 @@ class OrganizationsYearsController extends Controller
             'id' => ['required', 'integer', Rule::exists('organizations_years', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $yearId = $request->id;
         return $this->organizationYearsService->find($yearId);

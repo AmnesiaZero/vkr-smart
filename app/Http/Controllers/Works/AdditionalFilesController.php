@@ -33,7 +33,7 @@ class AdditionalFilesController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $workId = $request->work_id;
         return $this->additionalFilesService->get($workId);
@@ -47,7 +47,7 @@ class AdditionalFilesController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
         return $this->additionalFilesService->create($data);
@@ -60,7 +60,7 @@ class AdditionalFilesController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->additionalFilesService->download($id);
@@ -73,7 +73,7 @@ class AdditionalFilesController extends Controller
         ]);
         if ($validator->fails())
         {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->additionalFilesService->delete($id);

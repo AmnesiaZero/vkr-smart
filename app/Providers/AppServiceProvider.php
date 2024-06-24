@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Exports\WorksExport;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\ServiceProvider;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,6 +38,7 @@ class AppServiceProvider extends ServiceProvider
             'WorksType' => 'WorksTypes',
             'AdditionalFile' => 'AdditionalFiles'
         ];
+
 
         foreach ($repositories as $k => $v) {
             $this->app->bind('App\\Services\\' . $v . '\\Repositories\\' . $k . 'RepositoryInterface',

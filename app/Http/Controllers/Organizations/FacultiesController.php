@@ -39,7 +39,7 @@ class FacultiesController extends Controller
             'year_id' => ['required', 'integer']
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $yearId = $request->year_id;
         return $this->facultiesService->get($yearId);
@@ -52,7 +52,7 @@ class FacultiesController extends Controller
             'name' => 'required'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $user = Auth::user();
         $data = array_merge($data, ['user_id' => $user->id, 'organization_id' => $user->organization_id]);
@@ -66,7 +66,7 @@ class FacultiesController extends Controller
             'id' => ['required', 'integer', Rule::exists('faculties', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $facultyId = $request->id;
         $data = $request->only($this->fillable);
@@ -80,7 +80,7 @@ class FacultiesController extends Controller
             'id' => ['required', 'integer', Rule::exists('faculties', 'id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $facultyId = $request->id;
         return $this->facultiesService->delete($facultyId);

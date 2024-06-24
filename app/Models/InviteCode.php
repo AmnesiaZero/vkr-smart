@@ -10,6 +10,8 @@ class InviteCode extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'invite_codes';
+
     protected $fillable = [
         'organization_id',
         'type',

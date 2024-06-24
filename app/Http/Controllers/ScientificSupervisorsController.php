@@ -32,7 +32,7 @@ class ScientificSupervisorsController extends Controller
             'name' => 'required|max:250'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
         $you = Auth::user();
@@ -54,7 +54,7 @@ class ScientificSupervisorsController extends Controller
             'id' =>  ['required','integer',Rule::exists('scientific_supervisors','id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->scientificSupervisorsService->delete($id);

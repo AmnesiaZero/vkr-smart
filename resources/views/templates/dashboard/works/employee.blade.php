@@ -117,7 +117,8 @@
                                 <button class="btn pe-3 py-0 fs-14" disabled>
                                     <img src="/images/Calendar.svg" alt="">
                                 </button>
-                                <input type="text" name="date_range" value="04.06.2024 - 07.06.2024"
+{{--                                Временно поменял имя,чтобы не мешалось--}}
+                                <input type="text" name="date_rang" value="04.06.2024 - 07.06.2024"
                                        class=" fs-14 text-grey p-date w-75"/>
                             </div>
                         </div>
@@ -142,7 +143,7 @@
                                 <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 me-3"
                                         onclick="works();resetSearch()">сбросить
                                 </button>
-                                <button class="btn bg-green br-100 text-grey fs-14 py-1">выгрузить<img
+                                <button class="btn bg-green br-100 text-grey fs-14 py-1" onclick="exportWorks()">выгрузить<img
                                         src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
                             </div>
                         </div>

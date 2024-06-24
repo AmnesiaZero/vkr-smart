@@ -31,7 +31,7 @@ class InviteCodesController extends Controller
             'amount' => 'required|integer|max:150'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
         return $this->inviteCodesService->create($data);
@@ -44,7 +44,7 @@ class InviteCodesController extends Controller
             'type' => 'required|integer|in:1,2'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
         $user = Auth::user();
         $organizationId = $user->organization_id;
@@ -61,11 +61,9 @@ class InviteCodesController extends Controller
             'type' => 'required|integer|in:1,2'
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::validatorError($validator);
+            return ValidatorHelper::error($validator);
         }
-        $you = Auth::user();
-        $organizationId = $you->organization_id;
         $type = $request->type;
-        return Excel::download(new InviteCodesExport($organizationId, $type), 'invite_codes.xlsx');
+        return $this->inviteCodesService->load($type);
     }
 }

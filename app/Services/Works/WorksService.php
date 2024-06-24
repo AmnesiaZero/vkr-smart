@@ -2,6 +2,8 @@
 
 namespace App\Services\Works;
 
+use App\Exports\InviteCodesExport;
+use App\Exports\WorksExport;
 use App\Helpers\FilesHelper;
 use App\Helpers\JsonHelper;
 use App\Services\OrganizationsYears\Repositories\OrganizationYearRepositoryInterface;
@@ -158,16 +160,14 @@ class WorksService
                     'message' => 'Некорректные даты защиты'
                 ]);
             }
-            $startDateString = trim($dateParts[0]); // "21 июнь 2024"
-            $endDateString = trim($dateParts[1]);   // "20 июль 2024"
+            $startDateString = trim($dateParts[0]); // начальная дата
+            $endDateString = trim($dateParts[1]);   // конечная дата
             $startDate = Carbon::createFromFormat('d.m.Y', $startDateString);
             $endDate = Carbon::createFromFormat('d.m.Y', $endDateString);
             $formattedStartDate = $startDate->toDateString();
             $formattedEndDate = $endDate->toDateString();
-            Log::debug('start date = '.$formattedStartDate.' end date =  '.$formattedEndDate);
             $data['start_date'] = $formattedStartDate;
             $data['end_date'] = $formattedEndDate;
-
         }
         $works = $this->workRepository->search($data);
         if ($works)
@@ -442,10 +442,13 @@ class WorksService
         if(isset($data['import_file']) and is_file($data['import_file']) and FilesHelper::acceptableImport($data['import_file']))
         {
             $importFile = $data['import_file'];
+            $you = Auth::user();
+            $userId = $you->id;
+            $organizationId = $you->organization_id;
+            $data = array_merge($data,['user_id' => $userId,'organization_id' => $organizationId]);
+            unset($data['import_file']);
             try{
-                $imports = Excel::toCollection(new WorksImport(), $importFile);
-                $imports = $imports[0]->toArray();
-                array_shift($imports);
+                Excel::import(new WorksImport($data),$importFile);
             }
             catch (ValidationException  $e)
             {
@@ -454,47 +457,71 @@ class WorksService
                     'message' => 'Возникла ошибка при обработке импорта'
                 ]);
             }
-            $you = Auth::user();
-            $userId = $you->id;
-            $organizationId = $you->organization_id;
-            $data = array_merge($data,['organization_id' => $organizationId,'user_id' => $userId]);
-            $works = [];
-            foreach ($imports as $import)
-            {
-                $student = $import[0];
-                Log::debug('student = '.$student);
-                $group = $import[1];
-                $name = $import[2];
-                $scientificSupervisor = $import[3];
-                $workType = $import[4];
-                $protectDate = $import[5];
-                $protectDate =   Carbon::createFromFormat('d.m.Y', $protectDate)->toDateString();
-
-                $assessment = $import[6];
-                Log::debug('prtotect date = '.$protectDate);
-                $workData = array_merge($data,['student' => $student,'group' => $group,
-                    'name' => $name,'scientific_supervisor' => $scientificSupervisor,'work_type' => $workType,
-                   'protect_date' => $protectDate,'assessment' => $assessment]);
-                    $work = $this->workRepository->create($workData);
-                if(!isset($work) or !isset($work->id))
-                {
-                    return JsonHelper::sendJsonResponse(false,[
-                        'title' => 'Ошибка',
-                        'message' => 'Возникла ошибка при импорте работы'
-                    ]);
-                }
-                $works[] = $work;
-            }
+//            $you = Auth::user();
+//            $userId = $you->id;
+//            $organizationId = $you->organization_id;
+//            $data = array_merge($data,['organization_id' => $organizationId,'user_id' => $userId]);
+//            $works = [];
+//            foreach ($imports as $import)
+//            {
+//                $student = $import[0];
+//                Log::debug('student = '.$student);
+//                $group = $import[1];
+//                $name = $import[2];
+//                $scientificSupervisor = $import[3];
+//                $workType = $import[4];
+//                $protectDate = $import[5];
+//                $protectDate =   Carbon::createFromFormat('d.m.Y', $protectDate)->toDateString();
+//                $assessment = $import[6];
+//                Log::debug('prtotect date = '.$protectDate);
+//                $workData = array_merge($data,['student' => $student,'group' => $group,
+//                    'name' => $name,'scientific_supervisor' => $scientificSupervisor,'work_type' => $workType,
+//                   'protect_date' => $protectDate,'assessment' => $assessment]);
+//                    $work = $this->workRepository->create($workData);
+//                if(!isset($work) or !isset($work->id))
+//                {
+//                    return JsonHelper::sendJsonResponse(false,[
+//                        'title' => 'Ошибка',
+//                        'message' => 'Возникла ошибка при импорте работы'
+//                    ]);
+//                }
+//                $works[] = $work;
+//            }
             return JsonHelper::sendJsonResponse(true,[
                 'title' => 'Успешно',
-                'message' => 'Работы были успешно импортированы',
-                'works' => $works
+                'message' => 'Работы были успешно импортированы'
             ]);
         }
         return JsonHelper::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Файл импорта некорректный. Проверьте целостность и расширение файла'
         ]);
+    }
+
+    public function export(array $data)
+    {
+        if(isset($data['date_range']))
+        {
+            Log::debug($data['date_range']);
+            $protectDateRange = $data['date_range'];
+            // Разделение строки на начальную и конечную даты
+            $dateParts = explode(" - ", $protectDateRange);
+            if (count($dateParts) != 2) {
+                return JsonHelper::sendJsonResponse(false,[
+                    'title' => 'Ошибка',
+                    'message' => 'Некорректные даты защиты'
+                ]);
+            }
+            $startDateString = trim($dateParts[0]); // начальная дата
+            $endDateString = trim($dateParts[1]);   // конечная дата
+            $startDate = Carbon::createFromFormat('d.m.Y', $startDateString);
+            $endDate = Carbon::createFromFormat('d.m.Y', $endDateString);
+            $formattedStartDate = $startDate->toDateString();
+            $formattedEndDate = $endDate->toDateString();
+            $data['start_date'] = $formattedStartDate;
+            $data['end_date'] = $formattedEndDate;
+        }
+        return Excel::download(new WorksExport($data), 'Экспорт работ.xlsx');
     }
 
 }

@@ -5,59 +5,46 @@ namespace App\Imports;
 
 use App\Models\User;
 use App\Models\Work;
+use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
+use Maatwebsite\Excel\Concerns\WithFormatData;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 
-class WorksImport implements ToModel
+
+class WorksImport implements ToCollection,WithFormatData
 {
-    /**
-     * @param array $row
-     *
-     * @return Work
-     */
-    public function model(array $row)
+
+    public function __construct(array $data)
     {
-        return new Work([
-            'student'              => $row[0],
-            'group'                => $row[1],
-            'name'                 => $row[2],
-            'scientific_supervisor'=> $row[3],
-            'work_type'            => $row[4],
-            'assessment'           => $row[5],
-        ]);
+        $this->data = $data;
     }
 
-    /**
-     * @param array $row
-     *
-     * @return Work|null
-     */
-    public function collection(Collection $rows):void
+    public function collection(Collection $collection)
     {
-        foreach ($rows as $row) {
-            Work::create([
-                'student'              => $row[0],
-                'group'                => $row[1],
-                'name'                 => $row[2],
-                'scientific_supervisor'=> $row[3],
-                'work_type'            => $row[4],
-                'assessment'           => $row[5],
-            ]);
+        Log::debug('data = '.print_r($this->data,true));
+        $collection = $collection->splice(1);
+        foreach ($collection as $work)
+        {
+            $protectDate = Carbon::createFromFormat('d.m.Y', $work[5])->toDateString();
+            $workData = [
+                'student' => $work[0],
+                'group'                => $work[1],
+                'name'                 => $work[2],
+                'scientific_supervisor' => $work[3],
+                'work_type'            => $work[4],
+                'protect_date' =>  $protectDate,
+                'assessment'           => $work[6],
+            ];
+            $allData = array_merge($workData,$this->data);
+            Log::debug('all data = '.print_r($allData,true));
+            Work::create($allData);
         }
     }
-
-    public function map($row): array
-    {
-        return [
-            'student'                => $row[0],
-            'group'                  => $row[1],
-            'name'                   => $row[2],
-            'scientific_supervisor'  => $row[3],
-            'work_type'              => $row[4],
-            'assessment'             => $row[5],
-        ];
-    }
-
 }
