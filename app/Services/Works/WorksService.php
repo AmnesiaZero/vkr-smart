@@ -106,18 +106,18 @@ class WorksService
                 Storage::makeDirectory($workDirectory);
                 $workFileName = $workId.'.'.$workFile->extension();
                 $workPath =  $workFile->storeAs($workDirectory,$workFileName);
-                $documentId = $this->uploadWork($workFile);
-                if($documentId and is_numeric($documentId))
-                {
-                    $updatedData['report_id'] = $documentId;
-                }
-                else
-                {
-                    return JsonHelper::sendJsonResponse(false,[
-                        'title' => 'Ошибка',
-                        'message' => 'Возникла ошибка при отправке работы на проверочный сервер'
-                    ]);
-                }
+//                $documentId = $this->uploadWork($workFile);
+//                if($documentId and is_numeric($documentId))
+//                {
+//                    $updatedData['report_id'] = $documentId;
+//                }
+//                else
+//                {
+//                    return JsonHelper::sendJsonResponse(false,[
+//                        'title' => 'Ошибка',
+//                        'message' => 'Возникла ошибка при отправке работы на проверочный сервер'
+//                    ]);
+//                }
                 $updatedData['path'] = $workPath;
             }
             else
