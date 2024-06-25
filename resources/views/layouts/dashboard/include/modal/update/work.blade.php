@@ -90,26 +90,26 @@
                     <div class="col-sm-8">
                         <div class="radio">
                             <label>
-                                <input type="radio" name="bsemethod" value="0"> Проверить автоматически после
+                                <input type="radio" name="verification_method" value="0"> Проверить автоматически после
                                 загрузки
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" name="bsemethod" value="1" checked=""> Проверить работу в ручном
+                                <input type="radio" name="verification_method" value="1" checked=""> Проверить работу в ручном
                                 режиме
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" name="bsemethod" value="2"> Не проверять работу после загрузки
+                                <input type="radio" name="verification_method" value="2"> Не проверять работу после загрузки
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success" onclick="closeModal('update_work_modal')">Изменить</button>
+                <button type="submit" class="btn btn-success">Изменить</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeModal('update_work_modal')">Отмена</button>
             </div>
         </form>

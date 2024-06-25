@@ -20,7 +20,7 @@
     </div>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/Edit_Pencil.svg" alt="" class="pe-2">
-        <p class="fs-14 lh-17 text-grey m-0" onclick="openModal('update_work_modal')">Изменить информацию о работе</p>
+        <p class="fs-14 lh-17 text-grey m-0" onclick="openUpdateWorkModal()">Изменить информацию о работе</p>
     </div>
     <p class="fs-14 lh-17">Самопроверка</p>
     <div class="d-flex cursor-p mb-2">

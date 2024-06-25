@@ -42,6 +42,7 @@ class EloquentWorkRepository implements WorkRepositoryInterface
                 $query = Work::withTrashed();
             }
         }
+        $query->with(['specialty','faculty','department']);
         if(isset($data['user_type']))
         {
             $query = $query->where('user_type','=',$data['user_type']);

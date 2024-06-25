@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-<>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ВКР Смарт</title>
@@ -168,7 +167,9 @@
         </div>
 
 
+
         @yield('content')
+
     </div>
 </main>
 

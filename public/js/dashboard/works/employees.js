@@ -118,7 +118,7 @@ $(document).ready(function () {
             formData.append('id', workId);
             formData.append('work_file', file);
             $.ajax({
-                url: '/dashboard/works/employees/upload', // URL к вашему серверному скрипту
+                url: '/dashboard/works/upload', // URL к вашему серверному скрипту
                 type: 'POST',
                 data: formData,
                 headers: {
@@ -148,7 +148,7 @@ $(document).ready(function () {
             formData.append('id', workId);
             formData.append('certificate_file', file);
             $.ajax({
-                url: '/dashboard/works/employees/certificates/upload', // URL к вашему серверному скрипту
+                url: '/dashboard/works/certificates/upload', // URL к вашему серверному скрипту
                 type: 'POST',
                 data: formData,
                 headers: {
@@ -179,7 +179,7 @@ $(document).ready(function () {
         formData.append('work_id',workId);
 
         $.ajax({
-            url: '/dashboard/works/employees/additional-files/create',
+            url: '/dashboard/works/additional-files/create',
             type: 'POST',
             data: formData,
             processData: false, // Не обрабатываем файлы (не превращаем в строку)
@@ -501,7 +501,7 @@ $("#addWorkForm").on('submit', function(e) {
     formData.append('user_type',userType);
 
     $.ajax({
-        url: '/dashboard/works/employees/create',
+        url: '/dashboard/works/create',
         type: 'POST',
         data: formData,
         processData: false, // Не обрабатываем файлы (не превращаем в строку)
@@ -535,7 +535,7 @@ $("#import_work_form").on('submit', function(e) {
     const formData = new FormData(this);
 
     $.ajax({
-        url: '/dashboard/works/employees/import',
+        url: '/dashboard/works/import',
         type: 'POST',
         data: formData,
         processData: false, // Не обрабатываем файлы (не превращаем в строку)
@@ -565,7 +565,7 @@ $("#import_work_form").on('submit', function(e) {
 function addWork(formData)
 {
     $.ajax({
-        url: '/dashboard/works/employees/create',
+        url: '/dashboard/works/create',
         type: 'POST',
         data: formData,
         processData: false, // Не обрабатываем файлы (не превращаем в строку)
@@ -640,7 +640,7 @@ function works(page= 1)
       page:page, user_type:userType
     };
     $.ajax({
-        url: "/dashboard/works/employees/get",
+        url: "/dashboard/works/get",
         type: 'GET',
         data:data,
         dataType: "json",
@@ -686,7 +686,7 @@ function searchWorks() {
     };
     data += '&' + $.param(additionalData);
     $.ajax({
-        url: "/dashboard/works/employees/search",
+        url: "/dashboard/works/search",
         type: 'GET',
         data: data,
         dataType: "json",
@@ -736,7 +736,6 @@ function openInfoBox(id)
     if(id)
     {
         const deleted = $("#work_" + id).attr('class');
-        console.log('deleted = ' + deleted);
         if(deleted)
         {
             console.log('true');
@@ -747,9 +746,41 @@ function openInfoBox(id)
             console.log('false');
             $("#added_menu").html($("#undeleted_menu_tmpl").tmpl());
         }
-        localStorage.setItem('work_id',id);
+        const data = {
+            id:id
+        };
+
+        $.ajax({
+            url: "/dashboard/works/find",
+            type: 'GET',
+            data:data,
+            dataType: "json",
+            success: function(response) {
+                if (response.success)
+                {
+                    const work = response.data.work;
+                    const userId = work.user_id;
+                    localStorage.setItem('work_id',id);
+                    localStorage.setItem('user_id',userId);
+                }
+                else
+                {
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                }
+            },
+            error: function() {
+                $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
+            }
+        });
     }
-    $("#info_box").fadeToggle(100);
+
+    if(userType===2)
+    {
+        $("#info_box").fadeToggle(100);
+    }
+    else {
+        $("#student_info_box").fadeToggle(100);
+    }
 }
 
 function checkDeleted()
@@ -765,29 +796,7 @@ function updateWorkSpecialty()
         id: workId,
     };
     data += '&' + $.param(additionalData);
-    $.ajax({
-        url: "/dashboard/works/employees/update",
-        type: 'POST',
-        data:data,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        dataType: "json",
-        success: function(response) {
-            if (response.success)
-            {
-                const work = response.data.work;
-                $("#work_" + workId).replaceWith($("#work_tmpl").tmpl(work));
-            }
-            else
-            {
-                $.notify(response.data.title + ":" + response.data.message, "error");
-            }
-        },
-        error: function() {
-            $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
-        }
-    });
+    updateWorkCore(data,workId);
 }
 
 function workInfo()
@@ -797,7 +806,7 @@ function workInfo()
         id: workId,
     };
     $.ajax({
-        url: "/dashboard/works/employees/find",
+        url: "/dashboard/works/find",
         type: 'GET',
         data:data,
         dataType: "json",
@@ -826,19 +835,31 @@ function updateWork()
         id: workId,
     };
     data += '&' + $.param(additionalData);
+    updateWorkCore(data,workId);
+}
+
+function downloadWork()
+{
+    const workId = localStorage.getItem('work_id');
+    window.location.href = '/dashboard/works/download?id=' + workId;
+}
+
+function openUpdateWorkModal()
+{
+    const workId = localStorage.getItem('work_id');
+    const data = {
+        id:workId
+    };
     $.ajax({
-        url: "/dashboard/works/employees/update",
-        type: 'POST',
+        url: "/dashboard/works/find",
+        type: 'GET',
         data:data,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
         dataType: "json",
         success: function(response) {
             if (response.success)
             {
                 const work = response.data.work;
-                $("#work_" + workId).replaceWith($("#work_tmpl").tmpl(work));
+                $("#tmpl_modals").html($("#update_work_tmpl").tmpl(work));
             }
             else
             {
@@ -849,18 +870,13 @@ function updateWork()
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
-}
 
-function downloadWork()
-{
-    const workId = localStorage.getItem('work_id');
-    window.location.href = '/dashboard/works/employees/download?id=' + workId;
 }
 
 function downloadCertificate()
 {
     const workId = localStorage.getItem('work_id');
-    window.location.href = '/dashboard/works/employees/certificates/download?id=' + workId;
+    window.location.href = '/dashboard/works/certificates/download?id=' + workId;
 
 }
 
@@ -871,7 +887,7 @@ function copyWork()
         id: workId,
     };
     $.ajax({
-        url: "/dashboard/works/employees/copy",
+        url: "/dashboard/works/copy",
         type: 'POST',
         data:data,
         headers: {
@@ -905,7 +921,7 @@ function deleteWork()
             id: workId,
         };
         $.ajax({
-            url: "/dashboard/works/employees/delete",
+            url: "/dashboard/works/delete",
             type: 'POST',
             data:data,
             headers: {
@@ -939,7 +955,7 @@ function destroyWork()
             id: workId,
         };
         $.ajax({
-            url: "/dashboard/works/employees/destroy",
+            url: "/dashboard/works/destroy",
             type: 'POST',
             data:data,
             headers: {
@@ -971,7 +987,7 @@ function updateSelfCheckStatus()
         id:workId
     };
     $.ajax({
-        url: "/dashboard/works/employees/update-self-check-status",
+        url: "/dashboard/works/update-self-check-status",
         type: 'POST',
         data:data,
         headers: {
@@ -1003,7 +1019,7 @@ function restore()
         id:workId
     };
     $.ajax({
-        url: "/dashboard/works/employees/restore",
+        url: "/dashboard/works/restore",
         type: 'POST',
         data:data,
         headers: {
@@ -1034,7 +1050,7 @@ function additionalFiles()
         work_id:workId
     };
     $.ajax({
-        url: "/dashboard/works/employees/additional-files/get",
+        url: "/dashboard/works/additional-files/get",
         type: 'GET',
         data: data,
         dataType: "json",
@@ -1061,7 +1077,7 @@ function deleteAdditionalFile(additionalFileId)
         id:additionalFileId
     };
    $.ajax({
-       url: "/dashboard/works/employees/additional-files/delete",
+       url: "/dashboard/works/additional-files/delete",
        type: 'POST',
        data: data,
        headers: {
@@ -1096,7 +1112,34 @@ function exportWorks()
         selected_faculties: selectedFaculties,
     };
     data += '&' + $.param(additionalData);
-    window.location.href = '/dashboard/works/employees/export?' + data;
+    window.location.href = '/dashboard/works/export?' + data;
+}
+
+function updateWorkCore(data,workId)
+{
+    $.ajax({
+        url: "/dashboard/works/update",
+        type: 'POST',
+        data:data,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        dataType: "json",
+        success: function(response) {
+            if (response.success)
+            {
+                const work = response.data.work;
+                $("#work_" + workId).replaceWith($("#work_tmpl").tmpl(work));
+            }
+            else
+            {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function() {
+            $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
+        }
+    });
 }
 
 
@@ -1126,6 +1169,7 @@ function updateWorksCount()
         $('#works_count').text(worksCount);
     }
 }
+
 
 
 

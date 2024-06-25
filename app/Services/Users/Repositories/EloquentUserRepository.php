@@ -115,4 +115,9 @@ class EloquentUserRepository implements UserRepositoryInterface
         }
         return $users;
     }
+
+    public function exists(int $id): bool
+    {
+        return User::query()->where('id','=',$id)->exists();
+    }
 }

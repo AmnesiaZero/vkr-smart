@@ -7,6 +7,7 @@ use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\BroadcastsEvents;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -50,8 +51,18 @@ class Work extends Model
         'percent_person',
         'check_code',
         'verification_method',
-        'user_type'
+        'user_type',
+        'work_status'
     ];
+
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d',
+        'deleted_at' => 'datetime:Y-m-d',
+    ];
+
+    protected $cascadeDeletes = ['comments'];
+
+    protected $dates = ['deleted_at'];
 
     public function specialty(): HasOne
     {
@@ -76,6 +87,11 @@ class Work extends Model
     public function year():HasOne
     {
         return $this->hasOne(OrganizationYear::class,'id','year_id');
+    }
+
+    public function comments():HasMany
+    {
+        return $this->hasMany(Comment::class,'work_id');
     }
 
 

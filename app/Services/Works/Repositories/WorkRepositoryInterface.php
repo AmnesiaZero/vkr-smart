@@ -30,10 +30,10 @@ interface WorkRepositoryInterface
     public function find(int $id):Model;
 
     /**
-     * @param array $datae
+     * @param array $data
      * @return LengthAwarePaginator
      */
-    public function search(array $datae):LengthAwarePaginator;
+    public function search(array $data):LengthAwarePaginator;
 
     /**
      * @param int $id

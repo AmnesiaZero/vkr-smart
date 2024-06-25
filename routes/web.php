@@ -13,6 +13,7 @@ use App\Http\Controllers\Organizations\SpecialtiesController;
 use App\Http\Controllers\ScientificSupervisorsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Works\AdditionalFilesController;
+use App\Http\Controllers\Works\CommentsController;
 use App\Http\Controllers\Works\WorksController;
 use App\Http\Controllers\Works\WorksTypesController;
 use Illuminate\Http\Request;
@@ -156,48 +157,38 @@ Route::group([
         Route::get('integration', [OrganizationsController::class, 'integrationView']);
         Route::get('api', [UsersController::class, 'apiView']);
     });
-
     Route::group([
         'prefix' => 'works'
     ], function () {
+        Route::get('employees', [WorksController::class, 'employeesWorksView']);
+        Route::get('students', [WorksController::class, 'studentsWorksView']);
+        Route::post('create',[WorksController::class,'create']);
+        Route::get('get',[WorksController::class,'get']);
+        Route::get('search',[WorksController::class,'search']);
+        Route::post('update',[WorksController::class,'update']);
+        Route::get('find',[WorksController::class,'find']);
+        Route::get('download',[WorksController::class,'download']);
+        Route::post('upload',[WorksController::class,'upload']);
+        Route::post('copy',[WorksController::class,'copy']);
+        Route::post('delete',[WorksController::class,'delete']);
+        Route::post('destroy',[WorksController::class,'destroy']);
+        Route::post('update-self-check-status',[WorksController::class, 'updateSelfCheckStatus']);
+        Route::post('restore',[WorksController::class,'restore']);
+        Route::post('import',[WorksController::class,'import']);
+        Route::get('export',[WorksController::class,'export']);
         Route::group([
-            'prefix' => 'students'
-        ], function () {
-            Route::get('/', [WorksController::class, 'studentsWorksView']);
-            Route::get('get', [WorksController::class, 'get']);
+            'prefix' => 'certificates'
+        ],function (){
+            Route::post('upload',[WorksController::class,'uploadCertificate']);
+            Route::get('download',[WorksController::class,'downloadCertificate']);
         });
         Route::group([
-            'prefix' => 'employees'
-        ], function () {
-            Route::get('/', [WorksController::class, 'employeesWorksView']);
-            Route::post('create',[WorksController::class,'create']);
-            Route::get('get',[WorksController::class,'get']);
-            Route::get('search',[WorksController::class,'search']);
-            Route::post('update',[WorksController::class,'update']);
-            Route::get('find',[WorksController::class,'find']);
-            Route::get('download',[WorksController::class,'download']);
-            Route::post('upload',[WorksController::class,'upload']);
-            Route::post('copy',[WorksController::class,'copy']);
-            Route::post('delete',[WorksController::class,'delete']);
-            Route::post('destroy',[WorksController::class,'destroy']);
-            Route::post('update-self-check-status',[WorksController::class, 'updateSelfCheckStatus']);
-            Route::post('restore',[WorksController::class,'restore']);
-            Route::post('import',[WorksController::class,'import']);
-            Route::get('export',[WorksController::class,'export']);
-            Route::group([
-                'prefix' => 'certificates'
-            ],function (){
-                Route::post('upload',[WorksController::class,'uploadCertificate']);
-                Route::get('download',[WorksController::class,'downloadCertificate']);
-            });
-            Route::group([
-                'prefix' => 'additional-files'
-            ],function (){
-               Route::get('get',[AdditionalFilesController::class,'get']);
-               Route::post('create',[AdditionalFilesController::class,'create']);
-               Route::post('delete',[AdditionalFilesController::class,'delete']);
-               Route::get('download',[AdditionalFilesController::class,'download']);
-            });
+            'prefix' => 'additional-files'
+        ],function (){
+            Route::get('get',[AdditionalFilesController::class,'get']);
+            Route::post('create',[AdditionalFilesController::class,'create']);
+            Route::post('delete',[AdditionalFilesController::class,'delete']);
+            Route::get('download',[AdditionalFilesController::class,'download']);
         });
         Route::group([
             'prefix' => 'types'
@@ -206,7 +197,17 @@ Route::group([
             Route::post('create', [WorksTypesController::class, 'create']);
             Route::post('delete',[WorksTypesController::class,'delete']);
         });
+
+        Route::group([
+            'prefix' => 'comments'
+        ],function (){
+           Route::post('create',[CommentsController::class,'create']);
+           Route::get('get',[CommentsController::class,'get']);
+           Route::post('delete',[CommentsController::class,'delete']);
+        });
+
     });
+
 
     Route::group([
         'prefix' => 'portfolio'

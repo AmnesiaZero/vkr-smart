@@ -37,7 +37,8 @@ class WorksController extends Controller
         'delete_type',
         'import_file',
         'date_range',
-        'user_type'
+        'user_type',
+        'work_status'
     ];
 
     protected WorksService $worksService;
@@ -182,7 +183,8 @@ class WorksController extends Controller
             'agreement' => 'integer:in:1',
             'work_file' => 'file',
             'self_check' => 'integer:in:1',
-            'certificate_file' => 'file'
+            'certificate_file' => 'file',
+            'work_status' => 'integer|in:0,1,2'
         ]);
         if ($validator->fails())
         {

@@ -72,5 +72,11 @@ interface UserRepositoryInterface
      */
     public function filterUsers(Collection $users, array $data): Collection;
 
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function exists(int $id): bool;
+
 
 }

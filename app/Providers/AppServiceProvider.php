@@ -36,7 +36,8 @@ class AppServiceProvider extends ServiceProvider
             'Work' => 'Works',
             'ScientificSupervisor' => 'ScientificSupervisors',
             'WorksType' => 'WorksTypes',
-            'AdditionalFile' => 'AdditionalFiles'
+            'AdditionalFile' => 'AdditionalFiles',
+            'Comment' => 'Comments'
         ];
 
 

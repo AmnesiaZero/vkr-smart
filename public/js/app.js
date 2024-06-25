@@ -57,3 +57,13 @@ function deleteElement(elementId)
     $("#" + elementId).remove();
 }
 
+function openTmplModal(modalId,object)
+{
+    $("#tmpl_modals").html($("#" + modalId).tmpl(object));
+}
+
+function closeTmplModal(modalId)
+{
+    $("#" + modalId).remove();
+}
+
