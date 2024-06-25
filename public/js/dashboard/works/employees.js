@@ -18,6 +18,7 @@ $(document).ready(function () {
     works();
     localStorage.setItem('selected_years', '');
     localStorage.setItem('selected_faculties', '');
+    localStorage.setItem('selected_departments', '');
     $(".fancytree-title").on('click', function () {
         addBadge($(this));
     })
@@ -300,7 +301,19 @@ const addBadge = function (clickedElement) {
             elemOutKod.innerHTML += `<span class="badge text-black bg-green-light br-100 fs-12 me-3 mb-2 clicked" id="clicked_${id}"  onclick="deleteTreeElement('${id}')">${text}</span>`;
         }
         localStorage.setItem('selected_faculties', selectedFaculties.join(','));
-
+    }
+    else if (id.includes('department_')) {
+        let selectedDepartments = localStorage.getItem('selected_departments');
+        const match = id.match(/\d+/); // Находим все последовательности цифр в строке
+        const number = match ? match[0] : ''; // Если найдены цифры, сохраняем их
+        selectedDepartments = selectedDepartments ? selectedDepartments.split(",") : [];
+        if (!selectedDepartments.includes(number)) {
+            selectedDepartments.push(number);
+            document.querySelector('.out-kod').style.display = "block";
+            const elemOutKod = document.querySelector('.out-kod');
+            elemOutKod.innerHTML += `<span class="badge text-black bg-green-light br-100 fs-12 me-3 mb-2 clicked" id="clicked_${id}"  onclick="deleteTreeElement('${id}')">${text}</span>`;
+        }
+        localStorage.setItem('selected_departments', selectedDepartments.join(','));
     }
 }
 
@@ -323,8 +336,22 @@ function deleteTreeElement(id) {
             localStorage.setItem('selected_years', selectedYears);
         }
 
-    } else if (id.includes('faculty_')) {
-        let selectedDepartments = localStorage.getItem('selected_faculties');
+    }
+    else if (id.includes('faculty_')) {
+        let selectedFaculties = localStorage.getItem('selected_faculties');
+        const match = id.match(/\d+/); // Находим все последовательности цифр в строке
+        const number = match ? match[0] : ''; // Если найдены цифры, сохраняем их
+        if (selectedFaculties.includes(number)) {
+            let facultiesArray = selectedFaculties.split(',');
+            facultiesArray = facultiesArray.filter(function (item) {
+                return item !== number;
+            });
+            selectedFaculties = facultiesArray.join(',');
+            localStorage.setItem('selected_faculties', selectedFaculties);
+        }
+    }
+    else if (id.includes('department_')) {
+        let selectedDepartments = localStorage.getItem('selected_departments');
         const match = id.match(/\d+/); // Находим все последовательности цифр в строке
         const number = match ? match[0] : ''; // Если найдены цифры, сохраняем их
         if (selectedDepartments.includes(number)) {
@@ -333,7 +360,7 @@ function deleteTreeElement(id) {
                 return item !== number;
             });
             selectedDepartments = departmentsArray.join(',');
-            localStorage.setItem('selected_faculties', selectedDepartments);
+            localStorage.setItem('selected_departments', selectedDepartments);
         }
     }
 
