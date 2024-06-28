@@ -5,6 +5,7 @@ namespace App\Services\Users\Repositories;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
 
 class EloquentUserRepository implements UserRepositoryInterface
@@ -31,7 +32,7 @@ class EloquentUserRepository implements UserRepositoryInterface
 
     public function find(int $id): Model
     {
-        return User::with(['roles', 'departments', 'organization'])->find($id);
+        return User::with(['roles', 'departments', 'organization','works','educations','careers','achievements'])->find($id);
     }
 
     public function update(int $id, array $data): int
@@ -41,7 +42,7 @@ class EloquentUserRepository implements UserRepositoryInterface
 
     public function search(array $data): Collection
     {
-        $query = User::with(['roles', 'departments']);
+        $query = User::with(['roles', 'departments','works']);
         if (isset($data['organization_id'])) {
             $query = $query->where('organization_id', '=', $data['organization_id']);
         }
@@ -93,10 +94,14 @@ class EloquentUserRepository implements UserRepositoryInterface
         return $users;
     }
 
-    public function get(int $organizationId, array $roles): Collection
+    public function get(int $organizationId, array $roles, bool $pagination): Collection|LengthAwarePaginator
     {
-        return User::with(['roles', 'departments'])->where('organization_id', '=', $organizationId)
-            ->get()->filter(function ($user) use ($roles) {
+        $users =  User::with(['roles', 'departments','works'])->where('organization_id', '=', $organizationId);
+        if($pagination)
+        {
+            return $users->paginate(config('pagination.per_page'),'*','page',1);
+        }
+        return $users->get()->filter(function ($user) use ($roles) {
                 return $user->roles->whereIn('slug', $roles)->isNotEmpty();
             });
     }

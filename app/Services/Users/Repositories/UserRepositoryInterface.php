@@ -4,6 +4,7 @@ namespace App\Services\Users\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface UserRepositoryInterface
 {
@@ -28,9 +29,10 @@ interface UserRepositoryInterface
      * Получить список пользователей по их организации
      * @param int $organizationId
      * @param array $roles
-     * @return Collection
+     * @param bool $pagination
+     * @return Collection|LengthAwarePaginator
      */
-    public function get(int $organizationId, array $roles): Collection;
+    public function get(int $organizationId, array $roles,bool $pagination): Collection|LengthAwarePaginator;
 
     /**
      * @param int $id

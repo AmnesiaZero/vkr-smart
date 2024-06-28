@@ -388,11 +388,11 @@ class UsersService extends Services
         return view('templates.dashboard.settings.user_management', ['years' => $years]);
     }
 
-    public function get(array $roles): JsonResponse
+    public function get(array $roles,bool $pagination): JsonResponse
     {
         $you = Auth::user();
         $organizationId = $you->organization_id;
-        $users = $this->_repository->get($organizationId, $roles)->except(['id' => $you->id]);
+        $users = $this->_repository->get($organizationId, $roles,$pagination)->except(['id' => $you->id]);
         //Сюда можно добавить ещё какую-нибудь инфу
         return JsonHelper::sendJsonResponse(true, [
             'title' => 'Успешно',
@@ -424,6 +424,26 @@ class UsersService extends Services
             'title' => 'Успешно',
             'token' => $token
         ]);
+    }
+
+    public function teachersPortfoliosView()
+    {
+        $you = Auth::user();
+        $organizationId = $you->organization_id;
+        $years = $this->yearRepository->get($organizationId);
+        $roles = ['teacher'];
+        $users = $this->_repository->get($organizationId,$roles);
+        return view('templates.dashboard.portfolio.teachers',['years' => $years,'users' => $users]);
+    }
+
+    public function openPortfolio(int $id)
+    {
+        $user = $this->_repository->find($id);
+        if($user and $user->id)
+        {
+            return view('templates.dashboard.portfolio.portfolio',['user' => $user]);
+        }
+        return back()->withErrors(['Возникла ошибка при поиске пользователя с данным id']);
     }
 
 }

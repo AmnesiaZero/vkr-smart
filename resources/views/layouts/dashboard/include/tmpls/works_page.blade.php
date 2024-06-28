@@ -13,10 +13,7 @@
 
 <script id="specialty_tmpl" type="text/x-jquery-tmpl">
      <option value="${id}">${name}</option>
-
-
-
-            </script>
+</script>
 
 <script id="work_tmpl" type="text/x-jquery-tmpl">
      <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>

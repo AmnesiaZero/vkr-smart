@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -66,6 +67,26 @@ class User extends Authenticatable
     public function organization(): HasOne
     {
         return $this->hasOne(Organization::class, 'id', 'organization_id');
+    }
+
+    public function works():HasMany
+    {
+        return $this->hasMany(Work::class,'user_id','id');
+    }
+
+    public function achievements():HasMany
+    {
+       return $this->hasMany(Achievement::class,'user_id','id');
+    }
+
+    public function educations():HasMany
+    {
+        return $this->hasMany(Education::class,'user_id','id');
+    }
+
+    public function careers():HasMany
+    {
+        return $this->hasMany(Career::class,'user_id','id');
     }
 
 

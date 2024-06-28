@@ -139,13 +139,15 @@ class UsersController extends Controller
     public function get(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'roles.*' => ['required', Rule::exists('roles', 'slug')]
+            'roles.*' => ['required', Rule::exists('roles', 'slug')],
+            'pagination' => 'required|integer|in:0,1'
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $roles = $request->roles;
-        return $this->usersService->get($roles);
+        $pagination = $request->pagination;
+        return $this->usersService->get($roles,$pagination);
     }
 
     public function create(Request $request): JsonResponse
@@ -297,6 +299,25 @@ class UsersController extends Controller
         $apiKey = config('jwt.api_key');
         return view('templates.dashboard.settings.api', ['you' => $you, 'api_key' => $apiKey]);
     }
+
+    public function teachersPortfoliosView()
+    {
+        return $this->usersService->teachersPortfoliosView();
+    }
+
+    public function openPortfolio(int $id)
+    {
+        $validator = Validator::make(['id' => $id],[
+            'id' => ['integer',Rule::exists('users','id')]
+        ]);
+        if($validator->fails())
+        {
+            return ValidatorHelper::redirectError($validator);
+        }
+        return $this->usersService->openPortfolio($id);
+
+    }
+
 
 
 }

@@ -213,9 +213,8 @@ Route::group([
         'prefix' => 'portfolio'
     ], function () {
         Route::get('students', [WorksController::class, 'studentsWorksView']);
-        Route::get('teachers', function () {
-            return view('templates.dashboard.portfolio.teachers');
-        });
+        Route::get('teachers', [UsersController::class,'teachersPortfoliosView']);
+        Route::get('/{id}',[UsersController::class,'openPortfolio']);
     });
 
     Route::get('report', function () {

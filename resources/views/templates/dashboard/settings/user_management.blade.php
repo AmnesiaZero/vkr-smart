@@ -100,6 +100,8 @@
             <button class="btn btn-secondary w-100 text-grey fs-14 br-100 br-none mt-4 mb-5">Показать еще</button>
         </div>
     </div>
+    @include('layouts.dashboard.include.elements.works_menu')
+
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEdit">
         <div class="offcanvas-header border-bottom">
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -153,10 +155,11 @@
                         пароль</a></p>
                     <div class="bg-green-light br-5 d-flex justify-content-center py-1">
                         <img src="/images/doc_green.svg" alt="" class="pe-2">
-                            <p class="text-grey fs-14 m-0">Загруженных<br> документов: 5</p>
+                            <p class="text-grey fs-14 m-0" onclick="openWorks(${id})">Загруженных<br> документов: ${works.length}</p>
                     </div>
                 </div>
             </div>
+
 
     </script>
     <script type="text/x-jquery-tmpl" id="off_canvas_user">
@@ -199,6 +202,9 @@
             </form>
         </div>
 
+
     </script>
+
+    @include('layouts.dashboard.include.tmpls.work')
 
 @endsection
