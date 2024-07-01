@@ -7,20 +7,38 @@ $(document).ready(function () {
     })
     $(".clicked").on('click', function () {
         deleteTreeElement($(this));
-    })
+    });
+    users();
 });
 
-function users()
+function users(page=1)
 {
+    const data = {
+        roles:['teacher'],
+        page:page
+    }
     $.ajax({
-        url: "/dashboard/users/get",
+        url: "/dashboard/users/get-paginate",
+        data:data,
         type: "GET",
         dataType: "json",
         success: function (response) {
             if (response.success) {
-                const users = response.data.users;
-                $("#users_list").html($("#user_tmpl").tmpl(works));
-                openModal('user_works_modal');
+                const pagination = response.data.users;
+                const links = pagination.links;
+                //Обрезаем из массива линков Previos и Next
+                links.shift();
+                links.pop();
+                pagination.links = links;
+                const users = pagination.data;
+                const usersList = $("#users_list");
+                usersList.html($("#user_tmpl").tmpl(users));
+                const currentPage = pagination.current_page;
+                const perPage = pagination.per_page;
+                const totalItems = pagination.total;
+                $("#users_count").text(totalItems);
+                const totalPages = pagination.links.length;
+                updatePagination(currentPage,totalItems,totalPages,perPage);
 
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");

@@ -29,10 +29,17 @@ interface UserRepositoryInterface
      * Получить список пользователей по их организации
      * @param int $organizationId
      * @param array $roles
-     * @param bool $pagination
-     * @return Collection|LengthAwarePaginator
+     * @return Collection
      */
-    public function get(int $organizationId, array $roles,bool $pagination): Collection|LengthAwarePaginator;
+    public function get(int $organizationId, array $roles): Collection;
+
+    /**
+     * @param int $organizationId
+     * @param array $roles
+     * @param int $page
+     * @return LengthAwarePaginator
+     */
+    public function getPaginate(int $organizationId, array $roles,int $page):LengthAwarePaginator;
 
     /**
      * @param int $id

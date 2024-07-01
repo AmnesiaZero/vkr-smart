@@ -155,7 +155,7 @@
                         пароль</a></p>
                     <div class="bg-green-light br-5 d-flex justify-content-center py-1">
                         <img src="/images/doc_green.svg" alt="" class="pe-2">
-                            <p class="text-grey fs-14 m-0" onclick="openWorks(${id})">Загруженных<br> документов: ${works.length}</p>
+                            <p class="text-grey fs-14 m-0" onclick="openWorks(${id})">Загруженных<br> документов: @{{if typeof works!='undefined'}} ${works.length} @{{else}} 0 @{{/if}}</p>
                     </div>
                 </div>
             </div>

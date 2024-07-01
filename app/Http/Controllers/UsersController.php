@@ -139,15 +139,27 @@ class UsersController extends Controller
     public function get(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'roles.*' => ['required', Rule::exists('roles', 'slug')],
-            'pagination' => 'required|integer|in:0,1'
+            'roles.*' => ['required', Rule::exists('roles', 'slug')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $roles = $request->roles;
-        $pagination = $request->pagination;
-        return $this->usersService->get($roles,$pagination);
+        return $this->usersService->get($roles);
+    }
+
+    public function getPaginate(Request $request):JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'roles.*' => ['required', Rule::exists('roles', 'slug')],
+            'page' => 'required|integer'
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $roles = $request->roles;
+        $page = $request->page;
+        return $this->usersService->getPaginate($roles,$page);
     }
 
     public function create(Request $request): JsonResponse

@@ -157,8 +157,8 @@
         </div>
         <div class="d-flex mt-5">
             <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 w-75 me-3"
-                    onclick="openModal('add_work_modal')">добавить<img
-                    src="/images/pl-green.svg" alt="" class="ps-2"></button>
+                    onclick="openModal('add_work_modal')">добавить
+                <img src="/images/pl-green.svg" alt="" class="ps-2"></button>
             <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25"
                     onclick="openModal('import_work_modal')">импорт из файла<img
                     src="/images/File_Download_green.svg" alt="" class="ps-2"></button>

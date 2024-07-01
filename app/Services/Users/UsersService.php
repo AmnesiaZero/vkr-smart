@@ -388,11 +388,23 @@ class UsersService extends Services
         return view('templates.dashboard.settings.user_management', ['years' => $years]);
     }
 
-    public function get(array $roles,bool $pagination): JsonResponse
+    public function get(array $roles): JsonResponse
     {
         $you = Auth::user();
         $organizationId = $you->organization_id;
-        $users = $this->_repository->get($organizationId, $roles,$pagination)->except(['id' => $you->id]);
+        $users = $this->_repository->get($organizationId, $roles)->except(['id' => $you->id]);
+        //Сюда можно добавить ещё какую-нибудь инфу
+        return JsonHelper::sendJsonResponse(true, [
+            'title' => 'Успешно',
+            'users' => $users
+        ]);
+    }
+
+    public function getPaginate(array $roles,int $page)
+    {
+        $you = Auth::user();
+        $organizationId = $you->organization_id;
+        $users = $this->_repository->getPaginate($organizationId, $roles,$page);
         //Сюда можно добавить ещё какую-нибудь инфу
         return JsonHelper::sendJsonResponse(true, [
             'title' => 'Успешно',

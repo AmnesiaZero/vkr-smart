@@ -10,6 +10,7 @@ use App\Http\Controllers\Organizations\OrganizationsYearsController;
 use App\Http\Controllers\Organizations\ProgramsController;
 use App\Http\Controllers\Organizations\ProgramsSpecialtiesController;
 use App\Http\Controllers\Organizations\SpecialtiesController;
+use App\Http\Controllers\Portfolios\AchievementsController;
 use App\Http\Controllers\ScientificSupervisorsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Works\AdditionalFilesController;
@@ -215,6 +216,12 @@ Route::group([
         Route::get('students', [WorksController::class, 'studentsWorksView']);
         Route::get('teachers', [UsersController::class,'teachersPortfoliosView']);
         Route::get('/{id}',[UsersController::class,'openPortfolio']);
+
+        Route::group([
+            'prefix' => 'achievements'
+        ],function (){
+            Route::get('/{id}',[AchievementsController::class,'view']);
+        });
     });
 
     Route::get('report', function () {
@@ -292,6 +299,7 @@ Route::group([
         'prefix' => 'users'
     ], function () {
         Route::get('get', [UsersController::class, 'get']);
+        Route::get('get-paginate',[UsersController::class,'getPaginate']);
         Route::post('create', [UsersController::class, 'create']);
         Route::post('delete', [UsersController::class, 'delete']);
         Route::get('find', [UsersController::class, 'find']);

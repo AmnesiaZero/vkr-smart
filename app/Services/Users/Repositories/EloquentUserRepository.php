@@ -94,16 +94,22 @@ class EloquentUserRepository implements UserRepositoryInterface
         return $users;
     }
 
-    public function get(int $organizationId, array $roles, bool $pagination): Collection|LengthAwarePaginator
+    public function get(int $organizationId, array $roles): Collection
     {
         $users =  User::with(['roles', 'departments','works'])->where('organization_id', '=', $organizationId);
-        if($pagination)
-        {
-            return $users->paginate(config('pagination.per_page'),'*','page',1);
-        }
         return $users->get()->filter(function ($user) use ($roles) {
                 return $user->roles->whereIn('slug', $roles)->isNotEmpty();
-            });
+        })->values();
+    }
+
+    public function getPaginate(int $organizationId, array $roles,int $page):LengthAwarePaginator
+    {
+        $query =  User::with(['roles', 'departments','works'])->where('organization_id', '=', $organizationId);
+        $query->whereHas('roles', function ($query) use ($roles) {
+            $query->whereIn('slug', $roles);
+        });
+        return $query->paginate(config('paginate.per_page'),'*','page',$page);
+
     }
 
     public function filterUsers(Collection $users, array $data): Collection
