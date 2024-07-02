@@ -18,4 +18,16 @@ interface AchievementRepositoryInterface
      * @return Collection
      */
     public function get(int $userId):Collection;
+
+    /**
+     * @param int $id
+     * @return Model
+     */
+    public function find(int $id):Model;
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function delete(int $id):bool;
 }

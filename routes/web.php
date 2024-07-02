@@ -215,12 +215,21 @@ Route::group([
     ], function () {
         Route::get('students', [WorksController::class, 'studentsWorksView']);
         Route::get('teachers', [UsersController::class,'teachersPortfoliosView']);
-        Route::get('/{id}',[UsersController::class,'openPortfolio']);
+        Route::get('{id}',[UsersController::class,'openPortfolio']);
 
         Route::group([
             'prefix' => 'achievements'
         ],function (){
-            Route::get('/{id}',[AchievementsController::class,'view']);
+            Route::post('create',[AchievementsController::class,'create']);
+            Route::get('get',[AchievementsController::class,'get']);
+            Route::get('find',[AchievementsController::class,'find']);
+            Route::post('delete',[AchievementsController::class,'delete']);
+            Route::group([
+                'prefix' => 'records'
+            ],function (){
+//               Route::post('add')
+            });
+            Route::get('{id}',[AchievementsController::class,'view']);
         });
     });
 

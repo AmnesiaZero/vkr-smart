@@ -11,11 +11,21 @@ class EloquentAchievementRepository implements AchievementRepositoryInterface
 
     public function create(array $data): Model
     {
-        return Achievement::query()->create($data);
+        return Achievement::with('mode')->create($data);
     }
 
     public function get(int $userId): Collection
     {
-        return Achievement::query()->where('user_id','=',$userId)->get();
+        return Achievement::with('mode')->where('user_id','=',$userId)->get();
+    }
+
+    public function find(int $id): Model
+    {
+        return Achievement::query()->find($id);
+    }
+
+    public function delete(int $id): bool
+    {
+        return Achievement::query()->find($id)->delete();
     }
 }

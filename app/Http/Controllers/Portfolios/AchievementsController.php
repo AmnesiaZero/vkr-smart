@@ -42,6 +42,19 @@ class AchievementsController
         return $this->achievementsService->view($userId);
     }
 
+    public function get(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(),[
+            'user_id' => ['required','integer',Rule::exists('users','id')],
+        ]);
+        if($validator->fails())
+        {
+            return ValidatorHelper::error($validator);
+        }
+        $userId = $request->user_id;
+        return $this->achievementsService->get($userId);
+    }
+
     public function create(Request $request): JsonResponse
     {
         $validator = Validator::make($request->only($this->fillable),[
@@ -59,6 +72,47 @@ class AchievementsController
         }
         $data = $request->only($this->fillable);
         return $this->achievementsService->create($data);
+    }
+
+    public function find(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(),[
+            'id' => ['required','integer',Rule::exists('achievements','id')],
+        ]);
+        if($validator->fails())
+        {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->achievementsService->find($id);
+    }
+
+    public function delete(Request $request):JsonResponse
+    {
+        $validator = Validator::make($request->all(),[
+            'id' => ['required','integer',Rule::exists('achievements','id')],
+        ]);
+        if($validator->fails())
+        {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->achievementsService->delete($id);
+    }
+
+    public function add(Request $request):JsonResponse
+    {
+        $validator = Validator::make($request->all(),[
+            'id' => ['required','integer',Rule::exists('achievements','id')],
+            'file' => 'file',
+            ''
+        ]);
+        if($validator->fails())
+        {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->achievementsService->delete($id);
     }
 
 }

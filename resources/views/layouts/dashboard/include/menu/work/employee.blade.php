@@ -42,4 +42,3 @@
         <p class="fs-14 lh-17 text-grey m-0" onclick="openModal('additional_files_modal');additionalFiles();return false">Открыть окно управления<br> дополнительными файлами</p>
     </div>
 </div>
-</div>
