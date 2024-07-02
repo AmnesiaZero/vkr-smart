@@ -26,5 +26,6 @@
 <script src="/js/jquery/jquery.tmpl.min.js"></script>
 
 <script src="/js/jquery/jquery.simplePagination.js"></script>
+@yield('scripts')
 </body>
 </html>
