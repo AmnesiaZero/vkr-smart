@@ -3,9 +3,13 @@
 namespace App\Services\Achievements;
 
 use App\Helpers\JsonHelper;
+use App\Models\AchievementType;
+use App\Models\AchievementTypeCategory;
+use App\Models\RecordType;
 use App\Services\Achievements\Repositories\AchievementRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AchievementsService
 {
@@ -60,7 +64,8 @@ class AchievementsService
         $achievements = $this->achievementRepository->get($userId);
         if($achievements and is_iterable($achievements))
         {
-            return view('templates.dashboard.portfolio.achievements',['achievements' => $achievements]);
+            $categories = AchievementTypeCategory::with('achievementsTypes')->get();
+            return view('templates.dashboard.portfolio.achievements',['achievements' => $achievements,'categories' => $categories]);
         }
         return back()->withErrors('Ошибка при получении достижений');
     }

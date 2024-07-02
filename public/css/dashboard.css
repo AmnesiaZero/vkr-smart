@@ -85,6 +85,11 @@ p {
     line-height: 19px;
 }
 
+.dropdown.bootstrap-select li.disabled a span {
+    color: #000 !important;
+    font-weight: 700 !important;
+}
+
 .lh-23 {
     line-height: 23px;
 }

@@ -15,7 +15,7 @@
     <div class="d-flex cursor-p mb-2">
         <img src="/images/download.svg" alt="" class="pe-2">
         <input type="file" id="file_input" style="display: none">
-        <p class="fs-14 lh-17 text-grey m-0" >Добавить ссылку</p>
+        <p class="fs-14 lh-17 text-grey m-0" onclick="openModal('add_link_modal')">Добавить ссылку</p>
     </div>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/download.svg" alt="" class="pe-2">

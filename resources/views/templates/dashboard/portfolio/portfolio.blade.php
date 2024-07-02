@@ -35,7 +35,7 @@
                     </div>
                     <div class="profile-usertitle">
                         <div class="profile-usertitle-name fs-14 fw-bold">
-                            Кузьмичев Николай Валерьевич
+                            {{$user->name}}
                         </div>
                     </div>
                     <div class="profile-usermenu">

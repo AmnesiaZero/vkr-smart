@@ -100,19 +100,6 @@ class AchievementsController
         return $this->achievementsService->delete($id);
     }
 
-    public function add(Request $request):JsonResponse
-    {
-        $validator = Validator::make($request->all(),[
-            'id' => ['required','integer',Rule::exists('achievements','id')],
-            'file' => 'file',
-            ''
-        ]);
-        if($validator->fails())
-        {
-            return ValidatorHelper::error($validator);
-        }
-        $id = $request->id;
-        return $this->achievementsService->delete($id);
-    }
+
 
 }

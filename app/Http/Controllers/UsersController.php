@@ -319,6 +319,7 @@ class UsersController extends Controller
 
     public function openPortfolio(int $id)
     {
+        Log::debug('Вошёл в openPortfolio');
         $validator = Validator::make(['id' => $id],[
             'id' => ['integer',Rule::exists('users','id')]
         ]);

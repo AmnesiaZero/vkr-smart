@@ -12,6 +12,6 @@
             @endif
             </span>
     </td>
-    <td>{{$achievement->type->name}}</td>
+    <td>{{$achievement->mode->name}}</td>
     <td>{{$achievement->record_date}}</td>
 </tr>

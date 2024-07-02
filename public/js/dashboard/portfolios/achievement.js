@@ -172,3 +172,8 @@ function deleteAchievement()
    }
 }
 
+function addLink()
+{
+
+}
+

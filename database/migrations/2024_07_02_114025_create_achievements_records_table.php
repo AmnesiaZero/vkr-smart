@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedInteger('user_role')->nullable();
             $table->unsignedBigInteger('achievement_id');
-            $table->unsignedInteger('achievement_type_id')->nullable();
+            $table->unsignedInteger('achievement_type_id');
             $table->unsignedInteger('record_type_id');
             $table->date('record_date')->nullable();
             $table->string('name');

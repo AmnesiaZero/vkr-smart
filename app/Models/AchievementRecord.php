@@ -9,6 +9,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class AchievementRecord extends Model
 {
     use HasFactory,SoftDeletes;
-
     protected $table = 'achievements_records';
 }

@@ -63,6 +63,7 @@
     </div>
     @include('layouts.dashboard.include.modal.add.achievement')
     @include('layouts.dashboard.include.modal.add.file')
+    @include('layouts.dashboard.include.modal.add.link')
 @endsection
 
 @section('scripts')
