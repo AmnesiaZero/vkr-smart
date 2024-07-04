@@ -327,4 +327,18 @@ class WorksController extends Controller
     }
 
 
+    public function getReport(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'document_id' => 'required|integer'
+        ]);
+        if($validator->fails())
+        {
+            return ValidatorHelper::error($validator);
+        }
+        $documentId = $request->document_id;
+        return $this->worksService->getReport($documentId);
+    }
+
+
 }

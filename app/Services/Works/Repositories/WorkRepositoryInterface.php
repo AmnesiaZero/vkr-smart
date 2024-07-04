@@ -65,4 +65,10 @@ interface WorkRepositoryInterface
      * @return mixed
      */
     public function restore(int $id);
+
+    /**
+     * @param int $reportId
+     * @return mixed
+     */
+    public function updateReportStatus(int $reportId,array $data);
 }

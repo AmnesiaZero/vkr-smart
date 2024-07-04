@@ -2,6 +2,7 @@
 
 namespace App\Services\Works;
 
+use App\Events\WorkUpdated;
 use App\Exports\InviteCodesExport;
 use App\Exports\WorksExport;
 use App\Helpers\FilesHelper;
@@ -23,6 +24,7 @@ use Maatwebsite\Excel\Validators\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
 use Vkrsmart\Sdk\clients\MasterClient;
 use Vkrsmart\Sdk\Models\Document;
+use Vkrsmart\Sdk\Models\Report;
 
 class WorksService
 {
@@ -106,19 +108,22 @@ class WorksService
                 Storage::makeDirectory($workDirectory);
                 $workFileName = $workId.'.'.$workFile->extension();
                 $workPath =  $workFile->storeAs($workDirectory,$workFileName);
-//                $documentId = $this->uploadWork($workFile);
-//                if($documentId and is_numeric($documentId))
-//                {
-//                    $updatedData['report_id'] = $documentId;
-//                }
-//                else
-//                {
-//                    return JsonHelper::sendJsonResponse(false,[
-//                        'title' => 'Ошибка',
-//                        'message' => 'Возникла ошибка при отправке работы на проверочный сервер'
-//                    ]);
-//                }
                 $updatedData['path'] = $workPath;
+                if(isset($data['verification_method']) and $data['verification_method']==1)
+                {
+                    $documentId = $this->uploadWork($workFile);
+                    if($documentId and is_numeric($documentId))
+                    {
+                        $updatedData['report_id'] = $documentId;
+                    }
+                    else
+                    {
+                        return JsonHelper::sendJsonResponse(false,[
+                            'title' => 'Ошибка',
+                            'message' => 'Возникла ошибка при отправке работы на проверочный сервер'
+                        ]);
+                    }
+                }
             }
             else
             {
@@ -203,6 +208,8 @@ class WorksService
     public function update(int $id,array $data): JsonResponse
     {
         $result = $this->workRepository->update($id,$data);
+        $work = $this->workRepository->find($id);
+        event(new WorkUpdated($work));
         if($result)
         {
             $work = $this->workRepository->find($id);
@@ -513,7 +520,9 @@ class WorksService
 
     public function uploadWork(UploadedFile $workFile)
     {
+        Log::debug('work file = '.$workFile);
         $masterKey = config('sdk.master_key');
+        Log::debug('master key = '.$masterKey);
         $client = new MasterClient($masterKey);
         $document = new Document($client,true);
         if(!$document->uploadDocument($workFile))
@@ -521,6 +530,21 @@ class WorksService
             return false;
         }
         return $document->getId();
+    }
+
+    public function getReport(int $documentId)
+    {
+        $client = new MasterClient(config('sdk.master_key'));
+        $report = new Report($client,true);
+        $report->get($documentId);
+        $unique = $report->getUnique();
+        $data = [
+            'work_status' => 1,
+            'unique_percent' => $unique
+        ];
+        $result = $this->workRepository->updateReportStatus($documentId,$data);
+
+
     }
 
 }

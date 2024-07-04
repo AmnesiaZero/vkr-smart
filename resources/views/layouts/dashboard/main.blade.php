@@ -186,13 +186,12 @@
 
 <script src="{{'/js/bootstrap-select.js'}}"></script>
 
+
 <script src="/js/app.js"></script>
 
 <script src="/js/jquery/jquery.tmpl.min.js"></script>
-
+<script src="{{asset('js/bootstrap.js')}}"></script>
 <script src="/js/jquery/jquery.simplePagination.js"></script>
-
-
 
 @yield('scripts')
 </body>

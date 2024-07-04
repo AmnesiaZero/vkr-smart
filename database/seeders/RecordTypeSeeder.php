@@ -14,17 +14,14 @@ class RecordTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $achievementModes = [
-            ['name' => 'Учебная деятельность'],
-            ['name' => 'Производственная деятельность'],
-            ['name' => 'Научная деятельность'],
-            ['name' => 'Творческая деятельность'],
-            ['name' => 'Социальная деятельность'],
-            ['name' => 'Спортивная деятельность']
+        $types = [
+            ['name' => 'Файл или изображение'],
+            ['name' => 'Ссылка на веб-страницу, документ или видео'],
+            ['name' => 'Текст'],
         ];
-        foreach ($achievementModes as $achievementMode)
+        foreach ($types as $type)
         {
-            RecordType::factory()->create($achievementMode);
+            RecordType::factory()->create($type);
         }
     }
 }

@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Bkwld\Cloner\Cloneable;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Database\Eloquent\BroadcastsEvents;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Broadcasting\PrivateChannel;
 
 class Work extends Model
 {
@@ -100,11 +102,11 @@ class Work extends Model
     /**
      * Get the channels that model events should broadcast on.
      *
-     * @return array<int, \Illuminate\Broadcasting\Channel|\Illuminate\Database\Eloquent\Model>
+     * @return Channel
      */
-    public function broadcastOn(string $event): array
+    public function broadcastOn(string $event)
     {
-        return [$this, $this];
+        return new Channel('works.'.$this->id);
     }
 
 }

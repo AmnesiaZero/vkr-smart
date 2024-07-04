@@ -24,4 +24,7 @@ interface WorksTypeRepositoryInterface
      * @return bool
      */
     public function delete(int $id):bool;
+
+
+
 }

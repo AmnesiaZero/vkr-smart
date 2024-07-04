@@ -25,8 +25,36 @@ function achievements()
                 let index = 1;
                 achievements.forEach(achievement => {
                     achievement.index = index;
-                    $("#achievements_list").append($("#achievement_tmpl").tmpl(achievement))
+                    $("#achievements_list").append($("#achievement_tmpl").tmpl(achievement));
+                    achievementRecords(achievement.id);
                     index++;
+                });
+            }
+            else {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function () {
+            $.notify("Произошла ошибка при редактировании пользователя", "error");
+        }
+    });
+}
+
+function achievementRecords(achievementId)
+{
+    const data = {
+        achievement_id:achievementId
+    };
+    $.ajax({
+        url: "/dashboard/portfolio/achievements/records/get",
+        data:data,
+        type: "GET",
+        dataType: "json",
+        success: function (response) {
+            if (response.success) {
+                const achievementsRecords = response.data.achievements_records;
+                achievementsRecords.forEach(achievementRecord => {
+                    printAchievementRecord(achievementRecord);
                 });
             }
             else {
@@ -172,8 +200,63 @@ function deleteAchievement()
    }
 }
 
-function addLink()
+function addRecord(recordTypeId)
 {
+    let data = $("#add_link_form").serialize();
+    const additionalData = {
+       achievement_id:achievementId,
+        user_id:userId,
+        record_type_id:recordTypeId
+    };
+    data += '&' + $.param(additionalData);
+    $.ajax({
+        url: "/dashboard/portfolio/achievements/records/create",
+        data:data,
+        type: "POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        dataType: "json",
+        success: function (response) {
+            if (response.success) {
+               const achievementRecord = response.data.achievement_record;
+               printAchievementRecord(achievementRecord);
+            }
+            else {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function () {
+            $.notify("Произошла ошибка при редактировании пользователя", "error");
+        }
+    });
+}
 
+function printAchievementRecord(achievementRecord)
+{
+    const categoryId = achievementRecord.type.category_id;
+    let column = false;
+    console.log('category id = ' + categoryId);
+    switch (categoryId)
+    {
+        case 1:
+            column = $("#confirm_achievements_column");
+            break;
+        case 2:
+            column = $("#reviews_column");
+            break;
+        case 3:
+            column = $("#works_column");
+            break;
+        case 4:
+            column = $("#others_column");
+            break;
+    }
+    if(!column)
+    {
+        $.notify('У записи указана неправильная категория', "error");
+        return;
+    }
+    column.append($("#record_tmpl").tmpl(achievementRecord));
 }
 

@@ -117,4 +117,9 @@ class EloquentWorkRepository implements WorkRepositoryInterface
     {
         return Work::withTrashed()->where('id','=',$id)->first()->restore();
     }
+
+    public function updateReportStatus(int $reportId,array $data)
+    {
+        return Work::query()->where('report_id','=',$reportId)->first()->update($data);
+    }
 }

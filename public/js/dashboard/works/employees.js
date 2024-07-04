@@ -1,5 +1,8 @@
 var userType = '';
 
+
+
+
 $(document).ready(function () {
 
     const siteUrl = window.location.href;
@@ -565,6 +568,18 @@ function works(page= 1)
                 $("#works_count").text(totalItems);
                 const totalPages = pagination.links.length;
                 updatePagination(currentPage,totalItems,totalPages,perPage);
+                console.log('Echo');
+                console.log(window.Echo)
+                works.forEach(work =>{
+                    const workId = work.id;
+                    const channel =  window.Echo.channel(`works.${workId}`)
+                        .listen('WorkUpdated', (e) => {
+                            console.log('Work updated:', e);
+                        })
+                        .error((error) => {
+                            console.error('Error:', error);
+                        });
+                });
             }
             else
             {

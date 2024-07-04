@@ -64,6 +64,7 @@
     @include('layouts.dashboard.include.modal.add.achievement')
     @include('layouts.dashboard.include.modal.add.file')
     @include('layouts.dashboard.include.modal.add.link')
+    @include('layouts.dashboard.include.modal.add.file')
 @endsection
 
 @section('scripts')
@@ -87,6 +88,28 @@
     <td>
       <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p" onclick="openInfoBox(${id})">
       </td>
+   </tr>
+   <tr>
+     <td class="nopadding" colspan="5">
+       <table class="table table-condensed table-bordered">
+           <thead>
+           <tr>
+           <th>Отзыв</th>
+           <th>Подтверждение достижения</th>
+           <th>Работа</th>
+           <th>Другое</th>
+           </tr>
+           </thead>
+           <tbody>
+           <tr style="flex:row">
+             <td id="reviews_column" class="list-group"> </td>
+             <td id="confirm_achievements_column" class="list-group"> </td>
+             <td id="works_column" class="list-group"> </td>
+             <td id="others_column" class="list-group"> </td>
+           </tr>
+           </tbody>
+
+     </td>
    </tr>
     </script>
 
@@ -170,6 +193,40 @@
             </div>
         </div>
     </div>
+    </script>
+
+    <script id="record_tmpl" type="text/x-jquery-tmpl">
+       <div class="dropdown">
+       <a onclick="getRecord(${id},${achievement_type_id})" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="list-group-item">
+        @{{if record_type_id==1}}
+          <span class="glyphicon glyphicon-save-file"></span>
+          Файл
+        @{{/if}}
+
+        @{{if record_type_id==2}}
+         <span class="glyphicon glyphicon-link">
+          </span>
+          Ссылка
+        @{{/if}}
+
+        @{{if record_type_id==3}}
+         <span class="glyphicon glyphicon-eye-open"></span>
+          Текст
+        @{{/if}}
+        <span class="gree">(${type.name})</span>
+       </a>
+       <ul class="dropdown-menu">
+       <li><a onclick="getResource(111257); return false;" class="green">
+       <span class="glyphicon glyphicon-edit"></span>
+       Открыть</a>
+       </li>
+       <li>
+       <a onclick="removeResource(111257); return false;" class="red">
+       <span class="glyphicon glyphicon-remove"></span>
+       Удалить</a>
+       </li>
+       </ul>
+       </div>
     </script>
 
 

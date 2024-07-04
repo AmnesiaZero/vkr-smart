@@ -11,6 +11,7 @@ use App\Http\Controllers\Organizations\ProgramsController;
 use App\Http\Controllers\Organizations\ProgramsSpecialtiesController;
 use App\Http\Controllers\Organizations\SpecialtiesController;
 use App\Http\Controllers\Portfolios\AchievementsController;
+use App\Http\Controllers\Portfolios\AchievementsRecordsController;
 use App\Http\Controllers\ScientificSupervisorsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Works\AdditionalFilesController;
@@ -207,6 +208,12 @@ Route::group([
            Route::post('delete',[CommentsController::class,'delete']);
         });
 
+        Route::group([
+            'prefix' => 'report',
+        ],function (){
+           Route::get('get',[WorksController::class,'getReport']);
+        });
+
     });
 
 
@@ -227,7 +234,8 @@ Route::group([
             Route::group([
                 'prefix' => 'records'
             ],function (){
-//               Route::post('add')
+               Route::post('create',[AchievementsRecordsController::class,'create']);
+               Route::get('get',[AchievementsRecordsController::class,'get']);
             });
             Route::get('{id}',[AchievementsController::class,'view']);
         });
