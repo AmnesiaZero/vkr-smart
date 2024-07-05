@@ -191,6 +191,7 @@
 
 <script src="/js/jquery/jquery.tmpl.min.js"></script>
 <script src="{{asset('js/bootstrap.js')}}"></script>
+<script src="/js/bootstrap.js"></script>
 <script src="/js/jquery/jquery.simplePagination.js"></script>
 
 @yield('scripts')
