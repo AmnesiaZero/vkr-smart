@@ -71,4 +71,10 @@ interface WorkRepositoryInterface
      * @return mixed
      */
     public function updateReportStatus(int $reportId,array $data);
+
+    /**
+     * @param int $reportId
+     * @return Model
+     */
+    public function findByReportId(int $reportId):Model;
 }

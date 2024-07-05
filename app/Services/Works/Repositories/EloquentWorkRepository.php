@@ -122,4 +122,9 @@ class EloquentWorkRepository implements WorkRepositoryInterface
     {
         return Work::query()->where('report_id','=',$reportId)->first()->update($data);
     }
+
+    public function findByReportId(int $reportId): Model
+    {
+        return Work::query()->where('report_id','=',$reportId)->first();
+    }
 }

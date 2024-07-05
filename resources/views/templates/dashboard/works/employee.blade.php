@@ -197,6 +197,9 @@
                 </ul>
             </nav>
         </div>
+        <div id="report_container">
+
+        </div>
         @include('layouts.dashboard.include.modal.add.work')
         @include('layouts.dashboard.include.modal.update.work_specialty')
         @include('layouts.dashboard.include.modal.other.additional_file')

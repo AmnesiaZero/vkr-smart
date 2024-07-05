@@ -96,6 +96,11 @@ class Work extends Model
         return $this->hasMany(Comment::class,'work_id');
     }
 
+    public function reportAssets():HasMany
+    {
+       return $this->hasMany(ReportAsset::class,'work_id','id');
+    }
+
 
 
 

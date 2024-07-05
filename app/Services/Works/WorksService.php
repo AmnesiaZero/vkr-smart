@@ -9,6 +9,7 @@ use App\Helpers\FilesHelper;
 use App\Helpers\JsonHelper;
 use App\Services\OrganizationsYears\Repositories\OrganizationYearRepositoryInterface;
 use App\Services\ProgramsSpecialties\Repositories\ProgramSpecialtyRepositoryInterface;
+use App\Services\ReportsAssets\Repositories\ReportAssetRepositoryInterface;
 use App\Services\ScientificSupervisors\Repositories\ScientificSupervisorRepositoryInterface;
 use App\Services\Specialties\Repositories\SpecialtyRepositoryInterface;
 use App\Services\Works\Repositories\WorkRepositoryInterface;
@@ -39,15 +40,18 @@ class WorksService
 
     private WorksTypeRepositoryInterface $worksTypeRepository;
 
+    private ReportAssetRepositoryInterface $reportAssetRepository;
+
     public function __construct(WorkRepositoryInterface $workRepository, OrganizationYearRepositoryInterface $yearRepository,
                                 ScientificSupervisorRepositoryInterface $scientificSupervisorRepository, ProgramSpecialtyRepositoryInterface $programSpecialtyRepository,
-                                WorksTypeRepositoryInterface $worksTypeRepository)
+                                WorksTypeRepositoryInterface $worksTypeRepository,ReportAssetRepositoryInterface $reportAssetRepository)
     {
         $this->workRepository = $workRepository;
         $this->yearRepository = $yearRepository;
         $this->scientificSupervisorRepository = $scientificSupervisorRepository;
         $this->worksTypeRepository = $worksTypeRepository;
         $this->programSpecialtyRepository = $programSpecialtyRepository;
+        $this->reportAssetRepository = $reportAssetRepository;
 
     }
 
@@ -543,6 +547,21 @@ class WorksService
         $result = $this->workRepository->updateReportStatus($documentId,$data);
         if($result)
         {
+            $work = $this->workRepository->findByReportId($documentId);
+            if($work and $work->id)
+            {
+                $documents = $report->getDocuments();
+                foreach ($documents as $document)
+                {
+                    $data = [
+                        'work_id' => $work->id,
+                        'name' => $document->title,
+                        'link' => $document->link,
+                        'unique_percent' => $document->percent
+                    ];
+                    $this->reportAssetRepository->create($data);
+                }
+            }
             return JsonHelper::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'message' => 'Репорт был успешно добавлен в систему'

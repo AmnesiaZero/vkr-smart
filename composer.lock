@@ -7317,12 +7317,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/AmnesiaZero/vkr-smart-sdk.git",
-                "reference": "33dea51e6792fe5da0ebce514f836ce52c0db9ad"
+                "reference": "d4088cbd16954d5101c5290d0fe4567817308695"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AmnesiaZero/vkr-smart-sdk/zipball/33dea51e6792fe5da0ebce514f836ce52c0db9ad",
-                "reference": "33dea51e6792fe5da0ebce514f836ce52c0db9ad",
+                "url": "https://api.github.com/repos/AmnesiaZero/vkr-smart-sdk/zipball/d4088cbd16954d5101c5290d0fe4567817308695",
+                "reference": "d4088cbd16954d5101c5290d0fe4567817308695",
                 "shasum": ""
             },
             "require": {
@@ -7351,7 +7351,7 @@
                 "source": "https://github.com/AmnesiaZero/vkr-smart-sdk/tree/master",
                 "issues": "https://github.com/AmnesiaZero/vkr-smart-sdk/issues"
             },
-            "time": "2024-07-03T09:06:00+00:00"
+            "time": "2024-07-05T10:53:22+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

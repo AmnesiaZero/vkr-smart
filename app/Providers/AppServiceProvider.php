@@ -39,7 +39,8 @@ class AppServiceProvider extends ServiceProvider
             'AdditionalFile' => 'AdditionalFiles',
             'Comment' => 'Comments',
             'Achievement' => 'Achievements',
-            'AchievementRecord' => 'AchievementsRecords'
+            'AchievementRecord' => 'AchievementsRecords',
+            'ReportAsset' => 'ReportsAssets'
         ];
 
 

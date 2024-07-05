@@ -620,6 +620,33 @@ function reloadWork(workId)
     });
 }
 
+function openReport(workId)
+{
+    const data = {
+        id:workId
+    };
+    $.ajax({
+        url: "/dashboard/works/find",
+        type: 'GET',
+        data:data,
+        dataType: "json",
+        success: function(response) {
+            if (response.success)
+            {
+                const work = response.data.work;
+                $("#report_container").html($("#record_tmpl").tmpl(work));
+            }
+            else
+            {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function() {
+            $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
+        }
+    });
+}
+
 function searchWorks() {
     let data = $("#search_form").serialize();
     data = serializeRemoveNull(data);
