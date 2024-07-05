@@ -13149,8 +13149,8 @@ window.Pusher = pusher_js__WEBPACK_IMPORTED_MODULE_2__;
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_1__["default"]({
   broadcaster: 'pusher',
   key: '1c0d73f2452a1f8c84a4',
-  cluster: 'b8b61fdb84fa46be999e',
-  encrypted: true,
+  cluster: 'eu',
+  encrypted: false,
   disableStats: true,
   forceTLS: false,
   wsHost: window.location.hostname,

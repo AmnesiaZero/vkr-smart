@@ -569,17 +569,45 @@ function works(page= 1)
                 const totalPages = pagination.links.length;
                 updatePagination(currentPage,totalItems,totalPages,perPage);
                 console.log('Echo');
-                console.log(window.Echo)
+                console.log(window.Echo);
                 works.forEach(work =>{
                     const workId = work.id;
                     const channel =  window.Echo.channel(`works.${workId}`)
-                        .listen('WorkUpdated', (e) => {
+                        .listen('.WorkUpdated', (e) => {
                             console.log('Work updated:', e);
+                            reloadWork(workId);
                         })
                         .error((error) => {
                             console.error('Error:', error);
                         });
                 });
+            }
+            else
+            {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function() {
+            $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
+        }
+    });
+}
+
+function reloadWork(workId)
+{
+    const data = {
+      id:workId
+    };
+    $.ajax({
+        url: "/dashboard/works/find",
+        type: 'GET',
+        data:data,
+        dataType: "json",
+        success: function(response) {
+            if (response.success)
+            {
+                const work = response.data.work;
+                $("#work_" + workId).replaceWith($("#work_tmpl").tmpl(work));
             }
             else
             {

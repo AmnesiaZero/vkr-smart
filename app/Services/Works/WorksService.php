@@ -208,8 +208,6 @@ class WorksService
     public function update(int $id,array $data): JsonResponse
     {
         $result = $this->workRepository->update($id,$data);
-        $work = $this->workRepository->find($id);
-        event(new WorkUpdated($work));
         if($result)
         {
             $work = $this->workRepository->find($id);
@@ -532,17 +530,28 @@ class WorksService
         return $document->getId();
     }
 
-    public function getReport(int $documentId)
+    public function getReport(int $documentId): JsonResponse
     {
         $client = new MasterClient(config('sdk.master_key'));
         $report = new Report($client,true);
         $report->get($documentId);
         $unique = $report->getUnique();
         $data = [
-            'work_status' => 1,
+            'report_status' => 1,
             'unique_percent' => $unique
         ];
         $result = $this->workRepository->updateReportStatus($documentId,$data);
+        if($result)
+        {
+            return JsonHelper::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'message' => 'Репорт был успешно добавлен в систему'
+            ]);
+        }
+        return JsonHelper::sendJsonResponse(false,[
+            'title' => 'Успешно',
+            'message' => 'Ошибка при добавлении репорта'
+        ]);
 
 
     }

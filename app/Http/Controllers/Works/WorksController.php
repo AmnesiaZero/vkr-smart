@@ -327,8 +327,9 @@ class WorksController extends Controller
     }
 
 
-    public function getReport(Request $request)
+    public function getReport(Request $request): JsonResponse
     {
+        Log::debug('Вошёл в getReport');
         $validator = Validator::make($request->all(),[
             'document_id' => 'required|integer'
         ]);
