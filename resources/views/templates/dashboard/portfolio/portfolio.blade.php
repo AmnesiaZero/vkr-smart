@@ -472,50 +472,13 @@
         <input type="hidden" name="action" value="getFile">
     </form>
 
-    <script type="text/javascript">
-        function getResourses(id) {
-            $.ajax({
-                url: "/achivements-actions",
-                type: "post",
-                data: "action=getResources&id=" + id + "&v=" + (new Date()).getTime(),
-                dataType: "json",
-                success: function (response) {
-                    if (response.success) {
-                        $("#resourses-" + id).html(response.data)
-                    } else {
-                        $.notify(response.message, "error");
-                    }
-                }
-            });
-        }
-        function getResource(id) {
-            $.ajax({
-                url: "/achivements-actions",
-                type: "post",
-                data: "action=getResource&id=" + id + "&v=" + (new Date()).getTime(),
-                dataType: "json",
-                success: function (response) {
-                    if (response.success) {
-                        var data = response.data;
-                        if (data.record_type_id == 3) {
-                            $("#informationModalData").html(data.content)
-                            $("#informationModal").modal("show");
-                        }
-                        if (data.record_type_id == 2) {
-                            window.open(data.content, "_blank");
-                        }
-                        if (data.record_type_id == 1) {
-                            $("#downloadFileForm input[name='id']").val(id);
-                            $("#downloadFileForm").submit();
-                        }
-                    } else {
-                        $.notify(response.message, "error");
-                    }
-                }
-            });
-        }
-    </script>
 
+
+@endsection
+
+
+@section('scripts')
+    <script src="{{'/js/dashboard/portfolios/card.js'}}"></script>
     <script id="achievement_tmpl" type="text/x-jquery-tmpl">
         <tr id="achievement_${id}">
             <td>
@@ -533,9 +496,38 @@
         </tr>
     </script>
 
-@endsection
-
-
-@section('scripts')
-    <script src="{{'/js/dashboard/portfolios/card.js'}}"></script>
+    <script id="education_tmpl" type="text/x-jquery-tmpl">
+        <form class="form-horizontal row-life" id="row-life-131"> <span class="close-life"> <span onclick="removeLifePlace(131); return false;" class="glyphicon glyphicon-remove"></span> </span>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-4 col-xs-4">Наименование организации</label>
+                    <div class="col-sm-8 col-xs-8"> </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-4 col-xs-4">Год начала обучения</label>
+                    <div class="col-sm-8 col-xs-8"> 1993 </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-4 col-xs-4">Год окончания обучения</label>
+                    <div class="col-sm-8 col-xs-8"> 2003 </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-4 col-xs-4">Год выпуска</label>
+                    <div class="col-sm-8 col-xs-8"> 2003 </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-4 col-xs-4">Форма обучения</label>
+                    <div class="col-sm-8 col-xs-8"> Дневная </div>
+                </div>
+            </div>
+        </form>
+    </script>
 @endsection

@@ -100,6 +100,20 @@ class AchievementsController
         return $this->achievementsService->delete($id);
     }
 
+    public function search(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->only($this->fillable),[
+            'user_id' => ['integer',Rule::exists('users','id')],
+            'name' => 'max:250',
+        ]);
+        if($validator->fails())
+        {
+            return ValidatorHelper::error($validator);
+        }
+        $data = $request->only($this->fillable);
+        return $this->achievementsService->search($data);
+    }
+
 
 
 }

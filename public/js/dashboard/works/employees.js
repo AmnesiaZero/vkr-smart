@@ -698,10 +698,11 @@ function searchWorks() {
 function resetSearch()
 {
     $("#default_specialty").prop('selected',true);
-    $("#student_input").val();
-    $("#work_name_input").val();
-    $("#group_input").val();
-    $("#work_type_input").val();
+    $("#student_input").val('');
+    $("#work_name_input").val('');
+    $("#group_input").val('');
+    $("#work_type_input").val('');
+    works();
 }
 
 function openInfoBox(id)

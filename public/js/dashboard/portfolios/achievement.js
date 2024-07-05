@@ -22,13 +22,7 @@ function achievements()
         success: function (response) {
             if (response.success) {
                 const achievements = response.data.achievements;
-                let index = 1;
-                achievements.forEach(achievement => {
-                    achievement.index = index;
-                    $("#achievements_list").append($("#achievement_tmpl").tmpl(achievement));
-                    achievementRecords(achievement.id);
-                    index++;
-                });
+                printAchievements(achievements);
             }
             else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
@@ -37,6 +31,18 @@ function achievements()
         error: function () {
             $.notify("Произошла ошибка при редактировании пользователя", "error");
         }
+    });
+}
+
+function printAchievements(achievements)
+{
+    $("#achievements_list").empty();
+    let index = 1;
+    achievements.forEach(achievement => {
+        achievement.index = index;
+        $("#achievements_list").append($("#achievement_tmpl").tmpl(achievement));
+        achievementRecords(achievement.id);
+        index++;
     });
 }
 
@@ -260,3 +266,41 @@ function printAchievementRecord(achievementRecord)
     column.append($("#record_tmpl").tmpl(achievementRecord));
 }
 
+function searchAchievements()
+{
+    let data = $("#search_achievements_form").serialize();
+    const additionalData = {
+       user_id:userId
+    };
+    data+= '&' + $.param(additionalData);
+    $.ajax({
+        url: "/dashboard/portfolio/achievements/search",
+        data:data,
+        type: "GET",
+        dataType: "json",
+        success: function (response) {
+            if (response.success) {
+                const achievements = response.data.achievements;
+                printAchievements(achievements);
+            }
+            else {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function () {
+            $.notify("Произошла ошибка при редактировании пользователя", "error");
+        }
+    });
+}
+
+function resetSearch()
+{
+    $("#default_achievement").prop('selected',true);
+    $("#achievement_name").val('');
+    achievements();
+}
+
+function openPortfolio()
+{
+    window.location.href = '/dashboard/portfolio/' + userId;
+}

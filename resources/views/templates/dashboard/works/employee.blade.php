@@ -141,7 +141,7 @@
                                         class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 me-3">применить
                                 </button>
                                 <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 me-3"
-                                        onclick="works();resetSearch()">сбросить
+                                        onclick="resetSearch();return false">сбросить
                                 </button>
                                 <button class="btn bg-green br-100 text-grey fs-14 py-1" onclick="exportWorks()">
                                     выгрузить<img

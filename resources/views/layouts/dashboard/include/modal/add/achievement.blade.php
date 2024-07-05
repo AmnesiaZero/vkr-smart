@@ -16,13 +16,12 @@
                     <div class="form-group">
                         <label class="col-sm-4">Выберите тип деятельности:</label>
                         <div class="col-sm-8">
-                            <select class="form-control" name="achievement_mode_id">
-                                <option value="3">Научная деятельность</option>
-                                <option value="2">Производственная деятельность</option>
-                                <option value="5">Социальная деятельность</option>
-                                <option value="6">Спортивная деятельность</option>
-                                <option value="4">Творческая деятельность</option>
-                                <option value="1">Учебная деятельность</option>
+                            <select name="achievement_mode_id" class="selectpicker bs-select-hidden">
+                                @if(isset($modes) and is_iterable($modes))
+                                    @foreach($modes as $mode)
+                                        <option value="{{$mode->id}}">{{$mode->name}}</option>
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
                     </div>

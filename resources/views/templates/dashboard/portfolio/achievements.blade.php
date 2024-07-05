@@ -4,26 +4,31 @@
         <div class="row pt-4 g-3 px-md-0 px-3">
             <div class="col">
                 <div class="out-kod"></div>
-                <form action="" method="" class="pt-4 col-xxl-4 col-xl-5 col-md-8">
-                    <p class="text-grey mb-2 fs-14">ФИО обучающегося</p>
+                <form action="" class="pt-4 col-xxl-4 col-xl-5 col-md-8" id="search_achievements_form" onsubmit="searchAchievements();return false">
+                    <p class="text-grey mb-2 fs-14">Наименование достижения</p>
                     <div class="input-group input-group-lg br-100 br-green-light-2 focus-form mb-3">
-                        <input type="text" name="q" value="" class="form-control search br-none fs-14 form-small-p"
-                               placeholder="">
+                        <input type="text" name="name" value="" class="form-control search br-none fs-14 form-small-p"
+                               placeholder="" id="achievement_name">
                         <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                             <img src="/images/Search.svg" alt="search">
                         </button>
                     </div>
-                    <p class="text-grey mb-2 fs-14">Поиск по email</p>
-                    <div class="input-group input-group-lg br-100 br-green-light-2 focus-form mb-3">
-                        <input type="text" name="q" value="" class="form-control search br-none fs-14 form-small-p"
-                               placeholder="">
-                        <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
-                            <img src="/images/Search.svg" alt="search">
-                        </button>
+                    <p class="text-grey mb-2 fs-14">Тип документа</p>
+                    <div>
+                        <div class="col-sm-8">
+                            <select name="achievement_mode_id" class="selectpicker bs-select-hidden">
+                                <option value="" id="default_achievement">Выбрать</option>
+                            @if(isset($modes) and is_iterable($modes))
+                                    @foreach($modes as $mode)
+                                        <option value="{{$mode->id}}">{{$mode->name}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
                     </div>
                     <div class="mt-auto">
                         <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1">применить</button>
-                        <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1">сбросить</button>
+                        <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1" onclick="resetSearch();return false">сбросить</button>
                     </div>
                 </form>
             </div>
@@ -33,10 +38,9 @@
                         onclick="openModal('add_achievement_modal')">добавить
                     <img src="/images/pl-green.svg" alt="" class="ps-2"></button>
                 <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25"
-                        onclick="openModal('import_work_modal')">Обзор<img
+                       >Обзор<img
                         src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
-                <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25"
-                        onclick="openModal('import_work_modal')">Карточка<img
+                <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25" onclick="openPortfolio()">Карточка<img
                         src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
             </div>
         <div class="pt-5 px-md-0 px-3">
@@ -102,10 +106,10 @@
            </thead>
            <tbody>
            <tr style="flex:row">
-             <td id="reviews_column" class="list-group"> </td>
-             <td id="confirm_achievements_column" class="list-group"> </td>
-             <td id="works_column" class="list-group"> </td>
-             <td id="others_column" class="list-group"> </td>
+             <td id="reviews_column"> </td>
+             <td id="confirm_achievements_column"> </td>
+             <td id="works_column"> </td>
+             <td id="others_column"> </td>
            </tr>
            </tbody>
 

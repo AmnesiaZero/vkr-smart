@@ -3,6 +3,7 @@
 namespace App\Services\Achievements;
 
 use App\Helpers\JsonHelper;
+use App\Models\AchievementMode;
 use App\Models\AchievementType;
 use App\Models\AchievementTypeCategory;
 use App\Models\RecordType;
@@ -64,8 +65,13 @@ class AchievementsService
         $achievements = $this->achievementRepository->get($userId);
         if($achievements and is_iterable($achievements))
         {
+            $modes = AchievementMode::all();
             $categories = AchievementTypeCategory::with('achievementsTypes')->get();
-            return view('templates.dashboard.portfolio.achievements',['achievements' => $achievements,'categories' => $categories]);
+            return view('templates.dashboard.portfolio.achievements',[
+                'achievements' => $achievements,
+                'categories' => $categories,
+                'modes' => $modes
+            ]);
         }
         return back()->withErrors('Ошибка при получении достижений');
     }
@@ -99,6 +105,22 @@ class AchievementsService
         return JsonHelper::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при поиске достижения'
+        ]);
+    }
+
+    public function search(array $data): JsonResponse
+    {
+        $achievements = $this->achievementRepository->search($data);
+        if($achievements and is_iterable($achievements))
+        {
+            return JsonHelper::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'achievements' => $achievements
+            ]);
+        }
+        return JsonHelper::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Ошибка при поиске достижений'
         ]);
     }
 }

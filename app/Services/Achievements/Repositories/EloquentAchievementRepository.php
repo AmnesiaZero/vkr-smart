@@ -28,4 +28,26 @@ class EloquentAchievementRepository implements AchievementRepositoryInterface
     {
         return Achievement::query()->find($id)->delete();
     }
+
+    public function search(array $data): Collection
+    {
+        $query = Achievement::with('mode');
+
+        if(isset($data['user_id']))
+        {
+            $query = $query->where('user_id','=',$data['user_id']);
+        }
+        if(isset($data['name']))
+        {
+            $query = $query->where('name','=',$data['name']);
+        }
+        if(isset($data['achievement_mode_id']))
+        {
+            $query = $query->where('achievement_mode_id','=',$data['achievement_mode_id']);
+        }
+
+        return $query->get();
+
+
+    }
 }

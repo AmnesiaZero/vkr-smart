@@ -12,6 +12,7 @@ use App\Http\Controllers\Organizations\ProgramsSpecialtiesController;
 use App\Http\Controllers\Organizations\SpecialtiesController;
 use App\Http\Controllers\Portfolios\AchievementsController;
 use App\Http\Controllers\Portfolios\AchievementsRecordsController;
+use App\Http\Controllers\Portfolios\EducationsController;
 use App\Http\Controllers\ScientificSupervisorsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Works\AdditionalFilesController;
@@ -231,6 +232,7 @@ Route::group([
             Route::get('get',[AchievementsController::class,'get']);
             Route::get('find',[AchievementsController::class,'find']);
             Route::post('delete',[AchievementsController::class,'delete']);
+            Route::get('search',[AchievementsController::class,'search']);
             Route::group([
                 'prefix' => 'records'
             ],function (){
@@ -238,6 +240,13 @@ Route::group([
                Route::get('get',[AchievementsRecordsController::class,'get']);
             });
             Route::get('{id}',[AchievementsController::class,'view']);
+        });
+
+        Route::group([
+            'prefix' => 'educations'
+        ],function (){
+             Route::post('create',[EducationsController::class,'create']);
+             Route::get('get',[EducationsController::class,'get']);
         });
     });
 

@@ -18,7 +18,7 @@
                     <div class="form-group">
                         <label class="col-sm-4">Выберите тип документа:</label>
                         <div class="col-sm-8">
-                            <select name="achievement_type_id" class="selectpicker bs-select-hidden">
+                            <select name="achievement_mode_id" class="selectpicker bs-select-hidden">
                                 @if(isset($categories) and is_iterable($categories))
                                     @foreach($categories as $category)
                                         <option class="boldoption" disabled="disabled">{{$category->name}}</option>

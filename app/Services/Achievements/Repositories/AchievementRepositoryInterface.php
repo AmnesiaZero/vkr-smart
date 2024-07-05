@@ -30,4 +30,10 @@ interface AchievementRepositoryInterface
      * @return bool
      */
     public function delete(int $id):bool;
+
+    /**
+     * @param array $data
+     * @return Collection
+     */
+    public function search(array $data):Collection;
 }
