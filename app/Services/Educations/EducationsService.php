@@ -5,6 +5,7 @@ namespace App\Services\Educations;
 use App\Helpers\JsonHelper;
 use App\Services\Educations\Repositories\EducationRepositoryInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class EducationsService
 {
@@ -17,12 +18,16 @@ class EducationsService
 
    public function create(array $data): JsonResponse
    {
+       $you = Auth::user();
+       $organizationId = $you->organization_id;
+       $data['organization_id'] = $organizationId;
        $education = $this->educationRepository->create($data);
        if($education and $education->id)
        {
            return JsonHelper::sendJsonResponse(true,[
                'title' => 'Успешно',
-               'message' => 'Успешно создано образование'
+               'message' => 'Успешно создано образование',
+               'education' => $education
            ]);
        }
        return JsonHelper::sendJsonResponse(false,[
@@ -44,6 +49,22 @@ class EducationsService
         return JsonHelper::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при получении образований'
+        ]);
+    }
+
+    public function delete(int $id): JsonResponse
+    {
+        $flag = $this->educationRepository->delete($id);
+        if($flag)
+        {
+            return JsonHelper::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'message' => 'Образование было успешно удалено'
+            ]);
+        }
+        return JsonHelper::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Возникла ошибка при удалении образования'
         ]);
     }
 }

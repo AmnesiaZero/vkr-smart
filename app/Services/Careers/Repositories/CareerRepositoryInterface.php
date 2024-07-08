@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Services\Educations\Repositories;
+namespace App\Services\Careers\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-interface EducationRepositoryInterface
+interface CareerRepositoryInterface
 {
     /**
      * @param array $data
      * @return Model
      */
-    public function create(array $data):Model;
+   public function create(array $data):Model;
 
     /**
      * @param int $userId

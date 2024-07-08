@@ -12,6 +12,7 @@ use App\Http\Controllers\Organizations\ProgramsSpecialtiesController;
 use App\Http\Controllers\Organizations\SpecialtiesController;
 use App\Http\Controllers\Portfolios\AchievementsController;
 use App\Http\Controllers\Portfolios\AchievementsRecordsController;
+use App\Http\Controllers\Portfolios\CareersController;
 use App\Http\Controllers\Portfolios\EducationsController;
 use App\Http\Controllers\ScientificSupervisorsController;
 use App\Http\Controllers\UsersController;
@@ -247,6 +248,15 @@ Route::group([
         ],function (){
              Route::post('create',[EducationsController::class,'create']);
              Route::get('get',[EducationsController::class,'get']);
+             Route::post('delete',[EducationsController::class,'delete']);
+        });
+
+        Route::group([
+            'prefix' => 'careers'
+        ],function (){
+            Route::post('create',[CareersController::class,'create']);
+            Route::get('get',[CareersController::class,'get']);
+            Route::post('delete',[CareersController::class,'delete']);
         });
     });
 

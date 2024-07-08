@@ -40,9 +40,10 @@ class AppServiceProvider extends ServiceProvider
             'Comment' => 'Comments',
             'Achievement' => 'Achievements',
             'AchievementRecord' => 'AchievementsRecords',
-            'ReportAsset' => 'ReportsAssets'
+            'ReportAsset' => 'ReportsAssets',
+            'Education' => 'Educations',
+            'Career' => 'Careers'
         ];
-
 
         foreach ($repositories as $k => $v) {
             $this->app->bind('App\\Services\\' . $v . '\\Repositories\\' . $k . 'RepositoryInterface',

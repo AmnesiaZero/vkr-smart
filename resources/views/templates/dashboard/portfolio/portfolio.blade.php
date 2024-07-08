@@ -161,113 +161,12 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="profile-main">
                         <h2>Образование:</h2>
-                        <div id="my-educations">
-                            <form class="form-horizontal row-life" id="row-life-131"> <span class="close-life"> <span
-                                        onclick="removeLifePlace(131); return false;"
-                                        class="glyphicon glyphicon-remove"></span> </span>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Наименование организации</label>
-                                        <div class="col-sm-8 col-xs-8"> Пошел в школу </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Год начала обучения</label>
-                                        <div class="col-sm-8 col-xs-8"> 1993 </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Год окончания обучения</label>
-                                        <div class="col-sm-8 col-xs-8"> 2003 </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Год выпуска</label>
-                                        <div class="col-sm-8 col-xs-8"> 2003 </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Форма обучения</label>
-                                        <div class="col-sm-8 col-xs-8"> Дневная </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <form class="form-horizontal row-life" id="row-life-132"> <span class="close-life"> <span
-                                        onclick="removeLifePlace(132); return false;"
-                                        class="glyphicon glyphicon-remove"></span> </span>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Наименование организации</label>
-                                        <div class="col-sm-8 col-xs-8"> Пошел в университет </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Год начала обучения</label>
-                                        <div class="col-sm-8 col-xs-8"> 2003 </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Год окончания обучения</label>
-                                        <div class="col-sm-8 col-xs-8"> 2008 </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Год выпуска</label>
-                                        <div class="col-sm-8 col-xs-8"> 2008 </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Форма обучения</label>
-                                        <div class="col-sm-8 col-xs-8"> Дневная </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <form class="form-horizontal row-life" id="row-life-464"> <span class="close-life"> <span
-                                        onclick="removeLifePlace(464); return false;"
-                                        class="glyphicon glyphicon-remove"></span> </span>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Наименование организации</label>
-                                        <div class="col-sm-8 col-xs-8"> Николай (тестирую) </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Год начала обучения</label>
-                                        <div class="col-sm-8 col-xs-8"> 2017 </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Год окончания обучения</label>
-                                        <div class="col-sm-8 col-xs-8"> 2017 </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Год выпуска</label>
-                                        <div class="col-sm-8 col-xs-8"> 2017 </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Форма обучения</label>
-                                        <div class="col-sm-8 col-xs-8"> Дневная </div>
-                                    </div>
-                                </div>
-                            </form>
+                        <div id="educations_list">
+
                         </div>
 
-                        <form class="form form-horizontal form-well" id="educationForm"
-                              onsubmit="addEducation(); return false;" method="post">
+                        <form class="form form-horizontal form-well" id="add_education_form"
+                              onsubmit="addEducation(); return false;">
                             <div class="form-group">
                                 <div class="row">
                                     <label class="col-sm-4">Наименование организации</label>
@@ -281,7 +180,8 @@
                                     <label class="col-sm-4">Год начала обучения</label>
                                     <div class="col-sm-8">
                                         <select class="selectpicker form-control bs-select-hidden" data-live-search="true"
-                                                name="date_start">
+                                                name="start_year">
+                                            @include('layouts.dashboard.include.elements.years_list')
                                         </select>
                                     </div>
                                 </div>
@@ -291,7 +191,8 @@
                                     <label class="col-sm-4">Год окончания обучения</label>
                                     <div class="col-sm-8">
                                         <select class="selectpicker form-control bs-select-hidden" data-live-search="true"
-                                                name="date_end">
+                                                name="end_year">
+                                            @include('layouts.dashboard.include.elements.years_list')
                                         </select>
                                     </div>
                                 </div>
@@ -301,7 +202,8 @@
                                     <label class="col-sm-4">Год выпуска</label>
                                     <div class="col-sm-8">
                                         <select class="selectpicker form-control bs-select-hidden" data-live-search="true"
-                                                name="date_issue">
+                                                name="graduation_year">
+                                            @include('layouts.dashboard.include.elements.years_list')
                                         </select>
                                     </div>
                                 </div>
@@ -310,8 +212,8 @@
                                 <div class="row">
                                     <label class="col-sm-4">Форма обучения</label>
                                     <div class="col-sm-8">
-                                        <select class="selectpicker form-control bs-select-hidden" name="training_form_id">
-                                            <option value="2">Очная</option>
+                                        <select class="selectpicker form-control bs-select-hidden" name="education_form">
+                                            <option value="0">Очная</option>
                                             <option value="1">Заочная</option>
                                             <option value="2">Дистанционное образование</option>
                                         </select>
@@ -325,68 +227,11 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="profile-career">
                         <h2>Профессиональная деятельность:</h2>
-                        <div id="my-career">
-                            <form class="form-horizontal row-life" id="row-life-133">
-                            <span class="close-life">
-                                <span onclick="removeLifePlace(133); return false;"
-                                      class="glyphicon glyphicon-remove"></span>
-                            </span>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Место работы</label>
-                                        <div class="col-sm-8 col-xs-8">ТБ-Информ</div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Год начала работы</label>
-                                        <div class="col-sm-8 col-xs-8">2009</div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Год окончания</label>
-                                        <div class="col-sm-8 col-xs-8">2010</div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Должность</label>
-                                        <div class="col-sm-8 col-xs-8">Инженер 1й категории</div>
-                                    </div>
-                                </div>
-                            </form>
-                            <form class="form-horizontal row-life" id="row-life-134"> <span class="close-life"> <span
-                                        onclick="removeLifePlace(134); return false;"
-                                        class="glyphicon glyphicon-remove"></span> </span>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Место работы</label>
-                                        <div class="col-sm-8 col-xs-8"> ИП Кузьмичев Н. В. </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Год начала работы</label>
-                                        <div class="col-sm-8 col-xs-8"> 2010 </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Год окончания</label>
-                                        <div class="col-sm-8 col-xs-8"> Продолжаю работать </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-xs-4">Должность</label>
-                                        <div class="col-sm-8 col-xs-8"> ИП Кузьмичев Н. В. </div>
-                                    </div>
-                                </div>
-                            </form>
+                        <div id="careers_list">
+
                         </div>
 
-                        <form class="form form-horizontal form-well" id="careerForm" onsubmit="addCareer(); return false;"
+                        <form class="form form-horizontal form-well" id="add_career_form" onsubmit="addCareer(); return false;"
                               method="post">
                             <div class="form-group">
                                 <div class="row">
@@ -400,7 +245,8 @@
                                 <div class="row">
                                     <label class="col-sm-4">Год начала работы</label>
                                     <div class="col-sm-8">
-                                        <select class="selectpicker form-control bs-select-hidden" name="date_start">
+                                        <select class="selectpicker form-control bs-select-hidden" name="start_year">
+                                            @include('layouts.dashboard.include.elements.years_list')
                                         </select>
                                     </div>
                                 </div>
@@ -409,8 +255,9 @@
                                 <div class="row">
                                     <label class="col-sm-4">Год окончания</label>
                                     <div class="col-sm-8">
-                                        <select class="selectpicker form-control bs-select-hidden" name="date_end">
+                                        <select class="selectpicker form-control bs-select-hidden" name="end_year">
                                             <option value="0">Продолжаю работать...</option>
+                                            @include('layouts.dashboard.include.elements.years_list')
                                         </select>
                                     </div>
                                 </div>
@@ -419,7 +266,7 @@
                                 <div class="row">
                                     <label class="col-sm-4">Должность</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="position" required="">
+                                        <input type="text" class="form-control" name="post" required="">
                                     </div>
                                 </div>
                             </div>
@@ -497,35 +344,75 @@
     </script>
 
     <script id="education_tmpl" type="text/x-jquery-tmpl">
-        <form class="form-horizontal row-life" id="row-life-131"> <span class="close-life"> <span onclick="removeLifePlace(131); return false;" class="glyphicon glyphicon-remove"></span> </span>
+        <form class="form-horizontal row-life" id="education_${id}">
+        <span class="close-life">
+        <span onclick="deleteEducation(${id}); return false;" class="bi bi-x"></span> </span>
             <div class="form-group">
                 <div class="row">
                     <label class="col-sm-4 col-xs-4">Наименование организации</label>
-                    <div class="col-sm-8 col-xs-8"> </div>
+                    <div class="col-sm-8 col-xs-8">${name}</div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="row">
                     <label class="col-sm-4 col-xs-4">Год начала обучения</label>
-                    <div class="col-sm-8 col-xs-8"> 1993 </div>
+                    <div class="col-sm-8 col-xs-8">${start_year}</div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="row">
                     <label class="col-sm-4 col-xs-4">Год окончания обучения</label>
-                    <div class="col-sm-8 col-xs-8"> 2003 </div>
+                    <div class="col-sm-8 col-xs-8">${end_year}</div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="row">
                     <label class="col-sm-4 col-xs-4">Год выпуска</label>
-                    <div class="col-sm-8 col-xs-8"> 2003 </div>
+                    <div class="col-sm-8 col-xs-8">${graduation_year}</div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="row">
                     <label class="col-sm-4 col-xs-4">Форма обучения</label>
-                    <div class="col-sm-8 col-xs-8"> Дневная </div>
+                    <div class="col-sm-8 col-xs-8">${getEducationForm(education_form)}</div>
+                </div>
+            </div>
+        </form>
+    </script>
+
+    <script id="career_tmpl" type="text/x-jquery-tmpl">
+        <form class="form-horizontal row-life" id="career_${id}">
+                            <span class="close-life">
+                                <span onclick="deleteCareer(${id}); return false;" class="bi bi-x"></span>
+                            </span>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-4 col-xs-4">Место работы</label>
+                    <div class="col-sm-8 col-xs-8">${name}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-4 col-xs-4">Год начала работы</label>
+                    <div class="col-sm-8 col-xs-8">${start_year}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-4 col-xs-4">Год окончания</label>
+                    <div class="col-sm-8 col-xs-8">
+                    @{{if end_year==0}}
+                      Продолжаю работать
+                    @{{else}}
+                    ${end_year}
+                    @{{/if}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-sm-4 col-xs-4">Должность</label>
+                    <div class="col-sm-8 col-xs-8">${post}</div>
                 </div>
             </div>
         </form>

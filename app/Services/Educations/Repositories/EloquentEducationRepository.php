@@ -18,4 +18,9 @@ class EloquentEducationRepository implements EducationRepositoryInterface
     {
         return Education::query()->where('user_id','=',$userId)->get();
     }
+
+    public function delete(int $id): bool
+    {
+        return Education::query()->find($id)->delete();
+    }
 }
