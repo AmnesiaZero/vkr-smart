@@ -258,7 +258,6 @@ class UsersController extends Controller
             return ValidatorHelper::error($validator);
         }
         $you = Auth::user();
-
         $data = $request->only($this->fillable);
         Log::debug('request data = ' . print_r($data, true));
         $data['organization_id'] = $you->organization_id;

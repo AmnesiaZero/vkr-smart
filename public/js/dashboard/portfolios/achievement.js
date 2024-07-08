@@ -6,6 +6,36 @@ $(document).ready(function () {
     const path = window.location.pathname;
     userId = path.split("/").pop(); // Получаем последний сегмент URL
 
+    $("#add_file_form").on('submit', function(e) {
+        e.preventDefault(); // Предотвращаем стандартное поведение формы
+        const formData = new FormData(this);
+        formData.append('achievement_id',achievementId);
+        formData.append('user_id',userId);
+        formData.append('record_type_id',1);
+        $.ajax({
+            url: "/dashboard/portfolio/achievements/records/create",
+            data:formData,
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            processData: false, // Не обрабатываем файлы (не превращаем в строку)
+            contentType: false, // Не устанавливаем заголовок Content-Type
+            success: function (response) {
+                if (response.success) {
+                    const achievementRecord = response.data.achievement_record;
+                    printAchievementRecord(achievementRecord);
+                }
+                else {
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                }
+            },
+            error: function () {
+                $.notify("Произошла ошибка при редактировании пользователя", "error");
+            }
+        });
+    });
+
     achievements();
 });
 
@@ -208,13 +238,28 @@ function deleteAchievement()
 
 function addRecord(recordTypeId)
 {
-    let data = $("#add_link_form").serialize();
+    let formId = '';
     const additionalData = {
-       achievement_id:achievementId,
+        achievement_id:achievementId,
         user_id:userId,
         record_type_id:recordTypeId
     };
+    switch (recordTypeId)
+    {
+        case 2:
+            formId = $("#add_link_form");
+            break;
+        case 3:
+            formId = $("#add_text_form");
+            break;
+    }
+    let data = formId.serialize();
     data += '&' + $.param(additionalData);
+    addRecordAjax(data);
+}
+
+function addRecordAjax(data)
+{
     $.ajax({
         url: "/dashboard/portfolio/achievements/records/create",
         data:data,
@@ -225,8 +270,8 @@ function addRecord(recordTypeId)
         dataType: "json",
         success: function (response) {
             if (response.success) {
-               const achievementRecord = response.data.achievement_record;
-               printAchievementRecord(achievementRecord);
+                const achievementRecord = response.data.achievement_record;
+                printAchievementRecord(achievementRecord);
             }
             else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
@@ -241,21 +286,22 @@ function addRecord(recordTypeId)
 function printAchievementRecord(achievementRecord)
 {
     const categoryId = achievementRecord.type.category_id;
+    const achievementId = achievementRecord.achievement_id;
     let column = false;
     console.log('category id = ' + categoryId);
     switch (categoryId)
     {
         case 1:
-            column = $("#confirm_achievements_column");
+            column = $("#confirm_achievements_column_" + achievementId);
             break;
         case 2:
-            column = $("#reviews_column");
+            column = $("#reviews_column_" + achievementId);
             break;
         case 3:
-            column = $("#works_column");
+            column = $("#works_column_" + achievementId);
             break;
         case 4:
-            column = $("#others_column");
+            column = $("#others_column_" + achievementId);
             break;
     }
     if(!column)
@@ -292,6 +338,32 @@ function searchAchievements()
         }
     });
 }
+
+function openTextRecord(recordId)
+{
+    const data = {
+        id:recordId
+    };
+    $.ajax({
+        url: "/dashboard/portfolio/achievements/records/find",
+        data:data,
+        type: "GET",
+        dataType: "json",
+        success: function (response) {
+            if (response.success) {
+                const record = response.data.achievement_record;
+                $("#tmpl_container").html($("#text_tmpl").tmpl(record));
+            }
+            else {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function () {
+            $.notify("Произошла ошибка при редактировании пользователя", "error");
+        }
+    });
+}
+
 
 function resetSearch()
 {

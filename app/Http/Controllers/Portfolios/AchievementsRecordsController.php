@@ -17,6 +17,7 @@ class AchievementsRecordsController
         'achievement_type_id',
         'record_type_id',
         'name',
+        'file',
         'content',
         'access_id'
     ];
@@ -58,6 +59,24 @@ class AchievementsRecordsController
         }
         $achievementId = $request->achievement_id;
         return $this->achievementsRecordsService->get($achievementId);
+    }
+
+    public function find(Request $request):JsonResponse
+    {
+        $validator = Validator::make($request->all(),[
+            'id' => ['required','integer',Rule::exists('achievements_records','id')],
+        ]);
+        if($validator->fails())
+        {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->achievementsRecordsService->find($id);
+    }
+
+    public function download()
+    {
+
     }
 
 }

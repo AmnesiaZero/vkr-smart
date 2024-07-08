@@ -6,6 +6,7 @@ use App\Helpers\JsonHelper;
 use App\Services\AchievementsRecords\Repositories\AchievementRecordRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class AchievementsRecordsService
@@ -30,11 +31,13 @@ class AchievementsRecordsService
             $id = $achievementRecord->id;
             if(isset($data['file']))
             {
+                Log::debug('Вошёл в условие file');
                 $file = $data['file'];
-                $directory = ceil($id/1000);
-                $path = 'achievements_records/'.$directory;
-                Storage::makeDirectory($path);
-                Storage::put($path,$file);
+                $directoryNumber = ceil($id/1000);
+                $directory = 'achievements_records/'.$directoryNumber;
+                Storage::makeDirectory($directory);
+                $fileName = $id.'.'.$file->extension();
+                $path = $file->storeAs($directory,$fileName);
                 $additionalData['content'] = $path;
             }
             $result = $this->achievementRecordRepository->update($id,$additionalData);
@@ -66,6 +69,22 @@ class AchievementsRecordsService
         return JsonHelper::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Ошибка при получении записей достижений'
+        ]);
+    }
+
+    public function find(int $id): JsonResponse
+    {
+        $achievementRecord = $this->achievementRecordRepository->find($id);
+        if($achievementRecord and $achievementRecord->id)
+        {
+            return JsonHelper::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'achievement_record' => $achievementRecord
+            ]);
+        }
+        return JsonHelper::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Ошибка при получении записи достижения'
         ]);
     }
 }

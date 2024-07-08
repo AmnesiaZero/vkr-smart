@@ -79,6 +79,18 @@ class EloquentUserRepository implements UserRepositoryInterface
             });
         }
 
+        if (isset($data['selected_faculties']) and count($data['selected_faculties'])>0) {
+            $facultiesIds = $data['selected_faculties'];
+            $users = $users->filter(function ($user) use ($facultiesIds) {
+                // Проверяем, есть ли у пользователя департаменты, которые содержат годы с факультетами с заданными id
+                return $user->departments->contains(function ($department) use ($facultiesIds) {
+                    return $department->year->faculties->contains(function ($faculty) use ($facultiesIds) {
+                        return in_array($faculty->id, $facultiesIds);
+                    });
+                });
+            });
+        }
+
         if (isset($data['roles'])) {
             $roles = $data['roles'];
             $users = $users->filter(function ($user) use ($roles) {

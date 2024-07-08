@@ -66,9 +66,9 @@
         </div>
     </div>
     @include('layouts.dashboard.include.modal.add.achievement')
-    @include('layouts.dashboard.include.modal.add.file')
     @include('layouts.dashboard.include.modal.add.link')
     @include('layouts.dashboard.include.modal.add.file')
+    @include('layouts.dashboard.include.modal.add.text')
 @endsection
 
 @section('scripts')
@@ -106,10 +106,10 @@
            </thead>
            <tbody>
            <tr style="flex:row">
-             <td id="reviews_column"> </td>
-             <td id="confirm_achievements_column"> </td>
-             <td id="works_column"> </td>
-             <td id="others_column"> </td>
+             <td id="reviews_column_${id}"> </td>
+             <td id="confirm_achievements_column_${id}"> </td>
+             <td id="works_column_${id}"> </td>
+             <td id="others_column_${id}"> </td>
            </tr>
            </tbody>
 
@@ -200,38 +200,73 @@
     </script>
 
     <script id="record_tmpl" type="text/x-jquery-tmpl">
-       <div class="dropdown">
-       <a onclick="getRecord(${id},${achievement_type_id})" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="list-group-item">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"> </button>
         @{{if record_type_id==1}}
-          <span class="glyphicon glyphicon-save-file"></span>
-          Файл
+        <span class="glyphicon glyphicon-save-file"></span>
+        Файл
         @{{/if}}
 
         @{{if record_type_id==2}}
-         <span class="glyphicon glyphicon-link">
-          </span>
-          Ссылка
+        <span class="glyphicon glyphicon-link">
+            </span>
+        Ссылка
         @{{/if}}
 
         @{{if record_type_id==3}}
-         <span class="glyphicon glyphicon-eye-open"></span>
-          Текст
+        <span class="glyphicon glyphicon-eye-open" onclick="openTextRecord(${id})"></span>
+        Текст
         @{{/if}}
         <span class="gree">(${type.name})</span>
-       </a>
-       <ul class="dropdown-menu">
-       <li><a onclick="getResource(111257); return false;" class="green">
-       <span class="glyphicon glyphicon-edit"></span>
-       Открыть</a>
-       </li>
-       <li>
-       <a onclick="removeResource(111257); return false;" class="red">
-       <span class="glyphicon glyphicon-remove"></span>
-       Удалить</a>
-       </li>
-       </ul>
-       </div>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                @{{if record_type_id==1}}
+                <a href="${content}" class="green">
+                    <span class="glyphicon glyphicon-edit"></span>
+                    Открыть</a>
+                @{{/if}}
+                @{{if record_type_id==2}}
+                <a href="${content}" class="green">
+                    <span class="glyphicon glyphicon-edit"></span>
+                    Открыть</a>
+                @{{/if}}
+                @{{if record_type_id==3}}
+                <a onclick="openTextRecord(${id}); return false;" class="green">
+                    <span class="glyphicon glyphicon-edit"></span>
+                    Открыть</a>
+                @{{/if}}
+
+
+            </li>
+            <li>
+                <a onclick="removeResource(111257); return false;" class="red">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Удалить</a>
+            </li>
+        </ul>
+    </div>
     </script>
+
+    <script id="text_tmpl" type="text/x-jquery-tmpl">
+       <div id="text_modal" style="padding-right: 20px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h3>Описание ресурса</h3>
+                </div>
+                <div class="modal-body">
+                    <div id="informationModalData">${content}</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeTmplModal('text_modal')">Закрыть окно</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </script>
+
 
 
 

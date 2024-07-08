@@ -7,26 +7,26 @@
             </div>
             <div class="col">
                 <div class="out-kod"></div>
-                <form action="" method="" class="pt-4 col-xxl-4 col-xl-5 col-md-8">
+                <form id="search_users_form" class="pt-4 col-xxl-4 col-xl-5 col-md-8" onsubmit="searchUsers();return false">
                     <p class="text-grey mb-2 fs-14">ФИО обучающегося</p>
                     <div class="input-group input-group-lg br-100 br-green-light-2 focus-form mb-3">
-                        <input type="text" name="q" value="" class="form-control search br-none fs-14 form-small-p"
-                               placeholder="">
+                        <input type="text" name="name" value="" class="form-control search br-none fs-14 form-small-p"
+                               placeholder="" id="name_input">
                         <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                             <img src="/images/Search.svg" alt="search">
                         </button>
                     </div>
                     <p class="text-grey mb-2 fs-14">Поиск по email</p>
                     <div class="input-group input-group-lg br-100 br-green-light-2 focus-form mb-3">
-                        <input type="text" name="q" value="" class="form-control search br-none fs-14 form-small-p"
-                               placeholder="">
+                        <input type="text" name="email" value="" class="form-control search br-none fs-14 form-small-p"
+                               placeholder="" id="email_input">
                         <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                             <img src="/images/Search.svg" alt="search">
                         </button>
                     </div>
                     <div class="mt-auto">
-                        <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1">применить</button>
-                        <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1">сбросить</button>
+                        <button type="submit" class="btn btn-secondary br-100 br-none text-grey fs-14 py-1">применить</button>
+                        <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1" onclick="resetSearch();return false">сбросить</button>
                     </div>
                 </form>
             </div>
@@ -53,7 +53,7 @@
         <div class="col-xl-3 col-lg-4 col-sm-6 col-12">
             <div class="br-green-light-1 p-3 br-15">
                 <div class="d-flex pb-4">
-                    @{{if(is_active==1)}}
+                    @{{if is_active==1}}
                     <div class="bg-active br-100">
                     <p class="text-grey fs-14 m-0 px-3">
                         <span><img src="/images/green_active.svg" alt="" class="pe-2"></span>Активен</p>
@@ -88,6 +88,5 @@
                     портфолио</a></p>
             </div>
         </div>
-
     </script>
 @endsection

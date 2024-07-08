@@ -76,6 +76,47 @@ function openWorks(id)
     });
 }
 
+function searchUsers() {
+    let data = $("#search_users_form").serialize();
+    data = serializeRemoveNull(data);
+    const selectedYears = getArrayFromLocalStorage('selected_years');
+    const selectedDepartments = getArrayFromLocalStorage('selected_departments');
+    const selectedFaculties = getArrayFromLocalStorage('selected_faculties');
+    const additionalData = {
+        selected_years: selectedYears,
+        selected_departments: selectedDepartments,
+        selected_faculties:selectedFaculties,
+        roles:['teacher']
+    };
+    console.log(additionalData);
+    data += '&' + $.param(additionalData);
+    $.ajax({
+        url: "/dashboard/users/search",
+        data: data,
+        type: "GET",
+        dataType: "json",
+        success: function (response) {
+            if (response.success) {
+                const users = response.data.users;
+                $("#users_list").html($("#user_tmpl").tmpl(users));
+            }
+            else {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function () {
+            $.notify("Произошла ошибка при редактировании пользователя", "error");
+        }
+    });
+}
+
+function resetSearch()
+{
+    $("#name_input").val('');
+    $("#email_input").val('');
+    users();
+}
+
 
 function updateWorksCount()
 {
@@ -86,4 +127,6 @@ function updateWorksCount()
         $('#works_count').text(worksCount);
     }
 }
+
+
 

@@ -20,7 +20,7 @@
     <div class="d-flex cursor-p mb-2">
         <img src="/images/download.svg" alt="" class="pe-2">
         <input type="file" id="file_input" style="display: none">
-        <p class="fs-14 lh-17 text-grey m-0" id="upload_button">Добавить текст</p>
+        <p class="fs-14 lh-17 text-grey m-0" onclick="openModal('add_text_modal')">Добавить текст</p>
     </div>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/download.svg" alt="" class="pe-2">

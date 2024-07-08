@@ -7,7 +7,7 @@
                 <h3>Добавление файла</h3>
             </div>
             <div class="modal-body">
-                <form id="add_file_form" onsubmit="addRecord(1); return false;" class="form-inline">
+                <form id="add_file_form" class="form-inline">
                     <input type="hidden" name="record_type_id" value="1">
                     <div class="form-group">
                         <label class="col-sm-4">Введите наименование</label>
@@ -16,9 +16,21 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4">Выберите тип документа:</label>
+                        <label class="col-sm-4">Выберите тип деятельности:</label>
                         <div class="col-sm-8">
                             <select name="achievement_mode_id" class="selectpicker bs-select-hidden">
+                                @if(isset($modes) and is_iterable($modes))
+                                    @foreach($modes as $mode)
+                                        <option value="{{$mode->id}}">{{$mode->name}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">Выберите тип документа:</label>
+                        <div class="col-sm-8">
+                            <select name="achievement_type_id" class="selectpicker bs-select-hidden">
                                 @if(isset($categories) and is_iterable($categories))
                                     @foreach($categories as $category)
                                         <option class="boldoption" disabled="disabled">{{$category->name}}</option>
@@ -35,7 +47,7 @@
                     <div class="form-group">
                         <label class="col-sm-4">Загрузите файл</label>
                         <div class="col-sm-8">
-                            <input type="file" name="content" class="form-control fullwidth" required="">
+                            <input type="file" name="file" class="form-control fullwidth" id="file_input"  required="">
                         </div>
                     </div>
                     <div class="form-group">
@@ -51,13 +63,13 @@
                     <div class="form-group">
                         <label class="col-sm-4">Действия</label>
                         <div class="col-sm-8">
-                            <button type="submit" class="btn btn-lg btn-success" onclick="closeModal('add_link_modal')">Добавить</button>
+                            <button type="submit" class="btn btn-lg btn-success" onclick="closeModal('add_file_modal')">Добавить</button>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeModal('add_link_modal')">Закрыть окно
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeModal('add_file_modal')">Закрыть окно
                 </button>
             </div>
         </div>

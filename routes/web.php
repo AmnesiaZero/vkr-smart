@@ -239,6 +239,8 @@ Route::group([
             ],function (){
                Route::post('create',[AchievementsRecordsController::class,'create']);
                Route::get('get',[AchievementsRecordsController::class,'get']);
+               Route::get('find',[AchievementsRecordsController::class,'find']);
+               Route::post('download',[AchievementsRecordsController::class,'download']);
             });
             Route::get('{id}',[AchievementsController::class,'view']);
         });
@@ -345,7 +347,6 @@ Route::group([
         Route::get('you', [UsersController::class, 'you']);
         Route::post('configure-departments', [UsersController::class, 'configureDepartments']);
         Route::get('logout', [UsersController::class, 'logout']);
-
         Route::group([
             'prefix' => 'jwt'
         ], function () {
@@ -369,9 +370,6 @@ Route::group([
         Route::post('create', [ScientificSupervisorsController::class, 'create']);
         Route::post('delete',[ScientificSupervisorsController::class,'delete']);
     });
-
-
-
 });
 
 

@@ -1,13 +1,13 @@
-<div id="add_link_modal" class="modal">
+<div id="add_text_modal" class="modal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true" onclick="closeModal('add_link_modal')">×</span></button>
-                <h3>Добавление ссылки на документ, видео или веб-страницу</h3>
+                        aria-hidden="true" onclick="closeModal('add_text_modal')">×</span></button>
+                <h3>Добавление файла</h3>
             </div>
             <div class="modal-body">
-                <form id="add_link_form" onsubmit="addRecord(2); return false;" class="form-inline">
+                <form id="add_text_form" onsubmit="addRecord(3); return false;" class="form-inline">
                     <input type="hidden" name="record_type_id" value="1">
                     <div class="form-group">
                         <label class="col-sm-4">Введите наименование</label>
@@ -45,9 +45,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4">Введите ссылку:</label>
+                        <label class="col-sm-4">Введите текст</label>
                         <div class="col-sm-8">
-                            <input type="text" name="content" class="form-control fullwidth" required="">
+                            <textarea name="content">
+
+                            </textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -63,13 +65,13 @@
                     <div class="form-group">
                         <label class="col-sm-4">Действия</label>
                         <div class="col-sm-8">
-                            <button type="submit" class="btn btn-lg btn-success" onclick="closeModal('add_link_modal')">Добавить</button>
+                            <button type="submit" class="btn btn-lg btn-success" onclick="closeModal('add_text_modal')">Добавить</button>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeModal('add_link_modal')">Закрыть окно
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeModal('add_text_modal')">Закрыть окно
                 </button>
             </div>
         </div>
