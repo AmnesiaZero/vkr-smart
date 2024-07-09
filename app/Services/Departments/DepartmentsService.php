@@ -40,7 +40,7 @@ class DepartmentsService extends Services
     public function create(array $data): JsonResponse
     {
         if (!isset($data['faculty_id'])) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'При создании кафедры не указан id факультета'
             ]);
@@ -48,7 +48,7 @@ class DepartmentsService extends Services
         $yearId = $this->facultyRepository->getYearId($data['faculty_id']);
         $data = array_merge($data, ['year_id' => $yearId]);
         if (empty($data)) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Пустой массив данных'
             ]);
@@ -56,13 +56,13 @@ class DepartmentsService extends Services
         $facultyDepartment = $this->departmentRepository->create($data);
         Log::debug('department = ' . $facultyDepartment);
         if ($facultyDepartment and $facultyDepartment->id) {
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Кафедра успешно создана',
                 'department' => $facultyDepartment
             ]);
         }
-        return JsonHelper::sendJsonResponse(false, [
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'При сохранении данных произошла  ошибка'
         ], 403);
@@ -78,7 +78,7 @@ class DepartmentsService extends Services
     {
         $facultyDepartments = $this->departmentRepository->get($facultyId);
         Log::debug('departments = ' . $facultyDepartments);
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно получены кафедры',
             'departments' => $facultyDepartments
         ]);
@@ -92,7 +92,7 @@ class DepartmentsService extends Services
     public function update(int $id, array $data): JsonResponse
     {
         if (empty($data)) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Пустой массив данных'
             ]);
@@ -102,13 +102,13 @@ class DepartmentsService extends Services
 
         if ($result) {
             $facultyDepartment = Department::query()->find($id);
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успех',
                 'message' => 'Информация успешно сохранена',
                 'department' => $facultyDepartment
             ]);
         } else {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'При сохранении данных произошла ошибка',
                 'id' => $result->id
@@ -119,7 +119,7 @@ class DepartmentsService extends Services
     public function find(int $id): JsonResponse
     {
         $department = $this->departmentRepository->find($id);
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успех',
             'department' => $department
         ]);
@@ -131,12 +131,12 @@ class DepartmentsService extends Services
 
 
         if ($result) {
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Кафедра удалена успешно'
             ]);
         } else {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Ошибка при удалении из базы данных'
             ]);
@@ -147,13 +147,13 @@ class DepartmentsService extends Services
     {
         $user = $this->userRepository->find($userId);
         if (!$user) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Некорректный пользователь'
             ]);
         }
         $departments = $user->departments;
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'departments' => $departments
         ]);
@@ -163,12 +163,12 @@ class DepartmentsService extends Services
     {
         $programSpecialties = $this->departmentRepository->getProgramSpecialties($id);
         if ($programSpecialties) {
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'program_specialties' => $programSpecialties,
             ]);
         }
-        return JsonHelper::sendJsonResponse(false, [
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'При получении специальностей произошла ошибка',
         ]);

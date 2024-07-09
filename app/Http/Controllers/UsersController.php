@@ -8,7 +8,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -79,7 +81,7 @@ class UsersController extends Controller
         $codeArray = explode('-', $fullCode);
         $codeId = $codeArray[0];
         $code = $codeArray[1];
-        return $this->usersService->loginByCode($request, $codeId, $code);
+        return $this->usersService->loginByCode($codeId, $code);
     }
 
     public function resetPassword(Request $request): JsonResponse
@@ -94,13 +96,13 @@ class UsersController extends Controller
         return $this->usersService->resetPassword($email);
     }
 
-    public function registerByCodeView(Request $request)
+    public function registerByCodeView()
     {
-        $code = session('invite_code');
+        $inviteCodeId = Cookie::get('invite_code_id');
 
-        Log::debug('code session = ' . $code);
+        Log::debug('organization id in view = '.$inviteCodeId);
 
-        return $this->usersService->registerByCodeView($code);
+        return $this->usersService->registerByCodeView($inviteCodeId);
     }
 
     public function registerByCode(Request $request): JsonResponse
@@ -114,9 +116,8 @@ class UsersController extends Controller
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
-        $code = session('invite_code');
         $data = $request->only($this->fillable);
-        return $this->usersService->register($code, $data);
+        return $this->usersService->register($data);
 
     }
 

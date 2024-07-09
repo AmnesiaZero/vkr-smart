@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -53,61 +54,69 @@ class UsersService extends Services
         $this->yearRepository = $yearRepository;
     }
 
-    public function register(InviteCode $inviteCode, array $data)
+    public function register(array $data)
     {
-        if (empty($data)) {
-            return JsonHelper::sendJsonResponse(false, [
-                'title' => 'Ошибка',
-                'message' => 'Пустой массив данных'
-            ]);
-        }
-        $data['organization_id'] = $inviteCode->organization_id;
-        $data['login'] = $data['email'];
-        if ($inviteCode->type == 1) {
-            $data['role'] = 'user';
-        } elseif ($inviteCode->type == 2) {
-            $data['role'] = 'teacher';
-        } else {
-            return JsonHelper::sendJsonResponse(false, [
-                'title' => 'Ошибка',
-                'message' => 'Неккоректный тип кода регистрации'
-            ]);
-        }
-        if (!is_numeric($data['organization_id'])) {
-            return JsonHelper::sendJsonResponse(false, [
-                'title' => 'Ошибка',
-                'message' => 'У вас неккоректно задан id организации'
-            ]);
-        }
-        $user = $this->_repository->create($data);
-        if ($user and $user->id) {
-            $userId = $user->id;
-
-            $inviteCode->delete();
-
-            if (isset($data['role'])) {
-                Log::debug('role = ' . $data['role']);
-                $role = $this->roleRepository->find($data['role']);
-                Log::debug('role eloquent = ' . $role);
-            } else {
-                $role = $this->roleRepository->find('user');
+        $you = Auth::user();
+        $id = $you->id;
+        $codeId =(int )Cookie::get('invite_code_id');
+        $code = $this->inviteCodeRepository->find($codeId);
+        if($code and $code->id)
+        {
+            $data['organization_id'] = $code->organization_id;
+            $data['login'] = $data['email'];
+            if ($code->type == 1) {
+                $data['role'] = 'user';
             }
-            $user->attachRole($role);
+            elseif ($code->type == 2)
+            {
+                $data['role'] = 'teacher';
+            }
+            else {
+                return self::sendJsonResponse(false, [
+                    'title' => 'Ошибка',
+                    'message' => 'Некорректный тип кода регистрации'
+                ]);
+            }
+            if (!is_numeric($data['organization_id'])) {
+                return self::sendJsonResponse(false, [
+                    'title' => 'Ошибка',
+                    'message' => 'У вас некорректно задан id организации'
+                ]);
+            }
+            $result = $this->_repository->update($id,$data);
+            if($result)
+            {
+                $user = $this->_repository->find($id);
+                if ($user and $user->id) {
+                    $userId = $user->id;
 
-            if (isset($data['departments_ids'])) {
-                $departmentsIds = $data['departments_ids'];
-                foreach ($departmentsIds as $id) {
-                    $user->departments()->attach($id);
+                    $code->delete();
+
+                    if (isset($data['role'])) {
+                        Log::debug('role = ' . $data['role']);
+                        $role = $this->roleRepository->find($data['role']);
+                        Log::debug('role eloquent = ' . $role);
+                    } else {
+                        $role = $this->roleRepository->find('user');
+                    }
+                    $user->attachRole($role);
+
+                    if (isset($data['departments_ids'])) {
+                        $departmentsIds = $data['departments_ids'];
+                        foreach ($departmentsIds as $id) {
+                            $user->departments()->attach($id);
+                        }
+                    }
+                    $updatedUser = $this->_repository->find($userId);
+                    return self::sendJsonResponse(true, [
+                        'title' => 'Успешно',
+                        'message' => 'Пользователь успешно создан',
+                        'user' => $updatedUser
+                    ]);
                 }
             }
-            $updatedUser = $this->_repository->find($userId);
-            return JsonHelper::sendJsonResponse(true, [
-                'title' => 'Успешно',
-                'message' => 'Пользователь успешно создан',
-                'user' => $updatedUser
-            ]);
         }
-        return JsonHelper::sendJsonResponse(false, [
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'При сохранении данных произошла  ошибка'
         ]);
@@ -116,13 +125,13 @@ class UsersService extends Services
     public function create(array $data): JsonResponse
     {
         if (empty($data)) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Пустой массив данных'
             ]);
         }
         if (!is_numeric($data['organization_id'])) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'У вас неккоректно задан id организации'
             ]);
@@ -148,13 +157,13 @@ class UsersService extends Services
                 }
             }
             $updatedUser = $this->_repository->find($userId);
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Пользователь успешно создан',
                 'user' => $updatedUser
             ]);
         }
-        return JsonHelper::sendJsonResponse(false, [
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'При сохранении данных произошла  ошибка'
         ]);
@@ -164,12 +173,12 @@ class UsersService extends Services
     {
         $user = $this->_repository->find($id);
         if ($user and $user->id) {
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'user' => $user
             ]);
         }
-        return JsonHelper::sendJsonResponse(false, [
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'Ошибка при поиске пользователя'
         ]);
@@ -179,12 +188,12 @@ class UsersService extends Services
     {
         $result = $this->_repository->delete($id);
         if ($result) {
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Пользователь удален успешно'
             ]);
         } else {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Ошибка при удалении из базы данных'
             ]);
@@ -201,13 +210,13 @@ class UsersService extends Services
                 }
             }
             $updatedUser = $this->_repository->find($userId);
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Кафедра успешно привязана',
                 'user' => $updatedUser
             ]);
         }
-        return JsonHelper::sendJsonResponse(false, [
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'При получении пользователя произошла ошибка'
         ]);
@@ -217,14 +226,14 @@ class UsersService extends Services
     public function search(array $data): JsonResponse
     {
         if (empty($data)) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Пустой массив данных'
             ]);
         }
 
         $users = $this->_repository->search($data)->except([]);
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успех',
             'message' => 'Пользователи успешно найдены',
             'users' => $users
@@ -237,13 +246,13 @@ class UsersService extends Services
         if ($user and $user->id) {
             $user->departments()->sync($departmentsIds);
             $updatedUser = $this->_repository->find($userId);
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Кафедры успешно настроены успешно привязана',
                 'user' => $updatedUser
             ]);
         }
-        return JsonHelper::sendJsonResponse(false, [
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'При получении пользователя произошла ошибка'
         ]);
@@ -253,7 +262,7 @@ class UsersService extends Services
     {
         $you = Auth::user();
         $you->organization; //это добавляет в модель поле organization. ->with() не работает,так удобнее всего
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'you' => $you
         ]);
@@ -270,7 +279,7 @@ class UsersService extends Services
         try {
             $token = JWT::encode($payload, config('jwt.key'), config('jwt.alg'));
         } catch (Error $error) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Ошибка при кодировании токена'
             ]);
@@ -279,12 +288,12 @@ class UsersService extends Services
         try {
             Mail::to($email)->queue(new ResetPassword($resetLink));
         } catch (Error $error) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Ошибка при отправке сообщения на почту'
             ]);
         }
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'message' => 'Ссылка на сброс пароля была успешно отправлена на почту'
         ]);
@@ -293,7 +302,7 @@ class UsersService extends Services
     public function getByEmail(string $email): Model|JsonResponse
     {
         if (!$this->_repository->emailExist($email)) {
-            return $this->sendJsonResponse(true, 'success', [
+            return self::sendJsonResponse(true, [
                 'title' => 'Ошибка при верификации email',
                 'message' => 'Такого email не существует'
             ]);
@@ -312,33 +321,33 @@ class UsersService extends Services
         return redirect('home');
     }
 
-    public function loginByCode(Request $request, int $codeId, int $code)
+    public function loginByCode(int $codeId, int $code)
     {
+        Log::debug('1 code id = '.$codeId);
         if ($this->inviteCodeRepository->login($codeId, $code)) {
-            $request->session()->regenerate();
-            $user = Auth::user();
-            $userId = $user->id;
-            $data = [
-                'user_id' => $userId,
-                'status' => 1
-            ];
-            $flag = $this->inviteCodeRepository->update($codeId, $data);
-            $codeModel = $this->inviteCodeRepository->find($codeId);
-            Log::debug('code = ' . $codeModel);
-            if ($flag and $codeModel->id) {
-                Session::put('invite_code', $codeModel);
-                return redirect('/registration/by-code');
+            $code = $this->inviteCodeRepository->find($codeId);
+            if($code and $code->id)
+            {
+                $organizationId = $code->organization_id;
+                $data = [
+                    'organization_id' => $organizationId
+                ];
+                $user = $this->_repository->create($data);
+                if($user and $user->id)
+                {
+                    Auth::login($user);
+                    return redirect('/registration/by-code')->withCookie(Cookie::make('invite_code_id',$codeId));
+                }
             }
-            return back()->withErrors(['Возникла ошибка при обновлении информации кода приглашения']);
         }
-        return back()->withErrors(['Данный регистрационный код неккоректен']);
+        return back()->withErrors(['Данный регистрационный код некорректен']);
 
     }
 
     public function update(int $id, array $data): JsonResponse
     {
         if (empty($data)) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Пустой массив данных'
             ]);
@@ -354,13 +363,13 @@ class UsersService extends Services
                 $roleId = $role->id;
                 $user->syncRoles([$roleId]);
             }
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успех',
                 'message' => 'Информация успешно сохранена',
                 'user' => $user
             ]);
         } else {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'При сохранении данных произошла ошибка',
                 'id' => $result->id
@@ -368,16 +377,20 @@ class UsersService extends Services
         }
     }
 
-    public function registerByCodeView(InviteCode $code)
+    public function registerByCodeView(int $codeId)
     {
-        $organizationId = $code->organization_id;
-        $organization = $this->organizationRepository->find($organizationId);
-        if ($organization and $organization->id) {
-            $organizationName = $organization->name;
-            return view('templates.site.auth.code-registration', [
-                'code' => $code,
-                'organization_name' => $organizationName
-            ]);
+        $code = $this->inviteCodeRepository->find($codeId);
+        if($code and $code->id)
+        {
+            $organizationId = $code->organization_id;
+            $organization = $this->organizationRepository->find($organizationId);
+            if ($organization and $organization->id) {
+                $organizationName = $organization->name;
+                return view('templates.site.auth.code-registration', [
+                    'code' => $code,
+                    'organization_name' => $organizationName
+                ]);
+            }
         }
         return redirect('login')->withErrors(['К вашему коду привязана неккоректная организация']);
     }
@@ -394,7 +407,7 @@ class UsersService extends Services
         $organizationId = $you->organization_id;
         $users = $this->_repository->get($organizationId, $roles)->except(['id' => $you->id]);
         //Сюда можно добавить ещё какую-нибудь инфу
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'users' => $users
         ]);
@@ -406,7 +419,7 @@ class UsersService extends Services
         $organizationId = $you->organization_id;
         $users = $this->_repository->getPaginate($organizationId, $roles,$page);
         //Сюда можно добавить ещё какую-нибудь инфу
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'users' => $users
         ]);
@@ -415,14 +428,14 @@ class UsersService extends Services
     public function generateApiKey(int $id, string $apiKey, string $secretKey): JsonResponse
     {
         if (config('jwt.api_key') != $apiKey) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Неккоректный API ключ'
             ]);
         }
         $you = Auth::user();
         if ($you->secret_key != $secretKey) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Неккоректный secret key'
             ]);
@@ -432,7 +445,7 @@ class UsersService extends Services
             'expires_at' => time() + config('jwt.ex')
         ];
         $token = JWT::encode($payload, $secretKey, config('jwt.alg'));
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'token' => $token
         ]);

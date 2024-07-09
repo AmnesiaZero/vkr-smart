@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <label class="col-sm-4">Загрузите файл</label>
                         <div class="col-sm-8">
-                            <input type="file" name="file" class="form-control fullwidth" id="file_input"  required="">
+                            <input type="file" name="achievement_file" class="form-control fullwidth" id="file_input"  required="">
                         </div>
                     </div>
                     <div class="form-group">

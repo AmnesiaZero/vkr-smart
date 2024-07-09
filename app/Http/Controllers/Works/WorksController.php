@@ -38,7 +38,8 @@ class WorksController extends Controller
         'import_file',
         'date_range',
         'user_type',
-        'work_status'
+        'work_status',
+        'user_id'
     ];
 
     protected WorksService $worksService;
@@ -133,7 +134,8 @@ class WorksController extends Controller
             'work_type' => 'max:250',
             'name' => 'max:250',
             'selected_faculties.*' => ['integer', Rule::exists('faculties', 'id')],
-            'selected_years.*' => ['integer', Rule::exists('organizations_years', 'id')]
+            'selected_years.*' => ['integer', Rule::exists('organizations_years', 'id')],
+            'user_id' => ['integer', Rule::exists('users', 'id')]
         ]);
         if ($validator->fails())
         {

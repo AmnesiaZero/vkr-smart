@@ -8,11 +8,12 @@ use App\Models\AchievementType;
 use App\Models\AchievementTypeCategory;
 use App\Models\RecordType;
 use App\Services\Achievements\Repositories\AchievementRepositoryInterface;
+use App\Services\Services;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-class AchievementsService
+class AchievementsService extends Services
 {
     private AchievementRepositoryInterface $achievementRepository;
 
@@ -26,12 +27,12 @@ class AchievementsService
         $achievements = $this->achievementRepository->get($userId);
         if($achievements and is_iterable($achievements))
         {
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'achievements' => $achievements
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Ошибка при получении достижений'
         ]);
@@ -49,12 +50,12 @@ class AchievementsService
         if($achievement and $achievement->id)
         {
             $achievement =  $achievement->load('mode');
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'achievement' => $achievement
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Ошибка при создании достижения'
         ]);
@@ -81,12 +82,12 @@ class AchievementsService
         $achievement = $this->achievementRepository->find($id);
         if($achievement and $achievement->id)
         {
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'achievement' => $achievement
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при поиске достижения'
         ]);
@@ -97,12 +98,12 @@ class AchievementsService
         $flag = $this->achievementRepository->delete($id);
         if($flag)
         {
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'message' => 'Достижение было успешно удалено'
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при поиске достижения'
         ]);
@@ -113,12 +114,12 @@ class AchievementsService
         $achievements = $this->achievementRepository->search($data);
         if($achievements and is_iterable($achievements))
         {
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'achievements' => $achievements
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Ошибка при поиске достижений'
         ]);

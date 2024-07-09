@@ -5,11 +5,12 @@ namespace App\Services\Programs;
 use App\Helpers\JsonHelper;
 use App\Models\Program;
 use App\Services\Programs\Repositories\ProgramRepositoryInterface;
+use App\Services\Services;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 
-class ProgramsService
+class ProgramsService extends Services
 {
     public $_repository;
 
@@ -21,7 +22,7 @@ class ProgramsService
     public function create(array $data): JsonResponse
     {
         if (empty($data)) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Пустой массив данных'
             ], 400);
@@ -29,13 +30,13 @@ class ProgramsService
         $program = $this->_repository->create($data);
         Log::debug('department = ' . $program);
         if ($program and $program->id) {
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Кафедра успешно создана',
                 'program' => $program
             ]);
         }
-        return JsonHelper::sendJsonResponse(false, [
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'При сохранении данных произошла ошибка'
         ], 403);
@@ -44,7 +45,7 @@ class ProgramsService
     public function get(int $departmentId): JsonResponse
     {
         $programs = $this->_repository->get($departmentId);
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно получены программы',
             'programs' => $programs
         ]);
@@ -58,7 +59,7 @@ class ProgramsService
     public function update(int $id, array $data): JsonResponse
     {
         if (empty($data)) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Пустой массив данных'
             ]);
@@ -68,13 +69,13 @@ class ProgramsService
 
         if ($result) {
             $faculty = Program::query()->find($id);
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успех',
                 'message' => 'Информация успешно сохранена',
                 'program' => $faculty
             ]);
         } else {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'При сохранении данных произошла ошибка',
                 'id' => $result->id
@@ -85,7 +86,7 @@ class ProgramsService
     public function find(int $id): JsonResponse
     {
         $program = $this->_repository->find($id);
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'program' => $program
         ]);
@@ -94,7 +95,7 @@ class ProgramsService
     public function delete(int $id): JsonResponse
     {
         if (!$id) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Не указан id ресурса'
             ]);
@@ -103,12 +104,12 @@ class ProgramsService
         $flag = $this->_repository->delete($id);
 
         if ($flag) {
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Факультет удален успешно'
             ]);
         } else {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Ошибка при удалении из базы данных'
             ], 403);

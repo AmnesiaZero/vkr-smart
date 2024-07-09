@@ -4,12 +4,13 @@ namespace App\Services\AdditionalFiles;
 
 use App\Helpers\JsonHelper;
 use App\Services\AdditionalFiles\Repositories\AdditionalFileRepositoryInterface;
+use App\Services\Services;
 use App\Services\Works\Repositories\WorkRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class AdditionalFilesService
+class AdditionalFilesService extends Services
 {
 
     private AdditionalFileRepositoryInterface $additionalFileRepository;
@@ -22,7 +23,7 @@ class AdditionalFilesService
     public function get(int $workId): JsonResponse
     {
         $additionalFiles = $this->additionalFileRepository->get($workId);
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'additional_files' => $additionalFiles
         ]);
@@ -59,18 +60,18 @@ class AdditionalFilesService
             }
             else
             {
-                return JsonHelper::sendJsonResponse(false,[
+                return self::sendJsonResponse(false,[
                     'title' => 'Ошибка',
                     'message' => 'В запросе нет файла'
                 ]);
             }
             $additionalFile = $this->additionalFileRepository->find($id);
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'additional_file' => $additionalFile
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Ошибка при добавлении файла'
         ]);
@@ -101,14 +102,14 @@ class AdditionalFilesService
                 $flag = $this->additionalFileRepository->delete($id);
                 if($flag)
                 {
-                    return JsonHelper::sendJsonResponse(true,[
+                    return self::sendJsonResponse(true,[
                         'title' => 'Успешно',
                         'message' => 'Дополнительный файл успешно удален'
                     ]);
                 }
             }
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при удалении дополнительного файла'
         ]);

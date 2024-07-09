@@ -11,6 +11,7 @@ use App\Services\OrganizationsYears\Repositories\OrganizationYearRepositoryInter
 use App\Services\ProgramsSpecialties\Repositories\ProgramSpecialtyRepositoryInterface;
 use App\Services\ReportsAssets\Repositories\ReportAssetRepositoryInterface;
 use App\Services\ScientificSupervisors\Repositories\ScientificSupervisorRepositoryInterface;
+use App\Services\Services;
 use App\Services\Specialties\Repositories\SpecialtyRepositoryInterface;
 use App\Services\Works\Repositories\WorkRepositoryInterface;
 use App\Services\WorksTypes\Repositories\WorksTypeRepositoryInterface;
@@ -27,7 +28,7 @@ use Vkrsmart\Sdk\clients\MasterClient;
 use Vkrsmart\Sdk\Models\Document;
 use Vkrsmart\Sdk\Models\Report;
 
-class WorksService
+class WorksService extends Services
 {
 
     private OrganizationYearRepositoryInterface $yearRepository;
@@ -69,7 +70,7 @@ class WorksService
         $you = Auth::user();
         $organizationId = $you->organization_id;
         $works = $this->workRepository->get($organizationId,$pageNumber,$userType);
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'works' => $works
         ]);
@@ -122,7 +123,7 @@ class WorksService
                     }
                     else
                     {
-                        return JsonHelper::sendJsonResponse(false,[
+                        return self::sendJsonResponse(false,[
                             'title' => 'Ошибка',
                             'message' => 'Возникла ошибка при отправке работы на проверочный сервер'
                         ]);
@@ -131,7 +132,7 @@ class WorksService
             }
             else
             {
-                return JsonHelper::sendJsonResponse(false,[
+                return self::sendJsonResponse(false,[
                     'title' => 'Ошибка',
                     'message' => 'Был загружен некорректный файл работы. Проверьте его расширение и целостность.Допустимы только файлы формата doc,docx,pdf,pdf и txt'
                 ]);
@@ -149,7 +150,7 @@ class WorksService
                 }
                 else
                 {
-                    return JsonHelper::sendJsonResponse(false,[
+                    return self::sendJsonResponse(false,[
                         'title' => 'Ошибка',
                         'message' => 'Был загружен некорректный файл сертификата. Проверьте его расширение и целостность.Допустимы только файлы формата doc,docx,pdf,pdf и txt'
                     ]);
@@ -160,13 +161,13 @@ class WorksService
             {
                 //Подгружаю через find,чтобы связь specialty сохранилась
                 $workWithRelations = $this->workRepository->find($workId);
-                return JsonHelper::sendJsonResponse(true,[
+                return self::sendJsonResponse(true,[
                     'title' => 'Успешно',
                     'work' => $workWithRelations
                 ]);
             }
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
            'title' => 'Ошибка',
            'message' => 'Ошибка при добавлении работы'
         ]);
@@ -181,7 +182,7 @@ class WorksService
             // Разделение строки на начальную и конечную даты
             $dateParts = explode(" - ", $protectDateRange);
             if (count($dateParts) != 2) {
-                return JsonHelper::sendJsonResponse(false,[
+                return self::sendJsonResponse(false,[
                     'title' => 'Ошибка',
                     'message' => 'Некорректные даты защиты'
                 ]);
@@ -198,12 +199,12 @@ class WorksService
         $works = $this->workRepository->search($data);
         if ($works)
         {
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'works' => $works
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Ошибка при поиске работ'
         ]);
@@ -215,13 +216,13 @@ class WorksService
         if($result)
         {
             $work = $this->workRepository->find($id);
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'work' => $work,
                 'message' => 'Информация о работе была успешно обновлена'
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при обновлении работы'
         ]);
@@ -232,12 +233,12 @@ class WorksService
         $work = $this->workRepository->find($id);
         if($work and $work->id)
         {
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'work' => $work,
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при получении работы'
         ]);
@@ -268,7 +269,7 @@ class WorksService
             {
                 if(!Storage::delete($path))
                 {
-                    return JsonHelper::sendJsonResponse(false,[
+                    return self::sendJsonResponse(false,[
                         'title' => 'Ошибка',
                         'message' => 'Возникла ошибка при замене файла'
                     ]);
@@ -276,19 +277,19 @@ class WorksService
             }
             if(!isset($workFile) or !is_file($workFile) or !FilesHelper::acceptableFile($workFile))
             {
-                return JsonHelper::sendJsonResponse(false,[
+                return self::sendJsonResponse(false,[
                     'title' => 'Ошибка',
                     'message' => 'Был загружен некорректный файл. Проверьте его расширение и целостность'
                 ]);
             }
             $directory = 'works/'.ceil($work->id/1000);
             $workFile->storeAs($directory,$fileName);
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'message' => 'Файл успешно изменен'
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при изменении файла'
         ]);
@@ -299,12 +300,12 @@ class WorksService
         $result = $this->workRepository->copy($id);
         if($result)
         {
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'message' => 'Работа была успешно скопирована'
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
                'title' => 'Ошибка',
                 'message' => 'Возникла ошибка при копировании работы'
             ]);
@@ -315,12 +316,12 @@ class WorksService
         $flag = $this->workRepository->delete($id);
         if($flag)
         {
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'message' => 'Работа успешно помещена на удаление'
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при удалении работы'
         ]);
@@ -340,7 +341,7 @@ class WorksService
                 {
                     if(!Storage::delete($certificate))
                     {
-                        return JsonHelper::sendJsonResponse(false,[
+                        return self::sendJsonResponse(false,[
                             'title' => 'Ошибка',
                             'message' => 'Возникла ошибка при удалении сертификата'
                         ]);
@@ -351,7 +352,7 @@ class WorksService
                 {
                     if(!Storage::deleteDirectory($additionalFilesPath))
                     {
-                        return JsonHelper::sendJsonResponse(false,[
+                        return self::sendJsonResponse(false,[
                             'title' => 'Ошибка',
                             'message' => 'Возникла ошибка при удалении дополнительных файлов'
                         ]);
@@ -360,14 +361,14 @@ class WorksService
                 $flag = $this->workRepository->destroy($id);
                 if ($flag)
                 {
-                    return JsonHelper::sendJsonResponse(true,[
+                    return self::sendJsonResponse(true,[
                         'title' => 'Успешно',
                         'message' => 'Работа и файлы были успешно удалены'
                     ]);
                 }
             }
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при удалении файла работы'
         ]);
@@ -388,13 +389,13 @@ class WorksService
                 $work->self_check = 1;
             }
             $work->save();
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'message' => 'Статус самопроверки успешно обновлен',
                 'self_check' => $work->self_check
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при обновлении статуса самопроверки'
         ]);
@@ -409,17 +410,17 @@ class WorksService
             $result = $this->workRepository->restore($id);
             if($result)
             {
-                return JsonHelper::sendJsonResponse(true,[
+                return self::sendJsonResponse(true,[
                     'title' => 'Успешно',
                     'message' => 'Работа была успешно восстановлена'
                 ]);
             }
-            return JsonHelper::sendJsonResponse(false,[
+            return self::sendJsonResponse(false,[
                 'title' => 'Ошибка',
                 'message' => 'Возникла ошибка при восстановлении работы'
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при поиске работы'
         ]);
@@ -437,13 +438,13 @@ class WorksService
                 Storage::delete($certificatePath);
                 $directory = 'certificates/' . ceil($work->id / 1000);
                 $certificate->storeAs($directory, $fileName);
-                return JsonHelper::sendJsonResponse(true, [
+                return self::sendJsonResponse(true, [
                     'title' => 'Успешно',
                     'message' => 'Файл сертификата успешно изменен'
                 ]);
             }
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при изменении файла сертификата'
         ]);
@@ -478,17 +479,17 @@ class WorksService
             }
             catch (ValidationException  $e)
             {
-                return JsonHelper::sendJsonResponse(false,[
+                return self::sendJsonResponse(false,[
                     'title' => 'Ошибка',
                     'message' => 'Возникла ошибка при обработке импорта'
                 ]);
             }
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'message' => 'Работы были успешно импортированы'
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Файл импорта некорректный. Проверьте целостность и расширение файла'
         ]);
@@ -503,7 +504,7 @@ class WorksService
             // Разделение строки на начальную и конечную даты
             $dateParts = explode(" - ", $protectDateRange);
             if (count($dateParts) != 2) {
-                return JsonHelper::sendJsonResponse(false,[
+                return self::sendJsonResponse(false,[
                     'title' => 'Ошибка',
                     'message' => 'Некорректные даты защиты'
                 ]);
@@ -562,12 +563,12 @@ class WorksService
                     $this->reportAssetRepository->create($data);
                 }
             }
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'message' => 'Репорт был успешно добавлен в систему'
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Успешно',
             'message' => 'Ошибка при добавлении репорта'
         ]);

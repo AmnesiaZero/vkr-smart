@@ -4,7 +4,8 @@
         <div class="row pt-4 g-3 px-md-0 px-3">
             <div class="col">
                 <div class="out-kod"></div>
-                <form action="" class="pt-4 col-xxl-4 col-xl-5 col-md-8" id="search_achievements_form" onsubmit="searchAchievements();return false">
+                <form action="" class="pt-4 col-xxl-4 col-xl-5 col-md-8" id="search_achievements_form"
+                      onsubmit="searchAchievements();return false">
                     <p class="text-grey mb-2 fs-14">Наименование достижения</p>
                     <div class="input-group input-group-lg br-100 br-green-light-2 focus-form mb-3">
                         <input type="text" name="name" value="" class="form-control search br-none fs-14 form-small-p"
@@ -18,7 +19,7 @@
                         <div class="col-sm-8">
                             <select name="achievement_mode_id" class="selectpicker bs-select-hidden">
                                 <option value="" id="default_achievement">Выбрать</option>
-                            @if(isset($modes) and is_iterable($modes))
+                                @if(isset($modes) and is_iterable($modes))
                                     @foreach($modes as $mode)
                                         <option value="{{$mode->id}}">{{$mode->name}}</option>
                                     @endforeach
@@ -28,21 +29,23 @@
                     </div>
                     <div class="mt-auto">
                         <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1">применить</button>
-                        <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1" onclick="resetSearch();return false">сбросить</button>
+                        <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1"
+                                onclick="resetSearch();return false">сбросить
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
-            <div class="d-flex mt-5">
-                <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 w-75 me-3"
-                        onclick="openModal('add_achievement_modal')">добавить
-                    <img src="/images/pl-green.svg" alt="" class="ps-2"></button>
-                <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25"
-                       >Обзор<img
-                        src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
-                <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25" onclick="openPortfolio()">Карточка<img
-                        src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
-            </div>
+        <div class="d-flex mt-5">
+            <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 w-75 me-3"
+                    onclick="openModal('add_achievement_modal')">добавить
+                <img src="/images/pl-green.svg" alt="" class="ps-2"></button>
+            <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25"
+            >Обзор<img
+                    src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
+            <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25" onclick="openPortfolio()">Карточка<img
+                    src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
+        </div>
         <div class="pt-5 px-md-0 px-3">
             <div class="big-table">
                 <table class="table fs-14">
@@ -65,10 +68,11 @@
             </div>
         </div>
     </div>
-    @include('layouts.dashboard.include.modal.add.achievement')
-    @include('layouts.dashboard.include.modal.add.link')
-    @include('layouts.dashboard.include.modal.add.file')
-    @include('layouts.dashboard.include.modal.add.text')
+    @include('layouts.dashboard.include.modal.add.portfolio.achievement')
+    @include('layouts.dashboard.include.modal.add.portfolio.link')
+    @include('layouts.dashboard.include.modal.add.portfolio.file')
+    @include('layouts.dashboard.include.modal.add.portfolio.text')
+    @include('layouts.dashboard.include.modal.add.portfolio.work')
 @endsection
 
 @section('scripts')
@@ -115,6 +119,11 @@
 
      </td>
    </tr>
+
+
+
+
+
     </script>
 
     <script id="update_achievement_modal_tmpl" type="text/x-jquery-tmpl">
@@ -197,10 +206,15 @@
             </div>
         </div>
     </div>
+
+
+
+
+
     </script>
 
     <script id="record_tmpl" type="text/x-jquery-tmpl">
-      <div class="dropdown">
+      <div class="dropdown" id="achievement_record_${id}">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"> </button>
         @{{if record_type_id==1}}
         <span class="glyphicon glyphicon-save-file"></span>
@@ -222,12 +236,12 @@
         <ul class="dropdown-menu">
             <li>
                 @{{if record_type_id==1}}
-                <a href="${content}" class="green">
+                <a href="/dashboard/portfolio/achievements/records/download?id=${id}" class="green">
                     <span class="glyphicon glyphicon-edit"></span>
                     Открыть</a>
                 @{{/if}}
                 @{{if record_type_id==2}}
-                <a href="${content}" class="green">
+                <a href="${content}" target="_blank"  class="green">
                     <span class="glyphicon glyphicon-edit"></span>
                     Открыть</a>
                 @{{/if}}
@@ -236,16 +250,19 @@
                     <span class="glyphicon glyphicon-edit"></span>
                     Открыть</a>
                 @{{/if}}
-
-
             </li>
             <li>
-                <a onclick="removeResource(111257); return false;" class="red">
+                <a onclick="deleteAchievementRecord(${id}); return false;" class="red">
                     <span class="glyphicon glyphicon-remove"></span>
                     Удалить</a>
             </li>
         </ul>
     </div>
+
+
+
+
+
     </script>
 
     <script id="text_tmpl" type="text/x-jquery-tmpl">
@@ -265,10 +282,23 @@
             </div>
         </div>
     </div>
+
+
     </script>
 
+    <script id="work_tmpl" type="text/x-jquery-tmpl">
+     <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
+    <td><input type="radio" name="work_id" value="${id}"></td>
 
+    <th scope="row">${specialty.name}</th>
+    <td>${student}</td>
+    <td>${group}</td>
+    <td>${protect_date}</td>
+    <td>${name}</td>
+    <td>${getAssessmentDescription(assessment)}</td>
+    </tr>
 
+    </script>
 
 @endsection
 

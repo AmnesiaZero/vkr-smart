@@ -17,9 +17,10 @@ class AchievementsRecordsController
         'achievement_type_id',
         'record_type_id',
         'name',
-        'file',
+        'achievement_file',
         'content',
-        'access_id'
+        'access_id',
+        'work_id'
     ];
 
     private AchievementsRecordsService $achievementsRecordsService;
@@ -35,10 +36,10 @@ class AchievementsRecordsController
             'user_id' => ['required','integer',Rule::exists('users','id')],
             'achievement_id' => ['required','integer',Rule::exists('achievements','id')],
             'record_type_id' => ['required','integer',Rule::exists('records_types','id')],
-            'name' => 'required|max:250',
+            'name' => 'max:250',
             'content' => 'max:250',
             'access_id' => 'required|integer|in:1,2,3',
-            'file' => 'file'
+            'achievement_file' => 'file'
         ]);
         if($validator->fails())
         {
@@ -74,9 +75,30 @@ class AchievementsRecordsController
         return $this->achievementsRecordsService->find($id);
     }
 
-    public function download()
+    public function download(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+            'id' => ['required','integer',Rule::exists('achievements_records','id')],
+        ]);
+        if($validator->fails())
+        {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $id = $request->id;
+        return $this->achievementsRecordsService->download($id);
+    }
 
+    public function delete(Request $request): JsonResponse|\Illuminate\Http\RedirectResponse
+    {
+        $validator = Validator::make($request->all(),[
+            'id' => ['required','integer',Rule::exists('achievements_records','id')],
+        ]);
+        if($validator->fails())
+        {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $id = $request->id;
+        return $this->achievementsRecordsService->delete($id);
     }
 
 }

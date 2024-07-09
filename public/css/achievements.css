@@ -19,6 +19,12 @@
     line-height: 2;
 }
 
+.form-control[type=file] {
+    overflow: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+}
+
 .table tr td span.desc {
 	display:block;
 	border-top:1px #EEE solid;

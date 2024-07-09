@@ -28,12 +28,12 @@ class OrganizationsService extends Services
         try {
             $organization->specialties()->sync($specialtiesIds);
         } catch (QueryException $e) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'При привязке специальностей к проверяющим произошла ошибка'
             ]);
         }
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'message' => 'Проверяющим организации успешно привязаны специальности'
         ]);
@@ -45,7 +45,7 @@ class OrganizationsService extends Services
         $user = Auth::user();
         $id = $user->organization_id;
         $organization = $this->_repository->find($id);
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'organization' => $organization,
             'user' => $user

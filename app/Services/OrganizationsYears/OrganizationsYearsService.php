@@ -3,34 +3,48 @@
 namespace App\Services\OrganizationsYears;
 
 use App\Helpers\JsonHelper;
+use App\Services\InviteCodes\Repositories\InviteCodeRepositoryInterface;
 use App\Services\OrganizationsYears\Repositories\OrganizationYearRepositoryInterface;
 use App\Services\Services;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class OrganizationsYearsService extends Services
 {
-    public $_repository;
+    private $_repository;
 
-    public function __construct(OrganizationYearRepositoryInterface $organizationYearRepository)
+    private InviteCodeRepositoryInterface $inviteCodeRepository;
+
+
+
+    public function __construct(OrganizationYearRepositoryInterface $organizationYearRepository,InviteCodeRepositoryInterface $inviteCodeRepository)
     {
         $this->_repository = $organizationYearRepository;
+        $this->inviteCodeRepository = $inviteCodeRepository;
     }
 
     public function create(array $data): JsonResponse
     {
+        $user = Auth::user();
+        $data = array_merge($data, ['organization_id' => $user->organization_id,'user_id' => $user->id]);
         $year = $this->_repository->create($data);
-        return JsonHelper::sendJsonResponse(true, [
+        return $this->sendJsonResponse(true, [
             'message' => 'Успешно создан год',
             'year' => $year
         ]);
     }
 
-    public function get(int $organizationId): JsonResponse
+    public function get(): JsonResponse
     {
+        $user = Auth::user();
+        Log::debug('user = '.print_r($user,true));
+        $organizationId = $user->organization_id;
         $years = $this->_repository->get($organizationId);
         Log::debug('years = ' . $years);
-        return JsonHelper::sendJsonResponse(true, [
+        return $this->sendJsonResponse(true, [
             'title' => 'Года успешно получены',
             'years' => $years
         ]);
@@ -45,7 +59,7 @@ class OrganizationsYearsService extends Services
     public function update(int $id, array $data): JsonResponse
     {
         if (empty($data)) {
-            return JsonHelper::sendJsonResponse(false, [
+            return $this->sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Пустой массив данных'
             ], 400);
@@ -54,13 +68,13 @@ class OrganizationsYearsService extends Services
         Log::debug('result = ' . $result);
         if ($result) {
             $year = $this->_repository->find($id);
-            return JsonHelper::sendJsonResponse(true, [
+            return $this->sendJsonResponse(true, [
                 'title' => 'Успех',
                 'message' => 'Информация успешно сохранена',
                 'year' => $year
             ]);
         } else {
-            return JsonHelper::sendJsonResponse(false, [
+            return $this->sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'При сохранении данных произошла ошибка',
                 'id' => $result->id
@@ -72,12 +86,12 @@ class OrganizationsYearsService extends Services
     {
         $year = $this->_repository->findWithInfo($id);
         if ($year) {
-            return JsonHelper::sendJsonResponse(true, [
+            return $this->sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'year' => $year
             ]);
         } else {
-            return JsonHelper::sendJsonResponse(false, [
+            return $this->sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Ошибка при получении информации у года'
             ]);
@@ -89,7 +103,7 @@ class OrganizationsYearsService extends Services
     public function delete(int $id): JsonResponse
     {
         if (!$id) {
-            return JsonHelper::sendJsonResponse(false, [
+            return $this->sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Не указан id ресурса'
             ]);
@@ -98,12 +112,12 @@ class OrganizationsYearsService extends Services
         $result = $this->_repository->delete($id);
 
         if ($result) {
-            return JsonHelper::sendJsonResponse(true, [
+            return $this->sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Год удален успешно'
             ]);
         } else {
-            return JsonHelper::sendJsonResponse(false, [
+            return $this->sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Ошибка при удалении из базы данных'
             ], 403);
@@ -113,7 +127,7 @@ class OrganizationsYearsService extends Services
     public function copy(int $id): JsonResponse
     {
         if (!$id) {
-            return JsonHelper::sendJsonResponse(false, [
+            return $this->sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Не указан id ресурса'
             ]);
@@ -124,13 +138,13 @@ class OrganizationsYearsService extends Services
         Log::debug($year);
 
         if ($year) {
-            return JsonHelper::sendJsonResponse(true, [
+            return $this->sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Год скопирован успешно',
                 'year' => $year
             ]);
         } else {
-            return JsonHelper::sendJsonResponse(false, [
+            return $this->sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Ошибка при копировании элемента'
             ]);

@@ -19,19 +19,19 @@ class FacultiesService extends Services
     public function create(array $data): JsonResponse
     {
         if (empty($data)) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Пустой массив данных при создании факультета'
             ], 400);
         }
         $faculty = $this->_repository->create($data);
         if ($faculty and $faculty->id) {
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'message' => 'Факультет был успешно создан',
                 'faculty' => $faculty
             ]);
         }
-        return JsonHelper::sendJsonResponse(false, [
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'При сохранении данных произошла ошибка'
         ], 422);
@@ -46,7 +46,7 @@ class FacultiesService extends Services
     public function get(int $yearId): JsonResponse
     {
         $faculties = $this->_repository->get($yearId);
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно получены факультеты',
             'faculties' => $faculties
         ]);
@@ -55,7 +55,7 @@ class FacultiesService extends Services
     public function update(int $id, array $data): JsonResponse
     {
         if (empty($data)) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Пустой массив данных'
             ]);
@@ -65,13 +65,13 @@ class FacultiesService extends Services
 
         if ($faculty) {
             $faculty = $this->_repository->find($id);
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успех',
                 'message' => 'Информация успешно сохранена',
                 'faculty' => $faculty
             ]);
         } else {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'При сохранении данных произошла ошибка',
                 'id' => $faculty->id
@@ -82,7 +82,7 @@ class FacultiesService extends Services
     public function delete(int $id): JsonResponse
     {
         if (!$id) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Не указан id ресурса'
             ]);
@@ -91,12 +91,12 @@ class FacultiesService extends Services
         $flag = $this->_repository->delete($id);
 
         if ($flag) {
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Факультет удален успешно'
             ]);
         } else {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Ошибка при удалении из базы данных'
             ], 403);

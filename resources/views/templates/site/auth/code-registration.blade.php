@@ -84,7 +84,7 @@
                                         <option value="" selected>Выбрать</option>
                                     </select>
                                 @else
-                                    <select name="departments_ids[]" id="departments_menu_list"
+                                    <select name="departments_ids[]" id="departments_list_multiple"
                                             class="selectpicker form-control bs-select-hidden"
                                             data-title="Выбрать несколько..." data-width="100%"
                                             multiple>

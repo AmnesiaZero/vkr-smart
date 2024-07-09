@@ -32,4 +32,10 @@ interface AchievementRecordRepositoryInterface
      */
     public function find(int $id):Model;
 
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function delete(int $id):bool;
+
 }

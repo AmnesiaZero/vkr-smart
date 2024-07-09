@@ -6,9 +6,10 @@ use App\Helpers\JsonHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Program;
 use App\Services\ProgramsSpecialties\Repositories\ProgramSpecialtyRepositoryInterface;
+use App\Services\Services;
 use Illuminate\Http\JsonResponse;
 
-class ProgramsSpecialtiesService extends Controller
+class ProgramsSpecialtiesService extends Services
 {
 
     public $_repository;
@@ -21,20 +22,20 @@ class ProgramsSpecialtiesService extends Controller
     public function create(array $data): JsonResponse
     {
         if (empty($data)) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Пустой массив данных'
             ], 400);
         }
         $programSpecialty = $this->_repository->create($data);
         if ($programSpecialty and $programSpecialty->id) {
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Специальность у программы успешно создана',
                 'program_specialty' => $programSpecialty
             ]);
         }
-        return JsonHelper::sendJsonResponse(false, [
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'При сохранении данных произошла ошибка'
         ], 403);
@@ -43,7 +44,7 @@ class ProgramsSpecialtiesService extends Controller
     public function get(int $programId): JsonResponse
     {
         $programSpecialties = $this->_repository->get($programId);
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно получены программы',
             'program_specialties' => $programSpecialties
         ]);
@@ -52,7 +53,7 @@ class ProgramsSpecialtiesService extends Controller
     public function update(int $id, array $data): JsonResponse
     {
         if (empty($data)) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Пустой массив данных'
             ], 400);
@@ -62,13 +63,13 @@ class ProgramsSpecialtiesService extends Controller
 
         if ($result) {
             $faculty = Program::query()->find($id);
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успех',
                 'message' => 'Информация успешно сохранена',
                 'program' => $faculty
             ]);
         } else {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'При сохранении данных произошла ошибка',
                 'id' => $result->id
@@ -79,7 +80,7 @@ class ProgramsSpecialtiesService extends Controller
     public function delete(int $id): JsonResponse
     {
         if (!$id) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Не указан id ресурса'
             ]);
@@ -88,12 +89,12 @@ class ProgramsSpecialtiesService extends Controller
         $flag = $this->_repository->delete($id);
 
         if ($flag) {
-            return JsonHelper::sendJsonResponse(true, [
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Факультет удален успешно'
             ]);
         } else {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Ошибка при удалении из базы данных'
             ], 403);
@@ -105,12 +106,12 @@ class ProgramsSpecialtiesService extends Controller
         $programSpecialties = $this->_repository->getByOrganization($organizationId);
         if(!isEmpty($programSpecialties))
         {
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                'title' => 'Успешно',
                'program_specialties' => $programSpecialties
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Ошибка при получении специальностей'
         ]);

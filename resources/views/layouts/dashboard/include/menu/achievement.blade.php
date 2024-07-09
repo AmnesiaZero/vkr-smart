@@ -25,17 +25,6 @@
     <div class="d-flex cursor-p mb-2">
         <img src="/images/download.svg" alt="" class="pe-2">
         <input type="file" id="file_input" style="display: none">
-        <p class="fs-14 lh-17 text-grey m-0" id="upload_button">Выбрать работу из списка</p>
-    </div>
-    <div class="d-flex cursor-p mb-2">
-        <img src="/images/download.svg" alt="" class="pe-2">
-        <input type="file" id="file_input" style="display: none">
-        <p class="fs-14 lh-17 text-grey m-0" id="upload_button">Добавить файл</p>
-    </div>
-    <div class="d-flex cursor-p mb-2">
-        <img src="/images/download.svg" alt="" class="pe-2">
-        <input type="file" id="certificate_input" style="display: none">
-        <p class="fs-14 lh-17 text-grey m-0" id="upload_certificate_button">Загрузить или заменить справку<br> о самопроверке по другим
-            системам</p>
+        <p class="fs-14 lh-17 text-grey m-0" onclick="openAddWorksModal()">Выбрать работу из списка</p>
     </div>
 </div>

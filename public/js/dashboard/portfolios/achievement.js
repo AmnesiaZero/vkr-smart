@@ -36,6 +36,36 @@ $(document).ready(function () {
         });
     });
 
+    $("#add_work_form").on('submit', function(e) {
+        e.preventDefault(); // Предотвращаем стандартное поведение формы
+        const formData = new FormData(this);
+        formData.append('achievement_id',achievementId);
+        formData.append('user_id',userId);
+        formData.append('record_type_id',1);
+        $.ajax({
+            url: "/dashboard/portfolio/achievements/records/create",
+            data:formData,
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            processData: false, // Не обрабатываем файлы (не превращаем в строку)
+            contentType: false, // Не устанавливаем заголовок Content-Type
+            success: function (response) {
+                if (response.success) {
+                    const achievementRecord = response.data.achievement_record;
+                    printAchievementRecord(achievementRecord);
+                }
+                else {
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                }
+            },
+            error: function () {
+                $.notify("Произошла ошибка при редактировании пользователя", "error");
+            }
+        });
+    });
+
     achievements();
 });
 
@@ -255,11 +285,6 @@ function addRecord(recordTypeId)
     }
     let data = formId.serialize();
     data += '&' + $.param(additionalData);
-    addRecordAjax(data);
-}
-
-function addRecordAjax(data)
-{
     $.ajax({
         url: "/dashboard/portfolio/achievements/records/create",
         data:data,
@@ -282,6 +307,7 @@ function addRecordAjax(data)
         }
     });
 }
+
 
 function printAchievementRecord(achievementRecord)
 {
@@ -376,3 +402,101 @@ function openPortfolio()
 {
     window.location.href = '/dashboard/portfolio/' + userId;
 }
+
+function deleteAchievementRecord(id)
+{
+    if(confirm('Вы уверены,что хотите удалить достижение'))
+    {
+        const data = {
+            id:id
+        };
+        $.ajax({
+            url: "/dashboard/portfolio/achievements/records/delete",
+            data:data,
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    $("#achievement_record_" + id).remove();
+                    $.notify(response.data.title + ":" + response.data.message, "success");
+                }
+                else {
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                }
+            },
+            error: function () {
+                $.notify("Произошла ошибка при редактировании пользователя", "error");
+            }
+        });
+    }
+}
+
+function openAddWorksModal()
+{
+    openModal('add_work_modal');
+    works();
+}
+
+function getAssessmentDescription(assessment)
+{
+    switch (assessment) {
+        case 0:
+            return 'Без оценки';
+        case 2:
+            return 'Неудовлетворительно';
+        case 3:
+            return 'Удовлетворительно';
+        case 4:
+            return 'Хорошо';
+        case 5:
+            return 'Отлично';
+        default:
+            return 'Неизвестно';
+    }
+}
+
+
+function works(page=1)
+{
+    const data = {
+        page:page,
+        user_type:2,
+        user_id:userId
+    };
+    $.ajax({
+        url: "/dashboard/works/search",
+        type: 'GET',
+        data:data,
+        dataType: "json",
+        success: function(response) {
+            if (response.success)
+            {
+                const pagination = response.data.works;
+                const links = pagination.links;
+                //Обрезаем из массива линков Previos и Next
+                links.shift();
+                links.pop();
+                pagination.links = links;
+                const works = pagination.data;
+                const worksTable = $("#works_table");
+                worksTable.html($("#work_tmpl").tmpl(works));
+                const currentPage = pagination.current_page;
+                const perPage = pagination.per_page;
+                const totalItems = pagination.total;
+                const totalPages = pagination.links.length;
+                updatePagination(currentPage,totalItems,totalPages,perPage);
+            }
+            else
+            {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function() {
+            $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
+        }
+    });
+}
+

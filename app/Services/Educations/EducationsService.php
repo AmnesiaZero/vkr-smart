@@ -4,10 +4,11 @@ namespace App\Services\Educations;
 
 use App\Helpers\JsonHelper;
 use App\Services\Educations\Repositories\EducationRepositoryInterface;
+use App\Services\Services;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
-class EducationsService
+class EducationsService extends Services
 {
    private EducationRepositoryInterface $educationRepository;
 
@@ -24,13 +25,13 @@ class EducationsService
        $education = $this->educationRepository->create($data);
        if($education and $education->id)
        {
-           return JsonHelper::sendJsonResponse(true,[
+           return self::sendJsonResponse(true,[
                'title' => 'Успешно',
                'message' => 'Успешно создано образование',
                'education' => $education
            ]);
        }
-       return JsonHelper::sendJsonResponse(false,[
+       return self::sendJsonResponse(false,[
            'title' => 'Ошибка',
            'message' => 'Ошибка при создании образования'
        ]);
@@ -41,12 +42,12 @@ class EducationsService
         $educations = $this->educationRepository->get($userId);
         if($educations and is_iterable($educations))
         {
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'educations' => $educations
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при получении образований'
         ]);
@@ -57,12 +58,12 @@ class EducationsService
         $flag = $this->educationRepository->delete($id);
         if($flag)
         {
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'message' => 'Образование было успешно удалено'
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при удалении образования'
         ]);

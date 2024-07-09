@@ -142,7 +142,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'dashboard',
-    'middleware' => ['web', 'auth', 'role:admin']
+    'middleware' => ['web', 'auth','role:admin,teacher,user']
 ], function () {
     Route::get('/', [OrganizationsController::class, 'organizationsStructure']);
 
@@ -240,7 +240,8 @@ Route::group([
                Route::post('create',[AchievementsRecordsController::class,'create']);
                Route::get('get',[AchievementsRecordsController::class,'get']);
                Route::get('find',[AchievementsRecordsController::class,'find']);
-               Route::post('download',[AchievementsRecordsController::class,'download']);
+               Route::get('download',[AchievementsRecordsController::class,'download']);
+               Route::post('delete',[AchievementsRecordsController::class,'delete']);
             });
             Route::get('{id}',[AchievementsController::class,'view']);
         });

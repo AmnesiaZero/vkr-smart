@@ -9,33 +9,17 @@ class Services
 
 
     /**
-     * Проверка данных перед отправкой на сервер
+     * @param bool $success
      * @param array $data
-     * @return JsonResponse|null
-     */
-    public function checkData(array $data): JsonResponse|null
-    {
-        if (empty($data)) {
-            return self::sendJsonResponse(true, 'danger', [
-                'title' => 'Ошибка!',
-                'message' => 'Пустой массив данных'
-            ]);
-        }
-        return null;
-    }
-
-    /**
-     * @param bool $error
-     * @param string $msgType // primary, danger, success, secondary
-     * @param array $data
+     * @param int $status
      * @return JsonResponse
      */
-    public function sendJsonResponse(bool $error, string $msgType = 'secondary', array $data = []): JsonResponse
+    public static function sendJsonResponse(bool $success, array $data = [], int $status = 200): JsonResponse
     {
         return response()->json([
-            'success' => $error,
+            'success' => $success,
             'data' => $data
-        ]);
+        ], $status);
     }
 
 }

@@ -5,12 +5,13 @@ namespace App\Services\InviteCodes;
 use App\Exports\InviteCodesExport;
 use App\Helpers\JsonHelper;
 use App\Services\InviteCodes\Repositories\InviteCodeRepositoryInterface;
+use App\Services\Services;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
-class InviteCodesService
+class InviteCodesService extends Services
 {
     public InviteCodeRepositoryInterface $_repository;
 
@@ -23,7 +24,7 @@ class InviteCodesService
     public function create(array $data): JsonResponse
     {
         if (empty($data)) {
-            return JsonHelper::sendJsonResponse(false, [
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Пустой массив данных'
             ], 400);
@@ -48,7 +49,7 @@ class InviteCodesService
                 $inviteCodes[] = $inviteCode;
             }
         }
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'message' => 'Коды приглашений успешно созданы',
             'invite_codes' => $inviteCodes
@@ -59,7 +60,7 @@ class InviteCodesService
     public function get(int $organizationId, int $pageNumber, int $type): JsonResponse
     {
         $inviteCodes = $this->_repository->get($organizationId, $pageNumber, $type);
-        return JsonHelper::sendJsonResponse(true, [
+        return self::sendJsonResponse(true, [
             'title' => 'Успешно получены коды регистраций',
             'invite_codes' => $inviteCodes
         ]);

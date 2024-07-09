@@ -86,7 +86,8 @@ function departments(data) {
                 if ($("#departments_list").length > 0) {
                     departmentsList = $("#departments_list");
                     departmentsList.html($("#department_list_tmpl").tmpl(departments));
-                } else {
+                }
+                else {
                     departmentsList = $("#departments_list_multiple");
                     const dropdownList = $('.selectpicker');
                     dropdownList.empty();

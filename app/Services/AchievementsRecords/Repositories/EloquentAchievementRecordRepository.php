@@ -28,4 +28,9 @@ class EloquentAchievementRecordRepository implements AchievementRecordRepository
     {
         return AchievementRecord::with('type.category')->find($id);
     }
+
+    public function delete(int $id): bool
+    {
+        return $this->find($id)->delete();
+    }
 }

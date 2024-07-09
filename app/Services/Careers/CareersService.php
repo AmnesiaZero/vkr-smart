@@ -4,10 +4,11 @@ namespace App\Services\Careers;
 
 use App\Helpers\JsonHelper;
 use App\Services\Careers\Repositories\CareerRepositoryInterface;
+use App\Services\Services;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
-class CareersService
+class CareersService extends Services
 {
 
     private CareerRepositoryInterface $careerRepository;
@@ -25,12 +26,12 @@ class CareersService
         $career = $this->careerRepository->create($data);
         if($career and $career->id)
         {
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'career' => $career
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Ошибка при создании карьеры'
         ]);
@@ -41,12 +42,12 @@ class CareersService
         $careers = $this->careerRepository->get($userId);
         if($careers and is_iterable($careers))
         {
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'careers' => $careers
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Ошибка при получении карьер'
         ]);
@@ -57,12 +58,12 @@ class CareersService
         $flag = $this->careerRepository->delete($id);
         if($flag)
         {
-            return JsonHelper::sendJsonResponse(true,[
+            return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'message' => 'Карьера успешно удалена'
             ]);
         }
-        return JsonHelper::sendJsonResponse(false,[
+        return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при удалении работы'
         ]);

@@ -10,8 +10,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+
 
 class OrganizationsYearsController extends Controller
 {
@@ -29,21 +31,7 @@ class OrganizationsYearsController extends Controller
 
     public function get(): JsonResponse
     {
-        $user = Auth::user();
-        //Это для получения годов у незарегестрированных пользователей
-        if ($user == null) {
-            if ($code = session('invite_code')) {
-                $organizationId = $code->organizationId;
-            } else {
-                return JsonHelper::sendJsonResponse(false, [
-                    'title' => 'Ошибка',
-                    'message' => 'Не передан параметр organization id'
-                ]);
-            }
-        } else {
-            $organizationId = $user->organization_id;
-        }
-        return $this->organizationYearsService->get($organizationId);
+        return $this->organizationYearsService->get();
     }
 
     public function create(Request $request): JsonResponse
@@ -57,12 +45,7 @@ class OrganizationsYearsController extends Controller
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
-        $user = Auth::user();
-        $data = array_merge($data, ['organization_id' => $user->organization_id, 'user_id' => $user->id]);
-        Log::debug('request data = ' . print_r($data, true));
-        $result = $this->organizationYearsService->create($data);
-        Log::debug('result = ' . $result);
-        return $result;
+        return $this->organizationYearsService->create($data);
     }
 
     public function update(Request $request): JsonResponse
