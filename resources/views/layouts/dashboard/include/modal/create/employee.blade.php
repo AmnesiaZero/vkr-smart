@@ -65,14 +65,14 @@
                     <div class="form-group">
                         <label class="col-sm-4">Год выпуска</label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="years_list" required="">
+                            <select class="form-control" name="year_id" id="years_list" required="">
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4">Факультет</label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="faculties_list">
+                            <select class="form-control" name="faculty_id" id="faculties_list">
                                 <option value="" selected>Уточните год выпуска...</option>
                             </select>
                         </div>

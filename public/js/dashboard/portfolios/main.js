@@ -1,3 +1,15 @@
+const path = window.location.pathname;
+const string  = path.split("/").pop();
+var role = '';
+if(string=='teachers')
+{
+    role = 'teacher';
+}
+else
+{
+    role = 'user';
+}
+
 $(document).ready(function () {
     localStorage.setItem('selected_years', '');
     localStorage.setItem('selected_faculties', '');
@@ -14,7 +26,7 @@ $(document).ready(function () {
 function users(page=1)
 {
     const data = {
-        roles:['teacher'],
+        roles:[role],
         page:page
     }
     $.ajax({
@@ -86,7 +98,7 @@ function searchUsers() {
         selected_years: selectedYears,
         selected_departments: selectedDepartments,
         selected_faculties:selectedFaculties,
-        roles:['teacher']
+        roles:[role]
     };
     console.log(additionalData);
     data += '&' + $.param(additionalData);
@@ -114,8 +126,10 @@ function resetSearch()
 {
     $("#name_input").val('');
     $("#email_input").val('');
+    $("#group_input").val('');
     users();
 }
+
 
 
 function updateWorksCount()

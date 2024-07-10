@@ -500,3 +500,40 @@ function works(page=1)
     });
 }
 
+function openOverView()
+{
+    const data = {
+        id: userId
+    };
+    $.ajax({
+        url: "/dashboard/users/find",
+        data: data,
+        type: "GET",
+        dataType: "json",
+        success: function (response) {
+            if (response.success) {
+                const user = response.data.user;
+                $("#tmpl_container").html($("#overview_tmpl").tmpl(user));
+                const achievements = user.achievements;
+                console.log('achievements');
+                console.log(achievements);
+                $("#overview_achievements_list").html($("#overview_achievement_tmpl").tmpl(achievements));
+                const educations = user.educations;
+                console.log('educations');
+                console.log(educations);
+                $("#overview_educations_list").html($("#overview_education_tmpl").tmpl(educations));
+                const careers = user.careers;
+                console.log('careers');
+                console.log(careers);
+                $("#overview_careers_list").html($("#overview_career_tmpl").tmpl(careers));
+            }
+            else {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function () {
+            $.notify("Произошла ошибка при редактировании пользователя", "error");
+        }
+    });
+}
+

@@ -75,7 +75,7 @@
             <div class="col-sm-9 col-lg-9 col-xs-9">
                 <div class="tab-content profile-content">
                     <div role="tabpanel" class="tab-pane active" id="profile-base">
-                        <form class="form form-horizontal" action="staff-personal-info.html" method="post">
+                        <form class="form form-horizontal" method="post">
                             <h2>Основная информация:</h2>
                             <div class="form-group">
                                 <div class="row">

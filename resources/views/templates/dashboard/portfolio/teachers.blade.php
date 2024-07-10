@@ -47,7 +47,7 @@
 @endsection
 @section('scripts')
 
-    <script src="/js/dashboard/portfolios/teachers.js"></script>
+    <script src="/js/dashboard/portfolios/main.js"></script>
 
     <script id="user_tmpl" type="text/x-jquery-tmpl">
         <div class="col-xl-3 col-lg-4 col-sm-6 col-12">

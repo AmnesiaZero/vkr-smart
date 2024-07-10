@@ -30,6 +30,8 @@ class User extends Authenticatable
         'login',
         'password',
         'organization_id',
+        'faculty_id',
+        'year_id',
         'phone',
         'date_of_birth',
         'group',
@@ -62,6 +64,16 @@ class User extends Authenticatable
     public function departments(): BelongsToMany
     {
         return $this->belongsToMany(Department::class, 'departments_users')->with(['faculty', 'year']);
+    }
+
+    public function year():HasOne
+    {
+        return $this->hasOne(OrganizationYear::class,'id','year_id');
+    }
+
+    public function faculty():HasOne
+    {
+        return $this->hasOne(Faculty::class,'id','faculty_id');
     }
 
     public function organization(): HasOne

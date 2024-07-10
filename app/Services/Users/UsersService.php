@@ -471,4 +471,14 @@ class UsersService extends Services
         return back()->withErrors(['Возникла ошибка при поиске пользователя с данным id']);
     }
 
+    public function studentsPortfoliosView()
+    {
+        $you = Auth::user();
+        $organizationId = $you->organization_id;
+        $years = $this->yearRepository->get($organizationId);
+        $roles = ['user'];
+        $users = $this->_repository->get($organizationId,$roles);
+        return view('templates.dashboard.portfolio.students',['years' => $years,'users' => $users]);
+    }
+
 }

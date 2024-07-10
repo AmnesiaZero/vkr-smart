@@ -32,7 +32,7 @@ class EloquentUserRepository implements UserRepositoryInterface
 
     public function find(int $id): Model
     {
-        return User::with(['roles', 'departments', 'organization','works','educations','careers','achievements'])->find($id);
+        return User::with(['roles', 'departments', 'organization','works','educations','careers','achievements.mode'])->find($id);
     }
 
     public function update(int $id, array $data): int
@@ -62,34 +62,21 @@ class EloquentUserRepository implements UserRepositoryInterface
         if (isset($data['group'])) {
             $query = $query->where('group', 'like', '%' . $data['group'] . '%');
         }
-        $users = $query->get();
-
-        if (isset($data['selected_departments']) and count($data['selected_departments'])>0) {
-            Log::debug('Вошёл в условие');
-            $departmentsIds = $data['selected_departments'];
-            $users = $users->filter(function ($user) use ($departmentsIds) {
-                return $user->departments->whereIn('id', $departmentsIds)->isNotEmpty();
-            });
-        }
-
         if (isset($data['selected_years']) and count($data['selected_years'])>0) {
             $yearsIds = $data['selected_years'];
-            $users = $users->filter(function ($user) use ($yearsIds) {
-                return $user->departments->whereIn('year.id', $yearsIds)->isNotEmpty();
+            $query = $query->whereHas('year', function ($query) use ($yearsIds) {
+                $query->whereIn('id', $yearsIds);
             });
         }
-
         if (isset($data['selected_faculties']) and count($data['selected_faculties'])>0) {
             $facultiesIds = $data['selected_faculties'];
-            $users = $users->filter(function ($user) use ($facultiesIds) {
-                // Проверяем, есть ли у пользователя департаменты, которые содержат годы с факультетами с заданными id
-                return $user->departments->contains(function ($department) use ($facultiesIds) {
-                    return $department->year->faculties->contains(function ($faculty) use ($facultiesIds) {
-                        return in_array($faculty->id, $facultiesIds);
-                    });
-                });
+            $query = $query->whereHas('faculty', function ($query) use ($facultiesIds) {
+                $query->whereIn('id', $facultiesIds);
             });
         }
+        $users = $query->get();
+
+
 
         if (isset($data['roles'])) {
             $roles = $data['roles'];
@@ -101,6 +88,14 @@ class EloquentUserRepository implements UserRepositoryInterface
             $role = $data['role'];
             $users = $users->filter(function ($user) use ($role) {
                 return $user->roles->where('slug', '=', $role)->isNotEmpty();
+            });
+        }
+
+        if (isset($data['selected_departments']) and count($data['selected_departments'])>0) {
+            Log::debug('Вошёл в условие');
+            $departmentsIds = $data['selected_departments'];
+            $users = $users->filter(function ($user) use ($departmentsIds) {
+                return $user->departments->whereIn('id', $departmentsIds)->isNotEmpty();
             });
         }
         return $users;

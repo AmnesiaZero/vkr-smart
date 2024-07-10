@@ -27,6 +27,8 @@ class UsersController extends Controller
         'login',
         'password',
         'organization_id',
+        'faculty_id',
+        'year_id',
         'phone',
         'group',
         'specialty_id',
@@ -171,6 +173,8 @@ class UsersController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|max:255',
             'gender' => 'required|integer',
+            'faculty_id' => ['integer',Rule::exists('faculties','id')],
+            'year_id' => ['integer',Rule::exists('faculties','id')],
             'is_active' => 'required|integer',
         ]);
         if ($validator->fails()) {
@@ -315,6 +319,11 @@ class UsersController extends Controller
     public function teachersPortfoliosView()
     {
         return $this->usersService->teachersPortfoliosView();
+    }
+
+    public function studentsPortfoliosView()
+    {
+        return $this->usersService->studentsPortfoliosView();
     }
 
     public function openPortfolio(int $id)

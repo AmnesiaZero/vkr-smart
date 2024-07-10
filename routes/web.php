@@ -222,7 +222,7 @@ Route::group([
     Route::group([
         'prefix' => 'portfolio'
     ], function () {
-        Route::get('students', [WorksController::class, 'studentsWorksView']);
+        Route::get('students', [UsersController::class, 'studentsPortfoliosView']);
         Route::get('teachers', [UsersController::class,'teachersPortfoliosView']);
         Route::get('{id}',[UsersController::class,'openPortfolio']);
 
