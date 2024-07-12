@@ -1,4 +1,4 @@
-<div class="info-box" id="info_box">
+<div class="info-box dropdown-menu" id="info_box">
     <div class="d-flex cursor-p mb-2">
         <img src="/images/Edit_Pencil.svg" alt="" class="pe-2">
         <p class="fs-14 lh-17 text-grey m-0" onclick="openUpdateAchievementModal()">Изменить запись</p>

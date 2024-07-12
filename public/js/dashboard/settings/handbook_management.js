@@ -1,4 +1,4 @@
-var addBadge = function () {
+var addBadge_0 = function () {
     let text = document.getElementById("content").value;
     var elemOutKod = document.querySelector('.out-kod');
 
@@ -8,7 +8,7 @@ var addBadge = function () {
 function checkForEnter(e) {
     if (e.keyCode == 13) {
         console.log(this.value);
-        addBadge();
+        addBadge_0();
     }
 }
 
