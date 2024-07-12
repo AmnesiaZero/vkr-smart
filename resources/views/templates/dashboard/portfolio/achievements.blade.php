@@ -1,4 +1,11 @@
 @extends('layouts.dashboard.main')
+
+@section('styles')
+    <link rel="stylesheet" href="{{'/css/achievements.css'}}">
+    <link rel="stylesheet" href="{{'/css/profile.css'}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+@endsection
+
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
         <div class="row pt-4 g-3 px-md-0 px-3">
@@ -48,7 +55,7 @@
         </div>
         <div class="pt-5 px-md-0 px-3">
             <div class="big-table">
-                <table class="table fs-14">
+                <table class="table table-mini table-striped fs-14">
                     <thead class="brt-green-light-2 brb-green-light-2 lh-17">
                     <tr class="text-grey">
                         <th scope="col">Номер</th>
@@ -58,7 +65,6 @@
                         <th scope="col">Управление</th>
                     </tr>
                     </thead>
-                    @include('layouts.dashboard.include.menu.achievement')
                     <tbody class="lh-17 brb-green-light-2" id="achievements_list">
                     </tbody>
                 </table>
@@ -78,49 +84,50 @@
 @section('scripts')
     <script src="/js/dashboard/portfolios/achievement.js"></script>
     <script id="achievement_tmpl" type="text/x-jquery-tmpl">
-  <tr id="achievement_${id}">
-     <td>
-        ${index}
-    </td>
-    <td>
-        ${name}
-        <br>
-        ${description}
-    </td>
-    <td>
-        ${mode.name}
-    </td>
-    <td>
-        ${record_date}
-    </td>
-    <td>
-      <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p" onclick="openInfoBox(${id})">
-      </td>
-   </tr>
-   <tr>
-     <td class="nopadding" colspan="5">
-       <table class="table table-condensed table-bordered">
-           <thead>
-           <tr>
-           <th>Отзыв</th>
-           <th>Подтверждение достижения</th>
-           <th>Работа</th>
-           <th>Другое</th>
-           </tr>
-           </thead>
-           <tbody>
-           <tr style="flex:row">
-             <td id="reviews_column_${id}"> </td>
-             <td id="confirm_achievements_column_${id}"> </td>
-             <td id="works_column_${id}"> </td>
-             <td id="others_column_${id}"> </td>
-           </tr>
-           </tbody>
+        <tr id="achievement_${id}">
+           <td>
+              ${index}
+          </td>
+          <td>
+              ${name}
+              <br>
+              ${description}
+          </td>
+          <td>
+              ${mode.name}
+          </td>
+          <td>
+              ${record_date}
+          </td>
+          <td>
+            <img src="/images/three_dots.svg" alt="" aria-haspopup="true" data-bs-toggle="dropdown" class="btn-info-box cursor-p" onclick="openInfoBox(${id})">
+            @include('layouts.dashboard.include.menu.achievement')
+          </td>
+         </tr>
+         <tr>
+           <td class="nopadding" colspan="5">
+             <table class="table table-condensed table-bordered">
+                 <thead>
+                     <tr>
+                         <th>Отзыв</th>
+                         <th>Подтверждение достижения</th>
+                         <th>Работа</th>
+                         <th>Другое</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     <tr style="flex:row">
+                       <td id="reviews_column_${id}"> </td>
+                       <td id="confirm_achievements_column_${id}"> </td>
+                       <td id="works_column_${id}"> </td>
+                       <td id="others_column_${id}"> </td>
+                     </tr>
+                 </tbody>
 
-     </td>
-   </tr>
+           </td>
+         </tr>
 
-</script>
+    </script>
 
     <script id="update_achievement_modal_tmpl" type="text/x-jquery-tmpl">
         <div id="update_achievement_modal">
@@ -210,49 +217,53 @@
     </script>
 
     <script id="record_tmpl" type="text/x-jquery-tmpl">
-      <div class="dropdown" id="achievement_record_${id}">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"> </button>
-        @{{if record_type_id==1}}
-        <span class="glyphicon glyphicon-save-file"></span>
-        Файл
-        @{{/if}}
+        <div class="dropdown" id="achievement_record_${id}">
 
-        @{{if record_type_id==2}}
-        <span class="glyphicon glyphicon-link"> </span>
-        Ссылка
-        @{{/if}}
+          <a data-bs-toggle="dropdown" aria-expanded="false" class="list-group-item">
+              @{{if record_type_id==1}}
+                  <i class="bi bi-save"></i>
+                  Файл
+              @{{/if}}
 
-        @{{if record_type_id==3}}
-        <span class="glyphicon glyphicon-eye-open" onclick="openTextRecord(${id})"></span>
-        Текст
-        @{{/if}}
-        <span class="gree">(${type.name})</span>
-        </a>
-        <ul class="dropdown-menu">
-            <li>
-                @{{if record_type_id==1}}
-                <a href="/dashboard/portfolio/achievements/records/download?id=${id}" class="green">
-                    <span class="glyphicon glyphicon-edit"></span>
-                    Открыть</a>
-                @{{/if}}
-                @{{if record_type_id==2}}
-                <a href="${content}" target="_blank"  class="green">
-                    <span class="glyphicon glyphicon-edit"></span>
-                    Открыть</a>
-                @{{/if}}
-                @{{if record_type_id==3}}
-                <a onclick="openTextRecord(${id}); return false;" class="green">
-                    <span class="glyphicon glyphicon-edit"></span>
-                    Открыть</a>
-                @{{/if}}
-            </li>
-            <li>
-                <a onclick="deleteAchievementRecord(${id}); return false;" class="red">
-                    <span class="glyphicon glyphicon-remove"></span>
-                    Удалить</a>
-            </li>
-        </ul>
-    </div>
+              @{{if record_type_id==2}}
+                  <i class="bi bi-link-45deg"></i>
+                  Ссылка
+              @{{/if}}
+
+              @{{if record_type_id==3}}
+                  <i class="bi bi-eye" onclick="openTextRecord(${id})"></i>
+                  Текст
+              @{{/if}}
+
+              <span class="gree">(${type.name})</span>
+
+          </a>
+
+          <ul class="dropdown-menu">
+              <li>
+                  @{{if record_type_id==1}}
+                  <a href="/dashboard/portfolio/achievements/records/download?id=${id}"  class="green text-decoration-none">
+                      <i class="bi bi-pencil"></i>
+                      Открыть</a>
+                  @{{/if}}
+                  @{{if record_type_id==2}}
+                  <a href="${content}" target="_blank"   class="green text-decoration-none">
+                      <i class="bi bi-pencil"></i>
+                      Открыть</a>
+                  @{{/if}}
+                  @{{if record_type_id==3}}
+                  <a onclick="openTextRecord(${id}); return false;"  class="green text-decoration-none">
+                      <i class="bi bi-pencil"></i>
+                      Открыть</a>
+                  @{{/if}}
+              </li>
+              <li>
+                  <a onclick="deleteAchievementRecord(${id}); return false;"  class="reden text-decoration-none">
+                      <i class="bi bi-x"></i>
+                      Удалить</a>
+              </li>
+          </ul>
+      </div>
 
 
 
@@ -261,166 +272,166 @@
     </script>
 
     <script id="text_tmpl" type="text/x-jquery-tmpl">
-       <div id="text_modal" style="padding-right: 20px;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h3>Описание ресурса</h3>
-                </div>
-                <div class="modal-body">
-                    <div id="informationModalData">${content}</div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeTmplModal('text_modal')">Закрыть окно</button>
-                </div>
-            </div>
-        </div>
-    </div>
+        <div id="text_modal" style="padding-right: 20px;">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                     <h3>Описание ресурса</h3>
+                 </div>
+                 <div class="modal-body">
+                     <div id="informationModalData">${content}</div>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeTmplModal('text_modal')">Закрыть окно</button>
+                 </div>
+             </div>
+         </div>
+     </div>
 
 
     </script>
 
     <script id="work_tmpl" type="text/x-jquery-tmpl">
-     <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
-    <td><input type="radio" name="work_id" value="${id}"></td>
+        <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
+       <td><input type="radio" name="work_id" value="${id}"></td>
 
-    <th scope="row">${specialty.name}</th>
-    <td>${student}</td>
-    <td>${group}</td>
-    <td>${protect_date}</td>
-    <td>${name}</td>
-    <td>${getAssessmentDescription(assessment)}</td>
-    </tr>
+       <th scope="row">${specialty.name}</th>
+       <td>${student}</td>
+       <td>${group}</td>
+       <td>${protect_date}</td>
+       <td>${name}</td>
+       <td>${getAssessmentDescription(assessment)}</td>
+       </tr>
 
     </script>
 
     <script id="overview_tmpl" type="text/x-jquery-tmpl">
-       <div id="overview_modal" style="display: block;">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeTmplModal('overview_modal')"><span aria-hidden="true">×</span></button>
-                    <h3>Портфолио Ваших достижений</h3>
-                </div>
-                <div class="modal-body">
-                    <div id="user-achivements">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="profile-sidebar">
-                                    <div class="profile-userpic">
-                                        <img src="/assets/templates/c/img/profile/default.png" alt="" class="img-responsive">
-                                    </div>
-                                    <div class="profile-usertitle">
-                                        <div class="profile-usertitle-name">
-                                            ${name}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <form class="form form-horizontal" action="staff-personal-info.html" method="post">
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Фамилия, имя, отчество</label>
-                                        <div class="col-sm-8">
-                                            ${name}									</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Адрес электронной почты</label>
-                                        <div class="col-sm-8">
-                                            ${email}								</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Организация</label>
-                                        <div class="col-sm-8">
-                                            ${organization.name}									</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4"></label>
-                                        <div class="col-sm-8">
-                                            <div class="dropdown non-printable">
-                                                <button class="btn btn-default" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <span class="glyphicon glyphicon-print"></span> Печать <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu " aria-labelledby="dLabel">
-                                                    <li><a href="#" onclick="$('#achivement-tab').printThis(); return false;">Портфолио</a></li>
-                                                    <li><a href="#" onclick="$('#achivement-tab').printThis(); return false;">Резюме</a></li>
-                                                    <li><a href="#" onclick="$('#user-achivements').printThis(); return false;">Все на одной странице</a></li>
-                                                </ul>
+    <div id="overview_modal" class="modal" style="display: block;">
+         <div class="modal-dialog modal-lg">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h3>Портфолио Ваших достижений</h3>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeTmplModal('overview_modal')" style="background: none; border: none;"><span aria-hidden="true">×</span></button>
+                 </div>
+                 <div class="modal-body">
+                     <div id="user-achivements">
+                         <div class="row">
+                             <div class="col-sm-4">
+                                 <div class="profile-sidebar">
+                                     <div class="profile-userpic">
+                                         <img src="/images/default.png" alt="" class="img-responsive">
+                                     </div>
+                                     <div class="profile-usertitle">
+                                         <div class="profile-usertitle-name">
+                                             ${name}
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="col-sm-8">
+                                 <form class="form form-horizontal d-flex flex-column gap-2" action="staff-personal-info.html" method="post">
+                                     <div class="row">
+                                         <label class="col-sm-4 fw-700">Фамилия, имя, отчество</label>
+                                         <div class="col-sm-8">
+                                             ${name}									</div>
+                                     </div>
+                                     <div class="row">
+                                         <label class="col-sm-4 fw-700">Адрес электронной почты</label>
+                                         <div class="col-sm-8">
+                                             ${email}								</div>
+                                     </div>
+                                     <div class="row">
+                                         <label class="col-sm-4 fw-700">Организация</label>
+                                         <div class="col-sm-8">
+                                             ${organization.name}									</div>
+                                     </div>
+                                     <div class="row">
+                                         <label class="col-sm-4"></label>
+                                         <div class="col-sm-8">
+                                             <div class="dropdown non-printable">
+                                                 <button class="btn btn-default" id="dLabel" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                     <i class="bi bi-printer"></i> Печать <i class="bi bi-caret-down-fill"></i>
+                                                 </button>
+                                                 <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                                     <li><a href="#" class="text-decoration-none" onclick="$('#achivement-tab').printThis(); return false;">Портфолио</a></li>
+                                                     <li><a href="#" class="text-decoration-none" onclick="$('#achivement-tab').printThis(); return false;">Резюме</a></li>
+                                                     <li><a href="#" class="text-decoration-none" onclick="$('#user-achivements').printThis(); return false;">Все на одной странице</a></li>
+                                                 </ul>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <ul class="nav d-flex flex-column" role="tablist">
-                                    <li role="presentation" class="nav-item">
-                                        <a href="#achievements-tab" class="nav-link active" aria-controls="profile-base" role="tab" data-bs-toggle="tab"
-                                           aria-expanded="false">
-                                            <i class="fas fa-home"></i> Портфолио достижений
-                                        </a>
-                                    </li>
-                                    <li role="presentation" class="nav-item">
-                                        <a href="#educations-tab" class="nav-link" aria-controls="profile-achivements" role="tab"
-                                           data-bs-toggle="tab" aria-expanded="false">
-                                            <i class="fas fa-th"></i> Образование
-                                        </a>
-                                    </li>
-                                    <li role="presentation" class="nav-item">
-                                        <a href="#careers-tab" class="nav-link" aria-controls="profile-main" role="tab" data-bs-toggle="tab"
-                                           aria-expanded="false">
-                                            <i class="fas fa-graduation-cap"></i> Карьера
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane active" id="achievements-tab">
-                                        <h3 class="">Ваши достижения</h3>
-                                        <table class="table table-bordered">
-                                            <tbody id="overview_achievements_list">
-                                        </table>
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane" id="educations-tab">
-                                        <h3 class="">Ваше образование</h3>
-                                        <div id="overview_educations_list">
-                                        </div>
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane" id="careers-tab">
-                                        <h3 class="">Ваша профессиональная деятельность</h3>
-                                        <div id="overview_careers_list">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeTmplModal('overview_modal')">Закрыть окно</button>
-                </div>
-            </div>
-        </div>
-    </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </form>
+                             </div>
+                         </div>
+                         <div class="row">
+                             <div class="col-sm-12">
+                                 <ul class="nav nav-tabs non-printable" role="tablist">
+                                     <li role="presentation" class="nav-item">
+                                         <a href="#achievements-tab" class="nav-link active" aria-controls="profile-base" role="tab" data-bs-toggle="tab"
+                                            aria-expanded="false">
+                                             <i class="fas fa-home"></i> Портфолио достижений
+                                         </a>
+                                     </li>
+                                     <li role="presentation" class="nav-item">
+                                         <a href="#educations-tab" class="nav-link" aria-controls="profile-achivements" role="tab"
+                                            data-bs-toggle="tab" aria-expanded="false">
+                                             <i class="fas fa-th"></i> Образование
+                                         </a>
+                                     </li>
+                                     <li role="presentation" class="nav-item">
+                                         <a href="#careers-tab" class="nav-link" aria-controls="profile-main" role="tab" data-bs-toggle="tab"
+                                            aria-expanded="false">
+                                             <i class="fas fa-graduation-cap"></i> Карьера
+                                         </a>
+                                     </li>
+                                 </ul>
+                                 <div class="tab-content">
+                                     <div role="tabpanel" class="tab-pane active" id="achievements-tab">
+                                         <h3 class="">Ваши достижения</h3>
+                                         <table class="table table-bordered">
+                                             <tbody id="overview_achievements_list">
+                                         </table>
+                                     </div>
+                                     <div role="tabpanel" class="tab-pane" id="educations-tab">
+                                         <h3 class="">Ваше образование</h3>
+                                         <div id="overview_educations_list">
+                                         </div>
+                                     </div>
+                                     <div role="tabpanel" class="tab-pane" id="careers-tab">
+                                         <h3 class="">Ваша профессиональная деятельность</h3>
+                                         <div id="overview_careers_list">
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="close-modal btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeTmplModal('overview_modal')">Закрыть окно</button>
+                 </div>
+             </div>
+         </div>
+     </div>
     </script>
 
     <script id="overview_achievement_tmpl" type="text/x-jquery-tmpl">
-  <tr id="achievement_${id}">
-    <td>
-        ${name}
-        <br>
-        ${description}
-    </td>
-    <td>
-        ${mode.name}
-    </td>
-    <td>
-        ${record_date}
-    </td>
-   </tr>
-</script>
+        <tr id="achievement_${id}">
+          <td>
+              ${name}
+              <br>
+              ${description}
+          </td>
+          <td>
+              ${mode.name}
+          </td>
+          <td>
+              ${record_date}
+          </td>
+         </tr>
+    </script>
 
     <script id="overview_education_tmpl" type="text/x-jquery-tmpl">
         <form class="form-horizontal row-life" id="education_${id}">
@@ -460,46 +471,42 @@
     </script>
 
     <script id="overview_career_tmpl" type="text/x-jquery-tmpl">
-         <form class="form-horizontal row-life" id="career_${id}">
-                            <span class="close-life">
-                                <span onclick="deleteCareer(${id}); return false;" class="bi bi-x"></span>
-                            </span>
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-4 col-xs-4">Место работы</label>
-                    <div class="col-sm-8 col-xs-8">${name}</div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-4 col-xs-4">Год начала работы</label>
-                    <div class="col-sm-8 col-xs-8">${start_year}</div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-4 col-xs-4">Год окончания</label>
-                    <div class="col-sm-8 col-xs-8">
-                    @{{if end_year==0}}
-                      Продолжаю работать
-                    @{{else}}
-                    ${end_year}
-                    @{{/if}}
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <label class="col-sm-4 col-xs-4">Должность</label>
-                    <div class="col-sm-8 col-xs-8">${post}</div>
-                </div>
-            </div>
-        </form>
+        <form class="form-horizontal row-life" id="career_${id}">
+                           <span class="close-life">
+                               <span onclick="deleteCareer(${id}); return false;" class="bi bi-x"></span>
+                           </span>
+           <div class="form-group">
+               <div class="row">
+                   <label class="col-sm-4 col-xs-4">Место работы</label>
+                   <div class="col-sm-8 col-xs-8">${name}</div>
+               </div>
+           </div>
+           <div class="form-group">
+               <div class="row">
+                   <label class="col-sm-4 col-xs-4">Год начала работы</label>
+                   <div class="col-sm-8 col-xs-8">${start_year}</div>
+               </div>
+           </div>
+           <div class="form-group">
+               <div class="row">
+                   <label class="col-sm-4 col-xs-4">Год окончания</label>
+                   <div class="col-sm-8 col-xs-8">
+                   @{{if end_year==0}}
+                     Продолжаю работать
+                   @{{else}}
+                   ${end_year}
+                   @{{/if}}
+                   </div>
+               </div>
+           </div>
+           <div class="form-group">
+               <div class="row">
+                   <label class="col-sm-4 col-xs-4">Должность</label>
+                   <div class="col-sm-8 col-xs-8">${post}</div>
+               </div>
+           </div>
+       </form>
     </script>
-
-
-
-
 @endsection
 
 

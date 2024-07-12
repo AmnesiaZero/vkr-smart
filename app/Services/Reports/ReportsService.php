@@ -54,7 +54,7 @@ class ReportsService extends Services
         $roles = $query->get();
 
         // Запрос на получение пользователей, связанных с ролями, удовлетворяющих условиям фильтрации
-        $usersQuery = User::query()
+        $usersQuery = User::with('achievements.records')
             ->join('role_user', 'users.id', '=', 'role_user.user_id')
             ->join('roles', 'role_user.role_id', '=', 'roles.id')
             ->whereIn('roles.slug', ['teacher', 'admin', 'employee', 'user'])
@@ -108,7 +108,7 @@ class ReportsService extends Services
         $worksQuery = $query
             ->join('role_user', 'roles.id', '=', 'role_user.role_id')
             ->join('users', 'role_user.user_id', '=', 'users.id')
-            ->where('users.organization_id','=',$organizationId)
+            ->where('works.organization_id','=',$organizationId)
             ->join('works', 'users.id', '=', 'works.user_id')
             ->select(
                 'roles.id as role_id',
@@ -126,6 +126,8 @@ class ReportsService extends Services
 //        if (isset($data['organization_id'])) {
 //            $worksQuery->where('works.organization_id', $data['organization_id']);
 //        }
+
+
         if (isset($data['selected_years'])) {
             $worksQuery->whereIn('works.year_id', $data['selected_years']);
         }
@@ -155,12 +157,106 @@ class ReportsService extends Services
             ];
         }
 
+
 // Преобразование в массив для более удобного использования
         $rolesWorks = array_values($rolesWorks);
 
-        Log::debug('roles works = '.print_r($rolesWorks,true));
+
+
+
+
+
+
+        // Запрос на получение пользователей, связанных с ролями, удовлетворяющих условиям фильтрации
+        $achievementsQuery = User::query()
+            ->join('role_user', 'users.id', '=', 'role_user.user_id')
+            ->join('roles', 'role_user.role_id', '=', 'roles.id')
+            ->whereIn('roles.slug', ['teacher', 'admin', 'employee', 'user'])
+            ->where('users.organization_id', '=', $organizationId)
+            ->join('achievements','user_id','=','achievements.user_id')
+            ->join('achievements_records','achievement_id','=','achievements_records.achievement_id')
+            ->select(
+                'roles.id as role_id',
+                'roles.name as role_name',
+                'users.id as user_id',
+                'users.name as user_name',
+                'users.organization_id',
+                'users.year_id',
+                'users.faculty_id',
+                'users.department_id',
+                'achievements.id',
+                'achievements_records.id'
+            );
+
+        // Применение фильтров
+        if (isset($data['selected_years'])) {
+            $achievementsQuery->whereIn('achievements.year_id', $data['selected_years']);
+        }
+        if (isset($data['selected_faculties'])) {
+            $achievementsQuery->whereIn('achievements.faculty_id', $data['selected_faculties']);
+        }
+        if (isset($data['selected_departments'])) {
+            $achievementsQuery->whereIn('achievements.department_id', $data['selected_departments']);
+        }
+
+        $results = $achievementsQuery->get();
+
+        // Группировка пользователей по ролям
+        $rolesAchievements = [];
+        foreach ($results as $result) {
+            if (!isset($rolesAchievements[$result->role_id])) {
+                $rolesAchievements[$result->role_id] = [
+                    'role_id' => $result->role_id,
+                    'role_name' => $result->role_name,
+                    'achievements' => []
+                ];
+            }
+            $rolesAchievements[$result->role_id]['achievements'][] = [
+                'user_id' => $result->user_id,
+                'user_name' => $result->user_name,
+                'organization_id' => $result->organization_id,
+                'year_id' => $result->year_id,
+                'faculty_id' => $result->faculty_id,
+                'department_id' => $result->department_id,
+                'achievement_id' => $result->achievement_id,
+                'achievement_record_id'=> $result->achievement_record_id
+            ];
+        }
+        $rolesAchievements = array_values($rolesAchievements);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         $worksQuery = Work::query();
+
+        Log::debug('roles works = '.print_r($rolesWorks,true));
+
         if(isset($data['organization_id']))
         {
             $worksQuery = $worksQuery->where('organization_id','=',$organizationId);
@@ -185,6 +281,7 @@ class ReportsService extends Services
                 'users' => $users,
                 'roles_users' => $rolesUsers,
                 'roles_works' => $rolesWorks,
+                'roles_achievements' => $rolesAchievements,
                 'works' => $works
             ]);
         }

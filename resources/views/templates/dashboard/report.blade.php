@@ -31,87 +31,67 @@
                          </span>
                             </p>
 
-                            <div class="d-flex justify-content-between">
-                                <p class="text-grey fs-14 mb-2">Сотрудников</p>
+                            @{{each roles_users}}
+                              <div class="d-flex justify-content-between">
+                                <p class="text-grey fs-14 mb-2">${getRoleName(role_id)}</p>
                                 <p class="text-grey fs-14 mb-2">
-                                @{{if roles_users[0]}}
-                                   @{{if roles_users[0].users}}
-                                    ${roles_users[0].users.length}
-                                    @{{/if}}
-                                 @{{else}}
-                                   0
-                                @{{/if}}
-                                </p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p class="text-grey fs-14 mb-2">Сотрудников</p>
-                                <p class="text-grey fs-14 mb-2">
-                                @{{if roles_users[1]}}
-                                    @{{if roles_users[0].users}}
-                                    ${roles_users[1].users.length}
-                                    @{{/if}}
+{{--                                @{{if roles_users[0]}}--}}
+{{--                                    ${roles_users[0].users.length}--}}
+{{--                                 @{{else}}--}}
+{{--                                   0--}}
+{{--                                @{{/if}}--}}
 
-                                 @{{else}}
-                                   0
-                                @{{/if}}
+                                 ${users.length}
                                 </p>
                             </div>
-                            <div class="d-flex justify-content-between">
-                                <p class="text-grey fs-14 mb-2">Сотрудников</p>
-                                <p class="text-grey fs-14 mb-2">
-                                @{{if roles_users[2].users}}
-                                    ${roles_users[2].users.length}
-                                 @{{else}}
-                                   0
-                                @{{/if}}
-                                </p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p class="text-grey fs-14 mb-2">Сотрудников</p>
-                                <p class="text-grey fs-14 mb-2">
-                                @{{if roles_users[3].users}}
-                                    ${roles_users[3].users.length}
-                                 @{{else}}
-                                   0
-                                @{{/if}}
-                                </p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p class="text-grey fs-14 mb-2">Сотрудников</p>
-                                <p class="text-grey fs-14 mb-2">
-                                @{{if roles_users[4].users}}
-                                    ${roles_users[4].users.length}
-                                 @{{else}}
-                                   0
-                                @{{/if}}
-                                </p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p class="text-grey fs-14 mb-2">Сотрудников</p>
-                                <p class="text-grey fs-14 mb-2">
-                                @{{if roles_users[5].users}}
-                                    ${roles_users[5].users.length}
-                                 @{{else}}
-                                   0
-                                @{{/if}}
-                                </p>
-                            </div>
+                            @{{/each}}
+
+
+{{--                            <div class="d-flex justify-content-between">--}}
+{{--                                <p class="text-grey fs-14 mb-2">Студентов</p>--}}
+{{--                                <p class="text-grey fs-14 mb-2">--}}
+{{--                                @{{if roles_users[1]}}--}}
+{{--                                    ${roles_users[1].users.length}--}}
+{{--                                 @{{else}}--}}
+{{--                                   0--}}
+{{--                                @{{/if}}--}}
+{{--                                </p>--}}
+{{--                            </div>--}}
+{{--                            <div class="d-flex justify-content-between">--}}
+{{--                                <p class="text-grey fs-14 mb-2">Сотрудников организации</p>--}}
+{{--                                <p class="text-grey fs-14 mb-2">--}}
+{{--                                @{{if roles_users[3]}}--}}
+{{--                                    ${roles_users[3].users.length}--}}
+{{--                                 @{{else}}--}}
+{{--                                   0--}}
+{{--                                @{{/if}}--}}
+{{--                                </p>--}}
+{{--                            </div>--}}
+{{--                            <div class="d-flex justify-content-between">--}}
+{{--                                <p class="text-grey fs-14 mb-2">Преподавателей</p>--}}
+{{--                                <p class="text-grey fs-14 mb-2">--}}
+{{--                                @{{if roles_users[6]}}--}}
+{{--                                    ${roles_users[6].users.length}--}}
+{{--                                 @{{else}}--}}
+{{--                                   0--}}
+{{--                                @{{/if}}--}}
+{{--                                </p>--}}
+{{--                            </div>--}}
+
 
 
                         </div>
-{{--                        <div class="br-green-light-2 p-3 br-20 mt-4">--}}
-{{--                            <img src="/images/User_Card_ID-l.svg">--}}
-{{--                            <p class="text-grey fs-14">Портфолио <span class="ps-4 fs-32 fw-700">${users.length}</span></p>--}}
-{{--                            @{{each roles_users}}--}}
-{{--                              @{{if slug!='employee' && slug!='admin'}}--}}
-{{--                              <div class="d-flex justify-content-between brt-green-light-2 mt-4">--}}
+                        <div class="br-green-light-2 p-3 br-20 mt-4">
+                            <img src="/images/User_Card_ID-l.svg">
+                            <p class="text-grey fs-14">Портфолио <span class="ps-4 fs-32 fw-700">${users.length}</span></p>
+{{--                             <div class="d-flex justify-content-between brt-green-light-2 mt-4">--}}
 {{--                                <p class="text-grey fs-14 mb-3 mt-1">${name}</p>--}}
 {{--                            </div>--}}
 {{--                            <div class="d-flex justify-content-between">--}}
 {{--                                <p class="text-grey fs-14 mb-2">Записи достижений:</p>--}}
 {{--                                <p class="text-grey fs-14 mb-2">--}}
-{{--                                 @{{if users}}--}}
-{{--                                    ${getAchievementsCount(users)}--}}
+{{--                                 @{{if roles_users}}--}}
+{{--                                    ${getAchievementsCount(roles_users)}--}}
 {{--                                 @{{else}}--}}
 {{--                                    0--}}
 {{--                                 @{{/if}}--}}
@@ -120,67 +100,107 @@
 {{--                            <div class="d-flex justify-content-between brb-green-light-2">--}}
 {{--                                <p class="text-grey fs-14 mb-2">Прикреплено ресурсов:</p>--}}
 {{--                                <p class="text-grey fs-14 mb-2">--}}
-{{--                                    @{{if users}}--}}
-{{--                                    ${achievementsRecordsCount(users)}--}}
+{{--                                    @{{if roles_users}}--}}
+{{--                                    ${achievementsRecordsCount(roles_users)}--}}
 {{--                                 @{{else}}--}}
 {{--                                    0--}}
 {{--                                 @{{/if}}--}}
 
 {{--                                </p>--}}
 {{--                            </div>--}}
-{{--                            @{{/if}}--}}
-{{--                            @{{/each}}--}}
 
+                        @{{each roles_users}}
+                        <div class="d-flex justify-content-between brt-green-light-2 mt-4">
+                                <p class="text-grey fs-14 mb-3 mt-1">${getRoleName(role_id)}</p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <p class="text-grey fs-14 mb-2">Записи достижений:</p>
+                                <p class="text-grey fs-14 mb-2">
+                                   ${getAchievementsCount(users)}
+                                </p>
+                            </div>
+                            <div class="d-flex justify-content-between brb-green-light-2">
+                                <p class="text-grey fs-14 mb-2">Прикреплено ресурсов:</p>
+                                <p class="text-grey fs-14 mb-2">
+                                    ${achievementsRecordsCount(users)}
 
-{{--                        </div>--}}
-{{--                    </div>--}}
+                                </p>
+                            </div>
+                        @{{/each}}
+
+                        </div>
+                    </div>
                     <div class="col-xl-6">
                         <div class="br-green-light-2 p-3 br-20">
                             <img src="/images/File_Document.svg">
 
                             <p class="text-grey fs-14">Загруженных работ <span class="ps-4 fs-32 fw-700">${works.length}</span></p>
-                             <div class="d-flex justify-content-between">
-                                <p class="text-grey fs-14 mb-2">Сотрудниками:</p>
+                             @{{each roles_works}}
+                                <div class="d-flex justify-content-between">
+                                <p class="text-grey fs-14 mb-2">${getRoleName(role_id)}:</p>
                                 <p class="text-grey fs-14 mb-2">
-                                @{{if roles_works[0].works}}
-                                    ${roles_users[0].works.length}
-                                 @{{else}}
-                                   0
-                                @{{/if}}
-                                </p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p class="text-grey fs-14 mb-2">Преподавателями:</p>
-                                <p class="text-grey fs-14 mb-2">
-                                @{{if roles_works[1].works}}
-                                    ${roles_users[1].works.length}
-                                 @{{else}}
-                                   0
-                                @{{/if}}
-                                </p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p class="text-grey fs-14 mb-3 mt-1">Обучающимися</p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p class="text-grey fs-14 mb-2">Одобрено:</p>
-                                <p class="text-grey fs-14 mb-2">2</p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p class="text-grey fs-14 mb-2">Отправлено на доработку:</p>
-                                <p class="text-grey fs-14 mb-2">1</p>
-                            </div>
-                            <div class="d-flex justify-content-between brb-green-light-2">
-                                <p class="text-grey fs-14 mb-2">Ожидают одобрения:</p>
-                                <p class="text-grey fs-14 mb-2">1</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{{--                                @{{if roles_works[0]}}--}}
+{{--                                    ${roles_works[0].works.length}--}}
+{{--                                 @{{else}}--}}
+{{--                                   0--}}
+{{--                                @{{/if}}--}}
+                                 ${works.length}
+                               </p>
+                              </div>
+                            @{{/each}}
+
+{{--                            <div class="d-flex justify-content-between">--}}
+{{--                               <p class="text-grey fs-14 mb-2">Администраторами:</p>--}}
+{{--                               <p class="text-grey fs-14 mb-2">--}}
+{{--                               @{{if roles_works[0]}}--}}
+{{--                                   ${roles_works[0].works.length}--}}
+{{--                                @{{else}}--}}
+{{--                                  0--}}
+{{--                               @{{/if}}--}}
+{{--                               </p>--}}
+{{--                           </div>--}}
+{{--                            <div class="d-flex justify-content-between">--}}
+{{--                               <p class="text-grey fs-14 mb-2">Сотрудниками организации:</p>--}}
+{{--                               <p class="text-grey fs-14 mb-2">--}}
+{{--                               @{{if roles_works[2]}}--}}
+{{--                                   ${roles_works[2].works.length}--}}
+{{--                                @{{else}}--}}
+{{--                                  0--}}
+{{--                               @{{/if}}--}}
+{{--                               </p>--}}
+{{--                           </div>--}}
+{{--                           <div class="d-flex justify-content-between">--}}
+{{--                               <p class="text-grey fs-14 mb-2">Преподавателями:</p>--}}
+{{--                               <p class="text-grey fs-14 mb-2">--}}
+{{--                               @{{if roles_works[6]}}--}}
+{{--                                   ${roles_works[6].works.length}--}}
+{{--                                @{{else}}--}}
+{{--                                  0--}}
+{{--                               @{{/if}}--}}
+{{--                               </p>--}}
+{{--                           </div>--}}
+                           <div class="d-flex justify-content-between">
+                               <p class="text-grey fs-14 mb-3 mt-1">Обучающимися</p>
+                           </div>
+                           <div class="d-flex justify-content-between">
+                               <p class="text-grey fs-14 mb-2">Одобрено:</p>
+                               <p class="text-grey fs-14 mb-2">2</p>
+                           </div>
+                           <div class="d-flex justify-content-between">
+                               <p class="text-grey fs-14 mb-2">Отправлено на доработку:</p>
+                               <p class="text-grey fs-14 mb-2">1</p>
+                           </div>
+                           <div class="d-flex justify-content-between brb-green-light-2">
+                               <p class="text-grey fs-14 mb-2">Ожидают одобрения:</p>
+                               <p class="text-grey fs-14 mb-2">1</p>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
 
 
-  </script>
+</script>
 
 
 

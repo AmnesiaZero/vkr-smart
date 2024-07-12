@@ -43,6 +43,7 @@ function users(page=1)
                 links.pop();
                 pagination.links = links;
                 const users = pagination.data;
+                console.log(users);
                 const usersList = $("#users_list");
                 usersList.html($("#user_tmpl").tmpl(users));
                 const currentPage = pagination.current_page;

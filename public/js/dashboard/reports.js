@@ -89,3 +89,20 @@ function getWorksCount(users)
     });
     return worksCount;
 }
+
+function getRoleName(roleId)
+{
+    switch (roleId)
+    {
+        case 1:
+            return 'Администраторы';
+        case 2:
+            return 'Студенты';
+        case 3:
+            return 'Сотрудники организации';
+        case 5:
+            return 'Проверяющие организации';
+        case 6:
+            return 'Преподаватели';
+    }
+}
