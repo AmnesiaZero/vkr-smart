@@ -174,7 +174,7 @@ class UsersController extends Controller
             'password' => 'required|max:255',
             'gender' => 'required|integer',
             'faculty_id' => ['integer',Rule::exists('faculties','id')],
-            'year_id' => ['integer',Rule::exists('faculties','id')],
+            'year_id' => ['integer',Rule::exists('years','id')],
             'is_active' => 'required|integer',
         ]);
         if ($validator->fails()) {

@@ -6,7 +6,6 @@ var userType = '';
 $(document).ready(function () {
 
     const siteUrl = window.location.href;
-    console.log('site url = ' + siteUrl);
     if(siteUrl.includes('employees'))
     {
         userType = 2;
@@ -15,9 +14,6 @@ $(document).ready(function () {
     {
         userType = 1;
     }
-
-    console.log('works type = ' + userType);
-
     works();
     localStorage.setItem('selected_years', '');
     localStorage.setItem('selected_faculties', '');

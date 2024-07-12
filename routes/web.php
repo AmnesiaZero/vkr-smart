@@ -14,6 +14,7 @@ use App\Http\Controllers\Portfolios\AchievementsController;
 use App\Http\Controllers\Portfolios\AchievementsRecordsController;
 use App\Http\Controllers\Portfolios\CareersController;
 use App\Http\Controllers\Portfolios\EducationsController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ScientificSupervisorsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Works\AdditionalFilesController;
@@ -263,9 +264,13 @@ Route::group([
         });
     });
 
-    Route::get('report', function () {
-        return view('templates.dashboard.report');
+    Route::group([
+        'prefix' => 'reports'
+    ],function (){
+        Route::get('get',[ReportsController::class,'get']);
+        Route::get('/', [ReportsController::class,'view']);
     });
+
     Route::get('documentation', function () {
         return view('templates.dashboard.documentation');
     });

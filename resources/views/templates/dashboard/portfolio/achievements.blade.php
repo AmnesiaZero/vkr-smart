@@ -218,8 +218,7 @@
         @{{/if}}
 
         @{{if record_type_id==2}}
-        <span class="glyphicon glyphicon-link">
-            </span>
+        <span class="glyphicon glyphicon-link"> </span>
         Ссылка
         @{{/if}}
 

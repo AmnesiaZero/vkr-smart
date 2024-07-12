@@ -8,6 +8,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface WorkRepositoryInterface
 {
+    /**
+     * @param int $organizationId
+     * @return Collection
+     */
+    public function get(int $organizationId):Collection;
 
     /**
      * @param int $organizationId
@@ -15,7 +20,7 @@ interface WorkRepositoryInterface
      * @param int $userType
      * @return LengthAwarePaginator
      */
-    public function get(int $organizationId,int $pageNumber,int $userType): LengthAwarePaginator;
+    public function getPaginate(int $organizationId,int $pageNumber,int $userType): LengthAwarePaginator;
 
     /**
      * @param array $data
@@ -34,6 +39,8 @@ interface WorkRepositoryInterface
      * @return LengthAwarePaginator
      */
     public function search(array $data):LengthAwarePaginator;
+
+
 
     /**
      * @param int $id

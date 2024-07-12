@@ -12,7 +12,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class EloquentWorkRepository implements WorkRepositoryInterface
 {
 
-    public function get(int $organizationId, int $pageNumber, int $userType): LengthAwarePaginator
+    public function get(int $organizationId): Collection
+    {
+        return Work::query()->where('organization_id','=',$organizationId)->get();
+    }
+
+    public function getPaginate(int $organizationId, int $pageNumber, int $userType): LengthAwarePaginator
     {
         return Work::withTrashed()->with(['faculty','specialty'])->where('organization_id', '=', $organizationId)->where('user_type','=',$userType)->paginate(config('pagination.per_page'),'*','page',$pageNumber);
     }
@@ -131,4 +136,5 @@ class EloquentWorkRepository implements WorkRepositoryInterface
     {
         return Work::query()->where('report_id','=',$reportId)->first();
     }
+
 }

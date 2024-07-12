@@ -40,9 +40,9 @@ class EloquentUserRepository implements UserRepositoryInterface
         return $this->find($id)->update($data);
     }
 
-    public function search(array $data): Collection
+    public function search(array $data,array $relations=['roles', 'departments','works']): Collection
     {
-        $query = User::with(['roles', 'departments','works']);
+        $query = User::with($relations);
         if (isset($data['organization_id'])) {
             $query = $query->where('organization_id', '=', $data['organization_id']);
         }
@@ -101,12 +101,16 @@ class EloquentUserRepository implements UserRepositoryInterface
         return $users;
     }
 
-    public function get(int $organizationId, array $roles): Collection
+    public function get(int $organizationId, array $roles = []): Collection
     {
         $users =  User::with(['roles', 'departments','works'])->where('organization_id', '=', $organizationId);
-        return $users->get()->filter(function ($user) use ($roles) {
+        if(isset($roles))
+        {
+            return $users->get()->filter(function ($user) use ($roles) {
                 return $user->roles->whereIn('slug', $roles)->isNotEmpty();
-        })->values();
+            })->values();
+        }
+        return $users->get();
     }
 
     public function getPaginate(int $organizationId, array $roles,int $page):LengthAwarePaginator

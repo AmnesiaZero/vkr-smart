@@ -157,7 +157,7 @@
                         </div>
                     </div>
                     <p class="text-grey fw-600"><img src="/images/Chart_Line.svg" alt="" class="pe-3"><a
-                            href="/dashboard/report"
+                            href="/dashboard/reports"
                             class="text-grey text-grey-hover fw-600 td-none @if(request()->is('dashboard/report')) nav-link-active @endif">Отчеты</a>
                     </p>
                     <p class="text-grey fw-600"><img src="/images/File_Document.svg" alt="" class="pe-3"><a
@@ -180,6 +180,8 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 <script src="{{'/js/select2.min.js'}}"></script>
+<script type="text/javascript" src="/js/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 <script src="http://www.vkr-vuz.ru/assets/templates/c/js/jquery.fancytree.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
@@ -191,7 +193,6 @@
 
 <script src="/js/jquery/jquery.tmpl.min.js"></script>
 <script src="{{asset('js/bootstrap.js')}}"></script>
-<script src="/js/bootstrap.js"></script>
 <script src="/js/jquery/jquery.simplePagination.js"></script>
 
 @yield('scripts')

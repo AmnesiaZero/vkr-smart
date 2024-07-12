@@ -69,7 +69,7 @@ class WorksService extends Services
     {
         $you = Auth::user();
         $organizationId = $you->organization_id;
-        $works = $this->workRepository->get($organizationId,$pageNumber,$userType);
+        $works = $this->workRepository->getPaginate($organizationId,$pageNumber,$userType);
         return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'works' => $works
