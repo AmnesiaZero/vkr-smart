@@ -11,9 +11,11 @@
                             <div id="years_list"></div>
 
                             <div class="mx-3" id="year_end">
-                                <button class="btn btn-secondary br-none w-100 br-100 mt-4 text-grey fs-14 py-1"
-                                        onclick="openModal('create_year')">
-                                    добавить<img src="/images/Plus.svg" alt="" class="ps-3"></button>
+                                <button class="btn btn-secondary br-none w-100 br-100 mt-4 text-grey fs-14 py-1" data-bs-toggle="modal"
+                                data-bs-target="#create_year">
+                                    добавить
+                                    <img src="/images/Plus.svg" alt="" class="ps-3">
+                                </button>
                             </div>
                         </div>
                     </div>
