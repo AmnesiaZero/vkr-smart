@@ -101,19 +101,14 @@
                     <div class="mb-3 col-8 mx-4">
                         <p class="m-0">Профиль обучения</p>
                         <p class="fs-12 mb-2">программы подготовки</p>
-                        <form class="input-group" id="update_name_form" onsubmit="updateProgramName();return false;">
+                        <form class="input-group" id="update_name_form" onsubmit="updateProgramName(); return false;">
                             <input type="text" class="form-control bg-grey-form" id="profile" name="name" value="">
-                            <div class="input-group-append">
-                                <button class="btn btn-green" type="submit">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#d9f1f3"
-                                         class="bi bi-arrow-right-short" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                              d="M7.854 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.854 2.646a.5.5 0 0 1 0-.708z"/>
-                                        <path fill-rule="evenodd"
-                                              d="M1 8a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 0 1H1.5A.5.5 0 0 1 1 8z"/>
-                                    </svg>
-                                </button>
-                            </div>
+                            <button class="btn btn-green" type="submit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#d9f1f3" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M7.854 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.854 2.646a.5.5 0 0 1 0-.708z"/>
+                                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 0 1H1.5A.5.5 0 0 1 1 8z"/>
+                                </svg>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -132,7 +127,7 @@
                     </ul>
                     <div class="tab-content bg-white br-blue-grey-1 bbrr-20 bblr-20 " id="myQuestionsContent">
                         <div class="tab-pane fade active show" id="base" role="tabpanel" aria-labelledby="base-tab">
-                            <p class="fs-14 m-0 pt-4 ps-4">уровень образования:</p>
+                            <p class="fs-14 mb-2 pt-4 ps-4">Уровень образования:</p>
                             <div class="d-flex inline-flex ps-4" id="level_education_group">
                                 <div class="form-check">
                                     <input class="form-check-input green" type="radio" name="level_education"
@@ -149,9 +144,9 @@
                                     </label>
                                 </div>
                             </div>
-                            <p class="fs-14 m-0 pt-4 ps-4">уровень подготовки:</p>
+                            <p class="fs-14 mb-2 pt-4 ps-4">Уровень подготовки:</p>
                             <div class="row ps-4" id="level_group">
-                                <div class="col">
+                                <div class="col d-flex flex-column gap-2">
                                     <div class="form-check">
                                         <input class="form-check-input green" type="radio" name="level" id="level_1"
                                                value="1">
@@ -181,7 +176,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col d-flex flex-column gap-2">
                                     <div class="form-check">
                                         <input class="form-check-input green" type="radio" name="level" id="level_5"
                                                value="5">
@@ -205,7 +200,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="fs-14 m-0 pt-4 ps-4">направление:</p>
+                            <p class="fs-14 mb-2 pt-4 ps-4">Направление:</p>
                             <div class="px-4 col-10">
                                 <select class="js-example-basic-single w-100" name="state" id="specialties_list">
 
@@ -215,21 +210,21 @@
                         </div>
 
                         <div class="tab-pane fade" id="own-settings" role="tabpanel" aria-labelledby="own-settings-tab">
-                            <p class="text-grey fs-14 pt-4 mx-4 lh-17">вы можете самостоятельно добавить направление
+                            <p class="text-grey fs-14 pt-4 mx-4 lh-17">Вы можете самостоятельно добавить направление
                                 подготовки, если в предлагаемой базе направлений вы не видите необходимого</p>
                             <form onsubmit="createProgramSpecialty();return false;" id="create_program_specialty">
                                 <div class="mb-4 mx-4 col-8">
-                                    <label for="code_course" class="form-label m-0">код направления:</label>
+                                    <label for="code_course" class="form-label mb-2">Код направления:</label>
                                     <input type="text" class="form-control bg-grey-form" name="code" id="code_course"
                                            value="">
                                 </div>
                                 <div class="mb-3 mx-4 col-8">
-                                    <label for="course" class="form-label m-0">направление:</label>
+                                    <label for="course" class="form-label mb-2">Направление:</label>
                                     <input type="text" class="form-control bg-grey-form" name="name" id="course"
                                            value="">
                                 </div>
                                 <div class="mx-4 col-8">
-                                    <button class="btn btn-secondary fs-14 br-100 w-100 text-grey br-none py-1 mt-3">
+                                    <button class="btn btn-secondary fs-14 br-100 w-100 br-none py-2 mt-3">
                                         добавить
                                     </button>
                                 </div>
