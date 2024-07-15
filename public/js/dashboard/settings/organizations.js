@@ -229,6 +229,9 @@ function createFaculty() {
 
             // Вставляем созданный HTML перед элементом с id "years_button"
             $("#faculties_list").append(html);
+
+            // Очистка поля вставки
+            $('#faculty-name').val('');
         },
         error: function (response) {
             $.notify(response.data.title + ":" + response.data.message, "error");
@@ -357,6 +360,9 @@ function createDepartment() {
 
             // Вставляем созданный HTML
             $("#departments_list").append(html);
+
+            // Очистка поля ввода
+            $('#department-name').val('');
         },
         error: function (response) {
             $.notify(response.data.title + ":" + response.data.message, "error");
@@ -501,6 +507,8 @@ function createProgram() {
                 $("#programs_list").append(html);
 
                 loadProgramInfo(addedProgram.id);
+
+                $('#program-name').val('');
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }

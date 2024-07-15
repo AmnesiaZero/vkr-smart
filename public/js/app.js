@@ -1,3 +1,55 @@
+/* Кнопка открытия модального окна для update_year */
+$(document).ready(function() {
+    $('#update_year').on('show.bs.modal', function (event) {
+        let button = $(event.relatedTarget); // Кнопка, которая вызвала модалку
+        let id = button.data('id');
+        let year = button.data('year');
+        let students_count = button.data('students_count');
+        let comment = button.data('comment');
+
+        var modal = $(this);
+        modal.find('.modal-title h4').text('Редактирование года выпуска ' + id);
+        modal.find('input[name="year"]').val(year);
+        modal.find('input[name="students_count"]').val(students_count);
+        modal.find('input[name="comment"]').val(comment);
+
+        modal.find('form').attr('onsubmit', 'updateYear(' + id + ');return false;');
+        modal.find('form').attr('id', 'year_update_' + id);
+    });
+});
+
+/* Кнопка открытия модального окна для update_faculty */
+$(document).ready(function() {
+    $('#update_faculty').on('show.bs.modal', function (event) {
+        let button = $(event.relatedTarget); // Кнопка, которая вызвала модалку
+        let id = button.data('id');
+        let name = button.data('name');
+
+        var modal = $(this);
+        modal.find('.modal-title h4').text('Редактирование подразделения ' + id);
+        modal.find('input[name="name"]').val(name);
+
+        modal.find('form').attr('onsubmit', 'updateFaculty(' + id + ');return false;');
+        modal.find('form').attr('id', 'faculty_update_' + id);
+    });
+});
+
+/* Кнопка открытия модального окна для update_department */
+$(document).ready(function() {
+    $('#update_department').on('show.bs.modal', function (event) {
+        let button = $(event.relatedTarget); // Кнопка, которая вызвала модалку
+        let id = button.data('id');
+        let name = button.data('name');
+
+        var modal = $(this);
+        modal.find('.modal-title h4').text('Редактирование кафедры ' + id);
+        modal.find('input[name="name"]').val(name);
+
+        modal.find('form').attr('onsubmit', 'updateDepartment(' + id + ');return false;');
+        modal.find('form').attr('id', 'department_update_' + id);
+    });
+});
+
 // Функция открытия модального окна
 function openModal(modalId) {
     const modal = document.getElementById(modalId);

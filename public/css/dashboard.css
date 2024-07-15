@@ -1,6 +1,10 @@
 @import url("../fonts/stylesheet.css");
 
-/* Тексты */
+
+/* tooltips */
+.tooltip-inner {
+    font-size: 50px !important;
+}
 
 .box-shadow-none {
     box-shadow: none !important;
@@ -1142,10 +1146,27 @@ input {
 
 #faculties_list,
 #years_list,
-#faculty_departments_list,
-#programs-list {
-    max-height: 400px;
+#departments_list,
+#programs_list {
+    max-height: 220px;
     overflow-y: auto;
+}
+
+.blue-scroll::-webkit-scrollbar {
+    width: 4px;
+    padding-right: 10px;
+}
+.blue-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+.blue-scroll::-webkit-scrollbar-thumb {
+
+    background: linear-gradient(90deg, #D9F1F3 0%, #78C2C9 100%);
+    border-radius: 5px;
+    border: 0 solid #FFFFFF;
+}
+.blue-scroll::-webkit-scrollbar-button {
+    display: none;
 }
 
 .p-date {
