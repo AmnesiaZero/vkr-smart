@@ -39,7 +39,7 @@ class CommentsService extends Services
         }
         return self::sendJsonResponse(false,[
             'title' => 'Ошибка',
-            'message' => 'Произошла ошибка при создании работы'
+            'message' => 'Произошла ошибка при создании комментария'
         ]);
     }
 

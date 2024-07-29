@@ -248,7 +248,7 @@ class UsersService extends Services
             $updatedUser = $this->_repository->find($userId);
             return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
-                'message' => 'Кафедры успешно настроены успешно привязана',
+                'message' => 'Направления успешно привязаны',
                 'user' => $updatedUser
             ]);
         }

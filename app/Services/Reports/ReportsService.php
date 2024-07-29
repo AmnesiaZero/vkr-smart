@@ -168,12 +168,12 @@ class ReportsService extends Services
 
 
         // Запрос на получение пользователей, связанных с ролями, удовлетворяющих условиям фильтрации
-        $achievementsQuery = User::query()
+        $achievementsQuery = User::with('achievements')
             ->join('role_user', 'users.id', '=', 'role_user.user_id')
             ->join('roles', 'role_user.role_id', '=', 'roles.id')
             ->whereIn('roles.slug', ['teacher', 'admin', 'employee', 'user'])
             ->where('users.organization_id', '=', $organizationId)
-            ->join('achievements','user_id','=','achievements.user_id')
+            ->join('achievements','users.id','=','achievements.user_id')
             ->join('achievements_records','achievement_id','=','achievements_records.achievement_id')
             ->select(
                 'roles.id as role_id',
@@ -184,22 +184,25 @@ class ReportsService extends Services
                 'users.year_id',
                 'users.faculty_id',
                 'users.department_id',
-                'achievements.id',
-                'achievements_records.id'
+                'achievements.id as achievement_id',
+                'achievements_records.id as record_id'
             );
 
         // Применение фильтров
+
         if (isset($data['selected_years'])) {
-            $achievementsQuery->whereIn('achievements.year_id', $data['selected_years']);
+            $achievementsQuery->whereIn('users.year_id', $data['selected_years']);
         }
         if (isset($data['selected_faculties'])) {
-            $achievementsQuery->whereIn('achievements.faculty_id', $data['selected_faculties']);
+            $achievementsQuery->whereIn('users.faculty_id', $data['selected_faculties']);
         }
         if (isset($data['selected_departments'])) {
-            $achievementsQuery->whereIn('achievements.department_id', $data['selected_departments']);
+            $achievementsQuery->whereIn('users.department_id', $data['selected_departments']);
         }
 
         $results = $achievementsQuery->get();
+
+        Log::debug('achievements results = '.print_r($result,true));
 
         // Группировка пользователей по ролям
         $rolesAchievements = [];
@@ -223,32 +226,6 @@ class ReportsService extends Services
             ];
         }
         $rolesAchievements = array_values($rolesAchievements);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
