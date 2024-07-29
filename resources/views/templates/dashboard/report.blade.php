@@ -5,13 +5,18 @@
         <div class="row pt-4 g-3 px-md-0 px-3 mb-5">
             <div class="col-xxl-4 col-xl-5 col-lg-6">
                @include('layouts.dashboard.include.elements.tree',['years' => $years])
-                <button class="btn btn-secondary br-none br-100 text-grey fs-14 w-100 mt-3 py-1 mt-3" onclick="getReport();return false">за все время</button>
+                <button class="btn btn-secondary br-none br-100 fs-14 w-100 mt-3 py-1" onclick="getReport();return false">
+                    За все время
+                </button>
             </div>
+
+            <div class="col-xxl-8 col-xl-7 col-lg-6">
+
+            </div>
+
             <div class="out-kod mb-3"></div>
-            <div id="report_container">
 
-            </div>
-
+            <div id="report_container"></div>
         </div>
 
         @endsection

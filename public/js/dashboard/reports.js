@@ -15,27 +15,29 @@ $('.btn-info-box').click(function () {
     $("#info_box").fadeToggle(100);
 });
 
+// Открытие и закрытие ветвей
+$(".fancytree-node").click(function() {
+    $(this).next("ul").toggle();
+});
 
-function getReport()
-{
+function getReport() {
     const selectedYears = getArrayFromLocalStorage('selected_years');
     const selectedDepartments = getArrayFromLocalStorage('selected_departments');
     const selectedFaculties = getArrayFromLocalStorage('selected_faculties');
     const data = {
         selected_years: selectedYears,
         selected_departments: selectedDepartments,
-        selected_faculties:selectedFaculties,
+        selected_faculties: selectedFaculties,
     };
     $.ajax({
         url: "/dashboard/reports/get",
-        data:data,
+        data: data,
         type: "GET",
         dataType: "json",
         success: function (response) {
             if (response.success) {
                 $("#report_container").html($("#report_tmpl").tmpl(response.data));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -45,31 +47,26 @@ function getReport()
     });
 }
 
-function getAchievementsCount(users)
-{
+function getAchievementsCount(users) {
     let achievementsCount = 0;
     users.forEach(user => {
-       const achievements = user.achievements;
-       if(achievements)
-       {
-           achievementsCount += achievements.length;
-       }
+        const achievements = user.achievements;
+        if (achievements) {
+            achievementsCount += achievements.length;
+        }
     });
     return achievementsCount;
 }
 
-function achievementsRecordsCount(users)
-{
+function achievementsRecordsCount(users) {
     let achievementsRecordsCount = 0;
     users.forEach(user => {
         const achievements = user.achievements;
-        if(achievements)
-        {
+        if (achievements) {
             achievements.forEach(achievement => {
                 const records = achievement.records;
-                if(records)
-                {
-                    achievementsRecordsCount+= records.length;
+                if (records) {
+                    achievementsRecordsCount += records.length;
                 }
             });
         }
@@ -77,23 +74,19 @@ function achievementsRecordsCount(users)
     return achievementsRecordsCount;
 }
 
-function getWorksCount(users)
-{
+function getWorksCount(users) {
     let worksCount = 0;
     users.forEach(user => {
         const works = user.works;
-        if(works)
-        {
-            worksCount+=works.length;
+        if (works) {
+            worksCount += works.length;
         }
     });
     return worksCount;
 }
 
-function getRoleName(roleId)
-{
-    switch (roleId)
-    {
+function getRoleName(roleId) {
+    switch (roleId) {
         case 1:
             return 'Администраторы';
         case 2:
