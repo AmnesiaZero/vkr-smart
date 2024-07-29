@@ -186,13 +186,12 @@
 <script src="http://www.vkr-vuz.ru/assets/templates/c/js/jquery.fancytree.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
 
-<script src="{{'/js/bootstrap-select.js'}}"></script>
+
 
 
 <script src="/js/app.js"></script>
 
 <script src="/js/jquery/jquery.tmpl.min.js"></script>
-<script src="{{asset('js/bootstrap.js')}}"></script>
 <script src="/js/jquery/jquery.simplePagination.js"></script>
 
 @yield('scripts')

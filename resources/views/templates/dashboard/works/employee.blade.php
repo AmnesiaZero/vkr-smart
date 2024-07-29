@@ -207,12 +207,13 @@
         @endsection
 
         @section('scripts')
+            <script src="{{'/js/bootstrap-select.js'}}"></script>
             <script src="/js/dashboard/works/employees.js"></script>
             <script src="/js/bootstrap.js"></script>
             <script type="text/javascript" src="/js/jquery/moment.min.js"></script>
             <script type="text/javascript"
                     src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-    @include('layouts.dashboard.include.tmpls.works_page')
+         @include('layouts.dashboard.include.tmpls.works_page')
 
 @endsection

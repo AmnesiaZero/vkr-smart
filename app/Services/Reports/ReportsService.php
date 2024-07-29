@@ -164,14 +164,10 @@ class ReportsService extends Services
 
 
 
-
-
-
-        // Запрос на получение пользователей, связанных с ролями, удовлетворяющих условиям фильтрации
-        $achievementsQuery = User::with('achievements')
-            ->join('role_user', 'users.id', '=', 'role_user.user_id')
-            ->join('roles', 'role_user.role_id', '=', 'roles.id')
-            ->whereIn('roles.slug', ['teacher', 'admin', 'employee', 'user'])
+        $query = Role::query()->whereIn('slug',['teacher','admin','employee','user']);
+        $achievementsQuery = $query
+            ->join('role_user', 'roles.id', '=', 'role_user.role_id')
+            ->join('users', 'role_user.user_id', '=', 'users.id')
             ->where('users.organization_id', '=', $organizationId)
             ->join('achievements','users.id','=','achievements.user_id')
             ->join('achievements_records','achievement_id','=','achievements_records.achievement_id')
@@ -188,21 +184,58 @@ class ReportsService extends Services
                 'achievements_records.id as record_id'
             );
 
+//        // Запрос на получение пользователей, связанных с ролями, удовлетворяющих условиям фильтрации
+//        $achievementsQuery = User::with('achievements')
+//            ->join('role_user', 'users.id', '=', 'role_user.user_id')
+//            ->join('roles', 'role_user.role_id', '=', 'roles.id')
+//            ->whereIn('roles.slug', ['teacher', 'admin', 'employee', 'user'])
+//            ->where('users.organization_id', '=', $organizationId)
+//            ->join('achievements','users.id','=','achievements.user_id')
+//            ->join('achievements_records','achievement_id','=','achievements_records.achievement_id')
+//            ->select(
+//                'roles.id as role_id',
+//                'roles.name as role_name',
+//                'users.id as user_id',
+//                'users.name as user_name',
+//                'users.organization_id',
+//                'users.year_id',
+//                'users.faculty_id',
+//                'users.department_id',
+//                'achievements.id as achievement_id',
+//                'achievements_records.id as record_id'
+//            );
+
         // Применение фильтров
 
+//        if (isset($data['selected_years'])) {
+//            $achievementsQuery->whereIn('users.year_id', $data['selected_years']);
+//        }
+//        if (isset($data['selected_faculties'])) {
+//            $achievementsQuery->whereIn('users.faculty_id', $data['selected_faculties']);
+//        }
+//        if (isset($data['selected_departments'])) {
+//            $achievementsQuery->whereIn('users.department_id', $data['selected_departments']);
+//        }
+
         if (isset($data['selected_years'])) {
-            $achievementsQuery->whereIn('users.year_id', $data['selected_years']);
+            $achievementsQuery->whereHas('user', function($query) use ($data) {
+                $query->whereIn('year_id', $data['selected_years']);
+            });
         }
         if (isset($data['selected_faculties'])) {
-            $achievementsQuery->whereIn('users.faculty_id', $data['selected_faculties']);
+            $achievementsQuery->whereHas('user', function($query) use ($data) {
+                $query->whereIn('faculty_id', $data['selected_faculties']);
+            });
         }
         if (isset($data['selected_departments'])) {
-            $achievementsQuery->whereIn('users.department_id', $data['selected_departments']);
+            $achievementsQuery->whereHas('user', function($query) use ($data) {
+                $query->whereIn('department_id', $data['selected_departments']);
+            });
         }
 
         $results = $achievementsQuery->get();
 
-        Log::debug('achievements results = '.print_r($result,true));
+        Log::debug('achievements results = '.print_r($results,true));
 
         // Группировка пользователей по ролям
         $rolesAchievements = [];
