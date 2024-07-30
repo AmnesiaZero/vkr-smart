@@ -66,9 +66,9 @@
                     <li><a class="nav-link" href="https://api.vkr-vuz.ru" target="_blank">API</a></li>
                     <li>
                         <a href="/login" class="nav-link">
-		                        		<span class="badge br-40 br-green-1"
+		                        		<span class="badge br-40 br-green-1 d-flex align-items-center"
                                               style="padding-top: 7px; padding-bottom: 7px;">
-		                        			<span class="fs-16 text-black ps-1 pe-1"> вход </span>
+		                        			<span class="fs-16 text-black ps-1 pe-1">Вход</span>
 		                        		</span>
                         </a>
                     </li>
