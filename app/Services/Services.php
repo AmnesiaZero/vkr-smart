@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Services\Decorations\DecorationsService;
 use App\Services\Decorations\Repositories\DecorationRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -9,12 +10,6 @@ use Illuminate\Support\Facades\Auth;
 class Services
 {
 
-    private DecorationRepositoryInterface $decorationRepository;
-
-    public function __construct(DecorationRepositoryInterface $decorationRepository)
-    {
-        $this->decorationRepository = $decorationRepository;
-    }
 
 
     /**
@@ -31,12 +26,21 @@ class Services
         ], $status);
     }
 
-    public function view()
-    {
-        $you = Auth::user();
-        $organizationId = $you->organization_id;
-        $decoration = $this->decorationRepository->get($organizationId);
-
-    }
+//    public static function view(string $name,array $data = [])
+//    {
+//        $you = Auth::user();
+//        $decorationRepository = app(DecorationRepositoryInterface::class);
+//        $decorationService = new DecorationsService($decorationRepository);
+//        $organizationId = $you->organization_id;
+//        $decoration = $decorationService->get($organizationId);
+//        if($decoration)
+//        {
+//            $data = array_merge($data,['decoration' => $decoration]);
+//            return view($name,$data);
+//        }
+//        return back()->withErrors(['Ошибка - оформление не найдено']);
+//
+//
+//    }
 
 }

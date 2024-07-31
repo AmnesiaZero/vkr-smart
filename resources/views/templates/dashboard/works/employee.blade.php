@@ -1,5 +1,9 @@
 @extends('layouts.dashboard.main')
 
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+@endsection
+
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
         <div class="row pt-4 g-3 px-md-0 px-3">
@@ -117,8 +121,8 @@
                                 <button class="btn pe-3 py-0 fs-14" disabled>
                                     <img src="/images/Calendar.svg" alt="">
                                 </button>
-                                {{--Временно поменял имя,чтобы не мешалось--}}
-                                <input type="text" name="date_rang" value="04.06.2024 - 07.06.2024"
+                                {{--                                Временно поменял имя,чтобы не мешалось--}}
+                                <input type="text" name="daterange" value="04.06.2024 - 07.06.2024"
                                        class=" fs-14 text-grey p-date w-75"/>
                             </div>
                         </div>

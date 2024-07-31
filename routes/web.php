@@ -162,7 +162,6 @@ Route::group([
         Route::get('handbook-management', [HandbookController::class, 'view']);
         Route::get('integration', [OrganizationsController::class, 'integrationView']);
         Route::get('api', [UsersController::class, 'apiView']);
-        Route::get('decoration',[DecorationController::class,'view']);
     });
     Route::group([
         'prefix' => 'works'

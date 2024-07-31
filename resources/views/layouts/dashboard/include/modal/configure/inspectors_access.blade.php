@@ -1,5 +1,5 @@
-<div class="modal" id="inspectors_access_modal">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade" id="inspectors_access_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Настройка доступа для проверяющих</h3>
@@ -35,11 +35,11 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" onclick="closeModal('inspectors_access_modal');" class="btn btn-success">
-                            Сохранить изменения
+                        <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
+                            Сохранить
                         </button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="closeModal('inspectors_access_modal')">Закрыть окно
+                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                            Закрыть
                         </button>
                     </div>
                 </div>

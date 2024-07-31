@@ -25,6 +25,9 @@ $(document).ready(function () {
     // Инициализация селект 2
     $('.js-example-basic-single').select2();
 
+    $('#specialties_list').select2({
+        placeholder: 'Выбор...',
+    });
 
     $('#dropdownMenu').click(function () {
         if ($('.dropdown-menu.header').css('display') === 'none') {
@@ -622,8 +625,9 @@ function specialties() {
         success: function (response) {
             if (response.success) {
                 const specialties = response.data.specialties;
-                $("#specialties_list").html($("#specialty_menu_tmpl").tmpl(specialties));
-            } else {
+                $("#specialties_list").append($("#specialty_menu_tmpl").tmpl(specialties));
+                $("#specialties_list").prepend('<option value="" selected>Выберите...</option>');
+            } else {!
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -734,13 +738,6 @@ $(document).ready(function () {
             data: data,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-                if (response.success) {
-                    $.notify("Профиль успешно обновлен", "success");
-                } else {
-                    $.notify(response.data.title + ":" + response.data.message, "error");
-                }
             },
             error: function () {
                 $.notify("Ошибка при обновлении профиля. Обратитесь к системному администратору", "error");

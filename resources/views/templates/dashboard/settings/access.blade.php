@@ -6,9 +6,9 @@
             <div class="col-xxl-9 col-xl-8 col-12 mb-4 order-xl-1 order-2">
                 <form onsubmit="searchUsers();return false" id="search_users" class="">
                     <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
-                        <input type="text" name="name" value="" class="form-control search br-none"
+                        <input type="text" name="name" value="" class="form-control search br-none opacity-75"
                                placeholder="Поиск по имени">
-                        <button class="btn pe-sm-5 pe-3 py-1" type="submit" id="search">
+                        <button class="btn pe-sm-3 pe-3 py-1 d-flex align-items-center" type="submit" id="search">
                             <img src="/images/Search.svg" alt="search">
                         </button>
                     </div>
@@ -28,17 +28,19 @@
             </div>
             <div class="col-xxl-3 col-xl-4 col-12 mb-3 order-xl-2 order-1">
                 <div class="br-green-light-2 br-15 p-4 text-center bg-green cursor-p"
-                     onclick="openModal('create_admin')">
+                     data-bs-toggle="modal" data-bs-target="#create_admin">
                     <img src="/images/Plus.svg">
                     <p class="text-grey m-0 pt-3">Добавить администратора</p>
                 </div>
                 <div class="br-green-light-2 br-15 p-4 text-center bg-green cursor-p mt-3"
-                     onclick="years('years_list');openModal('create_employee')">
+                     data-bs-toggle="modal" data-bs-target="#create_employee">
                     <img src="/images/Plus.svg">
                     <p class="text-grey m-0 pt-3">Добавить сотрудника</p>
                 </div>
                 <div class="br-green-light-2 br-15 p-4 text-center bg-green cursor-p mt-3"
-                     onclick="inspectorsAccessModal()">
+                     onclick="inspectorsAccessModal()"
+                    data-bs-toggle="modal" data-bs-target="#inspectors_access_modal">
+
                     <img src="/images/Plus.svg">
                     <p class="text-grey m-0 pt-3">Доступ<br> для проверяющих</p>
                 </div>

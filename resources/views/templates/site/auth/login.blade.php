@@ -22,7 +22,7 @@
                                 <label for="password">Пароль</label>
                                 <input id="password" type="text" name="password" placeholder="" class="form-control">
                             </div>
-                            <div class="form-check mt-5 mb-2">
+                            <div class="form-check my-4">
                                 <input id="remember_me" type="checkbox" name="remember" value="1"
                                        class="form-check-input">
                                 <label for="remember_me" class="form-check-label">Запомнить меня</label>
@@ -36,17 +36,17 @@
                 <div class="col-xl-5 col-lg-6 mt-lg-0 mt-5">
                     <div class="bg-grey br-40 p-5">
                         <div class="text-before-form">
-                            <h2 class="">Регистрация <br>по приглашению</h2>
+                            <h2>Регистрация <br>по приглашению</h2>
                             <p class="mb-5 text-grey fs-14 lh-17">Чтобы пройти регистрацию, <br> введите выданный вам
                                 код приглашения</p>
                         </div>
                         <form class="auth mb-5" method="POST" action="/login/by-code">
                             @csrf
                             <div class="form-group">
-                                <label for="code">код приглашения</label>
+                                <label for="code">Код приглашения</label>
                                 <input id="code" type="text" name="code" placeholder="" class="form-control">
                             </div>
-                            <button type="submit" class="btn br-100 btn-primary w-100">продолжить</button>
+                            <button type="submit" class="btn br-100 btn-primary w-100 mt-4">продолжить</button>
                         </form>
                     </div>
                 </div>

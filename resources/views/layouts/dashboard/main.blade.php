@@ -97,9 +97,6 @@
                                     <li class="list-select"><a href="/dashboard/settings/handbook-management"
                                                                class="select-a @if(request()->is('*/handbook-management')) nav-link-active @endif">Управление
                                             <br>справочниками</a></li>
-                                    <li class="list-select"><a href="/dashboard/settings/decoration"
-                                                               class="select-a @if(request()->is('*/decoration')) nav-link-active @endif">Оформление</a>
-                                    </li>
                                     <li class="list-select"><a href="/dashboard/settings/integration"
                                                                class="select-a @if(request()->is('*/integration')) nav-link-active @endif">Интеграция</a>
                                     </li>
@@ -184,9 +181,12 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 <script src="http://www.vkr-vuz.ru/assets/templates/c/js/jquery.fancytree.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.15.0/printThis.min.js"></script>
 
 
 <script src="/js/bootstrap-select.js"></script>
+
+
 
 <script src="/js/app.js"></script>
 

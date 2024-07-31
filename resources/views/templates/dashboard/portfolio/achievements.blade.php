@@ -365,8 +365,8 @@
                                                      <i class="bi bi-printer"></i> Печать <i class="bi bi-caret-down-fill"></i>
                                                  </button>
                                                  <ul class="dropdown-menu" aria-labelledby="dLabel">
-                                                     <li><a href="#" class="text-decoration-none" onclick="$('#achivement-tab').printThis(); return false;">Портфолио</a></li>
-                                                     <li><a href="#" class="text-decoration-none" onclick="$('#achivement-tab').printThis(); return false;">Резюме</a></li>
+                                                     <li><a href="#" class="text-decoration-none" onclick="$('#achievements-tab').printThis(); return false;">Портфолио</a></li>
+                                                     <li><a href="#" class="text-decoration-none" onclick="$('#careers-tab').printThis(); return false;">Резюме</a></li>
                                                      <li><a href="#" class="text-decoration-none" onclick="$('#user-achivements').printThis(); return false;">Все на одной странице</a></li>
                                                  </ul>
 
