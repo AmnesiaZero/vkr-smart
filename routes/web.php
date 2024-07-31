@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\DecorationController;
 use App\Http\Controllers\HandbookController;
 use App\Http\Controllers\InviteCodesController;
 use App\Http\Controllers\Organizations\DepartmentsController;
@@ -161,6 +162,7 @@ Route::group([
         Route::get('handbook-management', [HandbookController::class, 'view']);
         Route::get('integration', [OrganizationsController::class, 'integrationView']);
         Route::get('api', [UsersController::class, 'apiView']);
+        Route::get('decoration',[DecorationController::class,'view']);
     });
     Route::group([
         'prefix' => 'works'

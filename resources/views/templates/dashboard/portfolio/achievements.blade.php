@@ -24,7 +24,7 @@
                     <p class="text-grey mb-2 fs-14">Тип документа</p>
                     <div>
                         <div class="col-sm-8">
-                            <select name="achievement_mode_id" class="selectpicker bs-select-hidden">
+                            <select name="achievement_mode_id" class="selectpicker">
                                 <option value="" id="default_achievement">Выбрать</option>
                                 @if(isset($modes) and is_iterable($modes))
                                     @foreach($modes as $mode)
@@ -32,6 +32,17 @@
                                     @endforeach
                                 @endif
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <p class="fs-14 mb-2 text-grey">Период загрузки работ</p>
+                        <div class="input-group input-group-lg br-100 br-green-light-2 focus-form pe-2">
+                            <button class="btn pe-3 py-0 fs-14" disabled>
+                                <img src="/images/Calendar.svg" alt="">
+                            </button>
+                            {{--Временно поменял имя,чтобы не мешалось--}}
+                            <input type="text" name="date_rang" value="04.06.2024 - 07.06.2024"
+                                   class=" fs-14 text-grey p-date w-75"/>
                         </div>
                     </div>
                     <div class="mt-auto">

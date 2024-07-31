@@ -39,7 +39,7 @@ class EloquentAchievementRepository implements AchievementRepositoryInterface
         }
         if(isset($data['name']))
         {
-            $query = $query->where('name','=',$data['name']);
+            $query = $query->where('name','like','%'.$data['name'].'%');
         }
         if(isset($data['achievement_mode_id']))
         {
@@ -47,7 +47,5 @@ class EloquentAchievementRepository implements AchievementRepositoryInterface
         }
 
         return $query->get();
-
-
     }
 }

@@ -117,7 +117,7 @@
                                 <button class="btn pe-3 py-0 fs-14" disabled>
                                     <img src="/images/Calendar.svg" alt="">
                                 </button>
-                                {{--                                Временно поменял имя,чтобы не мешалось--}}
+                                {{--Временно поменял имя,чтобы не мешалось--}}
                                 <input type="text" name="date_rang" value="04.06.2024 - 07.06.2024"
                                        class=" fs-14 text-grey p-date w-75"/>
                             </div>
