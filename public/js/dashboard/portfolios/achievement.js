@@ -513,19 +513,26 @@ function openOverView()
         success: function (response) {
             if (response.success) {
                 const user = response.data.user;
+
                 $("#tmpl_container").html($("#overview_tmpl").tmpl(user));
                 const achievements = user.achievements;
                 console.log('achievements');
                 console.log(achievements);
+
                 $("#overview_achievements_list").html($("#overview_achievement_tmpl").tmpl(achievements));
                 const educations = user.educations;
                 console.log('educations');
                 console.log(educations);
+
                 $("#overview_educations_list").html($("#overview_education_tmpl").tmpl(educations));
                 const careers = user.careers;
                 console.log('careers');
                 console.log(careers);
+
                 $("#overview_careers_list").html($("#overview_career_tmpl").tmpl(careers));
+
+                const modalElement = new bootstrap.Modal(document.getElementById('overview_modal'));
+                modalElement.show();
             }
             else {
                 $.notify(response.data.title + ":" + response.data.message, "error");

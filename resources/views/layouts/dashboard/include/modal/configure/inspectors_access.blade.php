@@ -2,14 +2,14 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Настройка доступа для проверяющих</h3>
+                <h3 class="modal-title">Настройка доступа для проверяющих</h3>
             </div>
             <form class="form form-inline" id="checkingAccessForm"
                   onsubmit="configureInspectorsAccess(); return false;">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h5>Выберите те направления подготовки, доступ к которым будет иметь проверяющий
+                            <h5 class="mb-3">Выберите те направления подготовки, доступ к которым будет иметь проверяющий
                                 организации</h5>
                             <div id="checking-access-alert"></div>
                             <div id="checkingAccessFormListYears">
@@ -18,12 +18,11 @@
 
                                     </ul>
                                 </nav>
-
                             </div>
                             <div id="checkingAccessFormList">
 
                                 <div class="list-group list-group-sm gap-2">
-                                    <p class="m-0">
+                                    <p class="pt-3">
                                         <input id="checking_specialties" type="checkbox">
                                         <label for="checking_specialties">Выбрать все</label>
                                     </p>

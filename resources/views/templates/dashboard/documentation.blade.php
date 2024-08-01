@@ -11,7 +11,7 @@
                             <img src="/images/File_Document.svg" alt="">
                         </div>
                         <div class="col">
-                            <p class="fw"><a href="#" class="td-none text-black-hover">Согласие студента на размещение
+                            <p class="fw-700 mb-2"><a href="#" class="td-none text-black-hover">Согласие студента на размещение
                                     ВКР</a></p>
                             <p class="fs-14 text-grey lh-17">Является рекомендуемым документом для учебного заведения
                                 при размещении работ.</p>
@@ -24,7 +24,7 @@
                             <img src="/images/File_Document.svg" alt="">
                         </div>
                         <div class="col">
-                            <p class="fw"><a href="#" class="td-none text-black-hover">Примерный алгоритм организации
+                            <p class="fw-700 mb-2"><a href="#" class="td-none text-black-hover">Примерный алгоритм организации
                                     размещения ВКР в вузе</a></p>
                             <p class="fs-14 text-grey lh-17">Это рекомендуемый документ, который может быть взят
                                 в качестве образца для разработки (корректировки) собственного регламента по организации
@@ -41,7 +41,7 @@
                             <img src="/images/File_Document.svg" alt="">
                         </div>
                         <div class="col">
-                            <p class="fw"><a href="#" class="td-none text-black-hover">Презентация ВКР-ВУЗ.РФ</a></p>
+                            <p class="fw-700 mb-2"><a href="#" class="td-none text-black-hover">Презентация ВКР-ВУЗ.РФ</a></p>
                             <p class="fs-14 text-grey lh-17">Краткое описание платформы.</p>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                             <img src="/images/File_Document.svg" alt="">
                         </div>
                         <div class="col">
-                            <p class="fw"><a href="#" class="td-none text-black-hover">Инструкция ВКР-ВУЗ.РФ</a></p>
+                            <p class="fw-700 mb-2"><a href="#" class="td-none text-black-hover">Инструкция ВКР-ВУЗ.РФ</a></p>
                             <p class="fs-14 text-grey lh-17">Информация о работе с системой ВКР-ВУЗ.РФ.</p>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                             <img src="/images/File_Document.svg" alt="">
                         </div>
                         <div class="col">
-                            <p class="fw"><a href="#" class="td-none text-black-hover">Примерное ТЗ</a></p>
+                            <p class="fw-700 mb-2"><a href="#" class="td-none text-black-hover">Примерное ТЗ</a></p>
                             <p class="fs-14 text-grey lh-17">Технический документ, оговаривающий набор требований к
                                 системе</p>
                         </div>
@@ -75,7 +75,7 @@
                             <img src="/images/File_Document.svg" alt="">
                         </div>
                         <div class="col">
-                            <p class="fw"><a href="#" class="td-none text-black-hover">Видеоинструкции</a></p>
+                            <p class="fw-700 mb-2"><a href="#" class="td-none text-black-hover">Видеоинструкции</a></p>
                             <p class="fs-14 text-grey lh-17">Подробная демонстрация действий,последовательности действий
                                 на платформе ВКР-ВУЗ</p>
                         </div>

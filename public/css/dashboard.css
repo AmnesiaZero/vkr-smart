@@ -172,6 +172,9 @@ p {
 .text-black-black {
     color: #000;
 }
+.text-black-grey {
+    color: #2C3E50 !important;
+}
 
 .text-grey {
     color: rgba(0, 0, 0, 0.5) !important;
@@ -642,7 +645,7 @@ label {
 
 .password-control {
     position: absolute;
-    top: 11px;
+    top: 8px;
     right: 6px;
     display: inline-block;
     width: 20px;
@@ -821,7 +824,7 @@ label {
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-    padding-top: 5px;
+    padding-top: 2px;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.5);
 }
@@ -1146,6 +1149,9 @@ label {
 input {
     border: 0;
     outline: none;
+}
+input::placeholder {
+    opacity: 70% !important;
 }
 
 #faculties_list,

@@ -1,16 +1,24 @@
 $(document).ready(function () {
+
     loadTeachersCodes();
     studentsCodes();
 });
+function copyInviteCode() {
+    // Найдем ближайший input элемент с классом .content, относительно кнопки, на которую нажали
+    var input = event.target.closest('.input-group').querySelector('.content');
 
-document.getElementById("copy").onclick = function () {
-    let text = document.getElementById("content").value;
-    navigator.clipboard.writeText(text);
+    // Выделим текст в поле ввода
+    input.select();
+    input.setSelectionRange(0, 99999); // Для мобильных устройств
+
+    // Скопируем текст в буфер обмена
+    document.execCommand("copy");
 }
 
-
-
-
+// document.getElementById("copy").onclick = function () {
+//     let text = document.getElementById("content").value;
+//     navigator.clipboard.writeText(text);
+// }
 
 function createTeachersCodes()
 {

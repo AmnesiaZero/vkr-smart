@@ -1,9 +1,10 @@
-<div id="user_works_modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="userWorksListLabel" aria-hide="true" style="padding-right: 20px;">
-    <div class="modal-dialog modal-lg">
+<div id="user_works_modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="userWorksListLabel" aria-hidden="true" style="padding-right: 20px;">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hide="true">×</button>
-                <h4 id="userWorksListLabel">Просмотр списка загруженных работы пользователя</h4>
+                <h4 id="userWorksListLabel" class="modal-title">Просмотр списка загруженных работы пользователя</h4>
             </div>
             <div class="modal-body">
                 <table class="table table-bordered table-mini">
@@ -21,7 +22,9 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-default" data-dismiss="modal" aria-hide="true" onclick="closeModal('user_works_modal')">Закрыть окно</button>
+                <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                    Закрыть
+                </button>
             </div>
         </div>
     </div>

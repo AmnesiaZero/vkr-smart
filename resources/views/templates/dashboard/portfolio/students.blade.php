@@ -13,7 +13,7 @@
                             <p class="text-grey mb-2 fs-14">ФИО обучающегося</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
                                 <input type="text" name="name" value=""
-                                       class="form-control search br-none fs-14 form-small-p" id="name_input" placeholder="">
+                                       class="form-control search br-none fs-14 form-small-p" id="name_input" placeholder="Ввод...">
                                 <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                                     <img src="/images/Search.svg" alt="search">
                                 </button>
@@ -23,7 +23,7 @@
                             <p class="text-grey mb-2 fs-14">Группа</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
                                 <input type="text" name="group" value=""
-                                       class="form-control search br-none fs-14 form-small-p" id="group_input" placeholder="">
+                                       class="form-control search br-none fs-14 form-small-p" id="group_input" placeholder="Ввод...">
                                 <button class="btn pe-3 py-0 fs-14" type="submit" id="search" >
                                     <img src="/images/Search.svg" alt="search">
                                 </button>
@@ -35,18 +35,19 @@
                             <p class="text-grey mb-2 fs-14">Поиск по email</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
                                 <input type="text" name="email" value=""
-                                       class="form-control search br-none fs-14 form-small-p" placeholder="" id="email_input">
+                                       class="form-control search br-none fs-14 form-small-p" placeholder="Ввод..." id="email_input">
                                 <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                                     <img src="/images/Search.svg" alt="search">
                                 </button>
                             </div>
                         </div>
                         <div class="col-xl-6">
-                            <div class="mt-auto">
+                            <div class="mt-auto d-flex gap-3">
                                 <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1">
-                                    применить
+                                    Применить
                                 </button>
-                                <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1" onclick="resetSearch();return false">сбросить
+                                <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1" onclick="resetSearch();return false">
+                                    Сбросить
                                 </button>
                             </div>
                         </div>

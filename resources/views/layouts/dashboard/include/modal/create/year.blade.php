@@ -15,7 +15,7 @@
                                 <label for="year" class="fw-bold fs-15">Год</label>
                             </div>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control fs-14" id="year" name="year">
+                                <input type="text" class="form-control fs-14" id="year" name="year" placeholder="Ввод...">
                             </div>
                         </div>
 
@@ -24,7 +24,7 @@
                                 <label for="comment" class="fw-bold ">Комментарий</label>
                             </div>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control fs-14" id="comment" name="comment">
+                                <input type="text" class="form-control fs-14" id="comment" name="comment" placeholder="Ввод...">
                             </div>
                         </div>
 
@@ -33,7 +33,7 @@
                                 <label for="students_count" class="fw-bold ">Количество студентов</label>
                             </div>
                             <div class="col-sm-8">
-                                <input type="number" class="form-control fs-14" id="students_count" name="students_count">
+                                <input type="number" class="form-control fs-14" id="students_count" name="students_count" placeholder="Ввод...">
                             </div>
                         </div>
                 </div>

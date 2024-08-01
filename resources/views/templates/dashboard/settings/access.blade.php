@@ -177,7 +177,6 @@
     <script id="you_tmpl" type="text/x-jquery-tmpl">
             <div class="d-flex flex-inline justify-content-between">
                 <p class="m-0 text-grey-light fw-600">Вы</p>
-                <img src="/images/pin.svg" alt="">
             </div>
             <div class="row mt-3">
                 <div class="col-6">
@@ -190,14 +189,19 @@
                 <div class="col brl-grey-2"></div>
                 <div class="col-5">
                     @{{if is_active}}
-                    <p class="text-grey fs-14"><span><img src="/images/green_active.svg" alt=""
-                                                          class="pe-2"></span>Активен</p>
+                    <div class="d-flex gap-2 align-items-center text-grey fs-14">
+                        <img src="/images/green_active.svg">
+                        Активен
+                    </div>
                     @{{else}}
                      <img src="/images/red.svg" alt="" class="pe-2" id="active_user_img2">
-                      <p class="text-grey fs-14 m-0" id="active_user2">Заблокирован</p>
+                      <div class="d-flex gap-2 align-items-center text-grey fs-14" id="active_user2">
+                        <img src="/images/green_active.svg">
+                        Заблокирован
+                      </div>
                      @{{/if}}
-                    <p class="text-grey fs-14 mb-0">${email}</p>
-                    <a href="#" class="text-grey link-active-hover fs-14"  onclick="resetUserPassword('${email}')">отправить пароль на email</a>
+                    <p class="text-grey fs-14 mt-3 mb-2">${email}</p>
+                    <a href="#" class="text-grey link-active-hover fs-14"  onclick="resetUserPassword('${email}')">Отправить пароль на email</a>
                 </div>
             </div>
 
@@ -205,76 +209,61 @@
 
 
     <script id="update_user_tmpl" type="text/x-jquery-tmpl">
-    <div class="create-modal" id="update_user" style="display: none">
-    <div class="modal-dialog">
-        <div class="modal-content" style="background-color: #fff;">
-            <div class="modal-header">
-                <h4 class="modal-title">Изменить пользователя</h4>
-            </div>
-            <div class="modal-body p-4">
-                <form method="post" id="update_user_form" class="d-flex flex-column gap-2"
-                      onsubmit="updateUser(${id});return false;">
-                    <div class="form-group">
-                        <label class="col-sm-4">ФИО</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="name" value="${name}" value=${password}>
+        <div class="modal fade" id="update_user" tabindex="-1" aria-labelledby="updateUserLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="updateUserLabel">Изменить пользователя</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="update_user_form" onsubmit="updateUser(${id});return false;">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">ФИО</label>
+                            <input type="text" class="form-control" id="name" name="name" value="${name}" placeholder="Ввод...">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4">Email</label>
-                        <div class="col-sm-8">
-                            <input type="email" class="form-control" name="email" value="${email}" value=${password}>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="${email}" placeholder="Ввод...">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4">Логин</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="login" value="${login}" value=${password}>
+                        <div class="mb-3">
+                            <label for="login" class="form-label">Логин</label>
+                            <input type="text" class="form-control" id="login" name="login" value="${login}" placeholder="Ввод...">
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-4">Номер телефона</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="phone" value="${phone}">
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Номер телефона</label>
+                            <input type="text" class="form-control" id="phone" name="phone" value="${phone}" placeholder="+7-999-999-99-99">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4">Дата рождения</label>
-                        <div class="col-sm-8">
-                            <input type="date" class="form-control" name="date_of_birth" value="${date_of_birth}" >
+                        <div class="mb-3">
+                            <label for="date_of_birth" class="form-label">Дата рождения</label>
+                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="${date_of_birth}">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4">Пол</label>
-                        <div class="col-sm-8">
-                            <select name="gender" class="form-control">
-                                <option value="0" @{{if gender==0}} checked @{{/if}}>Муж.</option>
-                                <option value="1" @{{if gender==1}} checked @{{/if}}>Жен.</option>
+                        <div class="mb-3">
+                            <label for="gender" class="form-label">Пол</label>
+                            <select id="gender" name="gender" class="form-select">
+                                <option value="0" @{{if gender==0}} selected @{{/if}}>Муж.</option>
+                                <option value="1" @{{if gender==1}} selected @{{/if}}>Жен.</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4">Статус</label>
-                        <div class="col-sm-8">
-                            <select name="is_active" class="form-control">
-                                <option value="1" @{{if is_active==1}} checked @{{/if}}>Активен</option>
-                                <option value="0" @{{if is_active==0}} checked @{{/if}}>Заблокирован</option>
+                        <div class="mb-3">
+                            <label for="is_active" class="form-label">Статус</label>
+                            <select id="is_active" name="is_active" class="form-select">
+                                <option value="1" @{{if is_active==1}} selected @{{/if}}>Активен</option>
+                                <option value="0" @{{if is_active==0}} selected @{{/if}}>Заблокирован</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="modal-footer br-none">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal"
-                                onclick="closeModal('update_user')">Закрыть
-                        </button>
-                        <button type="submit" class="btn btn-success" onclick="closeModal('update_user')">Изменить
-                        </button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
+                                Применить
+                            </button>
+                            <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                                Закрыть
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
     </script>

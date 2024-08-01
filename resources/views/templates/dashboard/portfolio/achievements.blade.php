@@ -16,7 +16,7 @@
                     <p class="text-grey mb-2 fs-14">Наименование достижения</p>
                     <div class="input-group input-group-lg br-100 br-green-light-2 focus-form mb-3">
                         <input type="text" name="name" value="" class="form-control search br-none fs-14 form-small-p"
-                               placeholder="" id="achievement_name">
+                               placeholder="Поиск" id="achievement_name">
                         <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                             <img src="/images/Search.svg" alt="search">
                         </button>
@@ -34,22 +34,27 @@
                             </select>
                         </div>
                     </div>
-                    <div class="mt-auto">
-                        <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1">применить</button>
+                    <div class="mt-auto d-flex gap-3">
+                        <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1">Применить</button>
                         <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1"
-                                onclick="resetSearch();return false">сбросить
+                                onclick="resetSearch();return false">Сбросить
                         </button>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="d-flex mt-5">
-            <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 w-75 me-3"
-                    onclick="openModal('add_achievement_modal')">добавить
-                <img src="/images/pl-green.svg" alt="" class="ps-2"></button>
-            <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25" onclick="openOverView()">Обзор
-                <img
-                    src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
+        <div class="d-flex gap-3 mt-5">
+            <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 w-75"
+                    data-bs-target="#add_achievement_modal" data-bs-toggle="modal">
+                Добавить
+                <img src="/images/Plus.svg" class="ps-2" alt="">
+            </button>
+            <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25"
+                    onclick="openOverView()"
+            >
+                Обзор
+                <img src="/images/File_Download_green.svg" alt="" class="ps-2">
+            </button>
             <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25" onclick="openPortfolio()">Карточка<img
                     src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
         </div>
@@ -219,7 +224,8 @@
     <script id="record_tmpl" type="text/x-jquery-tmpl">
         <div class="dropdown" id="achievement_record_${id}">
 
-          <a data-bs-toggle="dropdown" aria-expanded="false" class="list-group-item">
+          <a data-bs-toggle="dropdown" aria-expanded="false" class="list-group-item d-flex align-items-center gap-2"
+          data-bs-toggle="tooltip" title="${type.name}">
               @{{if record_type_id==1}}
                   <i class="bi bi-save"></i>
                   Файл
@@ -234,41 +240,47 @@
                   <i class="bi bi-eye" onclick="openTextRecord(${id})"></i>
                   Текст
               @{{/if}}
-
-              <span class="gree">(${type.name})</span>
-
           </a>
 
           <ul class="dropdown-menu">
               <li>
                   @{{if record_type_id==1}}
-                  <a href="/dashboard/portfolio/achievements/records/download?id=${id}"  class="green text-decoration-none">
-                      <i class="bi bi-pencil"></i>
-                      Открыть</a>
+                      <a href="/dashboard/portfolio/achievements/records/download?id=${id}"  class="text-decoration-none text-grey">
+                          <span class="d-flex align-items-center gap-2">
+                              <i class="bi bi-pencil"></i>
+                              Открыть
+                          </span>
+                      </a>
                   @{{/if}}
+
                   @{{if record_type_id==2}}
-                  <a href="${content}" target="_blank"   class="green text-decoration-none">
-                      <i class="bi bi-pencil"></i>
-                      Открыть</a>
+                      <a href="${content}" target="_blank"   class="text-decoration-none text-grey">
+                          <span class="d-flex align-items-center gap-2">
+                              <i class="bi bi-pencil"></i>
+                              Открыть
+                          </span>
+                      </a>
                   @{{/if}}
+
                   @{{if record_type_id==3}}
-                  <a onclick="openTextRecord(${id}); return false;"  class="green text-decoration-none">
-                      <i class="bi bi-pencil"></i>
-                      Открыть</a>
+                      <a onclick="openTextRecord(${id}); return false;"  class="text-decoration-none text-grey">
+                          <span class="d-flex align-items-center gap-2">
+                              <i class="bi bi-pencil"></i>
+                              Открыть
+                          </span>
+                      </a>
                   @{{/if}}
               </li>
               <li>
-                  <a onclick="deleteAchievementRecord(${id}); return false;"  class="reden text-decoration-none">
-                      <i class="bi bi-x"></i>
-                      Удалить</a>
+                  <a onclick="deleteAchievementRecord(${id}); return false;"  class="text-decoration-none text-grey">
+                      <span class="d-flex align-items-center gap-2">
+                          <i class="bi bi-x"></i>
+                          Удалить
+                      </span>
+                  </a>
               </li>
           </ul>
       </div>
-
-
-
-
-
     </script>
 
     <script id="text_tmpl" type="text/x-jquery-tmpl">
@@ -307,12 +319,11 @@
     </script>
 
     <script id="overview_tmpl" type="text/x-jquery-tmpl">
-    <div id="overview_modal" class="modal" style="display: block;">
+    <div id="overview_modal" class="modal fade" aria-hidden="true">
          <div class="modal-dialog modal-lg">
              <div class="modal-content">
                  <div class="modal-header">
-                     <h3>Портфолио Ваших достижений</h3>
-                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeTmplModal('overview_modal')" style="background: none; border: none;"><span aria-hidden="true">×</span></button>
+                     <h3 class="modal-title">Портфолио Ваших достижений</h3>
                  </div>
                  <div class="modal-body">
                      <div id="user-achivements">
@@ -330,33 +341,38 @@
                                  </div>
                              </div>
                              <div class="col-sm-8">
-                                 <form class="form form-horizontal d-flex flex-column gap-2" action="staff-personal-info.html" method="post">
+                                 <form class="form form-horizontal d-flex flex-column gap-3" action="staff-personal-info.html" method="post">
                                      <div class="row">
-                                         <label class="col-sm-4 fw-700">Фамилия, имя, отчество</label>
-                                         <div class="col-sm-8">
-                                             ${name}									</div>
+                                         <label class="col-sm-4 fw-bold text-grey fs-16">
+                                            Фамилия, имя, отчество
+                                         </label>
+                                         <div class="col-sm-8 fw-500 text-black">
+                                             ${name}
+                                         </div>
                                      </div>
                                      <div class="row">
-                                         <label class="col-sm-4 fw-700">Адрес электронной почты</label>
-                                         <div class="col-sm-8">
+                                         <label class="col-sm-4 fw-bold text-grey fs-16">Адрес электронной почты</label>
+                                         <div class="col-sm-8 fw-500 text-black">
                                              ${email}								</div>
                                      </div>
                                      <div class="row">
-                                         <label class="col-sm-4 fw-700">Организация</label>
-                                         <div class="col-sm-8">
-                                             ${organization.name}									</div>
+                                         <label class="col-sm-4 fw-bold text-grey fs-16">Организация</label>
+                                         <div class="col-sm-8 fw-500 text-black">
+                                             ${organization.name}
+                                         </div>
                                      </div>
                                      <div class="row">
                                          <label class="col-sm-4"></label>
                                          <div class="col-sm-8">
-                                             <div class="dropdown non-printable">
-                                                 <button class="btn btn-default" id="dLabel" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                     <i class="bi bi-printer"></i> Печать <i class="bi bi-caret-down-fill"></i>
+                                             <div class="dropdown non-printable text-end">
+                                                 <button class="btn btn-default text-grey fw-500" id="dLabel" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                     <i class="bi bi-printer"></i>
+                                                     Печать
                                                  </button>
                                                  <ul class="dropdown-menu" aria-labelledby="dLabel">
-                                                     <li><a href="#" class="text-decoration-none" onclick="$('#achievements-tab').printThis(); return false;">Портфолио</a></li>
-                                                     <li><a href="#" class="text-decoration-none" onclick="$('#careers-tab').printThis(); return false;">Резюме</a></li>
-                                                     <li><a href="#" class="text-decoration-none" onclick="$('#user-achivements').printThis(); return false;">Все на одной странице</a></li>
+                                                     <li><a href="#" class="text-grey fw-500 text-decoration-none" onclick="$('#achievements-tab').printThis(); return false;">Портфолио</a></li>
+                                                     <li><a href="#" class="text-grey fw-500 text-decoration-none" onclick="$('#careers-tab').printThis(); return false;">Резюме</a></li>
+                                                     <li><a href="#" class="text-grey fw-500 text-decoration-none" onclick="$('#user-achivements').printThis(); return false;">Все на одной странице</a></li>
                                                  </ul>
 
                                              </div>
@@ -365,7 +381,7 @@
                                  </form>
                              </div>
                          </div>
-                         <div class="row">
+                         <div class="row mt-4">
                              <div class="col-sm-12">
                                  <ul class="nav nav-tabs non-printable" role="tablist">
                                      <li role="presentation" class="nav-item">
@@ -391,7 +407,7 @@
                                      <div role="tabpanel" class="tab-pane active" id="achievements-tab">
                                          <h3 class="">Ваши достижения</h3>
                                          <table class="table table-bordered">
-                                             <tbody id="overview_achievements_list">
+                                             <tbody id="overview_achievements_list"></tbody>
                                          </table>
                                      </div>
                                      <div role="tabpanel" class="tab-pane" id="educations-tab">
@@ -410,8 +426,10 @@
                      </div>
                  </div>
                  <div class="modal-footer">
-                     <button type="button" class="close-modal btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeTmplModal('overview_modal')">Закрыть окно</button>
-                 </div>
+                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                        Закрыть
+                    </button>
+                </div>
              </div>
          </div>
      </div>
@@ -477,19 +495,19 @@
                            </span>
            <div class="form-group">
                <div class="row">
-                   <label class="col-sm-4 col-xs-4">Место работы</label>
+                   <label class="col-sm-4 col-xs-4 fw-bold">Место работы</label>
                    <div class="col-sm-8 col-xs-8">${name}</div>
                </div>
            </div>
            <div class="form-group">
                <div class="row">
-                   <label class="col-sm-4 col-xs-4">Год начала работы</label>
+                   <label class="col-sm-4 col-xs-4 fw-bold">Год начала работы</label>
                    <div class="col-sm-8 col-xs-8">${start_year}</div>
                </div>
            </div>
            <div class="form-group">
                <div class="row">
-                   <label class="col-sm-4 col-xs-4">Год окончания</label>
+                   <label class="col-sm-4 col-xs-4 fw-bold">Год окончания</label>
                    <div class="col-sm-8 col-xs-8">
                    @{{if end_year==0}}
                      Продолжаю работать
@@ -501,7 +519,7 @@
            </div>
            <div class="form-group">
                <div class="row">
-                   <label class="col-sm-4 col-xs-4">Должность</label>
+                   <label class="col-sm-4 col-xs-4 fw-bold">Должность</label>
                    <div class="col-sm-8 col-xs-8">${post}</div>
                </div>
            </div>

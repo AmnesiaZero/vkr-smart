@@ -7,8 +7,8 @@
                 <div class="col-xl-5 col-lg-6">
                     <div class="bg-grey br-40 p-5">
                         <div class="text-before-form">
-                            <h2 class="">Авторизация</h2>
-                            <p class="mb-5 text-grey fs-14 lh-17">Для авторизации в системе введите данные, полученные
+                            <h2 class="m-0">Авторизация</h2>
+                            <p class="my-4 text-grey fs-14 lh-17">Для авторизации в системе введите данные, полученные
                                 от Вашего персонального менеджера или полученные в виде текстового сообщения на адрес
                                 электронной почты</p>
                         </div>
@@ -27,7 +27,7 @@
                                        class="form-check-input">
                                 <label for="remember_me" class="form-check-label">Запомнить меня</label>
                             </div>
-                            <button type="submit" class="btn br-100 btn-primary w-100">войти</button>
+                            <button type="submit" class="btn br-100 btn-primary w-100">Войти</button>
                         </form>
                         <p class="fs-14 text-center pt-3 m-0">Забыли пароль? <a href="/reset-password"
                                                                                 class="text-green">Восстановить</a></p>
@@ -36,8 +36,8 @@
                 <div class="col-xl-5 col-lg-6 mt-lg-0 mt-5">
                     <div class="bg-grey br-40 p-5">
                         <div class="text-before-form">
-                            <h2>Регистрация <br>по приглашению</h2>
-                            <p class="mb-5 text-grey fs-14 lh-17">Чтобы пройти регистрацию, <br> введите выданный вам
+                            <h2 class="m-0">Регистрация <br>по приглашению</h2>
+                            <p class="my-4 text-grey fs-14 lh-17">Чтобы пройти регистрацию, <br> введите выданный вам
                                 код приглашения</p>
                         </div>
                         <form class="auth mb-5" method="POST" action="/login/by-code">
@@ -46,7 +46,7 @@
                                 <label for="code">Код приглашения</label>
                                 <input id="code" type="text" name="code" placeholder="" class="form-control">
                             </div>
-                            <button type="submit" class="btn br-100 btn-primary w-100 mt-4">продолжить</button>
+                            <button type="submit" class="btn br-100 btn-primary w-100 mt-4">Продолжить</button>
                         </form>
                     </div>
                 </div>

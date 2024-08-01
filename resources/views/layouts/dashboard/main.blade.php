@@ -13,6 +13,7 @@
 
         <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet"
               type="text/css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{{'/css/dashboard.css'}}">
         <link rel="stylesheet" type="text/css" href="{{'/css/fancy_style.css'}}">
         <meta name="csrf-token" content="{{ csrf_token() }}"/>
@@ -44,21 +45,27 @@
                 <li><a class="nav-link text-black-black" href="https://api.vkr-vuz.ru" target="_blank">API</a></li>
 
                 <li class="user-menu col-sm-5 text-right">
-                    <a href="admin-office/" class="btn btn-default btn-testaccess"><span class="glyphicon glyphicon-user"></span> Личный кабинет</a>
-
-                    <a href="#" class="btn dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="caret"></span>
+                    <a href="admin-office/" class="btn btn-default btn-testaccess py-0 text-black-grey">
+                        <span class="glyphicon glyphicon-user"></span>
+                        Личный кабинет
                     </a>
 
-                    <ul class="header dropdown-menu" aria-labelledby="dropdownMenu">
-                        <li><a class="dropdown-item" href="/organization-settings">Настройки</a></li>
-                        <li><a class="dropdown-item" href="/organization-works">Работы</a></li>
-                        <li><a class="dropdown-item" href="/org-users">Электронное портфолио</a></li>
-                        <li><a class="dropdown-item" href="/organization-reports">Отчеты</a></li>
-                        <li><a class="dropdown-item" href="/organization-documents">Документация</a></li>
-                        <li><a class="dropdown-item" href="/dashboard/users/logout">Выйти</a></li>
-                        <li class="dropdown-item organization-info"></li>
-                    </ul>
+                    <a class="dropdown">
+                        <a href="#" class="text-black-grey btn br-40 br-green-1" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 2px 7px;">
+                            <span class="bi bi-list"></span>
+                        </a>
+
+                        <ul class="header dropdown-menu" aria-labelledby="dropdownMenu">
+                            <li><a class="dropdown-item" href="/organization-settings">Настройки</a></li>
+                            <li><a class="dropdown-item" href="/organization-works">Работы</a></li>
+                            <li><a class="dropdown-item" href="/org-users">Электронное портфолио</a></li>
+                            <li><a class="dropdown-item" href="/organization-reports">Отчеты</a></li>
+                            <li><a class="dropdown-item" href="/organization-documents">Документация</a></li>
+                            <li><a class="dropdown-item" href="/dashboard/users/logout">Выйти</a></li>
+                            <li class="dropdown-item organization-info"></li>
+                        </ul>
+                    </a>
+
                 </li>
             </ul>
         </div>
@@ -83,28 +90,28 @@
                             <div class="accordion-body p-0">
                                 <ul class="list-custom-1 m-0">
                                     <li class="list-select"><a href="/dashboard/settings/organizations-structure"
-                                                               class="select-a @if(request()->is('*/organizations-structure')) nav-link-active @endif">Структура
+                                                               class="select-a @if(request()->is('*/organizations-structure')) list-select-active @endif">Структура
                                             <br>организации</a></li>
                                     <li class="list-select"><a href="/dashboard/settings/access"
-                                                               class="select-a @if(request()->is('*/access')) nav-link-active @endif">Настройка
+                                                               class="select-a @if(request()->is('*/access')) list-select-active @endif">Настройка
                                             <br>доступа</a></li>
                                     <li class="list-select"><a href="/dashboard/settings/invite-codes"
-                                                               class="select-a @if(request()->is('*/invite-codes')) nav-link-active @endif">Генерация
+                                                               class="select-a @if(request()->is('*/invite-codes')) list-select-active @endif">Генерация
                                             <br>кодов приглашений</a></li>
                                     <li class="list-select"><a href="/dashboard/settings/user-management"
-                                                               class="select-a @if(request()->is('*/user-management')) nav-link-active @endif">Управление
+                                                               class="select-a @if(request()->is('*/user-management')) list-select-active @endif">Управление
                                             <br>пользователями</a></li>
                                     <li class="list-select"><a href="/dashboard/settings/handbook-management"
-                                                               class="select-a @if(request()->is('*/handbook-management')) nav-link-active @endif">Управление
+                                                               class="select-a @if(request()->is('*/handbook-management')) list-select-active @endif">Управление
                                             <br>справочниками</a></li>
                                     <li class="list-select"><a href="/dashboard/settings/"
-                                                               class="select-a @if(request()->is('*/view')) nav-link-active @endif">Оформление</a>
+                                                               class="select-a @if(request()->is('*/view')) list-select-active @endif">Оформление</a>
                                     </li>
                                     <li class="list-select"><a href="/dashboard/settings/integration"
-                                                               class="select-a @if(request()->is('*/integration')) nav-link-active @endif">Интеграция</a>
+                                                               class="select-a @if(request()->is('*/integration')) list-select-active @endif">Интеграция</a>
                                     </li>
                                     <li class="list-select"><a href="/dashboard/settings/api"
-                                                               class="select-a @if(request()->is('*/api')) nav-link-active @endif">API
+                                                               class="select-a @if(request()->is('*/api')) list-select-active @endif">API
                                             ключ</a></li>
                                 </ul>
                             </div>
@@ -124,10 +131,10 @@
                             <div class="accordion-body p-0">
                                 <ul class="list-custom-1 m-0">
                                     <li class="list-select"><a href="/dashboard/works/employees"
-                                                               class="select-a @if(request()->is('*/works/employee')) nav-link-active @endif">Загруженные
+                                                               class="select-a @if(request()->is('*/works/employees')) list-select-active @endif">Загруженные
                                             <br>сотрудниками</a></li>
                                     <li class="list-select"><a href="/dashboard/works/students"
-                                                               class="select-a  @if(request()->is('*/works/student')) nav-link-active @endif">Загруженные
+                                                               class="select-a  @if(request()->is('*/works/students')) list-select-active @endif">Загруженные
                                             <br>студентами</a></li>
                                 </ul>
                             </div>
@@ -147,10 +154,10 @@
                             <div class="accordion-body p-0">
                                 <ul class="list-custom-1 m-0">
                                     <li class="list-select"><a href="/dashboard/portfolio/teachers"
-                                                               class="select-a @if(request()->is('*/portfolio/teachers')) nav-link-active @endif">портфолио<br>преподавателей</a>
+                                                               class="select-a @if(request()->is('*/portfolio/teachers')) list-select-active @endif">Портфолио<br>преподавателей</a>
                                     </li>
                                     <li class="list-select"><a href="/dashboard/portfolio/students"
-                                                               class="select-a @if(request()->is('*/portfolio/students')) nav-link-active @endif">портфолио<br>обучающихся</a>
+                                                               class="select-a @if(request()->is('*/portfolio/students')) list-select-active @endif">Портфолио<br>обучающихся</a>
                                     </li>
                                 </ul>
                             </div>
@@ -158,11 +165,11 @@
                     </div>
                     <p class="text-grey fw-600"><img src="/images/Chart_Line.svg" alt="" class="pe-3"><a
                             href="/dashboard/reports"
-                            class="text-grey text-grey-hover fw-600 td-none @if(request()->is('dashboard/report')) nav-link-active @endif">Отчеты</a>
+                            class="text-grey text-grey-hover fw-600 td-none @if(request()->is('dashboard/report')) list-select-active @endif">Отчеты</a>
                     </p>
                     <p class="text-grey fw-600"><img src="/images/File_Document.svg" alt="" class="pe-3"><a
                             href="/dashboard/documentation"
-                            class="text-grey text-grey-hover fw-600 td-none @if(request()->is('dashboard/documentation')) nav-link-active @endif">Документация</a>
+                            class="text-grey text-grey-hover fw-600 td-none @if(request()->is('dashboard/documentation')) list-select-active @endif">Документация</a>
                     </p>
                 </div>
             </div>

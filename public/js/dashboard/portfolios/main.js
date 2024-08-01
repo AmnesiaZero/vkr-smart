@@ -63,8 +63,7 @@ function users(page=1)
     });
 }
 
-function openWorks(id)
-{
+function openWorks(id) {
     const data = {
         id: id
     };
@@ -77,8 +76,8 @@ function openWorks(id)
             if (response.success) {
                 const works = response.data.user.works;
                 $("#works_list").html($("#work_tmpl").tmpl(works));
-                openModal('user_works_modal');
-
+                const userWorksModal = new bootstrap.Modal(document.getElementById('user_works_modal'));
+                userWorksModal.show();
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }

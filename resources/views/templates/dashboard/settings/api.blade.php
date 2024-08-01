@@ -10,14 +10,20 @@
                             <img src="/images/VKR-logo.svg" alt="">
                         </div>
                         <div class="col d-flex flex-column justify-content-between">
-                            <p class="fs-16"><img src="/images/href.svg" alt="" class="pe-2"><a href="#"
-                                                                                                class="text-grey td-none text-grey-hover fw-600">ВКР-ВУЗ
-                                    API</a></p>
-                            <div class="">
-                                <p class="fs-16 m-0"><img src="/images/href.svg" alt="" class="pe-2"><a href="#"
-                                                                                                        class="text-grey td-none text-grey-hover fw-600">Документация
-                                        к сервису</a></p>
-                                <p class="text-grey fs-14 m-0">основной перечень запросов ВКР-ВУЗ API</p>
+                            <p class="fs-16 m-0">
+                                <img src="/images/href.svg" alt="" class="pe-2">
+                                <a href="#" class="text-grey td-none text-grey-hover fw-600">
+                                    ВКР-ВУЗ API
+                                </a>
+                            </p>
+                            <div class="mt-3">
+                                <p class="fs-16 m-0">
+                                    <img src="/images/href.svg" alt="" class="pe-2">
+                                    <a href="#" class="text-grey td-none text-grey-hover fw-600">
+                                        Документация к сервису
+                                    </a>
+                                </p>
+                                <p class="text-grey fs-14 mt-2 mb-0">Основной перечень запросов ВКР-ВУЗ API</p>
                             </div>
                         </div>
                     </div>
@@ -52,7 +58,8 @@
                             <a href="#" class="password-control" onclick="return show_hide_password(this);"></a>
                         </div>
                     </div>
-                    <button class="btn btn-secondary w-100 mt-3">сформировать запрос<br> на создание ключа защиты API
+                    <button class="btn btn-secondary w-100 mt-3 text-grey">
+                        Создать ключ защиты API
                     </button>
                 </div>
             </form>

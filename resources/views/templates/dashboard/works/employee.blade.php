@@ -8,7 +8,7 @@
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
         <div class="row pt-4 g-3 px-md-0 px-3">
             <div class="col-xxl-4 col-xl-5 col-lg-6">
-                <div id="tree" class="br-green-light-2 br-15 p-3">
+                <div id="tree" class="br-green-light-2 br-15 p-3 blue-scroll overflow-auto" style="max-height: 420px">
                     <ul class="ui-fancytree fancytree-container fancytree-plain" tabindex="0">
                         @if(is_iterable($years))
                             @foreach($years as $year)
@@ -60,7 +60,7 @@
                             <p class="text-grey mb-2 fs-14">ФИО обучающегося</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
                                 <input type="text" name="student" value=""
-                                       class="form-control search br-none fs-14 form-small-p" placeholder=""
+                                       class="form-control search br-none fs-14 form-small-p" placeholder="Ввод..."
                                        id="student_input">
                                 <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                                     <img src="/images/Search.svg" alt="search">
@@ -71,7 +71,7 @@
                             <p class="text-grey mb-2 fs-14">Название работы</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
                                 <input type="text" name="name" value=""
-                                       class="form-control search br-none fs-14 form-small-p" placeholder=""
+                                       class="form-control search br-none fs-14 form-small-p" placeholder="Ввод..."
                                        id="work_name_input">
                                 <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                                     <img src="/images/Search.svg" alt="search">
@@ -83,7 +83,7 @@
                             <p class="text-grey mb-2 fs-14">Группа</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
                                 <input type="text" name="group" value=""
-                                       class="form-control search br-none fs-14 form-small-p" placeholder=""
+                                       class="form-control search br-none fs-14 form-small-p" placeholder="Ввод..."
                                        id="group_input">
                                 <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                                     <img src="/images/Search.svg" alt="search">
@@ -94,7 +94,7 @@
                             <p class="text-grey mb-2 fs-14">Тип работы</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
                                 <input type="text" name="work_type" value=""
-                                       class="form-control search br-none fs-14 form-small-p" placeholder=""
+                                       class="form-control search br-none fs-14 form-small-p" placeholder="Ввод..."
                                        id="work_type_input">
                                 <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                                     <img src="/images/Search.svg" alt="search">
@@ -142,13 +142,13 @@
                         <div class="col">
                             <div class="mt-auto">
                                 <button type="submit"
-                                        class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 me-3">применить
+                                        class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 me-3">Применить
                                 </button>
                                 <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 me-3"
-                                        onclick="resetSearch();return false">сбросить
+                                        onclick="resetSearch();return false">Сбросить
                                 </button>
                                 <button class="btn bg-green br-100 text-grey fs-14 py-1" onclick="exportWorks()">
-                                    выгрузить<img
+                                    Выгрузить<img
                                         src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
                             </div>
                         </div>
@@ -159,16 +159,20 @@
         <div id="tmpl_modals">
 
         </div>
-        <div class="d-flex mt-5">
-            <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 w-75 me-3"
-                    onclick="openModal('add_work_modal')">добавить
-                <img src="/images/pl-green.svg" alt="" class="ps-2"></button>
+        <div class="d-flex justify-content-end mt-5">
+            <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 w-25 me-3"
+                    onclick="openModal('add_work_modal')" data-bs-target="#add_work_modal" data-bs-toggle="modal">
+                Добавить
+                <img src="/images/pl-green.svg" alt="" class="ps-2">
+            </button>
             <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25"
-                    onclick="openModal('import_work_modal')">импорт из файла<img
-                    src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
+                    onclick="openModal('import_work_modal')" data-bs-target="#import_work_modal" data-bs-toggle="modal">
+                Импорт из файла
+                <img src="/images/File_Download_green.svg" alt="" class="ps-2">
+            </button>
         </div>
 
-        <p class="fs-14 pt-3">
+        <p class="fs-16 pt-3">
             <span class="text-grey">Работ: <span id="works_count"></span></span>
         </p>
         <div class="pt-3 px-md-0 px-3 position-relative">

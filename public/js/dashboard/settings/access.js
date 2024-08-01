@@ -338,9 +338,8 @@ function deleteUser(id) {
 
 function editUserModal(id) {
     console.log('Вошёл в editUserModal');
-    const data = {
-        id: id
-    };
+    const data = { id: id };
+
     $.ajax({
         url: "/dashboard/users/find",
         data: data,
@@ -353,11 +352,11 @@ function editUserModal(id) {
                 console.log(updateModal);
                 const updatedContent = $("#update_user_tmpl").tmpl(user);
                 updateModal.replaceWith(updatedContent);
-                openModal('update_user');
+                const modalElement = new bootstrap.Modal(document.getElementById('update_user'));
+                modalElement.show();
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
-
         },
         error: function () {
             $.notify("Произошла ошибка при подгрузке пользователя", "error");

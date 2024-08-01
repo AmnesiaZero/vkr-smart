@@ -12,7 +12,7 @@
                             <p class="mb-2 fw-600 px-3">Год выпуска</p>
 
                             <div class="p-2" id="year_end">
-                                <button class="btn btn-secondary br-none w-100 fs-14 py-2" data-bs-toggle="modal"
+                                <button class="btn btn-secondary br-none text-grey w-100 fs-14 py-2" data-bs-toggle="modal"
                                         data-bs-target="#create_year">
                                     Добавить
                                     <img src="/images/Plus.svg" alt="" class="ps-2">
@@ -38,7 +38,7 @@
                                   onsubmit="createDepartment();return false;">
                                 <div class="btn-group p-2 w-100">
                                     <input type="text" class="form-control fs-14" id="department-name" name="name" placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
-                                    <button type="submit" class="fs-14 btn btn-secondary">Добавить</button>
+                                    <button type="submit" class="fs-14 text-grey btn btn-secondary">Добавить</button>
                                 </div>
                             </form>
 
@@ -59,7 +59,7 @@
                                   onsubmit="createProgram();return false;">
                                 <div class="btn-group p-2 w-100">
                                     <input type="text" class="form-control fs-14" id="program-name" name="name" placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
-                                    <button type="submit" class="fs-14 btn btn-secondary">Добавить</button>
+                                    <button type="submit" class="fs-14 text-grey btn btn-secondary">Добавить</button>
                                 </div>
                             </form>
 
@@ -79,7 +79,7 @@
                             <form method="post" id="faculty_form" onsubmit="createFaculty();return false;">
                                 <div class="btn-group p-2 w-100">
                                     <input id="faculty-name" name="name" type="text" class="form-control fs-14" placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
-                                    <button type="submit" class="fs-14 btn btn-secondary">Добавить</button>
+                                    <button type="submit" class="fs-14 btn text-grey btn-secondary">Добавить</button>
                                 </div>
                             </form>
 
@@ -93,22 +93,16 @@
 
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEdit">
             <div class="offcanvas-header border-bottom">
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 <h5 class="offcanvas-title fw-600 fs-16 text-center pe-5">Настройки профиля обучения</h5>
             </div>
             <div class="offcanvas-body px-0">
                 <div>
-                    <div class="mb-3 col-8 mx-4">
+                    <div class="mb-3 col-10 mx-4">
                         <p class="m-0">Профиль обучения</p>
                         <p class="fs-12 mb-2">программы подготовки</p>
-                        <form class="input-group" id="update_name_form" onsubmit="updateProgramName(); return false;">
+                        <form class="input-group w-100" id="update_name_form" onsubmit="updateProgramName(); return false;">
                             <input type="text" class="form-control bg-grey-form" id="profile" name="name" value="">
-                            <button class="btn btn-green" type="submit">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#d9f1f3" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M7.854 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.854 2.646a.5.5 0 0 1 0-.708z"/>
-                                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 0 1H1.5A.5.5 0 0 1 1 8z"/>
-                                </svg>
-                            </button>
+                            <button type="submit" class="fs-14 text-grey btn btn-secondary">Изменить</button>
                         </form>
                     </div>
                 </div>
@@ -216,16 +210,16 @@
                                 <div class="mb-4 mx-4 col-8">
                                     <label for="code_course" class="form-label mb-2">Код направления:</label>
                                     <input type="text" class="form-control bg-grey-form" name="code" id="code_course"
-                                           value="">
+                                           value="" placeholder="Ввод...">
                                 </div>
                                 <div class="mb-3 mx-4 col-8">
                                     <label for="course" class="form-label mb-2">Направление:</label>
                                     <input type="text" class="form-control bg-grey-form" name="name" id="course"
-                                           value="">
+                                           value="" placeholder="Ввод..."   >
                                 </div>
                                 <div class="mx-4 col-8">
-                                    <button class="btn btn-secondary fs-14 br-100 w-100 br-none py-2 mt-3">
-                                        добавить
+                                    <button class="btn btn-secondary text-grey fs-14 br-100 w-100 br-none py-2 mt-3">
+                                        Добавить
                                     </button>
                                 </div>
                             </form>
