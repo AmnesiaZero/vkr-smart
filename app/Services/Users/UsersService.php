@@ -18,6 +18,7 @@ use Firebase\JWT\JWT;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
@@ -64,19 +65,6 @@ class UsersService extends Services
         {
             $data['organization_id'] = $code->organization_id;
             $data['login'] = $data['email'];
-            if ($code->type == 1) {
-                $data['role'] = 'user';
-            }
-            elseif ($code->type == 2)
-            {
-                $data['role'] = 'teacher';
-            }
-            else {
-                return self::sendJsonResponse(false, [
-                    'title' => 'Ошибка',
-                    'message' => 'Некорректный тип кода регистрации'
-                ]);
-            }
             if (!is_numeric($data['organization_id'])) {
                 return self::sendJsonResponse(false, [
                     'title' => 'Ошибка',
@@ -91,15 +79,6 @@ class UsersService extends Services
                     $userId = $user->id;
 
                     $code->delete();
-
-                    if (isset($data['role'])) {
-                        Log::debug('role = ' . $data['role']);
-                        $role = $this->roleRepository->find($data['role']);
-                        Log::debug('role eloquent = ' . $role);
-                    } else {
-                        $role = $this->roleRepository->find('user');
-                    }
-                    $user->attachRole($role);
 
                     if (isset($data['departments_ids'])) {
                         $departmentsIds = $data['departments_ids'];
@@ -332,9 +311,26 @@ class UsersService extends Services
                 $data = [
                     'organization_id' => $organizationId
                 ];
-                $user = $this->_repository->create($data);
-                if($user and $user->id)
+                if($code->type==1)
                 {
+                    $data['role'] = 'user';
+                }
+                else
+                {
+                    $data['role'] = 'teacher';
+                }
+                $user = $this->_repository->create($data);
+                if ($user and $user->id) {
+                    if (isset($data['role']))
+                    {
+                        Log::debug('role = ' . $data['role']);
+                        $role = $this->roleRepository->find($data['role']);
+                        Log::debug('role eloquent = ' . $role);
+                    } else
+                    {
+                        $role = $this->roleRepository->find('user');
+                    }
+                    $user->attachRole($role);
                     Auth::login($user);
                     return redirect('/registration/by-code')->withCookie(Cookie::make('invite_code_id',$codeId));
                 }
@@ -351,6 +347,14 @@ class UsersService extends Services
                 'title' => 'Ошибка',
                 'message' => 'Пустой массив данных'
             ]);
+        }
+        if(isset($data['avatar']))
+        {
+            $avatar = $data['avatar'];
+            $extension = $avatar->extension();
+            $avatarFileName = $id.'.'.$extension;
+            $avatar->storeAs('public/avatars',$avatarFileName);
+            $data['avatar_path'] = 'storage/avatars/'.$avatarFileName;
         }
 
         $result = $this->_repository->update($id, $data);
@@ -479,6 +483,12 @@ class UsersService extends Services
         $roles = ['user'];
         $users = $this->_repository->get($organizationId,$roles);
         return view('templates.dashboard.portfolio.students',['years' => $years,'users' => $users]);
+    }
+
+    public function personalCabinetView()
+    {
+        $you = Auth::user();
+        return view('templates.dashboard.personal-cabinet',['user' => $you]);
     }
 
 }

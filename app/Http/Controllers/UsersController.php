@@ -39,13 +39,16 @@ class UsersController extends Controller
         'role',
         'is_active',
         'selected_years',
-        'selected_departments'
+        'selected_departments',
+        'avatar'
     ];
 
     public function __construct(UsersService $usersService)
     {
         $this->usersService = $usersService;
     }
+
+
 
     public function login(Request $request): RedirectResponse
     {
@@ -59,7 +62,14 @@ class UsersController extends Controller
                 return back()->withErrors(['Вы заблокированы']);
             }
             $request->session()->regenerate();
-            return redirect('dashboard');
+            if($user->hasRole('admin'))
+            {
+                return redirect('/dashboard/settings/organizations-structure');
+            }
+            else
+            {
+                return redirect('/dashboard/personal-cabinet/'.$user->id);
+            }
         }
         return back()->withErrors(['Предоставленные данные были некорректными']);
     }
@@ -120,7 +130,11 @@ class UsersController extends Controller
         }
         $data = $request->only($this->fillable);
         return $this->usersService->register($data);
+    }
 
+    public function personalCabinetView()
+    {
+        return $this->usersService->personalCabinetView();
     }
 
     public function you(): JsonResponse
@@ -223,7 +237,8 @@ class UsersController extends Controller
             'password' => 'max:255',
             'gender' => 'integer',
             'is_active' => 'integer',
-            'role' => [Rule::exists('roles', 'slug')]
+            'role' => [Rule::exists('roles', 'slug')],
+            'avatar' => 'file'
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);

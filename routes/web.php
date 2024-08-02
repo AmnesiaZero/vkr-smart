@@ -146,8 +146,8 @@ Route::group([
     'prefix' => 'dashboard',
     'middleware' => ['web', 'auth','role:admin,teacher,user']
 ], function () {
-    Route::get('/', [OrganizationsController::class, 'organizationsStructure']);
 
+    Route::get('personal-cabinet/{id}',[UsersController::class,'personalCabinetView']);
     Route::group([
         'prefix' => 'settings'
     ], function () {
