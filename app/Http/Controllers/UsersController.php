@@ -132,9 +132,9 @@ class UsersController extends Controller
         return $this->usersService->register($data);
     }
 
-    public function personalCabinetView()
+    public function teacherPersonalCabinetView()
     {
-        return $this->usersService->personalCabinetView();
+        return $this->usersService->teacherPersonalCabinetView();
     }
 
     public function you(): JsonResponse
@@ -328,7 +328,7 @@ class UsersController extends Controller
     {
         $you = Auth::user();
         $apiKey = config('jwt.api_key');
-        return view('templates.dashboard.settings.api', ['you' => $you, 'api_key' => $apiKey]);
+        return view('templates.dashboard.admin.settings.api', ['you' => $you, 'api_key' => $apiKey]);
     }
 
     public function teachersPortfoliosView()

@@ -147,16 +147,16 @@ Route::group([
     'middleware' => ['web', 'auth','role:admin,teacher,user']
 ], function () {
 
-    Route::get('personal-cabinet/{id}',[UsersController::class,'personalCabinetView']);
+    Route::get('personal-cabinet/{id}',[UsersController::class, 'teacherPersonalCabinetView']);
     Route::group([
         'prefix' => 'settings'
     ], function () {
         Route::get('organizations-structure', [OrganizationsController::class, 'organizationsStructure']);
         Route::get('access', function () {
-            return view('templates.dashboard.settings.access');
+            return view('templates.dashboard.admin.settings.access');
         });
         Route::get('invite-codes', function () {
-            return view('templates.dashboard.settings.invite_codes');
+            return view('templates.dashboard.admin.settings.invite_codes');
         });
         Route::get('user-management', [UsersController::class, 'userManagement']);
         Route::get('handbook-management', [HandbookController::class, 'view']);
@@ -168,8 +168,14 @@ Route::group([
     ], function () {
         Route::get('employees', [WorksController::class, 'employeesWorksView']);
         Route::get('students', [WorksController::class, 'studentsWorksView']);
+        Route::group([
+            'prefix' => 'you'
+        ],function (){
+           Route::get('teacher',[WorksController::class,'youTeacherWorksView']);
+        });
         Route::post('create',[WorksController::class,'create']);
         Route::get('get',[WorksController::class,'get']);
+        Route::get('get-user-works',[WorksController::class,'getUserWorks']);
         Route::get('search',[WorksController::class,'search']);
         Route::post('update',[WorksController::class,'update']);
         Route::get('find',[WorksController::class,'find']);
@@ -273,7 +279,7 @@ Route::group([
     });
 
     Route::get('documentation', function () {
-        return view('templates.dashboard.documentation');
+        return view('templates.dashboard.admin.documentation');
     });
 
     Route::group([

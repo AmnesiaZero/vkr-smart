@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.main')
+@extends('layouts.dashboard.admin')
 
 @section('styles')
     <link rel="stylesheet" href="{{'/css/achievements.css'}}">
@@ -60,9 +60,9 @@
                 <img src="/images/pl-green.svg" alt="" class="ps-2"></button>
             <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25" onclick="openOverView()">Обзор
                 <img
-                    src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
+                        src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
             <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25" onclick="openPortfolio()">Карточка<img
-                    src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
+                        src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
         </div>
         <div class="pt-5 px-md-0 px-3">
             <div class="big-table">
@@ -113,30 +113,31 @@
           <td>
             <img src="/images/three_dots.svg" alt="" aria-haspopup="true" data-bs-toggle="dropdown" class="btn-info-box cursor-p" onclick="openInfoBox(${id})">
             @include('layouts.dashboard.include.menu.achievement')
-          </td>
-         </tr>
-         <tr>
-           <td class="nopadding" colspan="5">
-             <table class="table table-condensed table-bordered">
-                 <thead>
-                     <tr>
-                         <th>Отзыв</th>
-                         <th>Подтверждение достижения</th>
-                         <th>Работа</th>
-                         <th>Другое</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                     <tr style="flex:row">
-                       <td id="reviews_column_${id}"> </td>
-                       <td id="confirm_achievements_column_${id}"> </td>
-                       <td id="works_column_${id}"> </td>
-                       <td id="others_column_${id}"> </td>
-                     </tr>
-                 </tbody>
+        </td>
+       </tr>
+       <tr>
+         <td class="nopadding" colspan="5">
+           <table class="table table-condensed table-bordered">
+               <thead>
+                   <tr>
+                       <th>Отзыв</th>
+                       <th>Подтверждение достижения</th>
+                       <th>Работа</th>
+                       <th>Другое</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   <tr style="flex:row">
+                     <td id="reviews_column_${id}"> </td>
+                     <td id="confirm_achievements_column_${id}"> </td>
+                     <td id="works_column_${id}"> </td>
+                     <td id="others_column_${id}"> </td>
+                   </tr>
+               </tbody>
 
-           </td>
-         </tr>
+         </td>
+       </tr>
+
 
     </script>
 
@@ -225,6 +226,7 @@
 
 
 
+
     </script>
 
     <script id="record_tmpl" type="text/x-jquery-tmpl">
@@ -280,6 +282,7 @@
 
 
 
+
     </script>
 
     <script id="text_tmpl" type="text/x-jquery-tmpl">
@@ -301,6 +304,7 @@
      </div>
 
 
+
     </script>
 
     <script id="work_tmpl" type="text/x-jquery-tmpl">
@@ -314,6 +318,7 @@
        <td>${name}</td>
        <td>${getAssessmentDescription(assessment)}</td>
        </tr>
+
 
     </script>
 
@@ -426,6 +431,7 @@
              </div>
          </div>
      </div>
+
     </script>
 
     <script id="overview_achievement_tmpl" type="text/x-jquery-tmpl">
@@ -442,6 +448,7 @@
               ${record_date}
           </td>
          </tr>
+
     </script>
 
     <script id="overview_education_tmpl" type="text/x-jquery-tmpl">
@@ -479,6 +486,7 @@
                 </div>
             </div>
         </form>
+
     </script>
 
     <script id="overview_career_tmpl" type="text/x-jquery-tmpl">
@@ -517,6 +525,7 @@
                </div>
            </div>
        </form>
+
     </script>
 @endsection
 

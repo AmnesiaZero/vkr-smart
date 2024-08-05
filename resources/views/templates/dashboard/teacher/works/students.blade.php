@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.main')
+@extends('layouts.dashboard.teacher')
 
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
@@ -135,7 +135,7 @@
                 </ul>
             </nav>
         </div>
-        @include('layouts.dashboard.include.modal.add.work')
+        @include('layouts.dashboard.include.modal.add.works.admin')
         @include('layouts.dashboard.include.modal.update.work_specialty')
         @include('layouts.dashboard.include.modal.other.additional_file')
         @include('layouts.dashboard.include.modal.add.import-work')
@@ -285,6 +285,9 @@
         </div>
 
 
+
+
+
             </script>
 
             <script id="comment_tmpl" type="text/x-jquery-tmpl">
@@ -314,6 +317,9 @@
 					</div>
 				</div>
 				</div>
+
+
+
 
             </script>
     @include('layouts.dashboard.include.tmpls.works_page')

@@ -137,4 +137,8 @@ class EloquentWorkRepository implements WorkRepositoryInterface
         return Work::query()->where('report_id','=',$reportId)->first();
     }
 
+    public function getUserWorks(int $userId, int $pageNumber): LengthAwarePaginator
+    {
+        return Work::withTrashed()->with(['faculty','specialty'])->where('user_id','=',$userId)->paginate(config('pagination.per_page'),'*','page',$pageNumber);
+    }
 }

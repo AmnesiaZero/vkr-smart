@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.main')
+@extends('layouts.dashboard.admin')
 
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
@@ -66,6 +66,7 @@
 
     <script type="text/x-jquery-tmpl" id="jwt_tmpl">
       <span> Ваш jwt ключ - ${token} </span>
+
 
     </script>
 @endsection

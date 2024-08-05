@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.main')
+@extends('layouts.dashboard.admin')
 
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
@@ -8,7 +8,8 @@
                 <p class="mt-2">Неизменяемые типы работ:</p>
                 @if(isset($works_types) and is_iterable($works_types))
                     @foreach($works_types as $works_type)
-                        <div class="badge text-black-black bg-green-light br-100 fs-12 me-1 mb-1" onclick="deleteWorkType({{$works_type->id}})" id="work_type_{{$works_type->id}}">
+                        <div class="badge text-black-black bg-green-light br-100 fs-12 me-1 mb-1"
+                             onclick="deleteWorkType({{$works_type->id}})" id="work_type_{{$works_type->id}}">
                             {{$works_type->name}}
                         </div>
                     @endforeach
@@ -22,7 +23,9 @@
                 <p class="mt-2">Научные руководители:</p>
                 @if(isset($scientific_supervisors) and is_iterable($scientific_supervisors))
                     @foreach($scientific_supervisors as $scientific_supervisor)
-                        <div class="badge text-black-black bg-green-light br-100 fs-12 me-1 mb-1" onclick="deleteScientificSupervisor({{$scientific_supervisor->id}})" id="scientific_supervisor_{{$scientific_supervisor->id}}">{{$scientific_supervisor->name}}</div>
+                        <div class="badge text-black-black bg-green-light br-100 fs-12 me-1 mb-1"
+                             onclick="deleteScientificSupervisor({{$scientific_supervisor->id}})"
+                             id="scientific_supervisor_{{$scientific_supervisor->id}}">{{$scientific_supervisor->name}}</div>
                     @endforeach
                 @endif
             </div>
@@ -81,9 +84,11 @@
 
     <script id="scientific_supervisor_tmpl" type="text/x-jquery-tmpl">
        <div class="badge text-black-black bg-green-light br-100 fs-12 me-1 mb-1" onclick="deleteScientificSupervisor(${id})" id="scientific_supervisor_${id}">${name}</div>
+
     </script>
 
     <script id="works_type_tmpl" type="text/x-jquery-tmpl">
        <div class="badge text-black-black bg-green-light br-100 fs-12 me-1 mb-1" onclick="deleteWorkType(${id})" id="work_type_${id}">${name}</div>
+
     </script>
 @endsection

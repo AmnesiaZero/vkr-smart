@@ -41,7 +41,7 @@ class ReportsService extends Services
         $you = Auth::user();
         $organizationId = $you->organization_id;
         $years = $this->yearRepository->get($organizationId);
-        return view('templates.dashboard.report',[
+        return view('templates.dashboard.admin.report',[
             'years' => $years
         ]);
     }

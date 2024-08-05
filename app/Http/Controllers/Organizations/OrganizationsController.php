@@ -24,7 +24,7 @@ class OrganizationsController extends Controller
 
     public function organizationsStructure()
     {
-        return view('templates.dashboard.settings.organizations_structure');
+        return view('templates.dashboard.admin.settings.organizations_structure');
     }
 
 

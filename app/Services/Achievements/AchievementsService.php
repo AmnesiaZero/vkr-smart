@@ -68,7 +68,7 @@ class AchievementsService extends Services
         {
             $modes = AchievementMode::all();
             $categories = AchievementTypeCategory::with('achievementsTypes')->get();
-            return view('templates.dashboard.portfolio.achievements',[
+            return view('templates.dashboard.admin.portfolio.achievements',[
                 'achievements' => $achievements,
                 'categories' => $categories,
                 'modes' => $modes

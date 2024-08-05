@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.main')
+@extends('layouts.dashboard.admin')
 
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
@@ -37,7 +37,8 @@
                             <form method="post" id="department_form"
                                   onsubmit="createDepartment();return false;">
                                 <div class="btn-group p-2 w-100">
-                                    <input type="text" class="form-control fs-14" id="department-name" name="name" placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
+                                    <input type="text" class="form-control fs-14" id="department-name" name="name"
+                                           placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
                                     <button type="submit" class="fs-14 btn btn-secondary">Добавить</button>
                                 </div>
                             </form>
@@ -58,7 +59,8 @@
                             <form method="post" id="program_form"
                                   onsubmit="createProgram();return false;">
                                 <div class="btn-group p-2 w-100">
-                                    <input type="text" class="form-control fs-14" id="program-name" name="name" placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
+                                    <input type="text" class="form-control fs-14" id="program-name" name="name"
+                                           placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
                                     <button type="submit" class="fs-14 btn btn-secondary">Добавить</button>
                                 </div>
                             </form>
@@ -78,7 +80,8 @@
 
                             <form method="post" id="faculty_form" onsubmit="createFaculty();return false;">
                                 <div class="btn-group p-2 w-100">
-                                    <input id="faculty-name" name="name" type="text" class="form-control fs-14" placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
+                                    <input id="faculty-name" name="name" type="text" class="form-control fs-14"
+                                           placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
                                     <button type="submit" class="fs-14 btn btn-secondary">Добавить</button>
                                 </div>
                             </form>
@@ -104,9 +107,12 @@
                         <form class="input-group" id="update_name_form" onsubmit="updateProgramName(); return false;">
                             <input type="text" class="form-control bg-grey-form" id="profile" name="name" value="">
                             <button class="btn btn-green" type="submit">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#d9f1f3" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M7.854 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.854 2.646a.5.5 0 0 1 0-.708z"/>
-                                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 0 1H1.5A.5.5 0 0 1 1 8z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#d9f1f3"
+                                     class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M7.854 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.854 2.646a.5.5 0 0 1 0-.708z"/>
+                                    <path fill-rule="evenodd"
+                                          d="M1 8a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 0 1H1.5A.5.5 0 0 1 1 8z"/>
                                 </svg>
                             </button>
                         </form>
@@ -262,6 +268,7 @@
                         type="button" onclick="deleteYear(${id})"></button>
                     </div>
                 </div>
+
             </script>
 
 
@@ -284,6 +291,7 @@
                         type="button" onclick="deleteFaculty(${id})"></button>
                     </div>
                 </div>
+
             </script>
 
             <script id="department_tmpl" type="text/x-jquery-tmpl">
@@ -306,6 +314,7 @@
                         type="button" onclick="deleteDepartment(${id})"></button>
                     </div>
                 </div>
+
             </script>
 
             <script id="program_tmpl" type="text/x-jquery-tmpl">
@@ -320,9 +329,11 @@
                 </div>
             </div>
 
+
             </script>
             <script id="specialty_menu_tmpl" type="text/x-jquery-tmpl">
                 <option value="${id}"> ${code} | ${name} </option>
+
 
             </script>
             <script id="specialty_tmpl" type="text/x-jquery-tmpl">
@@ -331,6 +342,7 @@
                                        <td>${name}</td>
                                        <td class="pe-4"><button id="delete" class="btn copy_delete br-none" type="button" onclick="deleteProgramSpecialty(${id})"></button></td>
                                    </tr>
+
 
             </script>
 

@@ -58,7 +58,7 @@
                                 <span>Год выпуска</span>
                             </label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="years_list">
+                                <select class="form-control" id="years_list" name="year_id">
                                 </select>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                                 <span>Факультет</span>
                             </label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="faculties_list">
+                                <select class="form-control" id="faculties_list" name="faculty_id">
                                     <option value="" selected>Выбрать</option>
                                 </select>
                             </div>
@@ -80,7 +80,7 @@
                             </label>
                             <div class="col-sm-8">
                                 @if($code->type==1)
-                                    <select class="form-control" id="departments_list">
+                                    <select class="form-control" id="departments_list" name="department_id">
                                         <option value="" selected>Выбрать</option>
                                     </select>
                                 @else

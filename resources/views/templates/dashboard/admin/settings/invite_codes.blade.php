@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.main')
+@extends('layouts.dashboard.admin')
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
         <div class="row pt-5 px-0 px-sm-4 mx-sm-0 mx-4">
@@ -27,8 +27,8 @@
                                 <div class="mb-3 col-lg-3">
                                     <label for="amount" class="form-label fs-16 fw-600">Количество</label>
                                     <span
-                                        class="d-flex inline-flex br-green-light-2 br-100 px-3 text-pale-grey fs-14 align-items-center"
-                                        style="width: 124px">
+                                            class="d-flex inline-flex br-green-light-2 br-100 px-3 text-pale-grey fs-14 align-items-center"
+                                            style="width: 124px">
 					                            <span class="d-flex inline-flex align-items-center">
 					                                <button type="button" onclick="dec('amount')"
                                                             class="btn btn-minus btn-minus-white"></button>
@@ -56,7 +56,7 @@
                         <p class="m-0 fw-600">Для студентов</p>
                         <a href="#" onclick="downloadStudentsCodes()"
                            class="badge bg-green br-100 text-grey fs-14 cursor-p ps-3">выгрузить <img
-                                src="/images/File_Download.svg" alt="" class="ps-1 pe-2"></a>
+                                    src="/images/File_Download.svg" alt="" class="ps-1 pe-2"></a>
                     </div>
                     <div id="students_codes_list">
 
@@ -73,7 +73,7 @@
                         <p class="m-0 fw-600">Для преподавателей</p>
                         <a href="#" onclick="downloadTeachersCodes()"
                            class="badge bg-green br-100 text-grey fs-14 cursor-p ps-3">выгрузить <img
-                                src="/images/File_Download.svg" alt="" class="ps-1 pe-2"></a>
+                                    src="/images/File_Download.svg" alt="" class="ps-1 pe-2"></a>
 
                     </div>
                     <div id="teachers_codes_list">
@@ -105,6 +105,7 @@
                     </div>
 
 
+
     </script>
 
     <script id="empty_tmpl" type="text/x-jquery-tmpl">
@@ -112,6 +113,7 @@
                         <p>Пока здесь пусто</p>
                         <p class="m-0">Сгенерируйте код доступа</p>
                     </div>
+
 
     </script>
 
@@ -131,6 +133,7 @@
                                     <span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>
                                 </a>
                             </li>
+
 
 
     </script>

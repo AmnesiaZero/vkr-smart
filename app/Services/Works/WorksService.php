@@ -62,17 +62,22 @@ class WorksService extends Services
         $organizationId = $you->organization_id;
         $years = $this->yearRepository->get($organizationId);
         $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
-        return view('templates.dashboard.works.students', ['years' => $years,'program_specialties' => $programSpecialties]);
+        return view('templates.dashboard.admin.works.students', ['years' => $years,'program_specialties' => $programSpecialties]);
     }
 
-    public function get(int $pageNumber,int $userType): JsonResponse
+    public function youTeacherWorksView()
     {
         $you = Auth::user();
         $organizationId = $you->organization_id;
-        $works = $this->workRepository->getPaginate($organizationId,$pageNumber,$userType);
-        return self::sendJsonResponse(true, [
-            'title' => 'Успешно',
-            'works' => $works
+        $years = $this->yearRepository->get($organizationId);
+        $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
+        $scientificSupervisors = $this->scientificSupervisorRepository->get($organizationId);
+        $worksTypes = $this->worksTypeRepository->get($organizationId);
+        return view('templates.dashboard.teacher.works.you', [
+            'years' => $years,
+            'program_specialties' => $programSpecialties,
+            'scientific_supervisors' => $scientificSupervisors,
+            'works_types' => $worksTypes
         ]);
     }
 
@@ -84,7 +89,7 @@ class WorksService extends Services
         $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
         $scientificSupervisors = $this->scientificSupervisorRepository->get($organizationId);
         $worksTypes = $this->worksTypeRepository->get($organizationId);
-        return view('templates.dashboard.works.employee', [
+        return view('templates.dashboard.admin.works.employee', [
             'years' => $years,
             'program_specialties' => $programSpecialties,
             'scientific_supervisors' => $scientificSupervisors,
@@ -92,6 +97,42 @@ class WorksService extends Services
         ]);
 
     }
+
+    public function get(int $pageNumber,int $userType): JsonResponse
+    {
+        $you = Auth::user();
+        $organizationId = $you->organization_id;
+        $works = $this->workRepository->getPaginate($organizationId,$pageNumber,$userType);
+        if($works and is_iterable($works))
+        {
+            return self::sendJsonResponse(true, [
+                'title' => 'Успешно',
+                'works' => $works
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Произошла ошибка при получении работ'
+        ]);
+    }
+
+    public function getUserWorks(int $userId,int $pageNumber)
+    {
+        $works = $this->workRepository->getUserWorks($userId,$pageNumber);
+        if($works and is_iterable($works))
+        {
+            return self::sendJsonResponse(true, [
+                'title' => 'Успешно',
+                'works' => $works
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Произошла ошибка при получении работ'
+        ]);
+
+    }
+
 
     public function create(array $data):JsonResponse
     {
@@ -575,5 +616,7 @@ class WorksService extends Services
 
 
     }
+
+
 
 }
