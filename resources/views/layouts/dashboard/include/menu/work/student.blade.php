@@ -5,12 +5,13 @@
         <p class="fs-14 lh-17 text-grey m-0" onclick="workInfo()">Просмотр информации о работе</p>
     </div>
     <div class="d-flex cursor-p mb-2">
-        <img src="/images/Edit_Pencil.svg" alt="" class="pe-2">
-        <p class="fs-14 lh-17 text-grey m-0" onclick="openModal('update_work_modal')">Изменить информацию о работе</p>
-    </div>
-    <div class="d-flex cursor-p mb-2">
         <img src="/images/Chat.svg" alt="" class="pe-2">
         <p class="fs-14 lh-17 text-grey m-0" onclick="workInfoStudent()">Оставить комментарий</p>
+    </div>
+    @role('admin')
+    <div class="d-flex cursor-p mb-2">
+        <img src="/images/Edit_Pencil.svg" alt="" class="pe-2">
+        <p class="fs-14 lh-17 text-grey m-0" onclick="openModal('update_work_modal')">Изменить информацию о работе</p>
     </div>
     <div id="added_menu">
 
@@ -41,4 +42,5 @@
         <img src="/images/close_grey.svg" alt="" class="pe-2">
         <p class="fs-14 lh-17 text-grey m-0">Файл согласия не загружен</p>
     </div>
+    @endrole
 </div>

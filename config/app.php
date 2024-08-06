@@ -170,7 +170,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         HelperServiceProvider::class,
-        Bkwld\Cloner\ServiceProvider::class
+        Bkwld\Cloner\ServiceProvider::class,
+        \App\Providers\BladeServiceProvider::class
     ])->toArray(),
 
     /*

@@ -39,7 +39,7 @@ class AchievementsController
         {
             return ValidatorHelper::redirectError($validator);
         }
-        return $this->achievementsService->view($userId);
+        return $this->achievementsService->pageView($userId);
     }
 
     public function get(Request $request): JsonResponse

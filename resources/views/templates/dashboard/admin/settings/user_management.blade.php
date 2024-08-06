@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.main')
+@extends('layouts.dashboard.admin')
 
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
@@ -10,7 +10,7 @@
                             @foreach($years as $year)
                                 <li class="fancytree-lastsib">
 		    							<span
-                                            class="fancytree-node fancytree-expanded fancytree-folder fancytree-has-children fancytree-exp-e fancytree-ico-ef">
+                                                class="fancytree-node fancytree-expanded fancytree-folder fancytree-has-children fancytree-exp-e fancytree-ico-ef">
 		    								<span class="fancytree-title" id="year_{{$year->id}}">{{$year->year}}</span>
 		    							</span>
                                     <ul>
@@ -18,8 +18,8 @@
                                             @foreach($year->departments as $department)
                                                 <li class="fancytree-lastsib">
 		    											<span
-                                                            class="fancytree-node fancytree-lastsib fancytree-exp-nl fancytree-ico-c"><span
-                                                                class="fancytree-expander"></span>
+                                                                class="fancytree-node fancytree-lastsib fancytree-exp-nl fancytree-ico-c"><span
+                                                                    class="fancytree-expander"></span>
 		    											<span class="fancytree-title"
                                                               id="department_{{$department->id}}">{{$department->name}}</span>
 		    										</span>
@@ -171,6 +171,7 @@
             </div>
 
 
+
     </script>
     <script type="text/x-jquery-tmpl" id="off_canvas_user">
         <div class="px-4">
@@ -211,6 +212,7 @@
             <button type="submit" class="btn btn-secondary w-100 text-grey fs-14 br-100 br-none mt-4 mb-5">Применить</button>
             </form>
         </div>
+
 
 
     </script>

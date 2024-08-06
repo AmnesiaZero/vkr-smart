@@ -27,7 +27,7 @@ class ReportsController extends Controller
 
     public function view()
     {
-       return $this->reportsService->view();
+       return $this->reportsService->pqgeView();
     }
 
     public function get(Request $request): JsonResponse

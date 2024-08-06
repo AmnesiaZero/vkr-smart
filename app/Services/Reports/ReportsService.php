@@ -5,6 +5,7 @@ namespace App\Services\Reports;
 use App\Models\CustomRole;
 use App\Models\User;
 use App\Models\Work;
+use App\Services\Decorations\Repositories\DecorationRepositoryInterface;
 use App\Services\OrganizationsYears\Repositories\OrganizationYearRepositoryInterface;
 use App\Services\Services;
 use App\Services\Users\Repositories\UserRepositoryInterface;
@@ -25,20 +26,22 @@ class ReportsService extends Services
     private WorkRepositoryInterface $workRepository;
 
 
+
     public function __construct(OrganizationYearRepositoryInterface $yearRepository,
-                                UserRepositoryInterface $userRepository,WorkRepositoryInterface $workRepository)
+                                UserRepositoryInterface $userRepository, WorkRepositoryInterface $workRepository
+       )
     {
         $this->yearRepository = $yearRepository;
         $this->userRepository = $userRepository;
         $this->workRepository = $workRepository;
     }
 
-    public function view()
+    public function pqgeView()
     {
         $you = Auth::user();
         $organizationId = $you->organization_id;
         $years = $this->yearRepository->get($organizationId);
-        return view('templates.dashboard.report',[
+        return view('templates.dashboard.admin.report',[
             'years' => $years
         ]);
     }

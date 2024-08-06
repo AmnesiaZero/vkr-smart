@@ -60,6 +60,11 @@ class WorksController extends Controller
         return $this->worksService->employeesWorksView();
     }
 
+    public function youTeacherWorksView()
+    {
+        return $this->worksService->youTeacherWorksView();
+    }
+
     public function get(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(),[
@@ -75,15 +80,30 @@ class WorksController extends Controller
         return $this->worksService->get($pageNumber,$userType);
     }
 
+    public function getUserWorks(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'page' => 'required|integer',
+            'user_id' =>  ['required','integer',Rule::exists('users','id')]
+        ]);
+        if ($validator->fails())
+        {
+            return ValidatorHelper::error($validator);
+        }
+        $pageNumber = $request->page;
+        $userId = $request->user_id;
+        return $this->worksService->getUserWorks($userId,$pageNumber);
+    }
+
     public function create(Request $request):JsonResponse
     {
         $validator = Validator::make($request->all(),[
             'user_type' => 'required|integer|in:1,2',
             'year_id' => ['integer','required',Rule::exists('organizations_years','id')],
             'faculty_id' => ['integer','required',Rule::exists('faculties','id')],
-            'department_id' => ['integer','required',Rule::exists('departments','id')],
-            'specialty_id' => ['integer','required',Rule::exists('programs_specialties','id')],
-            'student' => 'required|max:250',
+            'department_id' => ['integer',Rule::exists('departments','id')],
+            'specialty_id' => ['integer',Rule::exists('programs_specialties','id')],
+            'student' => 'max:250',
             'group' => 'required|max:250',
             'verification_method' => 'required|integer|in:0,1,2',
             'scientific_supervisor' => 'max:250',

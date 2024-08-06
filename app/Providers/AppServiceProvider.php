@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Exports\WorksExport;
+use App\Services\Decorations\Repositories\DecorationRepositoryInterface;
+use App\Services\Decorations\Repositories\EloquentDecorationRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Excel\Facades\Excel;

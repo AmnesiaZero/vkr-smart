@@ -84,4 +84,11 @@ interface WorkRepositoryInterface
      * @return Model
      */
     public function findByReportId(int $reportId):Model;
+
+    /**
+     * @param int $userId
+     * @param int $pageNumber
+     * @return Collection
+     */
+    public function getUserWorks(int $userId, int $pageNumber):LengthAwarePaginator;
 }

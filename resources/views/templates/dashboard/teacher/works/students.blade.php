@@ -1,8 +1,8 @@
-@extends('layouts.dashboard.main')
+@extends('layouts.dashboard.teacher')
 
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
-        <div class="row pt-4 g-3 px-md-0 px-3 mb-4">
+        <div class="row pt-4 g-3 px-md-0 px-3">
             <div class="col-xxl-4 col-xl-5 col-lg-6">
                 @include('layouts.dashboard.include.elements.tree')
             </div>
@@ -14,7 +14,7 @@
                             <p class="text-grey mb-2 fs-14">ФИО обучающегося</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
                                 <input type="text" name="student" value=""
-                                       class="form-control search br-none fs-14 form-small-p" placeholder="Ввод...">
+                                       class="form-control search br-none fs-14 form-small-p" placeholder="">
                                 <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                                     <img src="/images/Search.svg" alt="search">
                                 </button>
@@ -24,7 +24,7 @@
                             <p class="text-grey mb-2 fs-14">Тип работы</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
                                 <input type="text" name="work_type" value=""
-                                       class="form-control search br-none fs-14 form-small-p" placeholder="Ввод...">
+                                       class="form-control search br-none fs-14 form-small-p" placeholder="">
                                 <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                                     <img src="/images/Search.svg" alt="search">
                                 </button>
@@ -44,7 +44,7 @@
                             <p class="text-grey mb-2 fs-14">Название работы</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
                                 <input type="text" name="name" value=""
-                                       class="form-control search br-none fs-14 form-small-p" placeholder="Ввод..."
+                                       class="form-control search br-none fs-14 form-small-p" placeholder=""
                                        id="work_name_input">
                                 <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                                     <img src="/images/Search.svg" alt="search">
@@ -74,30 +74,28 @@
                                        class=" fs-14 text-grey p-date w-75"/>
                             </div>
                         </div>
-                        <div class="col-xl-6">
-                            <p class="fs-14 mb-2 text-grey">Отображение работ</p>
-                            <div id="bg-white_1">
-                                <select class="js-example-basic-single w-100" name="delete_type" id="delete_type">
-                                    <option value="2" selected>Отображать все работы</option>
-                                    <option value="0">Отображать только активные</option>
-                                    <option value="1">Отображать только удаленные</option>
-                                </select>
-                            </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <p class="fs-14 mb-2 text-grey">Отображение работ</p>
+                        <div id="bg-white_1">
+                            <select class="js-example-basic-single w-100" name="delete_type" id="delete_type">
+                                <option value="2" selected>Отображать все работы</option>
+                                <option value="0">Отображать только активные</option>
+                                <option value="1">Отображать только удаленные</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row pt-4 d-flex align-items-end">
                         <div class="col">
                             <div class="mt-auto">
-                                <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 me-3">
-                                    Применить
+                                <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 me-3">применить
                                 </button>
                                 <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 me-3"
-                                        onclick="works();resetSearch()">Сбросить
+                                        onclick="works();resetSearch()">сбросить
                                 </button>
                                 <button class="btn bg-green br-100 text-grey fs-14 py-1" onclick="exportWorks()">
-                                    Выгрузить
-                                    <img src="/images/File_Download_green.svg" alt="" class="ps-2">
-                                </button>
+                                    выгрузить<img
+                                        src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
                             </div>
                         </div>
                     </div>
@@ -105,9 +103,7 @@
             </div>
         </div>
         @include('layouts.dashboard.include.modal.update.work')
-        <p class="fs-16 pt-3">
-            <span class="text-grey">Работ: <span id="works_count"></span></span>
-        </p>
+        <span class="text-grey">Работ: <span id="works_count"></span></span>
         <div class="px-md-0 px-3 position-relative">
             <div class="big-table">
                 <table class="table fs-14">
@@ -139,7 +135,7 @@
                 </ul>
             </nav>
         </div>
-        @include('layouts.dashboard.include.modal.add.work')
+        @include('layouts.dashboard.include.modal.add.works.admin')
         @include('layouts.dashboard.include.modal.update.work_specialty')
         @include('layouts.dashboard.include.modal.other.additional_file')
         @include('layouts.dashboard.include.modal.add.import-work')
@@ -289,6 +285,9 @@
         </div>
 
 
+
+
+
             </script>
 
             <script id="comment_tmpl" type="text/x-jquery-tmpl">
@@ -318,6 +317,9 @@
 					</div>
 				</div>
 				</div>
+
+
+
 
             </script>
     @include('layouts.dashboard.include.tmpls.works_page')

@@ -21,7 +21,7 @@
     <td>${student}</td>
     <td>${group}</td>
     <td>${protect_date}</td>
-    <td>${name}</td>
+    <td>${name} - ${work_type}</td>
     <td>${getAssessmentDescription(assessment)}</td>
     <td>${getSelfCheckDescription(self_check)}</td>
         <td>
@@ -348,7 +348,6 @@
                             <li>Результаты проверки по базам данных ВКР-ВУЗ:
                                 <ul>
                                     <li>Оригинальность текста документа: <strong id="borrowings_percent" class="ng-binding">${unique_percent}%</strong></li>
-
                                 </ul>
                             </li>
                         </ol>

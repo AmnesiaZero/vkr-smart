@@ -61,14 +61,14 @@ class AchievementsService extends Services
         ]);
     }
 
-    public function view(int $userId)
+    public function pageView(int $userId)
     {
         $achievements = $this->achievementRepository->get($userId);
         if($achievements and is_iterable($achievements))
         {
             $modes = AchievementMode::all();
             $categories = AchievementTypeCategory::with('achievementsTypes')->get();
-            return view('templates.dashboard.portfolio.achievements',[
+            return view('templates.dashboard.admin.portfolio.achievements',[
                 'achievements' => $achievements,
                 'categories' => $categories,
                 'modes' => $modes

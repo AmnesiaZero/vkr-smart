@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.main')
+@extends('layouts.dashboard.admin')
 
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
@@ -39,7 +39,7 @@
                 </div>
                 <div class="br-green-light-2 br-15 p-4 text-center bg-green cursor-p mt-3"
                      onclick="inspectorsAccessModal()"
-                    data-bs-toggle="modal" data-bs-target="#inspectors_access_modal">
+                     data-bs-toggle="modal" data-bs-target="#inspectors_access_modal">
 
                     <img src="/images/Plus.svg">
                     <p class="text-grey m-0 pt-3">Доступ<br> для проверяющих</p>
@@ -89,6 +89,7 @@
                                             <p class="text-grey m-0 fs-14">Подразделение: «${faculty.name}»</p>
                                             <p class="text-grey m-0 fs-14">Год выпуска: «${year.year}»</p>
                                     </div>
+
 
 
 
@@ -160,17 +161,21 @@
 
 
 
+
     </script>
     <script id="year_tmpl" type="text/x-jquery-tmpl">
         <option value="${id}" onclick="faculties(${id})">${year}</option>
+
     </script>
 
     <script id="faculty_tmpl" type="text/x-jquery-tmpl">
         <option value="${id}">${name}</option>
+
     </script>
 
     <script id="department_list_tmpl" type="text/x-jquery-tmpl">
         <option value="${id}">${name}</option>
+
     </script>
 
 
@@ -204,6 +209,7 @@
                     <a href="#" class="text-grey link-active-hover fs-14"  onclick="resetUserPassword('${email}')">Отправить пароль на email</a>
                 </div>
             </div>
+
 
     </script>
 
@@ -266,11 +272,13 @@
     </div>
 
 
+
     </script>
     <script id="inspectors_access_year_tmpl" type="text/x-jquery-tmpl">
       <li>
          <a href="#" onclick="accessSpecialties(${id});">${year}</a>
       </li>
+
 
 
     </script>
@@ -279,6 +287,7 @@
       <li>
          <a href="#" onclick="accessDepartments(${id});">${year}</a>
       </li>
+
 
 
     </script>
@@ -328,6 +337,7 @@
             <button type="submit" class="btn btn-secondary w-100 text-grey fs-14 br-100 br-none mt-4 mb-5">Применить</button>
             </form>
         </div>
+
 
     </script>
 
