@@ -422,8 +422,6 @@
     <div class="modal-dialog modal-lg" id="update_work_modal">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span></button>
                 <h3>Редактирование направления подготовки квалификационной работы</h3>
             </div>
             <form class="form form-horizontal" id="update_work_form" onsubmit="updateWork(); return false;">

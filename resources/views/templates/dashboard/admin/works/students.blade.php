@@ -109,7 +109,7 @@
             <span class="text-grey">Работ: <span id="works_count"></span></span>
         </p>
         <div class="px-md-0 px-3 position-relative">
-            <div class="big-table">
+            <div class="big-table blue-scroll">
                 <table class="table fs-14">
                     <thead class="brt-green-light-2 brb-green-light-2 lh-17">
                     <tr class="text-grey">

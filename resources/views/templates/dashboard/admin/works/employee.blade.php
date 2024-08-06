@@ -162,7 +162,7 @@
         <div class="d-flex justify-content-end mt-5">
             <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 w-25 me-3"
                     onclick="openModal('add_work_modal')" data-bs-target="#add_work_modal" data-bs-toggle="modal">
-                Добавить
+                Добавить работу
                 <img src="/images/pl-green.svg" alt="" class="ps-2">
             </button>
             <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25"
@@ -186,8 +186,8 @@
                         <th scope="col">Дата защиты</th>
                         <th scope="col">Наименование<br> работы - тип работы</th>
                         <th scope="col">Оценка</th>
-                        <th scope="col">Самопроверка по другим системам</th>
-                        <th scope="col">Проверка<br> ВКР-ВУЗка</th>
+                        <th scope="col">Самопроверка <br> по другим системам</th>
+                        <th scope="col">Проверка<br> ВКР-ВУЗ</th>
                         <th scope="col"><img src="/images/nine_dots.svg" alt="" class="pb-2"></th>
                     </tr>
                     </thead>
@@ -195,7 +195,6 @@
                     </tbody>
                 </table>
             </div>
-            @include('layouts.dashboard.include.menu.work.employee')
 
             <div id="about_work">
             </div>
