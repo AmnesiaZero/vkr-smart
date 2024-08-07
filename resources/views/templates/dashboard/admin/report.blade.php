@@ -23,7 +23,7 @@
         @endsection
 
         @section('scripts')
-            <script src="/js/dashboard/reports.js"></script>
+            <script src="/js/dashboard/admin/reports.js"></script>
 
             <script id="report_tmpl" type="text/x-jquery-tmpl">
          <div class="col">

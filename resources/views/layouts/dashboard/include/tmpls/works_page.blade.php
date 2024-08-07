@@ -60,7 +60,7 @@
     </tr>
 
 
-            </script>
+ </script>
 
 <script id="work_info_tmpl" type="text/x-jquery-tmpl">
         <div id="work_info_modal" style="display: block;">

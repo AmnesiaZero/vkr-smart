@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.admin')
+@extends('layouts.dashboard.teacher')
 
 @section('styles')
     <link rel="stylesheet" href="{{'/css/achievements.css'}}">
@@ -87,7 +87,7 @@
 @endsection
 
 @section('scripts')
-    <script src="/js/dashboard/admin/portfolios/achievement.js"></script>
+    <script src="/js/dashboard/teacher/portfolios/you.js"></script>
     <script id="achievement_tmpl" type="text/x-jquery-tmpl">
         <tr id="achievement_${id}">
            <td>
@@ -107,32 +107,34 @@
           <td>
             <img src="/images/three_dots.svg" alt="" aria-haspopup="true" data-bs-toggle="dropdown" class="btn-info-box cursor-p" onclick="openInfoBox(${id})">
             @include('layouts.dashboard.include.menu.achievement')
-          </td>
-         </tr>
-         <tr>
-           <td class="nopadding" colspan="5">
-             <table class="table table-condensed table-bordered">
-                 <thead>
-                     <tr>
-                         <th>Отзыв</th>
-                         <th>Подтверждение достижения</th>
-                         <th>Работа</th>
-                         <th>Другое</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                     <tr style="flex:row">
-                       <td id="reviews_column_${id}"> </td>
-                       <td id="confirm_achievements_column_${id}"> </td>
-                       <td id="works_column_${id}"> </td>
-                       <td id="others_column_${id}"> </td>
-                     </tr>
-                 </tbody>
+        </td>
+       </tr>
+       <tr>
+         <td class="nopadding" colspan="5">
+           <table class="table table-condensed table-bordered">
+               <thead>
+                   <tr>
+                       <th>Отзыв</th>
+                       <th>Подтверждение достижения</th>
+                       <th>Работа</th>
+                       <th>Другое</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   <tr style="flex:row">
+                     <td id="reviews_column_${id}"> </td>
+                     <td id="confirm_achievements_column_${id}"> </td>
+                     <td id="works_column_${id}"> </td>
+                     <td id="others_column_${id}"> </td>
+                   </tr>
+               </tbody>
 
-           </td>
-         </tr>
+         </td>
+       </tr>
 
-    </script>
+</script>
+
+
 
     <script id="update_achievement_modal_tmpl" type="text/x-jquery-tmpl">
         <div id="update_achievement_modal">

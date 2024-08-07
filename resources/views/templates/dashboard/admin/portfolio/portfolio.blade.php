@@ -328,7 +328,7 @@
 
 
 @section('scripts')
-    <script src="{{'/js/dashboard/portfolios/card.js'}}"></script>
+    <script src="{{'/js/dashboard/admin/portfolios/card.js'}}"></script>
     <script id="achievement_tmpl" type="text/x-jquery-tmpl">
         <tr id="achievement_${id}">
             <td>

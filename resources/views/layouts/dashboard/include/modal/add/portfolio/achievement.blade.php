@@ -65,12 +65,12 @@
                             </div>
                         </div>
                     </div>
+                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
+                        Добавить достижение
+                    </button>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
-                    Добавить достижение
-                </button>
                 <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
                     Закрыть
                 </button>

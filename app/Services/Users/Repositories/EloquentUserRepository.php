@@ -3,6 +3,7 @@
 namespace App\Services\Users\Repositories;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -37,6 +38,11 @@ class EloquentUserRepository implements UserRepositoryInterface
 
     public function update(int $id, array $data): int
     {
+        if(isset($data['departments_ids']))
+        {
+            $user = $this->find($id);
+            $user->departments()->sync($data['departments_ids']);
+        }
         return $this->find($id)->update($data);
     }
 
@@ -113,13 +119,21 @@ class EloquentUserRepository implements UserRepositoryInterface
         return $users->get();
     }
 
-    public function getPaginate(int $organizationId, array $roles,int $page):LengthAwarePaginator
+    public function getPaginate(array $data):LengthAwarePaginator
     {
-        $query =  User::with(['roles', 'departments','works'])->where('organization_id', '=', $organizationId);
+        $query =  User::with(['roles', 'departments','works'])->where('organization_id', '=', $data['organization_id']);
+        $roles = $data['roles'];
         $query->whereHas('roles', function ($query) use ($roles) {
             $query->whereIn('slug', $roles);
         });
-        return $query->paginate(config('paginate.per_page'),'*','page',$page);
+        if(isset($data['departments_ids']))
+        {
+            $departmentsIds = $data['departments_ids'];
+            $query = $query->whereHas('departments',function (Builder $builder) use ($departmentsIds) {
+                $builder->whereIn('departments.id', $departmentsIds);
+            });
+        }
+        return $query->paginate(config('paginate.per_page'),'*','page',$data['page']);
 
     }
 

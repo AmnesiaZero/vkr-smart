@@ -2,6 +2,7 @@ var userId = '';
 
 var user = '';
 
+
 $(document).ready(function () {
     function getUser() {
     var deferred = $.Deferred();
@@ -15,7 +16,6 @@ $(document).ready(function () {
                 user = response.data.you;
                 console.log(user);
                 userId = response.data.you.id;
-                console.log('user id = ' + userId);
                 deferred.resolve(); // Сообщаем, что функция завершена
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
@@ -35,9 +35,57 @@ $(document).ready(function () {
     $.when(getUser()).done(function() {
         works();
     });
-    localStorage.setItem('selected_years', '');
-    localStorage.setItem('selected_faculties', '');
-    localStorage.setItem('selected_departments', '');
+
+    $('#update_years_list').change(function () {
+        const yearId = $(this).val();
+        const data = {
+            year_id: yearId
+        };
+        console.log('изменение');
+        faculties(data,'update_faculties_list');
+    });
+
+    $('#update_faculties_list').change(function () {
+        const facultyId = $(this).val();
+        const data = {
+            faculty_id: facultyId
+        };
+        departments(data,'update_departments_list');
+    });
+
+    $('#update_departments_list').change(function () {
+        const departmentId = $(this).val();
+        const data = {
+            department_id: departmentId
+        };
+        specialties(data,'update_specialties_list');
+    });
+
+    $('#import_years_list').change(function () {
+        const yearId = $(this).val();
+        const data = {
+            year_id: yearId
+        };
+        console.log('изменение');
+        faculties(data,'import_faculties_list');
+    });
+
+    $('#import_faculties_list').change(function () {
+        const facultyId = $(this).val();
+        const data = {
+            faculty_id: facultyId
+        };
+        departments(data,'import_departments_list');
+    });
+
+    $('#import_departments_list').change(function () {
+        const departmentId = $(this).val();
+        const data = {
+            department_id: departmentId
+        };
+        specialties(data,'import_specialties_list');
+    });
+
     $(".fancytree-title").on('click', function () {
         addBadge($(this));
     })
@@ -551,12 +599,9 @@ function openReport(workId)
 function searchWorks() {
     let data = $("#search_form").serialize();
     data = serializeRemoveNull(data);
-    const selectedYears = getArrayFromLocalStorage('selected_years');
-    const selectedFaculties = getArrayFromLocalStorage('selected_faculties');
     const additionalData = {
-        selected_years: selectedYears,
-        selected_faculties: selectedFaculties,
-        user_type:2
+        user_type:2,
+        user_id:userId
     };
     data += '&' + $.param(additionalData);
     $.ajax({

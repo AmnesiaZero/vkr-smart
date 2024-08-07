@@ -61,7 +61,7 @@
 @endsection
 
 @section('scripts')
-    <script src="/js/dashboard/settings/handbook_management.js">
+    <script src="/js/dashboard/admin/settings/handbook_management.js">
 
     </script>
 

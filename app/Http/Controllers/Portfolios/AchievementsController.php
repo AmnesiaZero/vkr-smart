@@ -30,6 +30,11 @@ class AchievementsController
         $this->achievementsService = $achievementsService;
     }
 
+    public function youAchievementsView()
+    {
+        return $this->achievementsService->youAchievementsView();
+    }
+
     public function view(int $userId)
     {
         $validator = Validator::make(['id' => $userId],[
@@ -41,6 +46,8 @@ class AchievementsController
         }
         return $this->achievementsService->pageView($userId);
     }
+
+
 
     public function get(Request $request): JsonResponse
     {

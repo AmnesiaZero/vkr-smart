@@ -216,7 +216,7 @@
 
         @section('scripts')
             <script src="{{'/js/bootstrap-select.js'}}"></script>
-            <script src="/js/dashboard/works/employees.js"></script>
+            <script src="/js/dashboard/admin/works/employees.js"></script>
             <script src="/js/bootstrap.js"></script>
             <script type="text/javascript" src="/js/jquery/moment.min.js"></script>
             <script type="text/javascript"

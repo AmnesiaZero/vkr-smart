@@ -358,8 +358,8 @@
 
 
 @section('scripts')
-    <script src="{{'/js/dashboard/portfolios/card.js'}}"></script>
-    <script src="{{'/js/dashboard//personal-cabinet.js'}}"></script>
+    <script src="{{'/js/dashboard/admin/portfolios/card.js'}}"></script>
+    <script src="{{'/js/dashboard/teacher/personal-cabinet.js'}}"></script>
 
 
     <script id="about_tmpl" type="text/x-jquery-tmpl">

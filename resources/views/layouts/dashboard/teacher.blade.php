@@ -102,8 +102,8 @@
                              aria-labelledby="headingOne" data-bs-parent="#collapseOne" style="">
                             <div class="accordion-body p-0">
                                 <ul class="list-custom-1 m-0">
-                                    <li class="list-select"><a href="/dashboard/settings/organizations-structure"
-                                                               class="select-a @if(request()->is('*/organizations-structure')) nav-link-active @endif">Настройка структурных подразделений</a></li>
+                                    <li class="list-select"><a href="/dashboard/settings/teacher-departments"
+                                                               class="select-a @if(request()->is('*/settings/teacher-departments')) nav-link-active @endif">Настройка структурных подразделений</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -121,11 +121,11 @@
                              aria-labelledby="headingTwo" data-bs-parent="#accordionTwo" style="">
                             <div class="accordion-body p-0">
                                 <ul class="list-custom-1 m-0">
-                                    <li class="list-select"><a href="/dashboard/works/you/teacher"
-                                                               class="select-a @if(request()->is('*/works/you/teacher')) nav-link-active @endif">Загруженные
+                                    <li class="list-select"><a href="/dashboard/works/teacher/you"
+                                                               class="select-a @if(request()->is('*/works/teacher/you')) nav-link-active @endif">Загруженные
                                             <br>вами</a></li>
-                                    <li class="list-select"><a href="/dashboard/works/"
-                                                               class="select-a  @if(request()->is('*/works/student')) nav-link-active @endif">Загруженные
+                                    <li class="list-select"><a href="/dashboard/works/teacher/students"
+                                                               class="select-a  @if(request()->is('*/works/teacher/students')) nav-link-active @endif">Загруженные
                                             <br>студентами</a></li>
                                 </ul>
                             </div>
@@ -144,11 +144,11 @@
                              aria-labelledby="headingThree" data-bs-parent="#collapseThree" style="">
                             <div class="accordion-body p-0">
                                 <ul class="list-custom-1 m-0">
-                                    <li class="list-select"><a href="/dashboard/portfolio/teachers"
-                                                               class="select-a @if(request()->is('*/portfolio/teachers')) nav-link-active @endif">Мои <br> достижения</a>
+                                    <li class="list-select"><a href="/dashboard/portfolio/achievements/teacher/you"
+                                                               class="select-a @if(request()->is('*/portfolio/achievements/')) nav-link-active @endif">Мои <br> достижения</a>
                                     </li>
-                                    <li class="list-select"><a href="/dashboard/portfolio/students"
-                                                               class="select-a @if(request()->is('*/portfolio/students')) nav-link-active @endif">портфолио<br>обучающихся</a>
+                                    <li class="list-select"><a href="/dashboard/portfolio/teacher/students"
+                                                               class="select-a @if(request()->is('*/portfolio/teacher/students')) nav-link-active @endif">портфолио<br>обучающихся</a>
                                     </li>
                                 </ul>
                             </div>

@@ -69,7 +69,7 @@
 
 @section('scripts')
     <script src="/js/app.js"></script>
-    <script src="/js/dashboard/settings/api.js"></script>
+    <script src="/js/dashboard/admin/settings/api.js"></script>
 
     <script type="text/x-jquery-tmpl" id="jwt_tmpl">
       <span> Ваш jwt ключ - ${token} </span>

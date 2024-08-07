@@ -3,9 +3,6 @@
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
         <div class="row pt-4 g-3 px-md-0 px-3">
-            <div class="col-xxl-4 col-xl-5 col-lg-6">
-                @include('layouts.dashboard.include.elements.tree')
-            </div>
             <div class="col">
                 <div class="out-kod"></div>
                 <form class="pt-4 col-xl-10" id="search_form" onsubmit="searchWorks();return false">
@@ -142,8 +139,7 @@
         @endsection
 
         @section('scripts')
-            <script src="/js/dashboard/works/employees.js"></script>
-            <script src="/js/dashboard/works/students.js"></script>
+             <script src="/js/dashboard/teacher/works/students.js"></script>
             <script src="{{'/js/bootstrap-select.js'}}"></script>
             <script id="work_info_student_tmpl" type="text/x-jquery-tmpl">
             <div id="work_info_student" class="modal" style="display: block;">

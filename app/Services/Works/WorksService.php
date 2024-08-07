@@ -65,7 +65,7 @@ class WorksService extends Services
         return view('templates.dashboard.admin.works.students', ['years' => $years,'program_specialties' => $programSpecialties]);
     }
 
-    public function youTeacherWorksView()
+    public function teacherYouWorksView()
     {
         $you = Auth::user();
         $organizationId = $you->organization_id;
@@ -98,11 +98,28 @@ class WorksService extends Services
 
     }
 
-    public function get(int $pageNumber,int $userType): JsonResponse
+    public function teacherStudentsWorksView()
     {
         $you = Auth::user();
         $organizationId = $you->organization_id;
-        $works = $this->workRepository->getPaginate($organizationId,$pageNumber,$userType);
+        $years = $this->yearRepository->get($organizationId);
+        $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
+        $scientificSupervisors = $this->scientificSupervisorRepository->get($organizationId);
+        $worksTypes = $this->worksTypeRepository->get($organizationId);
+        return view('templates.dashboard.teacher.works.students',[
+            'years' => $years,
+            'program_specialties' => $programSpecialties,
+            'scientific_supervisors' => $scientificSupervisors,
+            'works_types' => $worksTypes
+        ]);
+    }
+
+    public function get(array $data): JsonResponse
+    {
+        $you = Auth::user();
+        $organizationId = $you->organization_id;
+        $data['organization_id'] = $organizationId;
+        $works = $this->workRepository->getPaginate($data);
         if($works and is_iterable($works))
         {
             return self::sendJsonResponse(true, [
@@ -616,6 +633,7 @@ class WorksService extends Services
 
 
     }
+
 
 
 

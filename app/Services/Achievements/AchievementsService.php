@@ -22,6 +22,16 @@ class AchievementsService extends Services
         $this->achievementRepository = $achievementRepository;
     }
 
+    public function youAchievementsView()
+    {
+        $modes = AchievementMode::all();
+        $categories = AchievementTypeCategory::with('achievementsTypes')->get();
+        return view('templates.dashboard.teacher.portfolios.you',[
+            'categories' => $categories,
+            'modes' => $modes
+        ]);
+    }
+
     public function get(int $userId): JsonResponse
     {
         $achievements = $this->achievementRepository->get($userId);

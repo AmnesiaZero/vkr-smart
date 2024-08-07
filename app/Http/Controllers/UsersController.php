@@ -22,6 +22,9 @@ class UsersController extends Controller
     protected $fillable = [
         'name',
         'role',
+        'roles',
+        'departments_ids',
+        'page',
         'email',
         'gender',
         'login',
@@ -169,14 +172,14 @@ class UsersController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'roles.*' => ['required', Rule::exists('roles', 'slug')],
-            'page' => 'required|integer'
+            'page' => 'required|integer',
+            'departments_ids.*' => ['integer',Rule::exists('departments','id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
-        $roles = $request->roles;
-        $page = $request->page;
-        return $this->usersService->getPaginate($roles,$page);
+        $data = $request->only($this->fillable);
+        return $this->usersService->getPaginate($data);
     }
 
     public function create(Request $request): JsonResponse
@@ -237,6 +240,7 @@ class UsersController extends Controller
             'password' => 'max:255',
             'gender' => 'integer',
             'is_active' => 'integer',
+            'departments_ids.*' => ['integer',Rule::exists('departments','id')],
             'role' => [Rule::exists('roles', 'slug')],
             'avatar' => 'file'
         ]);
@@ -339,6 +343,16 @@ class UsersController extends Controller
     public function studentsPortfoliosView()
     {
         return $this->usersService->studentsPortfoliosView();
+    }
+
+    public function teacherStudentsView()
+    {
+        return $this->usersService->teacherStudentsView();
+    }
+
+    public function teacherDepartmentsView()
+    {
+        return $this->usersService->teacherDepartmentsView();
     }
 
     public function openPortfolio(int $id)

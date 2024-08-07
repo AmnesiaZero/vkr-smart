@@ -152,6 +152,7 @@ Route::group([
         'prefix' => 'settings'
     ], function () {
         Route::get('organizations-structure', [OrganizationsController::class, 'organizationsStructure']);
+        Route::get('teacher-departments',[UsersController::class, 'teacherDepartmentsView']);
         Route::get('access', function () {
             return view('templates.dashboard.admin.settings.access');
         });
@@ -169,9 +170,10 @@ Route::group([
         Route::get('employees', [WorksController::class, 'employeesWorksView']);
         Route::get('students', [WorksController::class, 'studentsWorksView']);
         Route::group([
-            'prefix' => 'you'
+            'prefix' => 'teacher'
         ],function (){
-           Route::get('teacher',[WorksController::class,'youTeacherWorksView']);
+           Route::get('you',[WorksController::class, 'teacherYouWorksView']);
+           Route::get('students',[WorksController::class,'teacherStudentsWorksView']);
         });
         Route::post('create',[WorksController::class,'create']);
         Route::get('get',[WorksController::class,'get']);
@@ -230,6 +232,11 @@ Route::group([
     Route::group([
         'prefix' => 'portfolio'
     ], function () {
+        Route::group([
+            'prefix' => 'teacher'
+        ],function (){
+             Route::get('students',[UsersController::class,'teacherStudentsView']);
+        });
         Route::get('students', [UsersController::class, 'studentsPortfoliosView']);
         Route::get('teachers', [UsersController::class,'teachersPortfoliosView']);
         Route::get('{id}',[UsersController::class,'openPortfolio']);
@@ -237,6 +244,11 @@ Route::group([
         Route::group([
             'prefix' => 'achievements'
         ],function (){
+            Route::group([
+                'prefix' => 'teacher'
+            ],function (){
+                Route::get('you',[AchievementsController::class, 'youAchievementsView']);
+            });
             Route::post('create',[AchievementsController::class,'create']);
             Route::get('get',[AchievementsController::class,'get']);
             Route::get('find',[AchievementsController::class,'find']);

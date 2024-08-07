@@ -146,8 +146,8 @@
         @endsection
 
         @section('scripts')
-            <script src="/js/dashboard/works/employees.js"></script>
-            <script src="/js/dashboard/works/students.js"></script>
+            <script src="/js/dashboard/admin/works/employees.js"></script>
+            <script src="/js/dashboard/admin/works/students.js"></script>
             <script src="{{'/js/bootstrap-select.js'}}"></script>
             <script id="work_info_student_tmpl" type="text/x-jquery-tmpl">
             <div id="work_info_student" class="modal" style="display: block;">

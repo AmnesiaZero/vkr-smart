@@ -329,5 +329,5 @@
             </script>
 
 
-            <script src="/js/dashboard/settings/organizations.js"></script>
+            <script src="/js/dashboard/admin/settings/organizations.js"></script>
 @endsection

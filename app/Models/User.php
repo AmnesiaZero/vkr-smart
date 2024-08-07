@@ -62,6 +62,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected $with = ['departments'];
+
 
     public function departments(): BelongsToMany
     {

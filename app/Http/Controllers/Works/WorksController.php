@@ -16,6 +16,7 @@ class WorksController extends Controller
 {
 
     protected array $fillable = [
+        'user_id',
        'year_id',
         'faculty_id',
         'department_id',
@@ -38,6 +39,8 @@ class WorksController extends Controller
         'import_file',
         'date_range',
         'user_type',
+        'page',
+        'departments_ids',
         'work_status',
         'user_id'
     ];
@@ -60,24 +63,30 @@ class WorksController extends Controller
         return $this->worksService->employeesWorksView();
     }
 
-    public function youTeacherWorksView()
+    public function teacherYouWorksView()
     {
-        return $this->worksService->youTeacherWorksView();
+        return $this->worksService->teacherYouWorksView();
+    }
+
+    public function teacherStudentsWorksView()
+    {
+        return $this->worksService->teacherStudentsWorksView();
     }
 
     public function get(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(),[
             'page' => 'required|integer',
-            'user_type' => 'required|integer|in:1,2'
+            'user_type' => 'required|integer|in:1,2',
+            'departments_ids.*' => ['integer',Rule::exists('departments','id')],
+            'user_id' => ['integer',Rule::exists('users','id')]
         ]);
         if ($validator->fails())
         {
             return ValidatorHelper::error($validator);
         }
-        $pageNumber = $request->page;
-        $userType = $request->user_type;
-        return $this->worksService->get($pageNumber,$userType);
+        $data = $request->only($this->fillable);
+        return $this->worksService->get($data);
     }
 
     public function getUserWorks(Request $request)

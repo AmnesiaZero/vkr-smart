@@ -117,7 +117,7 @@
 
 @section('scripts')
 
-    <script src="/js/dashboard/settings/user_management.js">
+    <script src="/js/dashboard/admin/settings/user_management.js">
 
     </script>
     <script src="/js/user.js"></script>

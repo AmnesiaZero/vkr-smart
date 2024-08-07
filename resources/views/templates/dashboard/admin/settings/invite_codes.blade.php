@@ -91,7 +91,7 @@
 @endsection
 
 @section('scripts')
-    <script src="/js/dashboard/settings/invite_codes.js"></script>
+    <script src="/js/dashboard/admin/settings/invite_codes.js"></script>
 
     <script id="invite_code_tmpl" type="text/x-jquery-tmpl">
      <div class="border-bottom mb-2">

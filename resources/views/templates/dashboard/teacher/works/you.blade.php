@@ -7,35 +7,6 @@
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
         <div class="row pt-4 g-3 px-md-0 px-3">
-            <div class="col-xxl-4 col-xl-5 col-lg-6">
-                <div id="tree" class="br-green-light-2 br-15 p-3">
-                    <ul class="ui-fancytree fancytree-container fancytree-plain" tabindex="0">
-                        @if(is_iterable($years))
-                            @foreach($years as $year)
-                                <li class="">
-		    						<span
-                                        class="fancytree-node fancytree-expanded fancytree-folder fancytree-has-children fancytree-exp-e fancytree-ico-ef">
-		    							<span class="fancytree-title" id="year_{{$year->id}}">{{$year->year}}</span>
-		    						</span>
-                                    <ul>
-                                        @if(is_iterable($year->faculties))
-                                            @foreach($year->faculties as $faculty)
-                                                <li class="fancytree-lastsib">
-		    								<span
-                                                class="fancytree-node fancytree-expanded fancytree-folder fancytree-has-children fancytree-exp-e fancytree-ico-ef">
-		    									<span class="fancytree-title"
-                                                      id="faculty_{{$faculty->id}}">{{$faculty->name}}</span>
-                                            </span>
-                                                </li>
-                                            @endforeach
-                                        @endif
-                                    </ul>
-                                </li>
-                            @endforeach
-                        @endif
-                    </ul>
-                </div>
-            </div>
             <div class="col">
                 <div class="out-kod"></div>
                 <form class="pt-4 col-xl-10" id="search_form" onsubmit="searchWorks();return false">
@@ -190,7 +161,8 @@
                     </tbody>
                 </table>
             </div>
-            @include('layouts.dashboard.include.menu.work.employee')
+
+
 
             <div id="about_work">
             </div>
@@ -207,11 +179,12 @@
         @include('layouts.dashboard.include.modal.update.work_specialty')
         @include('layouts.dashboard.include.modal.other.additional_file')
         @include('layouts.dashboard.include.modal.add.import-work')
+        @include('layouts.dashboard.include.tmpls.works_page')
         @endsection
 
         @section('scripts')
             <script src="{{'/js/bootstrap-select.js'}}"></script>
-            <script src="/js/dashboard/works/you/teacher.js"></script>
+            <script src="/js/dashboard/teacher/works/you.js"></script>
             <script src="/js/bootstrap.js"></script>
             <script type="text/javascript" src="/js/jquery/moment.min.js"></script>
             <script type="text/javascript"
@@ -274,7 +247,9 @@
         <td>
             <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p" onclick="openInfoBox(${id})">
         </td>
+       @include('layouts.dashboard.include.menu.work.teacher.you')
     </tr>
+
 
 
             </script>

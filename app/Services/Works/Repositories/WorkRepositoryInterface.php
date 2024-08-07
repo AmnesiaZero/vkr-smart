@@ -15,12 +15,10 @@ interface WorkRepositoryInterface
     public function get(int $organizationId):Collection;
 
     /**
-     * @param int $organizationId
-     * @param int $pageNumber
-     * @param int $userType
+     * @param array $data
      * @return LengthAwarePaginator
      */
-    public function getPaginate(int $organizationId,int $pageNumber,int $userType): LengthAwarePaginator;
+    public function getPaginate(array $data): LengthAwarePaginator;
 
     /**
      * @param array $data
@@ -91,4 +89,5 @@ interface WorkRepositoryInterface
      * @return Collection
      */
     public function getUserWorks(int $userId, int $pageNumber):LengthAwarePaginator;
+
 }

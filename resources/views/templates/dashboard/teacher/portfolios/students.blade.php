@@ -1,10 +1,7 @@
-@extends('layouts.dashboard.admin')
+@extends('layouts.dashboard.teacher')
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
         <div class="row pt-4 g-3 px-md-0 px-3">
-            <div class="col-xxl-4 col-xl-5 col-lg-6">
-                @include('layouts.dashboard.include.elements.tree',['years' => $years])
-            </div>
             <div class="col">
                 <div class="out-kod"></div>
                 <form id="search_users_form" class="pt-4 col-xl-10" onsubmit="searchUsers();return false">
@@ -70,7 +67,7 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="/js/dashboard/admin/portfolios/main.js"></script>
+    <script src="/js/dashboard/teacher/portfolios/students.js"></script>
 
     <script id="user_tmpl" type="text/x-jquery-tmpl">
         <div class="col-xl-3 col-lg-4 col-sm-6 col-12">
