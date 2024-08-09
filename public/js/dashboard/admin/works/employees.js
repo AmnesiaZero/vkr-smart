@@ -957,7 +957,7 @@ function updateSelfCheckStatus()
         id:workId
     };
     $.ajax({
-        url: "/dashboard/works/update-self-check-status",
+        url: "/dashboard/works/update/self-check",
         type: 'POST',
         data:data,
         headers: {

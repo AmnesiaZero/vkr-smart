@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.teacher')
+@extends('layouts.dashboard.student')
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
     <link rel="stylesheet" href="{{ asset('css/achievements.css') }}">
@@ -39,6 +39,14 @@
                                 </li>
                                 <li role="presentation" class="nav-item">
                                     <a href="#profile-security" class="nav-link" aria-controls="profile-achivements"
+                                       role="tab"
+                                       data-bs-toggle="tab" aria-expanded="false">
+                                        <i class="fas fa-th"></i>
+                                        Безопасность
+                                    </a>
+                                </li>
+                                <li role="presentation" class="nav-item">
+                                    <a href="#profile-department" class="nav-link" aria-controls="profile-achivements"
                                        role="tab"
                                        data-bs-toggle="tab" aria-expanded="false">
                                         <i class="fas fa-th"></i>
@@ -184,6 +192,43 @@
                                     </div>
                                 </div>
                             </form>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="profile-department">
+                            @if(isset($user))
+                                <div class="form form-horizontal" >
+                                    <h2>Ваше структурное подразделение:</h2><hr>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Год выпуска</label>
+                                        <div class="col-sm-8">
+                                            {{$user->year->year}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Факультет (подразделение)</label>
+                                        <div class="col-sm-8">
+                                            {{$user->faculty->name}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Кафедра</label>
+                                        <div class="col-sm-8">
+                                            {{$user->department->name}}
+                                        </div>
+                                    </div><div class="form-group">
+                                        <label class="col-sm-4">Направление подготовки</label>
+                                        <div class="col-sm-8">
+                                            {{$user->specialty->code}}/{{$user->specialty->name}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Группа</label>
+                                        <div class="col-sm-8">
+                                            {{$user->group}}
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </di>
+                            @endif
                         </div>
                         <div role="tabpanel" class="tab-pane" id="profile-main">
                             <h2>Образование:</h2>
@@ -358,7 +403,7 @@
 
 
 @section('scripts')
-    <script src="{{'/js/dashboard/teacher/personal-cabinet.js'}}"></script>
+    <script src="{{'/js/dashboard/student/personal-cabinet.js'}}"></script>
 
 
     <script id="about_tmpl" type="text/x-jquery-tmpl">

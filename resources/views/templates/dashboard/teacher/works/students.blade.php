@@ -122,7 +122,7 @@
                     @include('layouts.dashboard.include.menu.work.student')
                 </table>
             </div>
-            @include('layouts.dashboard.include.menu.work.employee')
+            @include('layouts.dashboard.include.menu.work.teacher.students')
 
             <div id="about_work">
             </div>

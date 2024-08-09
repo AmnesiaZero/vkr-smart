@@ -30,9 +30,14 @@ class AchievementsController
         $this->achievementsService = $achievementsService;
     }
 
-    public function youAchievementsView()
+    public function teacherYouAchievementsView()
     {
-        return $this->achievementsService->youAchievementsView();
+        return $this->achievementsService->teacherYouAchievementsView();
+    }
+
+    public function studentYouAchievementsView()
+    {
+        return $this->achievementsService->studentYouAchievementsView();
     }
 
     public function view(int $userId)

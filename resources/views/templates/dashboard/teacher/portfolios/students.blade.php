@@ -100,12 +100,11 @@
                 <p class="mb-1"><img src="/images/doc_grey_img.svg" alt=""><a href="#"
                                                                               class="text-grey ps-2 fs-14 link-active-hover" onclick="openWorks(${id})">работы</a>
                 </p>
+                @{{if portfolio_card_access==1}}
                 <p class="mb-1"><img src="/images/User_Card_Id_Grey.svg" alt=""><a href="/dashboard/portfolio/${id}"
                                                                                    class="text-grey ps-2 fs-14 link-active-hover">портфолио</a>
                 </p>
-                <p class="mb-1"><img src="/images/setting_grey.svg" alt=""><a href="/dashboard/portfolio/achievements/${id}"
-                                                                              class="text-grey ps-2 fs-14 link-active-hover">управление
-                    портфолио</a></p>
+                @{{/if}}
             </div>
         </div>
     </script>

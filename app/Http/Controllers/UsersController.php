@@ -32,6 +32,9 @@ class UsersController extends Controller
         'organization_id',
         'faculty_id',
         'year_id',
+        'departments_ids',
+        'department_id',
+        'specialty_id',
         'phone',
         'group',
         'specialty_id',
@@ -69,9 +72,13 @@ class UsersController extends Controller
             {
                 return redirect('/dashboard/settings/organizations-structure');
             }
-            else
+            else if ($user->hasRole('teacher'))
             {
-                return redirect('/dashboard/personal-cabinet/'.$user->id);
+                return redirect('/dashboard/personal-cabinet/teacher');
+            }
+            else if ($user->hasRole('user'))
+            {
+                return redirect('/dashboard/personal-cabinet/student');
             }
         }
         return back()->withErrors(['Предоставленные данные были некорректными']);
@@ -127,12 +134,20 @@ class UsersController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|max:255',
             'gender' => 'required|integer',
+            'departments_ids.*' => ['integer',Rule::exists('departments','id')],
+            'department_id' => ['integer',Rule::exists('departments','id')],
+            'specialty_id' => ['integer',Rule::exists('programs_specialties','id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
         return $this->usersService->register($data);
+    }
+
+    public function studentPersonalCabinetView()
+    {
+        return $this->usersService->studentPersonalCabinetView();
     }
 
     public function teacherPersonalCabinetView()

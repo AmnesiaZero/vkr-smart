@@ -114,6 +114,22 @@ class WorksService extends Services
         ]);
     }
 
+    public function studentYouWorksView()
+    {
+        $you = Auth::user();
+        $organizationId = $you->organization_id;
+        $years = $this->yearRepository->get($organizationId);
+        $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
+        $scientificSupervisors = $this->scientificSupervisorRepository->get($organizationId);
+        $worksTypes = $this->worksTypeRepository->get($organizationId);
+        return view('templates.dashboard.student.works.you', [
+            'years' => $years,
+            'program_specialties' => $programSpecialties,
+            'scientific_supervisors' => $scientificSupervisors,
+            'works_types' => $worksTypes
+        ]);
+    }
+
     public function get(array $data): JsonResponse
     {
         $you = Auth::user();
@@ -634,6 +650,32 @@ class WorksService extends Services
 
     }
 
+    public function updateVisibility(int $id): JsonResponse
+    {
+        $work = $this->workRepository->find($id);
+        if($work and $work->id)
+        {
+            $manual = $work->visibility;
+            if($manual)
+            {
+                $work->visibility = 0;
+            }
+            else
+            {
+                $work->visibility = 1;
+            }
+            $work->save();
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'message' => 'Видимость работы успешно обновлена',
+                'visibility' => $work->visibility
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Возникла ошибка при обновлении видимости работы'
+        ]);
+    }
 
 
 

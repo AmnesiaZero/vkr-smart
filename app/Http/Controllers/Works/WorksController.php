@@ -73,6 +73,11 @@ class WorksController extends Controller
         return $this->worksService->teacherStudentsWorksView();
     }
 
+    public function studentYouWorksView()
+    {
+        return $this->worksService->studentYouWorksView();
+    }
+
     public function get(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(),[
@@ -320,6 +325,19 @@ class WorksController extends Controller
         }
         $id = $request->id;
         return $this->worksService->updateSelfCheckStatus($id);
+    }
+
+    public function updateVisibility(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(),[
+            'id' => ['required','integer']
+        ]);
+        if ($validator->fails())
+        {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->worksService->updateVisibility($id);
     }
 
     public function restore(Request $request): JsonResponse

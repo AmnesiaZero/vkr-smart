@@ -33,6 +33,8 @@ class User extends Authenticatable
         'organization_id',
         'faculty_id',
         'year_id',
+        'department_id',
+        'specialty_id',
         'phone',
         'date_of_birth',
         'group',
@@ -62,12 +64,27 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $with = ['departments'];
+    protected $with = [
+        'year',
+        'faculty',
+        'departments',
+        'department',
+        'specialty'
+    ];
 
 
     public function departments(): BelongsToMany
     {
         return $this->belongsToMany(Department::class, 'departments_users')->with(['faculty', 'year']);
+    }
+
+    public function specialty():HasOne
+    {
+        return $this->hasOne(ProgramSpecialty::class,'id','specialty_id');
+    }
+    public function department():HasOne
+    {
+        return $this->hasOne(Department::class,'id','department_id');
     }
 
     public function year():HasOne

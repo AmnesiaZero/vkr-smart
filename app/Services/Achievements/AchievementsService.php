@@ -22,11 +22,21 @@ class AchievementsService extends Services
         $this->achievementRepository = $achievementRepository;
     }
 
-    public function youAchievementsView()
+    public function teacherYouAchievementsView()
     {
         $modes = AchievementMode::all();
         $categories = AchievementTypeCategory::with('achievementsTypes')->get();
         return view('templates.dashboard.teacher.portfolios.you',[
+            'categories' => $categories,
+            'modes' => $modes
+        ]);
+    }
+
+    public function studentYouAchievementsView()
+    {
+        $modes = AchievementMode::all();
+        $categories = AchievementTypeCategory::with('achievementsTypes')->get();
+        return view('templates.dashboard.student.portfolios.you',[
             'categories' => $categories,
             'modes' => $modes
         ]);
@@ -134,4 +144,5 @@ class AchievementsService extends Services
             'message' => 'Ошибка при поиске достижений'
         ]);
     }
+
 }

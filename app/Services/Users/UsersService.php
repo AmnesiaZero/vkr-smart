@@ -511,5 +511,11 @@ class UsersService extends Services
         return view('templates.dashboard.teacher.settings.departments',['years' => $years,'departments_ids' => $departmentsIds]);
     }
 
+    public function studentPersonalCabinetView()
+    {
+        $you = Auth::user();
+        return view('templates.dashboard.student.personal-cabinet',['user' => $you]);
+    }
+
 
 }

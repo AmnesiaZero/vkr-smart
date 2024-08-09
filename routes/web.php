@@ -1,7 +1,6 @@
 <?php
 
 
-use App\Http\Controllers\DecorationController;
 use App\Http\Controllers\HandbookController;
 use App\Http\Controllers\InviteCodesController;
 use App\Http\Controllers\Organizations\DepartmentsController;
@@ -146,8 +145,12 @@ Route::group([
     'prefix' => 'dashboard',
     'middleware' => ['web', 'auth','role:admin,teacher,user']
 ], function () {
-
-    Route::get('personal-cabinet/{id}',[UsersController::class, 'teacherPersonalCabinetView']);
+    Route::group([
+        'prefix' => 'personal-cabinet'
+    ],function (){
+       Route::get('teacher',[UsersController::class,'teacherPersonalCabinetView']);
+       Route::get('student',[UsersController::class,'studentPersonalCabinetView']);
+    });
     Route::group([
         'prefix' => 'settings'
     ], function () {
@@ -175,10 +178,22 @@ Route::group([
            Route::get('you',[WorksController::class, 'teacherYouWorksView']);
            Route::get('students',[WorksController::class,'teacherStudentsWorksView']);
         });
+        Route::group([
+            'prefix' => 'student'
+        ],function (){
+            Route::get('you',[WorksController::class, 'studentYouWorksView']);
+        });
         Route::post('create',[WorksController::class,'create']);
         Route::get('get',[WorksController::class,'get']);
         Route::get('get-user-works',[WorksController::class,'getUserWorks']);
         Route::get('search',[WorksController::class,'search']);
+        Route::group([
+            'prefix' => 'update'
+        ],function (){
+           Route::post('visibility',[WorksController::class,'updateVisibility']);
+           Route::post('self-check',[WorksController::class, 'updateSelfCheckStatus']);
+           Route::post('/',[WorksController::class,'update']);
+        });
         Route::post('update',[WorksController::class,'update']);
         Route::get('find',[WorksController::class,'find']);
         Route::get('download',[WorksController::class,'download']);
@@ -186,7 +201,6 @@ Route::group([
         Route::post('copy',[WorksController::class,'copy']);
         Route::post('delete',[WorksController::class,'delete']);
         Route::post('destroy',[WorksController::class,'destroy']);
-        Route::post('update-self-check-status',[WorksController::class, 'updateSelfCheckStatus']);
         Route::post('restore',[WorksController::class,'restore']);
         Route::post('import',[WorksController::class,'import']);
         Route::get('export',[WorksController::class,'export']);
@@ -247,7 +261,12 @@ Route::group([
             Route::group([
                 'prefix' => 'teacher'
             ],function (){
-                Route::get('you',[AchievementsController::class, 'youAchievementsView']);
+                Route::get('you',[AchievementsController::class, 'teacherYouAchievementsView']);
+            });
+            Route::group([
+                'prefix' => 'student'
+            ],function (){
+                Route::get('you',[AchievementsController::class, 'studentYouAchievementsView']);
             });
             Route::post('create',[AchievementsController::class,'create']);
             Route::get('get',[AchievementsController::class,'get']);
