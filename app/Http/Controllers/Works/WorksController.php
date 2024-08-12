@@ -40,7 +40,7 @@ class WorksController extends Controller
         'date_range',
         'user_type',
         'page',
-        'departments_ids',
+        'selected_departments',
         'work_status',
         'user_id'
     ];
@@ -75,7 +75,7 @@ class WorksController extends Controller
         $validator = Validator::make($request->all(),[
             'page' => 'required|integer',
             'user_type' => 'required|integer|in:1,2',
-            'departments_ids.*' => ['integer',Rule::exists('departments','id')],
+            'selected_departments.*' => ['integer',Rule::exists('departments','id')],
             'user_id' => ['integer',Rule::exists('users','id')]
         ]);
         if ($validator->fails())

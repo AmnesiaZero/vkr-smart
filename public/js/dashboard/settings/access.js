@@ -1,5 +1,6 @@
 $(document).ready(function () {
     users();
+    years('years_list');
     getYou();
     $('.js-example-basic-single').select2();
 

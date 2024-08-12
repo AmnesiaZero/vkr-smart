@@ -464,7 +464,7 @@ class UsersService extends Services
         $years = $this->yearRepository->get($organizationId);
         $roles = ['teacher'];
         $users = $this->_repository->get($organizationId,$roles);
-        return view('templates.dashboard.portfolios',['years' => $years,'users' => $users]);
+        return view('templates.dashboard.portfolios.teachers',['years' => $years,'users' => $users]);
     }
 
     public function openPortfolio(int $id)
@@ -519,7 +519,11 @@ class UsersService extends Services
         return view('templates.dashboard.personal-cabinet',['user' => $you]);
     }
 
-
+    public function profileView()
+    {
+        $you = Auth::user();
+        return view('templates.dashboard.profile',['user' => $you]);
+    }
 
 
 }

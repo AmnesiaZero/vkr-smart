@@ -3,9 +3,11 @@
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
         <div class="row pt-4 g-3 px-md-0 px-3 mb-4">
+            @role('admin')
             <div class="col-xxl-4 col-xl-5 col-lg-6">
                 @include('layouts.dashboard.include.elements.tree')
             </div>
+            @endrole
             <div class="col">
                 <div class="out-kod"></div>
                 <form class="pt-4 col-xl-10" id="search_form" onsubmit="searchWorks();return false">

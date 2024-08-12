@@ -65,6 +65,8 @@ class User extends Authenticatable
     ];
 
     protected $with = [
+        'roles',
+        'organization',
         'year',
         'faculty',
         'departments',

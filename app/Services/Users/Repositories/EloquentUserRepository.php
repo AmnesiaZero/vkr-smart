@@ -126,12 +126,21 @@ class EloquentUserRepository implements UserRepositoryInterface
         $query->whereHas('roles', function ($query) use ($roles) {
             $query->whereIn('slug', $roles);
         });
-        if(isset($data['departments_ids']))
+        if(isset($data['selected_departments']))
         {
-            $departmentsIds = $data['departments_ids'];
-            $query = $query->whereHas('departments',function (Builder $builder) use ($departmentsIds) {
-                $builder->whereIn('departments.id', $departmentsIds);
-            });
+            $departmentsIds = $data['selected_departments'];
+            if($roles[0]=='student')
+            {
+                Log::debug('Условие where in');
+                $query = $query->whereIn('department_id',$departmentsIds);
+            }
+            else
+            {
+                Log::debug('Условие has');
+                $query = $query->whereHas('departments',function (Builder $builder) use ($departmentsIds) {
+                    $builder->whereIn('departments.id', $departmentsIds);
+                });
+            }
         }
         return $query->paginate(config('paginate.per_page'),'*','page',$data['page']);
 

@@ -143,9 +143,11 @@ Route::group([
 
 Route::group([
     'prefix' => 'dashboard',
-    'middleware' => ['web', 'auth','role:admin,teacher,user']
+    'middleware' => ['web', 'auth']
 ], function () {
+    //личный кабинет для студентов и преподавателей,profile для сотрудников организации. Страницы там слишком разные,чтобы в одну вьюху вставлять
     Route::get('personal-cabinet',[UsersController::class,'personalCabinetView']);
+    Route::get('profile',[UsersController::class,'profileView']);
     Route::group([
         'prefix' => 'settings'
     ], function () {

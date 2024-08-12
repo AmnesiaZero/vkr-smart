@@ -23,7 +23,6 @@ class UsersController extends Controller
         'name',
         'role',
         'roles',
-        'departments_ids',
         'page',
         'email',
         'gender',
@@ -71,6 +70,14 @@ class UsersController extends Controller
             if($user->hasRole('admin'))
             {
                 return redirect('/dashboard/settings/organizations-structure');
+            }
+            else if ($user->hasRole('employee'))
+            {
+                return redirect('/dashboard/profile');
+            }
+            else if($user->hasRole('inspector'))
+            {
+                return redirect('/dashboard/works/employees');
             }
             else
             {
@@ -146,6 +153,11 @@ class UsersController extends Controller
         return $this->usersService->personalCabinetView();
     }
 
+    public function profileView()
+    {
+        return $this->usersService->profileView();
+    }
+
 
 
 
@@ -182,7 +194,7 @@ class UsersController extends Controller
         $validator = Validator::make($request->all(), [
             'roles.*' => ['required', Rule::exists('roles', 'slug')],
             'page' => 'required|integer',
-            'departments_ids.*' => ['integer',Rule::exists('departments','id')]
+            'selected_departments.*' => ['integer',Rule::exists('departments','id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -341,7 +353,7 @@ class UsersController extends Controller
     {
         $you = Auth::user();
         $apiKey = config('jwt.api_key');
-        return view('templates.dashboard.admin.settings.api', ['you' => $you, 'api_key' => $apiKey]);
+        return view('templates.dashboard.settings.api', ['you' => $you, 'api_key' => $apiKey]);
     }
 
     public function teachersPortfoliosView()

@@ -1,14 +1,22 @@
 const path = window.location.pathname;
 const string  = path.split("/").pop();
-var role = '';
+
+var usersRole;
+
 if(string=='teachers')
 {
-    role = 'teacher';
+    usersRole = 'teacher';
 }
 else
 {
-    role = 'user';
+    usersRole = 'user';
 }
+
+var user;
+
+var role;
+
+var departmentsIds = [];
 
 $(document).ready(function () {
     localStorage.setItem('selected_years', '');
@@ -20,14 +28,55 @@ $(document).ready(function () {
     $(".clicked").on('click', function () {
         deleteTreeElement($(this));
     });
-    users();
+    function getUser() {
+        var deferred = $.Deferred();
+
+        $.ajax({
+            url: "/dashboard/users/you",
+            dataType: "json",
+            type: "get",
+            success: function(response) {
+                if (response.success) {
+                    user = response.data.you;
+                    console.log(user);
+                    userId = response.data.you.id;
+                    role = user.roles[0].slug;
+                    console.log('role = ' + role);
+                    const departments = user.departments;
+                    departmentsIds.push(...departments.map(department => department.id));
+                    deferred.resolve(); // Сообщаем, что функция завершена
+                } else {
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                    deferred.reject(); // Сообщаем об ошибке
+                }
+            },
+            error: function() {
+                $.notify("Произошла ошибка при выборе года", "error");
+                deferred.reject(); // Сообщаем об ошибке
+            }
+        });
+
+        return deferred.promise();
+    }
+
+
+    $.when(getUser()).done(function() {
+        users();
+    });
 });
 
 function users(page=1)
 {
-    const data = {
-        roles:[role],
+    let data = {
+        roles:[usersRole],
         page:page
+    };
+    if(role==='teacher' || role==='employee')
+    {
+        const additionalData = {
+            selected_departments:departmentsIds
+        };
+        data = $.extend(data,additionalData);
     }
     $.ajax({
         url: "/dashboard/users/get-paginate",
@@ -91,15 +140,25 @@ function openWorks(id) {
 function searchUsers() {
     let data = $("#search_users_form").serialize();
     data = serializeRemoveNull(data);
-    const selectedYears = getArrayFromLocalStorage('selected_years');
-    const selectedDepartments = getArrayFromLocalStorage('selected_departments');
-    const selectedFaculties = getArrayFromLocalStorage('selected_faculties');
-    const additionalData = {
-        selected_years: selectedYears,
-        selected_departments: selectedDepartments,
-        selected_faculties:selectedFaculties,
-        roles:[role]
-    };
+    let additionalData = '';
+    if(role==='admin')
+    {
+        const selectedYears = getArrayFromLocalStorage('selected_years');
+        const selectedDepartments = getArrayFromLocalStorage('selected_departments');
+        const selectedFaculties = getArrayFromLocalStorage('selected_faculties');
+        additionalData = {
+            selected_years: selectedYears,
+            selected_departments: selectedDepartments,
+            selected_faculties:selectedFaculties
+        };
+    }
+    else
+    {
+        additionalData = {
+            selected_departments:departmentsIds
+        };
+    }
+    additionalData['role'] = usersRole;
     console.log(additionalData);
     data += '&' + $.param(additionalData);
     $.ajax({

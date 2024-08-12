@@ -30,8 +30,8 @@
             <div class="col-sm-3 col-lg-3 col-xs-3">
                 <div class="profile-sidebar">
                     <div class="profile-userpic d-flex align-items-center justify-content-center">
-                        <img id="user-avatar" src="{{ asset('images/default.png') }}" alt=""
-                             class="img-responsive" style="border-radius: 6px;">
+                        <img id="user-avatar" src="{{asset($user->avatar_path)}}" alt=""
+                             class="img-fluid img-responsive" style="border-radius: 6px;">
                     </div>
                     <div class="profile-usertitle">
                         <div class="profile-usertitle-name fs-14 fw-bold text-grey">

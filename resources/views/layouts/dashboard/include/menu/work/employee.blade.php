@@ -1,4 +1,5 @@
 <div class="info-box" id="info_box">
+    @role('admin')
     <p class="fs-14 lh-17">Направление подготовки обучающегося</p>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/Edit_Pencil.svg" alt="" class="pe-2">
@@ -36,6 +37,7 @@
         <p class="fs-14 lh-17 text-grey m-0" id="upload_certificate_button">Загрузить или заменить справку<br> о самопроверке по другим
             системам</p>
     </div>
+    @endrole
     <p class="fs-14 lh-17">Дополнительные файлы</p>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/href_light.svg" alt="" class="pe-2">

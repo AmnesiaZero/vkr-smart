@@ -341,5 +341,5 @@
 
     </script>
 
-    <script src="/js/dashboard/admin/settings/access.js"></script>
+    <script src="/js/dashboard/settings/access.js"></script>
 @endsection

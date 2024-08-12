@@ -28,12 +28,10 @@ class EloquentWorkRepository implements WorkRepositoryInterface
         else {
             $query = $query->where('organization_id', '=', $data['organization_id'])->where('user_type','=',$data['user_type']);
         }
-        if(isset($data['departments_ids']))
+        if(isset($data['selected_departments']))
         {
-            $departmentsIds = $data['departments_ids'];
-            $query = $query->whereHas('department',function (Builder $builder) use ($departmentsIds) {
-                $builder->whereIn('id',$departmentsIds);
-            });
+            $departmentsIds = $data['selected_departments'];
+            $query = $query->whereIn('department_id',$departmentsIds);
         }
         return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
     }
@@ -113,6 +111,11 @@ class EloquentWorkRepository implements WorkRepositoryInterface
             Log::debug('вошёл в selected_years');
             $yearsIds = $data['selected_years'];
             $query = $query->whereIn('year_id', $yearsIds);
+        }
+        if(isset($data['selected_departments']))
+        {
+            $departmentsIds = $data['selected_departments'];
+            $query = $query->whereIn('department_id',$departmentsIds);
         }
         return $query->paginate(config('pagination.per_page'),'*','page',1);
     }
