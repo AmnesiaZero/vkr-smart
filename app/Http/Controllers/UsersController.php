@@ -72,13 +72,9 @@ class UsersController extends Controller
             {
                 return redirect('/dashboard/settings/organizations-structure');
             }
-            else if ($user->hasRole('teacher'))
+            else
             {
-                return redirect('/dashboard/personal-cabinet/teacher');
-            }
-            else if ($user->hasRole('user'))
-            {
-                return redirect('/dashboard/personal-cabinet/student');
+                return redirect('/dashboard/personal-cabinet');
             }
         }
         return back()->withErrors(['Предоставленные данные были некорректными']);
@@ -145,15 +141,13 @@ class UsersController extends Controller
         return $this->usersService->register($data);
     }
 
-    public function studentPersonalCabinetView()
+    public function personalCabinetView()
     {
-        return $this->usersService->studentPersonalCabinetView();
+        return $this->usersService->personalCabinetView();
     }
 
-    public function teacherPersonalCabinetView()
-    {
-        return $this->usersService->teacherPersonalCabinetView();
-    }
+
+
 
     public function you(): JsonResponse
     {
@@ -360,10 +354,6 @@ class UsersController extends Controller
         return $this->usersService->studentsPortfoliosView();
     }
 
-    public function teacherStudentsView()
-    {
-        return $this->usersService->teacherStudentsView();
-    }
 
     public function teacherDepartmentsView()
     {

@@ -22,21 +22,12 @@ class AchievementsService extends Services
         $this->achievementRepository = $achievementRepository;
     }
 
-    public function teacherYouAchievementsView()
-    {
-        $modes = AchievementMode::all();
-        $categories = AchievementTypeCategory::with('achievementsTypes')->get();
-        return view('templates.dashboard.teacher.portfolios.you',[
-            'categories' => $categories,
-            'modes' => $modes
-        ]);
-    }
 
-    public function studentYouAchievementsView()
+    public function youAchievementsView()
     {
         $modes = AchievementMode::all();
         $categories = AchievementTypeCategory::with('achievementsTypes')->get();
-        return view('templates.dashboard.student.portfolios.you',[
+        return view('templates.dashboard.portfolios.you',[
             'categories' => $categories,
             'modes' => $modes
         ]);
@@ -81,21 +72,6 @@ class AchievementsService extends Services
         ]);
     }
 
-    public function pageView(int $userId)
-    {
-        $achievements = $this->achievementRepository->get($userId);
-        if($achievements and is_iterable($achievements))
-        {
-            $modes = AchievementMode::all();
-            $categories = AchievementTypeCategory::with('achievementsTypes')->get();
-            return view('templates.dashboard.admin.portfolio.achievements',[
-                'achievements' => $achievements,
-                'categories' => $categories,
-                'modes' => $modes
-            ]);
-        }
-        return back()->withErrors('Ошибка при получении достижений');
-    }
 
     public function find(int $id): JsonResponse
     {

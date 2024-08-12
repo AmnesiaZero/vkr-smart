@@ -16,6 +16,7 @@
 </script>
 
 <script id="work_tmpl" type="text/x-jquery-tmpl">
+      @{{if visibility==1}}
      <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
     <th scope="row">${specialty.name}</th>
     <td>${student}</td>
@@ -58,6 +59,7 @@
             <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p" onclick="openInfoBox(${id})">
         </td>
     </tr>
+    @{{/if}}
 
 
  </script>

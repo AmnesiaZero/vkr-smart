@@ -62,10 +62,10 @@ class WorksService extends Services
         $organizationId = $you->organization_id;
         $years = $this->yearRepository->get($organizationId);
         $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
-        return view('templates.dashboard.admin.works.students', ['years' => $years,'program_specialties' => $programSpecialties]);
+        return view('templates.dashboard.works.students', ['years' => $years,'program_specialties' => $programSpecialties]);
     }
 
-    public function teacherYouWorksView()
+    public function youWorksView()
     {
         $you = Auth::user();
         $organizationId = $you->organization_id;
@@ -73,7 +73,7 @@ class WorksService extends Services
         $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
         $scientificSupervisors = $this->scientificSupervisorRepository->get($organizationId);
         $worksTypes = $this->worksTypeRepository->get($organizationId);
-        return view('templates.dashboard.teacher.works.you', [
+        return view('templates.dashboard.works.you', [
             'years' => $years,
             'program_specialties' => $programSpecialties,
             'scientific_supervisors' => $scientificSupervisors,
@@ -89,7 +89,7 @@ class WorksService extends Services
         $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
         $scientificSupervisors = $this->scientificSupervisorRepository->get($organizationId);
         $worksTypes = $this->worksTypeRepository->get($organizationId);
-        return view('templates.dashboard.admin.works.employee', [
+        return view('templates.dashboard.works.employee', [
             'years' => $years,
             'program_specialties' => $programSpecialties,
             'scientific_supervisors' => $scientificSupervisors,
@@ -98,37 +98,7 @@ class WorksService extends Services
 
     }
 
-    public function teacherStudentsWorksView()
-    {
-        $you = Auth::user();
-        $organizationId = $you->organization_id;
-        $years = $this->yearRepository->get($organizationId);
-        $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
-        $scientificSupervisors = $this->scientificSupervisorRepository->get($organizationId);
-        $worksTypes = $this->worksTypeRepository->get($organizationId);
-        return view('templates.dashboard.teacher.works.students',[
-            'years' => $years,
-            'program_specialties' => $programSpecialties,
-            'scientific_supervisors' => $scientificSupervisors,
-            'works_types' => $worksTypes
-        ]);
-    }
 
-    public function studentYouWorksView()
-    {
-        $you = Auth::user();
-        $organizationId = $you->organization_id;
-        $years = $this->yearRepository->get($organizationId);
-        $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
-        $scientificSupervisors = $this->scientificSupervisorRepository->get($organizationId);
-        $worksTypes = $this->worksTypeRepository->get($organizationId);
-        return view('templates.dashboard.student.works.you', [
-            'years' => $years,
-            'program_specialties' => $programSpecialties,
-            'scientific_supervisors' => $scientificSupervisors,
-            'works_types' => $worksTypes
-        ]);
-    }
 
     public function get(array $data): JsonResponse
     {

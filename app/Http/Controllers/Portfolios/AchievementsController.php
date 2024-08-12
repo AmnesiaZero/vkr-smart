@@ -30,17 +30,12 @@ class AchievementsController
         $this->achievementsService = $achievementsService;
     }
 
-    public function teacherYouAchievementsView()
+    public function youAchievementsView()
     {
-        return $this->achievementsService->teacherYouAchievementsView();
+        return $this->achievementsService->youAchievementsView();
     }
 
-    public function studentYouAchievementsView()
-    {
-        return $this->achievementsService->studentYouAchievementsView();
-    }
-
-    public function view(int $userId)
+    public function cardView(int $userId)
     {
         $validator = Validator::make(['id' => $userId],[
             'id' => ['integer',Rule::exists('users','id')]

@@ -63,20 +63,12 @@ class WorksController extends Controller
         return $this->worksService->employeesWorksView();
     }
 
-    public function teacherYouWorksView()
+    public function youWorksView()
     {
-        return $this->worksService->teacherYouWorksView();
+        return $this->worksService->youWorksView();
     }
 
-    public function teacherStudentsWorksView()
-    {
-        return $this->worksService->teacherStudentsWorksView();
-    }
 
-    public function studentYouWorksView()
-    {
-        return $this->worksService->studentYouWorksView();
-    }
 
     public function get(Request $request): JsonResponse
     {

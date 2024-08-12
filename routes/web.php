@@ -88,8 +88,8 @@ Route::get('test-access', function () {
     return view('templates.site.test_access');
 });
 
-Route::get('portfolio', function () {
-    return view('templates.site.portfolio.portfolio');
+Route::get('portfolios', function () {
+    return view('templates.site.portfolios.portfolios');
 });
 
 Route::get('reviews', function () {
@@ -145,22 +145,17 @@ Route::group([
     'prefix' => 'dashboard',
     'middleware' => ['web', 'auth','role:admin,teacher,user']
 ], function () {
-    Route::group([
-        'prefix' => 'personal-cabinet'
-    ],function (){
-       Route::get('teacher',[UsersController::class,'teacherPersonalCabinetView']);
-       Route::get('student',[UsersController::class,'studentPersonalCabinetView']);
-    });
+    Route::get('personal-cabinet',[UsersController::class,'personalCabinetView']);
     Route::group([
         'prefix' => 'settings'
     ], function () {
         Route::get('organizations-structure', [OrganizationsController::class, 'organizationsStructure']);
         Route::get('teacher-departments',[UsersController::class, 'teacherDepartmentsView']);
         Route::get('access', function () {
-            return view('templates.dashboard.admin.settings.access');
+            return view('templates.dashboard.settings.access');
         });
         Route::get('invite-codes', function () {
-            return view('templates.dashboard.admin.settings.invite_codes');
+            return view('templates.dashboard.settings.invite_codes');
         });
         Route::get('user-management', [UsersController::class, 'userManagement']);
         Route::get('handbook-management', [HandbookController::class, 'view']);
@@ -172,17 +167,7 @@ Route::group([
     ], function () {
         Route::get('employees', [WorksController::class, 'employeesWorksView']);
         Route::get('students', [WorksController::class, 'studentsWorksView']);
-        Route::group([
-            'prefix' => 'teacher'
-        ],function (){
-           Route::get('you',[WorksController::class, 'teacherYouWorksView']);
-           Route::get('students',[WorksController::class,'teacherStudentsWorksView']);
-        });
-        Route::group([
-            'prefix' => 'student'
-        ],function (){
-            Route::get('you',[WorksController::class, 'studentYouWorksView']);
-        });
+        Route::get('you',[WorksController::class, 'youWorksView']);
         Route::post('create',[WorksController::class,'create']);
         Route::get('get',[WorksController::class,'get']);
         Route::get('get-user-works',[WorksController::class,'getUserWorks']);
@@ -244,13 +229,8 @@ Route::group([
 
 
     Route::group([
-        'prefix' => 'portfolio'
+        'prefix' => 'portfolios'
     ], function () {
-        Route::group([
-            'prefix' => 'teacher'
-        ],function (){
-             Route::get('students',[UsersController::class,'teacherStudentsView']);
-        });
         Route::get('students', [UsersController::class, 'studentsPortfoliosView']);
         Route::get('teachers', [UsersController::class,'teachersPortfoliosView']);
         Route::get('{id}',[UsersController::class,'openPortfolio']);
@@ -258,16 +238,7 @@ Route::group([
         Route::group([
             'prefix' => 'achievements'
         ],function (){
-            Route::group([
-                'prefix' => 'teacher'
-            ],function (){
-                Route::get('you',[AchievementsController::class, 'teacherYouAchievementsView']);
-            });
-            Route::group([
-                'prefix' => 'student'
-            ],function (){
-                Route::get('you',[AchievementsController::class, 'studentYouAchievementsView']);
-            });
+            Route::get('you',[AchievementsController::class, 'youAchievementsView']);
             Route::post('create',[AchievementsController::class,'create']);
             Route::get('get',[AchievementsController::class,'get']);
             Route::get('find',[AchievementsController::class,'find']);
@@ -310,7 +281,7 @@ Route::group([
     });
 
     Route::get('documentation', function () {
-        return view('templates.dashboard.admin.documentation');
+        return view('templates.dashboard.documentation');
     });
 
     Route::group([

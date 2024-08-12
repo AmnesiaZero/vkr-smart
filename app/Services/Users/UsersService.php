@@ -5,6 +5,8 @@ namespace App\Services\Users;
 
 use App\Helpers\JsonHelper;
 use App\Mail\ResetPassword;
+use App\Models\AchievementMode;
+use App\Models\AchievementTypeCategory;
 use App\Models\InviteCode;
 use App\Services\Departments\Repositories\DepartmentRepositoryInterface;
 use App\Services\InviteCodes\Repositories\InviteCodeRepositoryInterface;
@@ -402,7 +404,7 @@ class UsersService extends Services
     public function userManagement($organizationId): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         $years = $this->yearRepository->get($organizationId);
-        return view('templates.dashboard.admin.settings.user_management', ['years' => $years]);
+        return view('templates.dashboard.settings.user_management', ['years' => $years]);
     }
 
     public function get(array $roles): JsonResponse
@@ -462,7 +464,7 @@ class UsersService extends Services
         $years = $this->yearRepository->get($organizationId);
         $roles = ['teacher'];
         $users = $this->_repository->get($organizationId,$roles);
-        return view('templates.dashboard.admin.portfolio.teachers',['years' => $years,'users' => $users]);
+        return view('templates.dashboard.portfolios',['years' => $years,'users' => $users]);
     }
 
     public function openPortfolio(int $id)
@@ -470,7 +472,7 @@ class UsersService extends Services
         $user = $this->_repository->find($id);
         if($user and $user->id)
         {
-            return view('templates.dashboard.admin.portfolio.portfolio',['user' => $user]);
+            return view('templates.dashboard.portfolios.portfolio',['user' => $user]);
         }
         return back()->withErrors(['Возникла ошибка при поиске пользователя с данным id']);
     }
@@ -482,13 +484,13 @@ class UsersService extends Services
         $years = $this->yearRepository->get($organizationId);
         $roles = ['user'];
         $users = $this->_repository->get($organizationId,$roles);
-        return view('templates.dashboard.admin.portfolio.students',['years' => $years,'users' => $users]);
+        return view('templates.dashboard.portfolios.students',['years' => $years,'users' => $users]);
     }
 
     public function teacherPersonalCabinetView()
     {
         $you = Auth::user();
-        return view('templates.dashboard.teacher.personal-cabinet',['user' => $you]);
+        return view('templates.dashboard.personal-cabinet',['user' => $you]);
     }
 
     public function teacherStudentsView()
@@ -498,7 +500,7 @@ class UsersService extends Services
         $years = $this->yearRepository->get($organizationId);
         $roles = ['user'];
         $users = $this->_repository->get($organizationId,$roles);
-        return view('templates.dashboard.teacher.portfolios.students',['years' => $years,'users' => $users]);
+        return view('templates.dashboard.portfolios.students',['years' => $years,'users' => $users]);
 
     }
 
@@ -508,14 +510,16 @@ class UsersService extends Services
         $departmentsIds = $user->departments()->pluck('departments.id')->toArray();
         $organizationId = $user->organization_id;
         $years = $this->yearRepository->get($organizationId);
-        return view('templates.dashboard.teacher.settings.departments',['years' => $years,'departments_ids' => $departmentsIds]);
+        return view('templates.dashboard.settings.departments',['years' => $years,'departments_ids' => $departmentsIds]);
     }
 
-    public function studentPersonalCabinetView()
+    public function personalCabinetView()
     {
         $you = Auth::user();
-        return view('templates.dashboard.student.personal-cabinet',['user' => $you]);
+        return view('templates.dashboard.personal-cabinet',['user' => $you]);
     }
+
+
 
 
 }
