@@ -47,7 +47,7 @@
                         <div class="row justify-items-center">
                             <label class="col-sm-4">Пол</label>
                             <div class="col-sm-8">
-                                <select name="gender" class="form-control">
+                                <select name="gender" class="selectpicker form-control">
                                     <option value="1">Муж.</option>
                                     <option value="2">Жен.</option>
                                 </select>
@@ -56,7 +56,7 @@
                         <div class="row justify-items-center">
                             <label class="col-sm-4">Статус</label>
                             <div class="col-sm-8">
-                                <select name="is_active" class="form-control">
+                                <select name="is_active" class="selectpicker form-control">
                                     <option value="1">Активен</option>
                                     <option value="0">Заблокирован</option>
                                 </select>

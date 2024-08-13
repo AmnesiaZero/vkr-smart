@@ -1,12 +1,16 @@
 @extends('layouts.dashboard.main')
 
+@section('styles')
+    <link rel="stylesheet" href="">
+@endsection
+
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
         <div class="row pt-5 px-0 px-sm-4 mx-sm-0 mx-4">
             <div class="col-xxl-9 col-xl-8 col-12 mb-4 order-xl-1 order-2">
                 <form onsubmit="searchUsers();return false" id="search_users" class="">
                     <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
-                        <input type="text" name="name" value="" class="form-control search br-none opacity-75"
+                        <input type="text" name="name" value="" class="form-control search br-none"
                                placeholder="Поиск по имени">
                         <button class="btn pe-sm-3 pe-3 py-1 d-flex align-items-center" type="submit" id="search">
                             <img src="/images/Search.svg" alt="search">
@@ -35,7 +39,7 @@
                 <div class="br-green-light-2 br-15 p-4 text-center bg-green cursor-p mt-3"
                      data-bs-toggle="modal" data-bs-target="#create_employee">
                     <img src="/images/Plus.svg">
-                    <p class="text-grey m-0 pt-3">Добавить сотрудника</p>
+                    <p class="text-grey m-0 pt-3">Добавить <br> сотрудника</p>
                 </div>
                 <div class="br-green-light-2 br-15 p-4 text-center bg-green cursor-p mt-3"
                      onclick="inspectorsAccessModal()"
@@ -245,14 +249,14 @@
                         </div>
                         <div class="mb-3">
                             <label for="gender" class="form-label">Пол</label>
-                            <select id="gender" name="gender" class="form-select">
+                            <select id="gender" name="gender" class=" form-select">
                                 <option value="0" @{{if gender==0}} selected @{{/if}}>Муж.</option>
                                 <option value="1" @{{if gender==1}} selected @{{/if}}>Жен.</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="is_active" class="form-label">Статус</label>
-                            <select id="is_active" name="is_active" class="form-select">
+                            <select id="is_active" name="is_active" class=" form-select">
                                 <option value="1" @{{if is_active==1}} selected @{{/if}}>Активен</option>
                                 <option value="0" @{{if is_active==0}} selected @{{/if}}>Заблокирован</option>
                             </select>
@@ -313,7 +317,7 @@
             </div>
             <div class="mb-3">
                 <label for="email">Пол</label>
-                <select name="gender" class="form-control">
+                <select name="gender" class=" form-control">
                                 <option value="1">Муж.</option>
                                 <option value="2">Жен.</option>
                  </select>

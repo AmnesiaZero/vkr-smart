@@ -1240,6 +1240,23 @@ span.current {
     text-decoration: none !important;
 }
 
+/* bs-select */
+.btn.dropdown-toggle.btn-light {
+    background-color: white;
+    border: 1px solid #D4D4D4;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 400 !important;
+    padding: 6px 12px;
+    line-height: 1.5;
+}
+.dropdown-item.selected.active {
+    background: #D9F1F3;
+}
+.filter-option-inner-inner {
+    font-weight: 400;
+}
+
 @media (min-width: 1200px) {
     .nav-link {
         padding-right: 1rem !important;

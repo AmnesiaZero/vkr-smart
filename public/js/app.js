@@ -8,7 +8,7 @@ $(document).ready(function() {
         let comment = button.data('comment');
 
         var modal = $(this);
-        modal.find('.modal-title h4').text('Редактирование года выпуска ' + id);
+        modal.find('.modal-title h4').text('Редактирование года выпуска');
         modal.find('input[name="year"]').val(year);
         modal.find('input[name="students_count"]').val(students_count);
         modal.find('input[name="comment"]').val(comment);
