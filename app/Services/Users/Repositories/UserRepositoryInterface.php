@@ -68,9 +68,9 @@ interface UserRepositoryInterface
      * Поиск по пользователям
      * @param array $data
      * @param array $relations
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function search(array $data,array $relations=['roles', 'departments','works']): Collection;
+    public function search(array $data,array $relations=['roles', 'departments','works']): LengthAwarePaginator;
 
 
     /**

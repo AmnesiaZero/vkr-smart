@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.admin')
+@extends('layouts.dashboard.main')
 
 @section('styles')
     <link rel="stylesheet" href="{{'/css/achievements.css'}}">

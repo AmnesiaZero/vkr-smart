@@ -368,7 +368,7 @@ function works(page = 1) {
                 const totalItems = pagination.total;
                 $("#works_count").text(totalItems);
                 const totalPages = pagination.links.length;
-                updatePagination(currentPage, totalItems, totalPages, perPage);
+                updateWorksPagination(currentPage, totalItems, totalPages, perPage);
                 works.forEach(work => {
                     const workId = work.id;
                     const channel = window.Echo.channel(`works.${workId}`)
@@ -659,7 +659,7 @@ function searchWorks() {
                 const totalPages = pagination.links.length;
                 console.log('total items = ' + totalItems);
                 $("#works_count").text(totalItems);
-                updatePagination(currentPage,totalItems,totalPages,perPage);
+                updateWorksPagination(currentPage,totalItems,totalPages,perPage);
             }
             else
             {

@@ -32,7 +32,7 @@ function users() {
 }
 
 
-function searchUsers() {
+function searchUsers(page= 1) {
     let data = $("#search_users").serialize();
     data = serializeRemoveNull(data);
     const selectedYears = getArrayFromLocalStorage('selected_years');
@@ -41,6 +41,7 @@ function searchUsers() {
     const additionalData = {
         selected_years: selectedYears,
         selected_departments: selectedDepartments,
+        page:page
     };
 
     data += '&' + $.param(additionalData);

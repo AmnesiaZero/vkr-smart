@@ -100,7 +100,7 @@ function users(page=1)
                 const totalItems = pagination.total;
                 $("#users_count").text(totalItems);
                 const totalPages = pagination.links.length;
-                updatePagination(currentPage,totalItems,totalPages,perPage);
+                updateWorksPagination(currentPage,totalItems,totalPages,perPage);
 
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
@@ -137,7 +137,7 @@ function openWorks(id) {
     });
 }
 
-function searchUsers() {
+function searchUsers(page=1) {
     let data = $("#search_users_form").serialize();
     data = serializeRemoveNull(data);
     let additionalData = '';
@@ -159,7 +159,7 @@ function searchUsers() {
         };
     }
     additionalData['role'] = usersRole;
-    console.log(additionalData);
+    additionalData['page'] = page;
     data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/users/search",
@@ -169,7 +169,12 @@ function searchUsers() {
         success: function (response) {
             if (response.success) {
                 const users = response.data.users;
+                updateUserPagination(currentPage,totalItems,totalPages,perPage);
                 $("#users_list").html($("#user_tmpl").tmpl(users));
+                const currentPage = pagination.current_page;
+                const perPage = pagination.per_page;
+                const totalItems = pagination.total;
+                const totalPages = pagination.links.length;
             }
             else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
@@ -199,6 +204,21 @@ function updateWorksCount()
         worksCount += 1;
         $('#works_count').text(worksCount);
     }
+}
+
+function updateUserPagination(currentPage,totalItems,totalPages,itemsPerPage) {
+    $("#users_pagination").pagination({
+        items: totalItems,
+        itemsOnPage: itemsPerPage,
+        currentPage: currentPage, // Установка текущей страницы в начало после добавления новых элементов
+        displayedPages: totalPages,
+        cssStyle: '',
+        prevText: '<span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>',
+        nextText: '<span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>',
+        onPageClick: function(pageNumber) {
+            searchUsers(pageNumber);
+        }
+    });
 }
 
 

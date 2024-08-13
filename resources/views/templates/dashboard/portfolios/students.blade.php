@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.admin')
+@extends('layouts.dashboard.main')
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
         <div class="row pt-4 g-3 px-md-0 px-3">
@@ -63,7 +63,7 @@
             <div class="row g-3" id="users_list">
 
             </div>
-            <nav aria-label="Page navigation example" class="custom_pagination" id="pagination">
+            <nav aria-label="Page navigation example" class="custom_pagination" id="users_pagination">
                 <ul class="pagination m-0" id="pages">
 
                 </ul>

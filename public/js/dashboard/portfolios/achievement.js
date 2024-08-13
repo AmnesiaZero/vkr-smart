@@ -487,7 +487,7 @@ function works(page=1)
                 const perPage = pagination.per_page;
                 const totalItems = pagination.total;
                 const totalPages = pagination.links.length;
-                updatePagination(currentPage,totalItems,totalPages,perPage);
+                updateWorksPagination(currentPage,totalItems,totalPages,perPage);
             }
             else
             {

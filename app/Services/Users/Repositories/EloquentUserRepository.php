@@ -46,7 +46,7 @@ class EloquentUserRepository implements UserRepositoryInterface
         return $this->find($id)->update($data);
     }
 
-    public function search(array $data,array $relations=['roles', 'departments','works']): Collection
+    public function search(array $data,array $relations=['roles', 'departments','works']): LengthAwarePaginator
     {
         $query = User::with($relations);
         if (isset($data['organization_id'])) {
@@ -100,7 +100,7 @@ class EloquentUserRepository implements UserRepositoryInterface
             $departmentsIds = $data['selected_departments'];
             $query = $query->whereIn('department_id',$departmentsIds);
         }
-        return  $query->paginate(config('paginate.per_page'),'*','page',$data['page']);
+        return  $query->paginate(5,'*','page',$data['page']);
 
 
 
@@ -151,18 +151,16 @@ class EloquentUserRepository implements UserRepositoryInterface
             $departmentsIds = $data['selected_departments'];
             if($roles[0]=='student')
             {
-                Log::debug('Условие where in');
                 $query = $query->whereIn('department_id',$departmentsIds);
             }
             else
             {
-                Log::debug('Условие has');
                 $query = $query->whereHas('departments',function (Builder $builder) use ($departmentsIds) {
                     $builder->whereIn('departments.id', $departmentsIds);
                 });
             }
         }
-        return $query->paginate(config('paginate.per_page'),'*','page',$data['page']);
+        return $query->paginate(5,'*','page',$data['page']);
 
     }
 

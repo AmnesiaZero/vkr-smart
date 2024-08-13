@@ -135,7 +135,7 @@
 
             <div id="about_work">
             </div>
-            <nav aria-label="Page navigation example" class="custom_pagination" id="pagination">
+            <nav aria-label="Page navigation example" class="custom_pagination" id="works_pagination">
                 <ul class="pagination m-0" id="pages">
 
                 </ul>

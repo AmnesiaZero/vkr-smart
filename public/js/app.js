@@ -218,8 +218,8 @@ function deleteTreeElement(id) {
 }
 
 
-function updatePagination(currentPage,totalItems,totalPages,itemsPerPage) {
-    $("#pagination").pagination({
+function updateWorksPagination(currentPage, totalItems, totalPages, itemsPerPage) {
+    $("#works_pagination").pagination({
         items: totalItems,
         itemsOnPage: itemsPerPage,
         currentPage: currentPage, // Установка текущей страницы в начало после добавления новых элементов

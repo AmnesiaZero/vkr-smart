@@ -45,7 +45,8 @@ class UsersController extends Controller
         'is_active',
         'selected_years',
         'selected_departments',
-        'avatar'
+        'avatar',
+        'page'
     ];
 
     public function __construct(UsersService $usersService)
@@ -297,7 +298,8 @@ class UsersController extends Controller
             'role' => [Rule::exists('roles', 'slug')],
             'is_active' => 'integer:in:0,1',
             'selected_departments.*' => ['integer', Rule::exists('departments', 'id')],
-            'selected_years.*' => ['integer', Rule::exists('organizations_years', 'id')]
+            'selected_years.*' => ['integer', Rule::exists('organizations_years', 'id')],
+            'page' => 'integer'
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
