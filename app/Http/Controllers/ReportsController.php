@@ -15,9 +15,9 @@ class ReportsController extends Controller
     private ReportsService $reportsService;
 
     private array $fillable = [
-        'selected_years',
-        'selected_faculties',
-        'selected_departments'
+        'year_id',
+        'faculty_id',
+        'department_id'
     ];
 
     public function __construct(ReportsService $reportsService)
@@ -33,9 +33,9 @@ class ReportsController extends Controller
     public function get(Request $request): JsonResponse
     {
         $validator = Validator::make($request->only($this->fillable),[
-            'selected_years.*' => ['integer',Rule::exists('organizations_years','id')],
-            'selected_faculties.*' => ['integer',Rule::exists('faculties','id')],
-            'selected_departments.*' => ['integer',Rule::exists('departments','id')]
+            'year_id' => ['integer',Rule::exists('organizations_years','id')],
+            'faculty_id' => ['integer',Rule::exists('faculties','id')],
+            'department_id' => ['integer',Rule::exists('departments','id')]
         ]);
         if($validator->fails())
         {

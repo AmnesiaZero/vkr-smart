@@ -106,7 +106,9 @@
                 </form>
             </div>
         </div>
-        @include('layouts.dashboard.include.modal.update.work')
+        <div id="tmpl_modals">
+
+        </div>
         <p class="fs-16 pt-3">
             <span class="text-grey">Работ: <span id="works_count"></span></span>
         </p>

@@ -692,7 +692,7 @@ function openReport(workId)
     });
 }
 
-function searchWorks() {
+function searchWorks(page=1) {
     let data = $("#search_form").serialize();
     data = serializeRemoveNull(data);
     let additionalData = '';
@@ -712,6 +712,7 @@ function searchWorks() {
         };
     }
     additionalData['user_type'] = userType;
+    additionalData['page'] = page;
     data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/works/search",
@@ -844,6 +845,8 @@ function workInfo()
             {
                 const work = response.data.work;
                 $("#about_work").html($("#work_info_tmpl").tmpl(work));
+                const modalElement = new bootstrap.Modal(document.getElementById('work_info_modal'));
+                modalElement.show();
             }
             else
             {
@@ -889,6 +892,8 @@ function openUpdateWorkModal()
             {
                 const work = response.data.work;
                 $("#tmpl_modals").html($("#update_work_tmpl").tmpl(work));
+                const modalElement = new bootstrap.Modal(document.getElementById('update_work_modal'));
+                modalElement.show();
             }
             else
             {

@@ -80,30 +80,50 @@ class EloquentUserRepository implements UserRepositoryInterface
                 $query->whereIn('id', $facultiesIds);
             });
         }
-        $users = $query->get();
-
-
-
         if (isset($data['roles'])) {
             $roles = $data['roles'];
-            $users = $users->filter(function ($user) use ($roles) {
+            $query = $query->filter(function ($user) use ($roles) {
                 return $user->roles->whereIn('slug', $roles)->isNotEmpty();
+            });
+            $query = $query->whereHas('roles', function ($query) use ($roles) {
+                $query->whereIn('slug', $roles);
             });
         }
         if (isset($data['role'])) {
             $role = $data['role'];
-            $users = $users->filter(function ($user) use ($role) {
-                return $user->roles->where('slug', '=', $role)->isNotEmpty();
+            $query = $query->whereHas('roles', function ($query) use ($role) {
+                $query->where('slug','=', $role);
             });
         }
-
-        if (isset($data['selected_departments']) and count($data['selected_departments'])>0) {
-            Log::debug('Вошёл в условие');
+        if(isset($data['selected_departments']))
+        {
             $departmentsIds = $data['selected_departments'];
-            $users = $users->filter(function ($user) use ($departmentsIds) {
-                return $user->departments->whereIn('id', $departmentsIds)->isNotEmpty();
-            });
+            $query = $query->whereIn('department_id',$departmentsIds);
         }
+        return  $query->paginate(config('paginate.per_page'),'*','page',$data['page']);
+
+
+
+//        if (isset($data['roles'])) {
+//            $roles = $data['roles'];
+//            $users = $users->filter(function ($user) use ($roles) {
+//                return $user->roles->whereIn('slug', $roles)->isNotEmpty();
+//            });
+//        }
+//        if (isset($data['role'])) {
+//            $role = $data['role'];
+//            $users = $users->filter(function ($user) use ($role) {
+//                return $user->roles->where('slug', '=', $role)->isNotEmpty();
+//            });
+//        }
+
+//        if (isset($data['selected_departments']) and count($data['selected_departments'])>0) {
+//            Log::debug('Вошёл в условие');
+//            $departmentsIds = $data['selected_departments'];
+//            $users = $users->filter(function ($user) use ($departmentsIds) {
+//                return $user->departments->whereIn('id', $departmentsIds)->isNotEmpty();
+//            });
+//        }
         return $users;
     }
 

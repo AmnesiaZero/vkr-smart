@@ -120,6 +120,7 @@ function closeTmplModal(modalId)
 }
 
 const addBadge = function (clickedElement) {
+    console.log('Прикол');
     console.log(clickedElement);
     const id = clickedElement.attr('id');
     console.log('id = ' + id);
@@ -227,7 +228,7 @@ function updatePagination(currentPage,totalItems,totalPages,itemsPerPage) {
         prevText: '<span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>',
         nextText: '<span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>',
         onPageClick: function(pageNumber) {
-            works(pageNumber);
+            searchWorks(pageNumber);
         }
     });
 }

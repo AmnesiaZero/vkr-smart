@@ -55,36 +55,6 @@
            @{{/each}}
 
 
-{{--                            <div class="d-flex justify-content-between">--}}
-                {{--                                <p class="text-grey fs-14 mb-2">Студентов</p>--}}
-                {{--                                <p class="text-grey fs-14 mb-2">--}}
-                {{--                                @{{if roles_users[1]}}--}}
-                {{--                                    ${roles_users[1].users.length}--}}
-                {{--                                 @{{else}}--}}
-                {{--                                   0--}}
-                {{--                                @{{/if}}--}}
-                {{--                                </p>--}}
-                {{--                            </div>--}}
-                {{--                            <div class="d-flex justify-content-between">--}}
-                {{--                                <p class="text-grey fs-14 mb-2">Сотрудников организации</p>--}}
-                {{--                                <p class="text-grey fs-14 mb-2">--}}
-                {{--                                @{{if roles_users[3]}}--}}
-                {{--                                    ${roles_users[3].users.length}--}}
-                {{--                                 @{{else}}--}}
-                {{--                                   0--}}
-                {{--                                @{{/if}}--}}
-                {{--                                </p>--}}
-                {{--                            </div>--}}
-                {{--                            <div class="d-flex justify-content-between">--}}
-                {{--                                <p class="text-grey fs-14 mb-2">Преподавателей</p>--}}
-                {{--                                <p class="text-grey fs-14 mb-2">--}}
-                {{--                                @{{if roles_users[6]}}--}}
-                {{--                                    ${roles_users[6].users.length}--}}
-                {{--                                 @{{else}}--}}
-                {{--                                   0--}}
-                {{--                                @{{/if}}--}}
-                {{--                                </p>--}}
-                {{--                            </div>--}}
 
 
                 </div>
@@ -94,32 +64,10 @@
                         Портфолио всего
                         <span class="fs-24 text-grey fw-600">${users.length}</span>
                     </div>
-{{--                             <div class="d-flex justify-content-between brt-green-light-2 mt-4">--}}
-                {{--                                <p class="text-grey fs-14 mb-3 mt-1">${name}</p>--}}
-                {{--                            </div>--}}
-                {{--                            <div class="d-flex justify-content-between">--}}
-                {{--                                <p class="text-grey fs-14 mb-2">Записи достижений:</p>--}}
-                {{--                                <p class="text-grey fs-14 mb-2">--}}
-                {{--                                 @{{if roles_users}}--}}
-                {{--                                    ${getAchievementsCount(roles_users)}--}}
-                {{--                                 @{{else}}--}}
-                {{--                                    0--}}
-                {{--                                 @{{/if}}--}}
-                {{--                                </p>--}}
-                {{--                            </div>--}}
-                {{--                            <div class="d-flex justify-content-between brb-green-light-2">--}}
-                {{--                                <p class="text-grey fs-14 mb-2">Прикреплено ресурсов:</p>--}}
-                {{--                                <p class="text-grey fs-14 mb-2">--}}
-                {{--                                    @{{if roles_users}}--}}
-                {{--                                    ${achievementsRecordsCount(roles_users)}--}}
-                {{--                                 @{{else}}--}}
-                {{--                                    0--}}
-                {{--                                 @{{/if}}--}}
 
-                {{--                                </p>--}}
-                {{--                            </div>--}}
 
-                @{{each roles_users}}
+
+                @{{each roles_achievements}}
                 <div class="d-flex justify-content-between brt-green-light-2 mt-3">
                         <p class="text-grey fs-14 mb-3 mt-1">${getRoleName(role_id)}</p>
                     </div>
@@ -152,46 +100,10 @@
                         <div class="d-flex justify-content-between">
                         <p class="text-grey fs-14 mb-2">${getRoleName(role_id)}:</p>
                         <p class="text-grey fs-14 mb-2">
-{{--                                @{{if roles_works[0]}}--}}
-                {{--                                    ${roles_works[0].works.length}--}}
-                {{--                                 @{{else}}--}}
-                {{--                                   0--}}
-                {{--                                @{{/if}}--}}
                 ${works.length}
               </p>
              </div>
            @{{/each}}
-
-{{--                            <div class="d-flex justify-content-between">--}}
-                {{--                               <p class="text-grey fs-14 mb-2">Администраторами:</p>--}}
-                {{--                               <p class="text-grey fs-14 mb-2">--}}
-                {{--                               @{{if roles_works[0]}}--}}
-                {{--                                   ${roles_works[0].works.length}--}}
-                {{--                                @{{else}}--}}
-                {{--                                  0--}}
-                {{--                               @{{/if}}--}}
-                {{--                               </p>--}}
-                {{--                           </div>--}}
-                {{--                            <div class="d-flex justify-content-between">--}}
-                {{--                               <p class="text-grey fs-14 mb-2">Сотрудниками организации:</p>--}}
-                {{--                               <p class="text-grey fs-14 mb-2">--}}
-                {{--                               @{{if roles_works[2]}}--}}
-                {{--                                   ${roles_works[2].works.length}--}}
-                {{--                                @{{else}}--}}
-                {{--                                  0--}}
-                {{--                               @{{/if}}--}}
-                {{--                               </p>--}}
-                {{--                           </div>--}}
-                {{--                           <div class="d-flex justify-content-between">--}}
-                {{--                               <p class="text-grey fs-14 mb-2">Преподавателями:</p>--}}
-                {{--                               <p class="text-grey fs-14 mb-2">--}}
-                {{--                               @{{if roles_works[6]}}--}}
-                {{--                                   ${roles_works[6].works.length}--}}
-                {{--                                @{{else}}--}}
-                {{--                                  0--}}
-                {{--                               @{{/if}}--}}
-                {{--                               </p>--}}
-                {{--                           </div>--}}
                 <div class="d-flex justify-content-between">
                     <p class="text-grey fs-14 mb-3 mt-1">Обучающимися</p>
                 </div>
