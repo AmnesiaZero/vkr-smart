@@ -92,14 +92,16 @@
             </div>
         </div>
         <div class="pt-5 px-md-0 px-3">
-            <p class="text-grey fs-16">Пользователей: <span class="text-black" id="users_total"></span></p>
+            <p class="text-grey fs-16">Пользователей: <span class="text-black" id="users_count"></span></p>
             <div class="row g-3" id="users_list">
 
 
             </div>
-            <div class="d-flex justify-content-center mt-4">
-                <button class="btn btn-secondary w-25 text-grey fs-14 br-100 br-none mt-4 mb-5">Показать еще</button>
-            </div>
+            <nav aria-label="Page navigation example" class="custom_pagination" id="users_pagination">
+                <ul class="pagination m-0" id="pages">
+
+                </ul>
+            </nav>
         </div>
     </div>
     @include('layouts.dashboard.include.elements.works_menu')

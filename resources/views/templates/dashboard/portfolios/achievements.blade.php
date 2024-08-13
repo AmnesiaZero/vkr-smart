@@ -134,6 +134,8 @@
 
     </script>
 
+
+
     <script id="update_achievement_modal_tmpl" type="text/x-jquery-tmpl">
         <div id="update_achievement_modal">
         <div class="modal-dialog modal-lg">
@@ -167,14 +169,14 @@
                             <label class="col-sm-4">Уточните уровень образования:</label>
                             <div class="col-sm-8">
                                 <select class="form-control" name="educational_level">
-                                    <option value="1" @{{if educational_level==1}} selected @{{/if}>Дошкольное образование</option>
-                                    <option value="2" @{{if educational_level==2}} selected @{{/if}>Начальное общее образование</option>
-                                    <option value="3" @{{if educational_level==3}} selected @{{/if}>Основное общее образование</option>
-                                    <option value="4" @{{if educational_level==4}} selected @{{/if}>Среднее общее образование</option>
-                                    <option value="5" @{{if educational_level==5}} selected @{{/if}>Среднее профессиональное образование</option>
-                                    <option value="6" @{{if educational_level==6}} selected @{{/if}>Высшее образование - бакалавриат</option>
-                                    <option value="7" @{{if educational_level==7}} selected @{{/if}>Высшее образование - специалитет, магистратура</option>
-                                    <option value="8" @{{if educational_level==8}} selected @{{/if}>Высшее образование - подготовка кадров высшей квалификации</option>
+                                    <option value="1" @{{if educational_level==1}} selected @{{/if}}Дошкольное образование</option>
+                                    <option value="2" @{{if educational_level==2}} selected @{{/if}}Начальное общее образование</option>
+                                    <option value="3" @{{if educational_level==3}} selected @{{/if}}Основное общее образование</option>
+                                    <option value="4" @{{if educational_level==4}} selected @{{/if}}Среднее общее образование</option>
+                                    <option value="5" @{{if educational_level==5}} selected @{{/if}}Среднее профессиональное образование</option>
+                                    <option value="6" @{{if educational_level==6}} selected @{{/if}}Высшее образование - бакалавриат</option>
+                                    <option value="7" @{{if educational_level==7}} selected @{{/if}}Высшее образование - специалитет, магистратура</option>
+                                    <option value="8" @{{if educational_level==8}} selected @{{/if}}Высшее образование - подготовка кадров высшей квалификации</option>
                                 </select>
                             </div>
                         </div>
@@ -194,9 +196,9 @@
                             <label class="col-sm-4">Кому доступно достижение:</label>
                             <div class="col-sm-8">
                                 <select class="form-control" name="access_level">
-                                    <option value="1" @{{if access_level==1}} selected @{{/if}>Всем</option>
-                                    <option value="2" @{{if access_level==2}} selected @{{/if}>Только сотрудникам организации</option>
-                                    <option value="3" @{{if access_level==3}} selected @{{/if}>Только мне</option>
+                                    <option value="1" @{{if access_level==1}} selected @{{/if}}Всем</option>
+                                    <option value="2" @{{if access_level==2}} selected @{{/if}}Только сотрудникам организации</option>
+                                    <option value="3" @{{if access_level==3}} selected @{{/if}}Только мне</option>
                                 </select>
                             </div>
                         </div>
@@ -214,11 +216,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
     </script>
 
     <script id="record_tmpl" type="text/x-jquery-tmpl">

@@ -193,23 +193,6 @@ function updateWorksCount()
     }
 }
 
-function updateUserPagination(pagination) {
-    const totalItems = pagination.total;
-    const displayedPages = pagination.links.length - 2; //Без Previous и Next
-    $("#users_count").text(totalItems);
-    $("#users_pagination").pagination({
-        items:  totalItems,
-        itemsOnPage: pagination.per_page,
-        currentPage: pagination.current_page, // Установка текущей страницы в начало после добавления новых элементов
-        displayedPages: displayedPages,
-        cssStyle: '',
-        prevText: '<span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>',
-        nextText: '<span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>',
-        onPageClick: function(pageNumber) {
-            searchUsers(pageNumber);
-        }
-    });
-}
 
 
 

@@ -12,18 +12,22 @@ $(document).ready(function () {
 
 
 function users() {
-    const roles = ['teacher', 'user','admin'];
+    const roles = ['user']; //по дефолту выбрана роль студента
     const data = {
-        roles: roles
+        roles: roles,
+        page:1
     };
     $.ajax({
-        url: "/dashboard/users/get",
+        url: "/dashboard/users/get-paginate",
         dataType: "json",
         type: "GET",
         data: data,
         success: function (response) {
-            const users = response.data.users;
-            printUsers(users);
+            const pagination = response.data.users;
+            const users = pagination.data;
+            const usersList = $("#users_list");
+            usersList.html($("#user_tmpl").tmpl(users));
+            updateUserPagination(pagination);
         },
         error: function (response) {
             $.notify(response.data.title + ":" + response.data.message, "error");
@@ -36,7 +40,7 @@ function searchUsers(page= 1) {
     let data = $("#search_users").serialize();
     data = serializeRemoveNull(data);
     const selectedYears = getArrayFromLocalStorage('selected_years');
-    const selectedDepartments = getArrayFromLocalStorage('selected_faculties');
+    const selectedDepartments = getArrayFromLocalStorage('selected_departments');
 
     const additionalData = {
         selected_years: selectedYears,
@@ -52,8 +56,10 @@ function searchUsers(page= 1) {
         dataType: "json",
         success: function (response) {
             if (response.success) {
-                const users = response.data.users;
-                printUsers(users);
+                const pagination = response.data.users;
+                const users = pagination.data;
+                updateUserPagination(pagination);
+                $("#users_list").html($("#user_tmpl").tmpl(users));
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -64,12 +70,6 @@ function searchUsers(page= 1) {
     });
 }
 
-function printUsers(users)
-{
-    const usersCount = users.length;
-    $("#users_total").text(usersCount);
-    $("#users_list").html($("#user_tmpl").tmpl(users));
-}
 
 function openWorks(id)
 {
@@ -122,6 +122,7 @@ function openUpdateUserCanvas(id) {
         }
     });
 }
+
 
 
 
