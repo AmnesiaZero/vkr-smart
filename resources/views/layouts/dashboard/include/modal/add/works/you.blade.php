@@ -133,6 +133,16 @@
                             <input type="file" class="form-control" name="certificate_file" placeholder="">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">Сделать документ (работу) доступным сотрудникам организации</label>
+                        <div class="col-sm-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="self_check" value="1" checked=""> Да
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                     <div id="works-add-alert"></div>
                 </div>
                 <div class="modal-footer">

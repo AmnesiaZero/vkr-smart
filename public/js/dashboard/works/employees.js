@@ -1,5 +1,12 @@
 var userType = '';
 
+var user;
+
+var role;
+
+var departmentsIds = [];
+
+
 
 
 
@@ -14,7 +21,41 @@ $(document).ready(function () {
     {
         userType = 1;
     }
-    works();
+    function getUser() {
+        var deferred = $.Deferred();
+
+        $.ajax({
+            url: "/dashboard/users/you",
+            dataType: "json",
+            type: "get",
+            success: function(response) {
+                if (response.success) {
+                    user = response.data.you;
+                    console.log(user);
+                    userId = response.data.you.id;
+                    role = user.roles[0].slug;
+                    console.log('role = ' + role);
+                    const departments = user.departments;
+                    departmentsIds.push(...departments.map(department => department.id));
+                    deferred.resolve(); // Сообщаем, что функция завершена
+                } else {
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                    deferred.reject(); // Сообщаем об ошибке
+                }
+            },
+            error: function() {
+                $.notify("Произошла ошибка при выборе года", "error");
+                deferred.reject(); // Сообщаем об ошибке
+            }
+        });
+
+        return deferred.promise();
+    }
+
+
+    $.when(getUser()).done(function() {
+        works();
+    });
     localStorage.setItem('selected_years', '');
     localStorage.setItem('selected_faculties', '');
     localStorage.setItem('selected_departments', '');
@@ -538,9 +579,17 @@ function getSelfCheckDescription(selfCheck)
 
 function works(page= 1)
 {
-    const data = {
-      page:page, user_type:userType
+    let data = {
+       page:page,
+        user_type:userType
     };
+    if(role!=='admin')
+    {
+        const additionalData = {
+            selected_departments:departmentsIds
+        };
+        data = $.extend(data,additionalData);
+    }
     $.ajax({
         url: "/dashboard/works/get",
         type: 'GET',
@@ -646,13 +695,23 @@ function openReport(workId)
 function searchWorks() {
     let data = $("#search_form").serialize();
     data = serializeRemoveNull(data);
-    const selectedYears = getArrayFromLocalStorage('selected_years');
-    const selectedFaculties = getArrayFromLocalStorage('selected_faculties');
-    const additionalData = {
-        selected_years: selectedYears,
-        selected_faculties: selectedFaculties,
-        user_type:userType
-    };
+    let additionalData = '';
+    if(role==='admin')
+    {
+        const selectedYears = getArrayFromLocalStorage('selected_years');
+        const selectedFaculties = getArrayFromLocalStorage('selected_faculties');
+        additionalData = {
+            selected_years: selectedYears,
+            selected_faculties: selectedFaculties
+        };
+    }
+    else
+    {
+        additionalData = {
+            selected_departments:departmentsIds
+        };
+    }
+    additionalData['user_type'] = userType;
     data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/works/search",
@@ -957,7 +1016,7 @@ function updateSelfCheckStatus()
         id:workId
     };
     $.ajax({
-        url: "/dashboard/works/update-self-check-status",
+        url: "/dashboard/works/update/self-check",
         type: 'POST',
         data:data,
         headers: {

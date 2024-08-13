@@ -62,10 +62,10 @@ class WorksService extends Services
         $organizationId = $you->organization_id;
         $years = $this->yearRepository->get($organizationId);
         $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
-        return view('templates.dashboard.admin.works.students', ['years' => $years,'program_specialties' => $programSpecialties]);
+        return view('templates.dashboard.works.students', ['years' => $years,'program_specialties' => $programSpecialties]);
     }
 
-    public function youTeacherWorksView()
+    public function youWorksView()
     {
         $you = Auth::user();
         $organizationId = $you->organization_id;
@@ -73,7 +73,7 @@ class WorksService extends Services
         $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
         $scientificSupervisors = $this->scientificSupervisorRepository->get($organizationId);
         $worksTypes = $this->worksTypeRepository->get($organizationId);
-        return view('templates.dashboard.teacher.works.you', [
+        return view('templates.dashboard.works.you', [
             'years' => $years,
             'program_specialties' => $programSpecialties,
             'scientific_supervisors' => $scientificSupervisors,
@@ -89,7 +89,7 @@ class WorksService extends Services
         $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
         $scientificSupervisors = $this->scientificSupervisorRepository->get($organizationId);
         $worksTypes = $this->worksTypeRepository->get($organizationId);
-        return view('templates.dashboard.admin.works.employee', [
+        return view('templates.dashboard.works.employee', [
             'years' => $years,
             'program_specialties' => $programSpecialties,
             'scientific_supervisors' => $scientificSupervisors,
@@ -98,11 +98,14 @@ class WorksService extends Services
 
     }
 
-    public function get(int $pageNumber,int $userType): JsonResponse
+
+
+    public function get(array $data): JsonResponse
     {
         $you = Auth::user();
         $organizationId = $you->organization_id;
-        $works = $this->workRepository->getPaginate($organizationId,$pageNumber,$userType);
+        $data['organization_id'] = $organizationId;
+        $works = $this->workRepository->getPaginate($data);
         if($works and is_iterable($works))
         {
             return self::sendJsonResponse(true, [
@@ -615,6 +618,33 @@ class WorksService extends Services
         ]);
 
 
+    }
+
+    public function updateVisibility(int $id): JsonResponse
+    {
+        $work = $this->workRepository->find($id);
+        if($work and $work->id)
+        {
+            $manual = $work->visibility;
+            if($manual)
+            {
+                $work->visibility = 0;
+            }
+            else
+            {
+                $work->visibility = 1;
+            }
+            $work->save();
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'message' => 'Видимость работы успешно обновлена',
+                'visibility' => $work->visibility
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Возникла ошибка при обновлении видимости работы'
+        ]);
     }
 
 

@@ -16,6 +16,7 @@ class WorksController extends Controller
 {
 
     protected array $fillable = [
+        'user_id',
        'year_id',
         'faculty_id',
         'department_id',
@@ -38,6 +39,8 @@ class WorksController extends Controller
         'import_file',
         'date_range',
         'user_type',
+        'page',
+        'selected_departments',
         'work_status',
         'user_id'
     ];
@@ -60,24 +63,27 @@ class WorksController extends Controller
         return $this->worksService->employeesWorksView();
     }
 
-    public function youTeacherWorksView()
+    public function youWorksView()
     {
-        return $this->worksService->youTeacherWorksView();
+        return $this->worksService->youWorksView();
     }
+
+
 
     public function get(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(),[
             'page' => 'required|integer',
-            'user_type' => 'required|integer|in:1,2'
+            'user_type' => 'required|integer|in:1,2',
+            'selected_departments.*' => ['integer',Rule::exists('departments','id')],
+            'user_id' => ['integer',Rule::exists('users','id')]
         ]);
         if ($validator->fails())
         {
             return ValidatorHelper::error($validator);
         }
-        $pageNumber = $request->page;
-        $userType = $request->user_type;
-        return $this->worksService->get($pageNumber,$userType);
+        $data = $request->only($this->fillable);
+        return $this->worksService->get($data);
     }
 
     public function getUserWorks(Request $request)
@@ -311,6 +317,19 @@ class WorksController extends Controller
         }
         $id = $request->id;
         return $this->worksService->updateSelfCheckStatus($id);
+    }
+
+    public function updateVisibility(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(),[
+            'id' => ['required','integer']
+        ]);
+        if ($validator->fails())
+        {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->worksService->updateVisibility($id);
     }
 
     public function restore(Request $request): JsonResponse

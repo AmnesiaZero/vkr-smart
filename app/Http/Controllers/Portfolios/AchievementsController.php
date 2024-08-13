@@ -30,7 +30,12 @@ class AchievementsController
         $this->achievementsService = $achievementsService;
     }
 
-    public function view(int $userId)
+    public function youAchievementsView()
+    {
+        return $this->achievementsService->youAchievementsView();
+    }
+
+    public function cardView(int $userId)
     {
         $validator = Validator::make(['id' => $userId],[
             'id' => ['integer',Rule::exists('users','id')]
@@ -41,6 +46,8 @@ class AchievementsController
         }
         return $this->achievementsService->pageView($userId);
     }
+
+
 
     public function get(Request $request): JsonResponse
     {

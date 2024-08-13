@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.teacher')
+@extends('layouts.dashboard.main')
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
     <link rel="stylesheet" href="{{ asset('css/achievements.css') }}">
@@ -45,6 +45,15 @@
                                         Безопасность
                                     </a>
                                 </li>
+                                @if(isset($user) and $user->roles[0]->slug=='user')
+                                    <li role="presentation" class="nav-item">
+                                        <a href="#profile-department" class="nav-link" aria-controls="profile-career" role="tab"
+                                           data-bs-toggle="tab"
+                                           aria-expanded="true">
+                                            <i class="fas fa-briefcase"></i> Карьера
+                                        </a>
+                                    </li>
+                                @endif
                                 <li role="presentation" class="nav-item">
                                     <a href="#profile-main" class="nav-link" aria-controls="profile-main" role="tab"
                                        data-bs-toggle="tab"
@@ -150,6 +159,44 @@
                             </form>
 
                         </div>
+                        @if(isset($user) and $user->roles[0]->slug=='user')
+                        <div role="tabpanel" class="tab-pane" id="profile-department">
+                                <div class="form form-horizontal" >
+                                    <h2>Ваше структурное подразделение:</h2><hr>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Год выпуска</label>
+                                        <div class="col-sm-8">
+                                            {{$user->year->year}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Факультет (подразделение)</label>
+                                        <div class="col-sm-8">
+                                            {{$user->faculty->name}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Кафедра</label>
+                                        <div class="col-sm-8">
+                                            {{$user->department->name}}
+                                        </div>
+                                    </div><div class="form-group">
+                                        <label class="col-sm-4">Направление подготовки</label>
+                                        <div class="col-sm-8">
+                                            {{$user->specialty->code}}/{{$user->specialty->name}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Группа</label>
+                                        <div class="col-sm-8">
+                                            {{$user->group}}
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    </div>
+
+                                </div>
+                        @endif
                         <div role="tabpanel" class="tab-pane" id="profile-security">
                             <h2>Смена пароля:</h2>
                             <hr>
@@ -358,8 +405,7 @@
 
 
 @section('scripts')
-    <script src="{{'/js/dashboard/portfolios/card.js'}}"></script>
-    <script src="{{'/js/dashboard//personal-cabinet.js'}}"></script>
+    <script src="{{'/js/dashboard/personal-cabinet.js'}}"></script>
 
 
     <script id="about_tmpl" type="text/x-jquery-tmpl">

@@ -4,6 +4,7 @@ namespace App\Services\Works\Repositories;
 
 use App\Models\StudentWork;
 use App\Models\Work;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
@@ -17,9 +18,22 @@ class EloquentWorkRepository implements WorkRepositoryInterface
         return Work::query()->where('organization_id','=',$organizationId)->get();
     }
 
-    public function getPaginate(int $organizationId, int $pageNumber, int $userType): LengthAwarePaginator
+    public function getPaginate(array $data): LengthAwarePaginator
     {
-        return Work::withTrashed()->with(['faculty','specialty'])->where('organization_id', '=', $organizationId)->where('user_type','=',$userType)->paginate(config('pagination.per_page'),'*','page',$pageNumber);
+        $query = Work::withTrashed()->with(['faculty','specialty']);
+        if(isset($data['user_id']))
+        {
+            $query = $query->where('user_id','=',$data['user_id']);
+        }
+        else {
+            $query = $query->where('organization_id', '=', $data['organization_id'])->where('user_type','=',$data['user_type']);
+        }
+        if(isset($data['selected_departments']))
+        {
+            $departmentsIds = $data['selected_departments'];
+            $query = $query->whereIn('department_id',$departmentsIds);
+        }
+        return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
     }
 
     public function create(array $data): Model
@@ -98,6 +112,11 @@ class EloquentWorkRepository implements WorkRepositoryInterface
             $yearsIds = $data['selected_years'];
             $query = $query->whereIn('year_id', $yearsIds);
         }
+        if(isset($data['selected_departments']))
+        {
+            $departmentsIds = $data['selected_departments'];
+            $query = $query->whereIn('department_id',$departmentsIds);
+        }
         return $query->paginate(config('pagination.per_page'),'*','page',1);
     }
 
@@ -141,4 +160,5 @@ class EloquentWorkRepository implements WorkRepositoryInterface
     {
         return Work::withTrashed()->with(['faculty','specialty'])->where('user_id','=',$userId)->paginate(config('pagination.per_page'),'*','page',$pageNumber);
     }
+
 }

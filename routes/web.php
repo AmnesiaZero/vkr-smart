@@ -1,7 +1,6 @@
 <?php
 
 
-use App\Http\Controllers\DecorationController;
 use App\Http\Controllers\HandbookController;
 use App\Http\Controllers\InviteCodesController;
 use App\Http\Controllers\Organizations\DepartmentsController;
@@ -89,8 +88,8 @@ Route::get('test-access', function () {
     return view('templates.site.test_access');
 });
 
-Route::get('portfolio', function () {
-    return view('templates.site.portfolio.portfolio');
+Route::get('portfolios', function () {
+    return view('templates.site.portfolios.portfolios');
 });
 
 Route::get('reviews', function () {
@@ -144,19 +143,21 @@ Route::group([
 
 Route::group([
     'prefix' => 'dashboard',
-    'middleware' => ['web', 'auth','role:admin,teacher,user']
+    'middleware' => ['web', 'auth']
 ], function () {
-
-    Route::get('personal-cabinet/{id}',[UsersController::class, 'teacherPersonalCabinetView']);
+    //личный кабинет для студентов и преподавателей,profile для сотрудников организации. Страницы там слишком разные,чтобы в одну вьюху вставлять
+    Route::get('personal-cabinet',[UsersController::class,'personalCabinetView']);
+    Route::get('profile',[UsersController::class,'profileView']);
     Route::group([
         'prefix' => 'settings'
     ], function () {
         Route::get('organizations-structure', [OrganizationsController::class, 'organizationsStructure']);
+        Route::get('teacher-departments',[UsersController::class, 'teacherDepartmentsView']);
         Route::get('access', function () {
-            return view('templates.dashboard.admin.settings.access');
+            return view('templates.dashboard.settings.access');
         });
         Route::get('invite-codes', function () {
-            return view('templates.dashboard.admin.settings.invite_codes');
+            return view('templates.dashboard.settings.invite_codes');
         });
         Route::get('user-management', [UsersController::class, 'userManagement']);
         Route::get('handbook-management', [HandbookController::class, 'view']);
@@ -168,15 +169,18 @@ Route::group([
     ], function () {
         Route::get('employees', [WorksController::class, 'employeesWorksView']);
         Route::get('students', [WorksController::class, 'studentsWorksView']);
-        Route::group([
-            'prefix' => 'you'
-        ],function (){
-           Route::get('teacher',[WorksController::class,'youTeacherWorksView']);
-        });
+        Route::get('you',[WorksController::class, 'youWorksView']);
         Route::post('create',[WorksController::class,'create']);
         Route::get('get',[WorksController::class,'get']);
         Route::get('get-user-works',[WorksController::class,'getUserWorks']);
         Route::get('search',[WorksController::class,'search']);
+        Route::group([
+            'prefix' => 'update'
+        ],function (){
+           Route::post('visibility',[WorksController::class,'updateVisibility']);
+           Route::post('self-check',[WorksController::class, 'updateSelfCheckStatus']);
+           Route::post('/',[WorksController::class,'update']);
+        });
         Route::post('update',[WorksController::class,'update']);
         Route::get('find',[WorksController::class,'find']);
         Route::get('download',[WorksController::class,'download']);
@@ -184,7 +188,6 @@ Route::group([
         Route::post('copy',[WorksController::class,'copy']);
         Route::post('delete',[WorksController::class,'delete']);
         Route::post('destroy',[WorksController::class,'destroy']);
-        Route::post('update-self-check-status',[WorksController::class, 'updateSelfCheckStatus']);
         Route::post('restore',[WorksController::class,'restore']);
         Route::post('import',[WorksController::class,'import']);
         Route::get('export',[WorksController::class,'export']);
@@ -228,7 +231,7 @@ Route::group([
 
 
     Route::group([
-        'prefix' => 'portfolio'
+        'prefix' => 'portfolios'
     ], function () {
         Route::get('students', [UsersController::class, 'studentsPortfoliosView']);
         Route::get('teachers', [UsersController::class,'teachersPortfoliosView']);
@@ -237,6 +240,7 @@ Route::group([
         Route::group([
             'prefix' => 'achievements'
         ],function (){
+            Route::get('you',[AchievementsController::class, 'youAchievementsView']);
             Route::post('create',[AchievementsController::class,'create']);
             Route::get('get',[AchievementsController::class,'get']);
             Route::get('find',[AchievementsController::class,'find']);
@@ -279,7 +283,7 @@ Route::group([
     });
 
     Route::get('documentation', function () {
-        return view('templates.dashboard.admin.documentation');
+        return view('templates.dashboard.documentation');
     });
 
     Route::group([

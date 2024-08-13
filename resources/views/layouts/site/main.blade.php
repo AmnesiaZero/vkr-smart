@@ -54,7 +54,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link @if(request()->is('portfolio')) nav-link-active @endif" href="/portfolio">
+                        <a class="nav-link @if(request()->is('portfolios')) nav-link-active @endif" href="/portfolio">
                             Портфолио</a>
                     </li>
                     <li>

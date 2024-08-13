@@ -22,6 +22,8 @@ class UsersController extends Controller
     protected $fillable = [
         'name',
         'role',
+        'roles',
+        'page',
         'email',
         'gender',
         'login',
@@ -29,6 +31,9 @@ class UsersController extends Controller
         'organization_id',
         'faculty_id',
         'year_id',
+        'departments_ids',
+        'department_id',
+        'specialty_id',
         'phone',
         'group',
         'specialty_id',
@@ -66,9 +71,17 @@ class UsersController extends Controller
             {
                 return redirect('/dashboard/settings/organizations-structure');
             }
+            else if ($user->hasRole('employee'))
+            {
+                return redirect('/dashboard/profile');
+            }
+            else if($user->hasRole('inspector'))
+            {
+                return redirect('/dashboard/works/employees');
+            }
             else
             {
-                return redirect('/dashboard/personal-cabinet/'.$user->id);
+                return redirect('/dashboard/personal-cabinet');
             }
         }
         return back()->withErrors(['Предоставленные данные были некорректными']);
@@ -124,6 +137,9 @@ class UsersController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|max:255',
             'gender' => 'required|integer',
+            'departments_ids.*' => ['integer',Rule::exists('departments','id')],
+            'department_id' => ['integer',Rule::exists('departments','id')],
+            'specialty_id' => ['integer',Rule::exists('programs_specialties','id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -132,10 +148,18 @@ class UsersController extends Controller
         return $this->usersService->register($data);
     }
 
-    public function teacherPersonalCabinetView()
+    public function personalCabinetView()
     {
-        return $this->usersService->teacherPersonalCabinetView();
+        return $this->usersService->personalCabinetView();
     }
+
+    public function profileView()
+    {
+        return $this->usersService->profileView();
+    }
+
+
+
 
     public function you(): JsonResponse
     {
@@ -169,14 +193,14 @@ class UsersController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'roles.*' => ['required', Rule::exists('roles', 'slug')],
-            'page' => 'required|integer'
+            'page' => 'required|integer',
+            'selected_departments.*' => ['integer',Rule::exists('departments','id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
-        $roles = $request->roles;
-        $page = $request->page;
-        return $this->usersService->getPaginate($roles,$page);
+        $data = $request->only($this->fillable);
+        return $this->usersService->getPaginate($data);
     }
 
     public function create(Request $request): JsonResponse
@@ -237,6 +261,7 @@ class UsersController extends Controller
             'password' => 'max:255',
             'gender' => 'integer',
             'is_active' => 'integer',
+            'departments_ids.*' => ['integer',Rule::exists('departments','id')],
             'role' => [Rule::exists('roles', 'slug')],
             'avatar' => 'file'
         ]);
@@ -328,7 +353,7 @@ class UsersController extends Controller
     {
         $you = Auth::user();
         $apiKey = config('jwt.api_key');
-        return view('templates.dashboard.admin.settings.api', ['you' => $you, 'api_key' => $apiKey]);
+        return view('templates.dashboard.settings.api', ['you' => $you, 'api_key' => $apiKey]);
     }
 
     public function teachersPortfoliosView()
@@ -339,6 +364,12 @@ class UsersController extends Controller
     public function studentsPortfoliosView()
     {
         return $this->usersService->studentsPortfoliosView();
+    }
+
+
+    public function teacherDepartmentsView()
+    {
+        return $this->usersService->teacherDepartmentsView();
     }
 
     public function openPortfolio(int $id)

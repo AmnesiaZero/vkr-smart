@@ -34,12 +34,10 @@ interface UserRepositoryInterface
     public function get(int $organizationId, array $roles): Collection;
 
     /**
-     * @param int $organizationId
-     * @param array $roles
-     * @param int $page
+     * @param array $data
      * @return LengthAwarePaginator
      */
-    public function getPaginate(int $organizationId, array $roles,int $page):LengthAwarePaginator;
+    public function getPaginate(array $data):LengthAwarePaginator;
 
     /**
      * @param int $id

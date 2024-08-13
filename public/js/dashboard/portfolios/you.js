@@ -1,10 +1,10 @@
 var userId;
 
+var user;
+
 var achievementId;
 
 $(document).ready(function () {
-    const path = window.location.pathname;
-    userId = path.split("/").pop(); // Получаем последний сегмент URL
 
     $("#add_file_form").on('submit', function(e) {
         e.preventDefault(); // Предотвращаем стандартное поведение формы
@@ -13,7 +13,7 @@ $(document).ready(function () {
         formData.append('user_id',userId);
         formData.append('record_type_id',1);
         $.ajax({
-            url: "/dashboard/portfolio/achievements/records/create",
+            url: "/dashboard/portfolios/achievements/records/create",
             data:formData,
             type: "POST",
             headers: {
@@ -43,7 +43,7 @@ $(document).ready(function () {
         formData.append('user_id',userId);
         formData.append('record_type_id',1);
         $.ajax({
-            url: "/dashboard/portfolio/achievements/records/create",
+            url: "/dashboard/portfolios/achievements/records/create",
             data:formData,
             type: "POST",
             headers: {
@@ -66,7 +66,38 @@ $(document).ready(function () {
         });
     });
 
-    achievements();
+    function getUser() {
+        var deferred = $.Deferred();
+
+        $.ajax({
+            url: "/dashboard/users/you",
+            dataType: "json",
+            type: "get",
+            success: function(response) {
+                if (response.success) {
+                    user = response.data.you;
+                    console.log(user);
+                    userId = response.data.you.id;
+                    console.log('user id = ' + userId);
+                    deferred.resolve(); // Сообщаем, что функция завершена
+                } else {
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                    deferred.reject(); // Сообщаем об ошибке
+                }
+            },
+            error: function() {
+                $.notify("Произошла ошибка при выборе года", "error");
+                deferred.reject(); // Сообщаем об ошибке
+            }
+        });
+
+        return deferred.promise();
+    }
+
+
+    $.when(getUser()).done(function() {
+        achievements();
+    });
 });
 
 function achievements()
@@ -75,7 +106,7 @@ function achievements()
         user_id:userId
     };
     $.ajax({
-        url: "/dashboard/portfolio/achievements/get",
+        url: "/dashboard/portfolios/achievements/get",
         data:data,
         type: "GET",
         dataType: "json",
@@ -112,7 +143,7 @@ function achievementRecords(achievementId)
         achievement_id:achievementId
     };
     $.ajax({
-        url: "/dashboard/portfolio/achievements/records/get",
+        url: "/dashboard/portfolios/achievements/records/get",
         data:data,
         type: "GET",
         dataType: "json",
@@ -135,13 +166,13 @@ function achievementRecords(achievementId)
 
 function addAchievement()
 {
-   let data = $("#add_achievement_form").serialize();
-   const additionalData = {
-       user_id:userId
-   };
-   data += '&' + $.param(additionalData);
+    let data = $("#add_achievement_form").serialize();
+    const additionalData = {
+        user_id:userId
+    };
+    data += '&' + $.param(additionalData);
     $.ajax({
-        url: "/dashboard/portfolio/achievements/create",
+        url: "/dashboard/portfolios/achievements/create",
         data:data,
         type: "POST",
         headers: {
@@ -179,7 +210,7 @@ function openUpdateAchievementModal()
         id:achievementId
     };
     $.ajax({
-        url: "/dashboard/portfolio/achievements/find",
+        url: "/dashboard/portfolios/achievements/find",
         data:data,
         type: "GET",
         dataType: "json",
@@ -202,11 +233,11 @@ function updateAchievement()
 {
     let data = $("#update_achievement_form").serialize();
     const additionalData = {
-      id:achievementId
+        id:achievementId
     };
     data += '&' + $.param(additionalData);
     $.ajax({
-        url: "/dashboard/portfolio/achievements/update",
+        url: "/dashboard/portfolios/achievements/update",
         data:data,
         type: "POST",
         headers: {
@@ -237,33 +268,33 @@ function openInfoBox(id)
 
 function deleteAchievement()
 {
-   if(confirm('Вы уверены,что хотите удалить достижение'))
-   {
-      const data = {
-           id:achievementId
-       };
-       $.ajax({
-           url: "/dashboard/portfolio/achievements/delete",
-           data:data,
-           type: "POST",
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           dataType: "json",
-           success: function (response) {
-               if (response.success) {
-                   $("#achievement_" + achievementId).remove();
-                   $.notify(response.data.title + ":" + response.data.message, "success");
-               }
-               else {
-                   $.notify(response.data.title + ":" + response.data.message, "error");
-               }
-           },
-           error: function () {
-               $.notify("Произошла ошибка при редактировании пользователя", "error");
-           }
-       });
-   }
+    if(confirm('Вы уверены,что хотите удалить достижение'))
+    {
+        const data = {
+            id:achievementId
+        };
+        $.ajax({
+            url: "/dashboard/portfolios/achievements/delete",
+            data:data,
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    $("#achievement_" + achievementId).remove();
+                    $.notify(response.data.title + ":" + response.data.message, "success");
+                }
+                else {
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                }
+            },
+            error: function () {
+                $.notify("Произошла ошибка при редактировании пользователя", "error");
+            }
+        });
+    }
 }
 
 function addRecord(recordTypeId)
@@ -286,7 +317,7 @@ function addRecord(recordTypeId)
     let data = formId.serialize();
     data += '&' + $.param(additionalData);
     $.ajax({
-        url: "/dashboard/portfolio/achievements/records/create",
+        url: "/dashboard/portfolios/achievements/records/create",
         data:data,
         type: "POST",
         headers: {
@@ -342,11 +373,11 @@ function searchAchievements()
 {
     let data = $("#search_achievements_form").serialize();
     const additionalData = {
-       user_id:userId
+        user_id:userId
     };
     data+= '&' + $.param(additionalData);
     $.ajax({
-        url: "/dashboard/portfolio/achievements/search",
+        url: "/dashboard/portfolios/achievements/search",
         data:data,
         type: "GET",
         dataType: "json",
@@ -371,7 +402,7 @@ function openTextRecord(recordId)
         id:recordId
     };
     $.ajax({
-        url: "/dashboard/portfolio/achievements/records/find",
+        url: "/dashboard/portfolios/achievements/records/find",
         data:data,
         type: "GET",
         dataType: "json",
@@ -411,7 +442,7 @@ function deleteAchievementRecord(id)
             id:id
         };
         $.ajax({
-            url: "/dashboard/portfolio/achievements/records/delete",
+            url: "/dashboard/portfolios/achievements/records/delete",
             data:data,
             type: "POST",
             headers: {
@@ -467,7 +498,7 @@ function works(page=1)
         user_id:userId
     };
     $.ajax({
-        url: "/dashboard/works/search",
+        url: "/dashboard/works/get",
         type: 'GET',
         data:data,
         dataType: "json",

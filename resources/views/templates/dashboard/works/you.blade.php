@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.teacher')
+@extends('layouts.dashboard.main')
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
@@ -7,35 +7,6 @@
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
         <div class="row pt-4 g-3 px-md-0 px-3">
-            <div class="col-xxl-4 col-xl-5 col-lg-6">
-                <div id="tree" class="br-green-light-2 br-15 p-3">
-                    <ul class="ui-fancytree fancytree-container fancytree-plain" tabindex="0">
-                        @if(is_iterable($years))
-                            @foreach($years as $year)
-                                <li class="">
-		    						<span
-                                        class="fancytree-node fancytree-expanded fancytree-folder fancytree-has-children fancytree-exp-e fancytree-ico-ef">
-		    							<span class="fancytree-title" id="year_{{$year->id}}">{{$year->year}}</span>
-		    						</span>
-                                    <ul>
-                                        @if(is_iterable($year->faculties))
-                                            @foreach($year->faculties as $faculty)
-                                                <li class="fancytree-lastsib">
-		    								<span
-                                                class="fancytree-node fancytree-expanded fancytree-folder fancytree-has-children fancytree-exp-e fancytree-ico-ef">
-		    									<span class="fancytree-title"
-                                                      id="faculty_{{$faculty->id}}">{{$faculty->name}}</span>
-                                            </span>
-                                                </li>
-                                            @endforeach
-                                        @endif
-                                    </ul>
-                                </li>
-                            @endforeach
-                        @endif
-                    </ul>
-                </div>
-            </div>
             <div class="col">
                 <div class="out-kod"></div>
                 <form class="pt-4 col-xl-10" id="search_form" onsubmit="searchWorks();return false">
@@ -147,9 +118,6 @@
                                 <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 me-3"
                                         onclick="resetSearch();return false">сбросить
                                 </button>
-                                <button class="btn bg-green br-100 text-grey fs-14 py-1" onclick="exportWorks()">
-                                    выгрузить<img
-                                        src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
                             </div>
                         </div>
                     </div>
@@ -163,9 +131,6 @@
             <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 w-75 me-3"
                     onclick="openModal('add_work_modal')">добавить
                 <img src="/images/pl-green.svg" alt="" class="ps-2"></button>
-            <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25"
-                    onclick="openModal('import_work_modal')">импорт из файла<img
-                    src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
         </div>
 
         <p class="fs-14 pt-3">
@@ -190,7 +155,7 @@
                     </tbody>
                 </table>
             </div>
-            @include('layouts.dashboard.include.menu.work.employee')
+
 
             <div id="about_work">
             </div>
@@ -200,10 +165,13 @@
                 </ul>
             </nav>
         </div>
+        @include('layouts.dashboard.include.menu.work.you')
+
         <div id="report_container">
 
         </div>
-        @include('layouts.dashboard.include.modal.add.works.teacher')
+
+        @include('layouts.dashboard.include.modal.add.works.you')
         @include('layouts.dashboard.include.modal.update.work_specialty')
         @include('layouts.dashboard.include.modal.other.additional_file')
         @include('layouts.dashboard.include.modal.add.import-work')
@@ -211,13 +179,14 @@
 
         @section('scripts')
             <script src="{{'/js/bootstrap-select.js'}}"></script>
-            <script src="/js/dashboard/works/you/teacher.js"></script>
+            <script src="/js/dashboard/works/you.js"></script>
             <script src="/js/bootstrap.js"></script>
             <script type="text/javascript" src="/js/jquery/moment.min.js"></script>
             <script type="text/javascript"
                     src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
             <script id="faculty_tmpl" type="text/x-jquery-tmpl">
         <option value="${id}">${name}</option>
+
 
 
             </script>
@@ -227,11 +196,13 @@
 
 
 
+
             </script>
 
             <script id="specialty_tmpl" type="text/x-jquery-tmpl">
      <option value="${id}">${name}</option>
-</script>
+
+            </script>
 
             <script id="work_tmpl" type="text/x-jquery-tmpl">
      <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
@@ -275,6 +246,8 @@
             <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p" onclick="openInfoBox(${id})">
         </td>
     </tr>
+
+
 
 
             </script>
@@ -376,6 +349,7 @@
             </div>
         </div>
 
+
             </script>
 
             <script id="deleted_menu_tmpl" type="text/x-jquery-tmpl">
@@ -388,6 +362,7 @@
         <p class="fs-14 lh-17 text-grey m-0" onclick="destroyWork()">Безвозвратно удалить работу<br> обучающего и все файлы</p>
     </div>
 
+
             </script>
             <script id="undeleted_menu_tmpl" type="text/x-jquery-tmpl">
         <div class="d-flex cursor-p mb-2">
@@ -399,12 +374,14 @@
         <p class="fs-14 lh-17 text-grey m-0" onclick="deleteWork()">Поместить работу на удаление</p>
     </div>
 
+
             </script>
 
             <script id="self_check_tmpl" type="text/x-jquery-tmpl">
        <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-warning btn-sm"> ${getSelfCheckDescription(self_check)}
           <span class="glyphicon glyphicon-refresh">
                                 </span>
+
 
             </script>
 
@@ -416,7 +393,8 @@
                 <a onclick="deleteAdditionalFile(${id}); return false;" href="#" class="btn btn-sm btn-danger btn-block">Удалить</a>
             </td>
         </tr>
-</script>
+
+            </script>
 
             <script id="update_work_tmpl" type="text/x-jquery-tmpl">
     <div class="modal-dialog modal-lg" id="update_work_modal">
@@ -455,7 +433,8 @@
                                     @if(isset($scientific_supervisors) and is_iterable($scientific_supervisors))
                     @foreach($scientific_supervisors as $scientific_supervisor)
                         <option value="{{$scientific_supervisor->name}}">{{$scientific_supervisor->name}}</option>
-                                    @endforeach
+
+                    @endforeach
                 @endif
                 </select>
         </div>
@@ -470,7 +449,8 @@
 @if(isset($works_types) and is_iterable($works_types))
                     @foreach($works_types as $works_type)
                         <option value="{{$works_type->name}}">{{$works_type->name}}</option>
-                                    @endforeach
+
+                    @endforeach
                 @endif
                 </select>
         </div>
@@ -536,7 +516,8 @@
 </div>
 </div>
 
-</script>
+
+            </script>
 
 
             <script id="report_tmpl" type="text/x-jquery-tmpl">
@@ -591,9 +572,7 @@
         </div>
     </div>
 </div>
-</script>
 
-
-
+            </script>
 
 @endsection

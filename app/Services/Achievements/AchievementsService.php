@@ -22,6 +22,17 @@ class AchievementsService extends Services
         $this->achievementRepository = $achievementRepository;
     }
 
+
+    public function youAchievementsView()
+    {
+        $modes = AchievementMode::all();
+        $categories = AchievementTypeCategory::with('achievementsTypes')->get();
+        return view('templates.dashboard.portfolios.you',[
+            'categories' => $categories,
+            'modes' => $modes
+        ]);
+    }
+
     public function get(int $userId): JsonResponse
     {
         $achievements = $this->achievementRepository->get($userId);
@@ -61,21 +72,6 @@ class AchievementsService extends Services
         ]);
     }
 
-    public function pageView(int $userId)
-    {
-        $achievements = $this->achievementRepository->get($userId);
-        if($achievements and is_iterable($achievements))
-        {
-            $modes = AchievementMode::all();
-            $categories = AchievementTypeCategory::with('achievementsTypes')->get();
-            return view('templates.dashboard.admin.portfolio.achievements',[
-                'achievements' => $achievements,
-                'categories' => $categories,
-                'modes' => $modes
-            ]);
-        }
-        return back()->withErrors('Ошибка при получении достижений');
-    }
 
     public function find(int $id): JsonResponse
     {
@@ -124,4 +120,5 @@ class AchievementsService extends Services
             'message' => 'Ошибка при поиске достижений'
         ]);
     }
+
 }

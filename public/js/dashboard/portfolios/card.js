@@ -71,7 +71,7 @@ function educations()
         user_id:userId
     };
     $.ajax({
-        url: "/dashboard/portfolio/educations/get",
+        url: "/dashboard/portfolios/educations/get",
         data:data,
         type: "GET",
         dataType: "json",
@@ -98,7 +98,7 @@ function addEducation()
     };
     data += '&' + $.param(additionalData);
     $.ajax({
-        url: "/dashboard/portfolio/educations/create",
+        url: "/dashboard/portfolios/educations/create",
         data:data,
         type: "POST",
         headers: {
@@ -126,7 +126,7 @@ function deleteEducation(educationId)
         id:educationId
     };
     $.ajax({
-        url: "/dashboard/portfolio/educations/delete",
+        url: "/dashboard/portfolios/educations/delete",
         data:data,
         type: "POST",
         headers: {
@@ -170,7 +170,7 @@ function careers()
         user_id:userId
     };
     $.ajax({
-        url: "/dashboard/portfolio/careers/get",
+        url: "/dashboard/portfolios/careers/get",
         data:data,
         type: "GET",
         dataType: "json",
@@ -197,7 +197,7 @@ function addCareer()
     };
     data += '&' + $.param(additionalData);
     $.ajax({
-        url: "/dashboard/portfolio/careers/create",
+        url: "/dashboard/portfolios/careers/create",
         data:data,
         type: "POST",
         headers: {
@@ -225,7 +225,7 @@ function deleteCareer(careerId)
         id:careerId
     };
     $.ajax({
-        url: "/dashboard/portfolio/careers/delete",
+        url: "/dashboard/portfolios/careers/delete",
         data:data,
         type: "POST",
         headers: {

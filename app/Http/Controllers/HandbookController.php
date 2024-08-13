@@ -29,7 +29,7 @@ class HandbookController extends Controller
         $organizationId = $you->organization_id;
         $scientificSupervisors = $this->scientificSupervisorRepository->get($organizationId);
         $worksTypes = $this->worksTypeRepository->get($organizationId);
-        return view('templates.dashboard.admin.settings.handbook_management', [
+        return view('templates.dashboard.settings.handbook_management', [
             'scientific_supervisors' => $scientificSupervisors,
             'works_types' => $worksTypes,
         ]);

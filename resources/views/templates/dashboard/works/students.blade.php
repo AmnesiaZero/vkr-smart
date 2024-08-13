@@ -1,11 +1,13 @@
-@extends('layouts.dashboard.teacher')
+@extends('layouts.dashboard.main')
 
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
-        <div class="row pt-4 g-3 px-md-0 px-3">
+        <div class="row pt-4 g-3 px-md-0 px-3 mb-4">
+            @role('admin')
             <div class="col-xxl-4 col-xl-5 col-lg-6">
                 @include('layouts.dashboard.include.elements.tree')
             </div>
+            @endrole
             <div class="col">
                 <div class="out-kod"></div>
                 <form class="pt-4 col-xl-10" id="search_form" onsubmit="searchWorks();return false">
@@ -14,7 +16,7 @@
                             <p class="text-grey mb-2 fs-14">ФИО обучающегося</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
                                 <input type="text" name="student" value=""
-                                       class="form-control search br-none fs-14 form-small-p" placeholder="">
+                                       class="form-control search br-none fs-14 form-small-p" placeholder="Ввод...">
                                 <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                                     <img src="/images/Search.svg" alt="search">
                                 </button>
@@ -24,7 +26,7 @@
                             <p class="text-grey mb-2 fs-14">Тип работы</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
                                 <input type="text" name="work_type" value=""
-                                       class="form-control search br-none fs-14 form-small-p" placeholder="">
+                                       class="form-control search br-none fs-14 form-small-p" placeholder="Ввод...">
                                 <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                                     <img src="/images/Search.svg" alt="search">
                                 </button>
@@ -44,7 +46,7 @@
                             <p class="text-grey mb-2 fs-14">Название работы</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
                                 <input type="text" name="name" value=""
-                                       class="form-control search br-none fs-14 form-small-p" placeholder=""
+                                       class="form-control search br-none fs-14 form-small-p" placeholder="Ввод..."
                                        id="work_name_input">
                                 <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                                     <img src="/images/Search.svg" alt="search">
@@ -74,28 +76,30 @@
                                        class=" fs-14 text-grey p-date w-75"/>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <p class="fs-14 mb-2 text-grey">Отображение работ</p>
-                        <div id="bg-white_1">
-                            <select class="js-example-basic-single w-100" name="delete_type" id="delete_type">
-                                <option value="2" selected>Отображать все работы</option>
-                                <option value="0">Отображать только активные</option>
-                                <option value="1">Отображать только удаленные</option>
-                            </select>
+                        <div class="col-xl-6">
+                            <p class="fs-14 mb-2 text-grey">Отображение работ</p>
+                            <div id="bg-white_1">
+                                <select class="js-example-basic-single w-100" name="delete_type" id="delete_type">
+                                    <option value="2" selected>Отображать все работы</option>
+                                    <option value="0">Отображать только активные</option>
+                                    <option value="1">Отображать только удаленные</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="row pt-4 d-flex align-items-end">
                         <div class="col">
                             <div class="mt-auto">
-                                <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 me-3">применить
+                                <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 me-3">
+                                    Применить
                                 </button>
                                 <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 me-3"
-                                        onclick="works();resetSearch()">сбросить
+                                        onclick="works();resetSearch()">Сбросить
                                 </button>
                                 <button class="btn bg-green br-100 text-grey fs-14 py-1" onclick="exportWorks()">
-                                    выгрузить<img
-                                        src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
+                                    Выгрузить
+                                    <img src="/images/File_Download_green.svg" alt="" class="ps-2">
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -103,9 +107,11 @@
             </div>
         </div>
         @include('layouts.dashboard.include.modal.update.work')
-        <span class="text-grey">Работ: <span id="works_count"></span></span>
+        <p class="fs-16 pt-3">
+            <span class="text-grey">Работ: <span id="works_count"></span></span>
+        </p>
         <div class="px-md-0 px-3 position-relative">
-            <div class="big-table">
+            <div class="big-table blue-scroll">
                 <table class="table fs-14">
                     <thead class="brt-green-light-2 brb-green-light-2 lh-17">
                     <tr class="text-grey">
