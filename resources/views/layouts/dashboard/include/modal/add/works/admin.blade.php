@@ -102,7 +102,7 @@
                         <div class="row">
                             <label class="col-sm-4">Оценка</label>
                             <div class="col-sm-8">
-                                <select class="selectpicker bs-select-hidden" data-width="100%" data-style="btn"
+                                <select class="selectpicker form-control" data-width="100%"
                                         name="assessment">
                                     <option value="0">Без оценки</option>
                                     <option value="5">Отлично</option>

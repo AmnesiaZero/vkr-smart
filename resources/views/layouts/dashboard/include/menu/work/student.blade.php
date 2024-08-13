@@ -1,5 +1,5 @@
 <div class="info-box" id="student_info_box">
-    @role('user')
+    @role('user|admin')
     <p class="fs-14 lh-17">Операции над работой</p>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/info.svg" alt="" class="pe-2">

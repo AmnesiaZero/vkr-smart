@@ -253,7 +253,7 @@ $(document).ready(function () {
             startDate: start,
             endDate: end,
             "locale": {
-                "format": "DD MMM. YYYY",
+                "format": "DD.MM.YYYY",
                 "separator": " - ",
                 "applyLabel": "Apply",
                 "cancelLabel": "Cancel",
@@ -301,7 +301,9 @@ $(document).ready(function () {
         $('#departments_list').find("input[class='department_checkbox']").prop('checked', $(this).prop("checked"));
     });
 
-    $('.js-example-basic-single').select2();
+    $('.js-example-basic-single').select2({
+        placeholder: "Выберите...",
+    });
 
 
 });
@@ -391,7 +393,7 @@ $(function () {
         startDate: start,
         endDate: end,
         "locale": {
-            "format": "DD MMM. YYYY",
+            "format": "DD.MM.YYYY",
             "separator": " - ",
             "applyLabel": "Apply",
             "cancelLabel": "Cancel",

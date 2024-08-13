@@ -2,7 +2,9 @@ $(document).ready(function () {
     users();
     years('years_list');
     getYou();
-    $('.js-example-basic-single').select2();
+    $('.js-example-basic-single').select2({
+        placeholder: "Выберите...",
+    });
 
     $('#years_list').change(function () {
         const yearId = $(this).val();

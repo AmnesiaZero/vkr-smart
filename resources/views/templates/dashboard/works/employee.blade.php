@@ -47,7 +47,7 @@
                             <div id="bg-white" class="bg-white">
                                 <select class="js-example-basic-single w-100" name="scientific_supervisor"
                                         id="scientific_supervisors_list">
-                                    <option value="">Выбрать</option>
+                                    <option></option>
                                     @if(isset($scientific_supervisors) and is_iterable($scientific_supervisors))
                                         )
                                         @foreach($scientific_supervisors as $scientific_supervisor)

@@ -605,7 +605,7 @@ label {
 }
 
 .menu {
-    height: 130.7vh;
+    height: 160.7vh;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -824,7 +824,7 @@ label {
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-    padding-top: 2px;
+    padding: 2px 16px;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.5);
 }
@@ -855,7 +855,7 @@ label {
 }
 
 .select2-container--default .select2-results__option--selected {
-    background-color: #00A2B0 !important;
+    background-color: #D9F1F3 !important;
 }
 
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
@@ -864,7 +864,7 @@ label {
 }
 
 .select2-container--default .select2-results__option[aria-selected=true] {
-    background-color: #D9F1F3;
+    background-color: whitesmoke;
     color: #2C3E50;
 }
 
@@ -874,7 +874,7 @@ label {
 }
 
 .select2-container--default .select2-results > .select2-results__options::-webkit-scrollbar {
-    width: 8px;
+    width: 4px;
 }
 
 .select2-container--default .select2-results > .select2-results__options::-webkit-scrollbar-track {

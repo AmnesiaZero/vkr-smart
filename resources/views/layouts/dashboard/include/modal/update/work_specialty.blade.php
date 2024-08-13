@@ -1,7 +1,7 @@
 <div class="modal fade" id="update_work_specialty_modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header">g
                 <h3>Редактирование направления подготовки квалификационной работы</h3>
             </div>
             <form class="form form-horizontal" id="update_work_specialty_form" onsubmit="updateWorkSpecialty(); return false;">
