@@ -13,7 +13,7 @@
 <script id="work_tmpl" type="text/x-jquery-tmpl">
       @{{if visibility==1}}
      <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
-{{--    <th scope="row">${specialty.name}</th>--}}
+    <th scope="row">${specialty.name}</th>
     <td>${student}</td>
     <td>${group}</td>
     <td>${protect_date}</td>
@@ -214,7 +214,7 @@
 </script>
 
 <script id="update_work_tmpl" type="text/x-jquery-tmpl">
-    <div class="modal fade" id="update_work_modal">
+    <div id="update_work_modal">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">

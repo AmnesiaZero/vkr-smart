@@ -692,7 +692,7 @@ function openReport(workId)
     });
 }
 
-function searchWorks() {
+function searchWorks(page=1) {
     let data = $("#search_form").serialize();
     data = serializeRemoveNull(data);
     let additionalData = '';
@@ -712,6 +712,7 @@ function searchWorks() {
         };
     }
     additionalData['user_type'] = userType;
+    additionalData['page'] = page;
     data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/works/search",

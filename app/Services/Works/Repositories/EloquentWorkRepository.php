@@ -117,7 +117,7 @@ class EloquentWorkRepository implements WorkRepositoryInterface
             $departmentsIds = $data['selected_departments'];
             $query = $query->whereIn('department_id',$departmentsIds);
         }
-        return $query->paginate(config('pagination.per_page'),'*','page',1);
+        return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
     }
 
 

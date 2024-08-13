@@ -1,14 +1,11 @@
 $(document).ready(function () {
     $('.js-example-basic-single').select2();
     $(".fancytree-title").on('click', function () {
-        addBadge($(this));
+        addElement($(this));
     })
     $(".clicked").on('click', function () {
         deleteTreeElement($(this));
     });
-    localStorage.setItem('selected_years', '');
-    localStorage.setItem('selected_faculties', '');
-    localStorage.setItem('selected_departments', '');
     getReport();
 });
 $('.btn-info-box').click(function () {
@@ -20,15 +17,37 @@ $(".fancytree-node").click(function() {
     $(this).next("ul").toggle();
 });
 
-function getReport() {
-    const selectedYears = getArrayFromLocalStorage('selected_years');
-    const selectedDepartments = getArrayFromLocalStorage('selected_departments');
-    const selectedFaculties = getArrayFromLocalStorage('selected_faculties');
-    const data = {
-        selected_years: selectedYears,
-        selected_departments: selectedDepartments,
-        selected_faculties: selectedFaculties,
-    };
+const addElement = function (clickedElement) {
+    console.log(clickedElement);
+    const fullId = clickedElement.attr('id');
+    let data = '';
+    if (fullId.includes('year_')) {
+        const match = fullId.match(/\d+/); // Находим все последовательности цифр в строке
+        const id = match ? match[0] : ''; // Если найдены цифры, сохраняем их
+        data = {
+            year_id:id
+        };
+    }
+    else if (fullId.includes('faculty_')) {
+        const match = fullId.match(/\d+/); // Находим все последовательности цифр в строке
+        const id = match ? match[0] : ''; // Если найдены цифры, сохраняем их
+        data = {
+            faculty_id:id
+        };
+    }
+    else if (fullId.includes('department_')) {
+        const match = fullId.match(/\d+/); // Находим все последовательности цифр в строке
+        const id = match ? match[0] : ''; // Если найдены цифры, сохраняем их
+        data = {
+            department_id:id
+        };
+    }
+    getReport(data);
+
+}
+
+function getReport(data={})
+{
     $.ajax({
         url: "/dashboard/reports/get",
         data: data,
@@ -37,15 +56,17 @@ function getReport() {
         success: function (response) {
             if (response.success) {
                 $("#report_container").html($("#report_tmpl").tmpl(response.data));
-            } else {
+            }
+            else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
         error: function () {
-            $.notify("Произошла ошибка при редактировании пользователя", "error");
+            $.notify("Произошла ошибка при получении отчета", "error");
         }
     });
 }
+
 
 function getAchievementsCount(users) {
     let achievementsCount = 0;

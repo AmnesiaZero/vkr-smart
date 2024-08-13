@@ -74,14 +74,14 @@ class ReportsService extends Services
             );
 
         // Применение фильтров
-        if (isset($data['selected_years'])) {
-            $usersQuery->whereIn('users.year_id', $data['selected_years']);
+        if (isset($data['year_id'])) {
+            $usersQuery->where('users.year_id', $data['year_id']);
         }
-        if (isset($data['selected_faculties'])) {
-            $usersQuery->whereIn('users.faculty_id', $data['selected_faculties']);
+        if (isset($data['faculty_id'])) {
+            $usersQuery->where('users.faculty_id','=', $data['faculty_id']);
         }
-        if (isset($data['selected_departments'])) {
-            $usersQuery->whereIn('users.department_id', $data['selected_departments']);
+        if (isset($data['department_id'])) {
+            $usersQuery->where('users.department_id','=', $data['department_id']);
         }
 
         $results = $usersQuery->get();
@@ -131,14 +131,14 @@ class ReportsService extends Services
 //        }
 
 
-        if (isset($data['selected_years'])) {
-            $worksQuery->whereIn('works.year_id', $data['selected_years']);
+        if (isset($data['year_id'])) {
+            $worksQuery->where('works.year_id','=', $data['year_id']);
         }
-        if (isset($data['selected_faculties'])) {
-            $worksQuery->whereIn('works.faculty_id', $data['selected_faculties']);
+        if (isset($data['faculty_id'])) {
+            $worksQuery->where('works.faculty_id','=', $data['faculty_id']);
         }
-        if (isset($data['selected_departments'])) {
-            $worksQuery->whereIn('works.department_id', $data['selected_departments']);
+        if (isset($data['department_id'])) {
+            $worksQuery->where('works.department_id','=', $data['department_id']);
         }
 
         $results = $worksQuery->get();
@@ -173,7 +173,7 @@ class ReportsService extends Services
             ->join('users', 'role_user.user_id', '=', 'users.id')
             ->where('users.organization_id', '=', $organizationId)
             ->join('achievements','users.id','=','achievements.user_id')
-            ->join('achievements_records','achievement_id','=','achievements_records.achievement_id')
+//            ->join('achievements_records','achievement_id','=','achievements_records.achievement_id')
             ->select(
                 'roles.id as role_id',
                 'roles.name as role_name',
@@ -184,56 +184,16 @@ class ReportsService extends Services
                 'users.faculty_id',
                 'users.department_id',
                 'achievements.id as achievement_id',
-                'achievements_records.id as record_id'
-            );
-
-//        // Запрос на получение пользователей, связанных с ролями, удовлетворяющих условиям фильтрации
-//        $achievementsQuery = User::with('achievements')
-//            ->join('role_user', 'users.id', '=', 'role_user.user_id')
-//            ->join('roles', 'role_user.role_id', '=', 'roles.id')
-//            ->whereIn('roles.slug', ['teacher', 'admin', 'employee', 'user'])
-//            ->where('users.organization_id', '=', $organizationId)
-//            ->join('achievements','users.id','=','achievements.user_id')
-//            ->join('achievements_records','achievement_id','=','achievements_records.achievement_id')
-//            ->select(
-//                'roles.id as role_id',
-//                'roles.name as role_name',
-//                'users.id as user_id',
-//                'users.name as user_name',
-//                'users.organization_id',
-//                'users.year_id',
-//                'users.faculty_id',
-//                'users.department_id',
-//                'achievements.id as achievement_id',
 //                'achievements_records.id as record_id'
-//            );
-
-        // Применение фильтров
-
-//        if (isset($data['selected_years'])) {
-//            $achievementsQuery->whereIn('users.year_id', $data['selected_years']);
-//        }
-//        if (isset($data['selected_faculties'])) {
-//            $achievementsQuery->whereIn('users.faculty_id', $data['selected_faculties']);
-//        }
-//        if (isset($data['selected_departments'])) {
-//            $achievementsQuery->whereIn('users.department_id', $data['selected_departments']);
-//        }
-
-        if (isset($data['selected_years'])) {
-            $achievementsQuery->whereHas('user', function($query) use ($data) {
-                $query->whereIn('year_id', $data['selected_years']);
-            });
+            );
+        if (isset($data['year_id'])) {
+                $query->where('year_id','=',$data['year_id']);
         }
-        if (isset($data['selected_faculties'])) {
-            $achievementsQuery->whereHas('user', function($query) use ($data) {
-                $query->whereIn('faculty_id', $data['selected_faculties']);
-            });
+        if (isset($data['faculty_id'])) {
+            $query->where('faculty_id','=',$data['faculty_id']);
         }
-        if (isset($data['selected_departments'])) {
-            $achievementsQuery->whereHas('user', function($query) use ($data) {
-                $query->whereIn('department_id', $data['selected_departments']);
-            });
+        if (isset($data['department_id'])) {
+            $query->where('department_id','=',$data['department_id']);
         }
 
         $results = $achievementsQuery->get();
@@ -274,17 +234,17 @@ class ReportsService extends Services
         {
             $worksQuery = $worksQuery->where('organization_id','=',$organizationId);
         }
-        if(isset($data['selected_years']))
+        if(isset($data['year_id']))
         {
-            $worksQuery = $worksQuery->whereIn('year_id',$data['selected_years']);
+            $worksQuery = $worksQuery->where('year_id','=',$data['year_id']);
         }
-        if(isset($data['selected_faculties']))
+        if(isset($data['faculty_id']))
         {
-            $worksQuery = $worksQuery->whereIn('faculty_id',$data['selected_faculties']);
+            $worksQuery = $worksQuery->where('faculty_id','=',$data['faculty_id']);
         }
-        if(isset($data['selected_departments']))
+        if(isset($data['department_id']))
         {
-            $worksQuery = $worksQuery->whereIn('department_id',$data['selected_departments']);
+            $worksQuery = $worksQuery->where('department_id','=',$data['department_id']);
         }
         $works = $worksQuery->get();
         if($users and is_iterable($users) and $roles and is_iterable($roles))
