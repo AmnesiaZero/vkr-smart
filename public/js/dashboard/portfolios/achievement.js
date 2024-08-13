@@ -13,7 +13,7 @@ $(document).ready(function () {
         formData.append('user_id',userId);
         formData.append('record_type_id',1);
         $.ajax({
-            url: "/dashboard/portfolio/achievements/records/create",
+            url: "/dashboard/portfolios/achievements/records/create",
             data:formData,
             type: "POST",
             headers: {
@@ -43,7 +43,7 @@ $(document).ready(function () {
         formData.append('user_id',userId);
         formData.append('record_type_id',1);
         $.ajax({
-            url: "/dashboard/portfolio/achievements/records/create",
+            url: "/dashboard/portfolios/achievements/records/create",
             data:formData,
             type: "POST",
             headers: {
@@ -75,7 +75,7 @@ function achievements()
         user_id:userId
     };
     $.ajax({
-        url: "/dashboard/portfolio/achievements/get",
+        url: "/dashboard/portfolios/achievements/get",
         data:data,
         type: "GET",
         dataType: "json",
@@ -112,7 +112,7 @@ function achievementRecords(achievementId)
         achievement_id:achievementId
     };
     $.ajax({
-        url: "/dashboard/portfolio/achievements/records/get",
+        url: "/dashboard/portfolios/achievements/records/get",
         data:data,
         type: "GET",
         dataType: "json",
@@ -141,7 +141,7 @@ function addAchievement()
    };
    data += '&' + $.param(additionalData);
     $.ajax({
-        url: "/dashboard/portfolio/achievements/create",
+        url: "/dashboard/portfolios/achievements/create",
         data:data,
         type: "POST",
         headers: {
@@ -179,7 +179,7 @@ function openUpdateAchievementModal()
         id:achievementId
     };
     $.ajax({
-        url: "/dashboard/portfolio/achievements/find",
+        url: "/dashboard/portfolios/achievements/find",
         data:data,
         type: "GET",
         dataType: "json",
@@ -206,7 +206,7 @@ function updateAchievement()
     };
     data += '&' + $.param(additionalData);
     $.ajax({
-        url: "/dashboard/portfolio/achievements/update",
+        url: "/dashboard/portfolios/achievements/update",
         data:data,
         type: "POST",
         headers: {
@@ -243,7 +243,7 @@ function deleteAchievement()
            id:achievementId
        };
        $.ajax({
-           url: "/dashboard/portfolio/achievements/delete",
+           url: "/dashboard/portfolios/achievements/delete",
            data:data,
            type: "POST",
            headers: {
@@ -286,7 +286,7 @@ function addRecord(recordTypeId)
     let data = formId.serialize();
     data += '&' + $.param(additionalData);
     $.ajax({
-        url: "/dashboard/portfolio/achievements/records/create",
+        url: "/dashboard/portfolios/achievements/records/create",
         data:data,
         type: "POST",
         headers: {
@@ -346,7 +346,7 @@ function searchAchievements()
     };
     data+= '&' + $.param(additionalData);
     $.ajax({
-        url: "/dashboard/portfolio/achievements/search",
+        url: "/dashboard/portfolios/achievements/search",
         data:data,
         type: "GET",
         dataType: "json",
@@ -371,7 +371,7 @@ function openTextRecord(recordId)
         id:recordId
     };
     $.ajax({
-        url: "/dashboard/portfolio/achievements/records/find",
+        url: "/dashboard/portfolios/achievements/records/find",
         data:data,
         type: "GET",
         dataType: "json",
@@ -411,7 +411,7 @@ function deleteAchievementRecord(id)
             id:id
         };
         $.ajax({
-            url: "/dashboard/portfolio/achievements/records/delete",
+            url: "/dashboard/portfolios/achievements/records/delete",
             data:data,
             type: "POST",
             headers: {

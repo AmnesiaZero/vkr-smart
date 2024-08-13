@@ -35,7 +35,7 @@
                 </p>
                 @{{/if}}
                 @role('admin')
-                <p class="mb-1"><img src="/images/setting_grey.svg" alt=""><a href="/dashboard/portfolio/achievements/${id}"
+                <p class="mb-1"><img src="/images/setting_grey.svg" alt=""><a href="/dashboard/portfolios/achievements/${id}"
                                                                               class="text-grey ps-2 fs-14 link-active-hover">управление
                     портфолио</a></p>
                 @endrole

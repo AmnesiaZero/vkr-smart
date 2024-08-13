@@ -33,6 +33,16 @@ class AchievementsService extends Services
         ]);
     }
 
+    public function view()
+    {
+        $modes = AchievementMode::all();
+        $categories = AchievementTypeCategory::with('achievementsTypes')->get();
+        return view('templates.dashboard.portfolios.achievements',[
+            'categories' => $categories,
+            'modes' => $modes
+        ]);
+    }
+
     public function get(int $userId): JsonResponse
     {
         $achievements = $this->achievementRepository->get($userId);

@@ -218,12 +218,18 @@ function deleteTreeElement(id) {
 }
 
 
-function updateWorksPagination(currentPage, totalItems, totalPages, itemsPerPage) {
+function updateWorksPagination(pagination) {
+
+    const displayedPages = pagination.links.length - 2; //Без Previous и Next
+    const totalItems = pagination.total;
+
+    $("#works_count").text(totalItems);
+
     $("#works_pagination").pagination({
         items: totalItems,
-        itemsOnPage: itemsPerPage,
-        currentPage: currentPage, // Установка текущей страницы в начало после добавления новых элементов
-        displayedPages: totalPages,
+        itemsOnPage: pagination.per_page,
+        currentPage: pagination.current_page, // Установка текущей страницы в начало после добавления новых элементов
+        displayedPages: displayedPages,
         cssStyle: '',
         prevText: '<span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>',
         nextText: '<span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>',

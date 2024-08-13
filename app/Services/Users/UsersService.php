@@ -213,7 +213,7 @@ class UsersService extends Services
             ]);
         }
 
-        $users = $this->_repository->search($data)->except([]);
+        $users = $this->_repository->search($data);
         return self::sendJsonResponse(true, [
             'title' => 'Успех',
             'message' => 'Пользователи успешно найдены',

@@ -86,21 +86,11 @@ function users(page=1)
         success: function (response) {
             if (response.success) {
                 const pagination = response.data.users;
-                const links = pagination.links;
-                //Обрезаем из массива линков Previos и Next
-                links.shift();
-                links.pop();
-                pagination.links = links;
                 const users = pagination.data;
                 console.log(users);
                 const usersList = $("#users_list");
                 usersList.html($("#user_tmpl").tmpl(users));
-                const currentPage = pagination.current_page;
-                const perPage = pagination.per_page;
-                const totalItems = pagination.total;
-                $("#users_count").text(totalItems);
-                const totalPages = pagination.links.length;
-                updateWorksPagination(currentPage,totalItems,totalPages,perPage);
+                updateUserPagination(pagination);
 
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
@@ -168,13 +158,10 @@ function searchUsers(page=1) {
         dataType: "json",
         success: function (response) {
             if (response.success) {
-                const users = response.data.users;
-                updateUserPagination(currentPage,totalItems,totalPages,perPage);
+                const pagination = response.data.users;
+                const users = pagination.data;
+                updateUserPagination(pagination);
                 $("#users_list").html($("#user_tmpl").tmpl(users));
-                const currentPage = pagination.current_page;
-                const perPage = pagination.per_page;
-                const totalItems = pagination.total;
-                const totalPages = pagination.links.length;
             }
             else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
@@ -206,12 +193,15 @@ function updateWorksCount()
     }
 }
 
-function updateUserPagination(currentPage,totalItems,totalPages,itemsPerPage) {
+function updateUserPagination(pagination) {
+    const totalItems = pagination.total;
+    const displayedPages = pagination.links.length - 2; //Без Previous и Next
+    $("#users_count").text(totalItems);
     $("#users_pagination").pagination({
-        items: totalItems,
-        itemsOnPage: itemsPerPage,
-        currentPage: currentPage, // Установка текущей страницы в начало после добавления новых элементов
-        displayedPages: totalPages,
+        items:  totalItems,
+        itemsOnPage: pagination.per_page,
+        currentPage: pagination.current_page, // Установка текущей страницы в начало после добавления новых элементов
+        displayedPages: displayedPages,
         cssStyle: '',
         prevText: '<span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>',
         nextText: '<span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>',
