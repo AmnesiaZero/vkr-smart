@@ -845,6 +845,8 @@ function workInfo()
             {
                 const work = response.data.work;
                 $("#about_work").html($("#work_info_tmpl").tmpl(work));
+                const modalElement = new bootstrap.Modal(document.getElementById('work_info_modal'));
+                modalElement.show();
             }
             else
             {
@@ -890,6 +892,8 @@ function openUpdateWorkModal()
             {
                 const work = response.data.work;
                 $("#tmpl_modals").html($("#update_work_tmpl").tmpl(work));
+                const modalElement = new bootstrap.Modal(document.getElementById('update_work_modal'));
+                modalElement.show();
             }
             else
             {
