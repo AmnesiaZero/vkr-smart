@@ -490,7 +490,7 @@ function getAssessmentDescription(assessment)
 }
 
 
-function works(page=1)
+function works(page= 1)
 {
     const data = {
         page:page,
@@ -506,19 +506,10 @@ function works(page=1)
             if (response.success)
             {
                 const pagination = response.data.works;
-                const links = pagination.links;
-                //Обрезаем из массива линков Previos и Next
-                links.shift();
-                links.pop();
-                pagination.links = links;
                 const works = pagination.data;
                 const worksTable = $("#works_table");
                 worksTable.html($("#work_tmpl").tmpl(works));
-                const currentPage = pagination.current_page;
-                const perPage = pagination.per_page;
-                const totalItems = pagination.total;
-                const totalPages = pagination.links.length;
-                updateWorksPagination(currentPage,totalItems,totalPages,perPage);
+                updateWorksPagination(pagination);
             }
             else
             {

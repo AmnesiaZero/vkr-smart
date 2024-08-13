@@ -35,7 +35,7 @@ class AchievementsController
         return $this->achievementsService->youAchievementsView();
     }
 
-    public function cardView(int $userId)
+    public function view(int $userId)
     {
         $validator = Validator::make(['id' => $userId],[
             'id' => ['integer',Rule::exists('users','id')]
@@ -44,7 +44,7 @@ class AchievementsController
         {
             return ValidatorHelper::redirectError($validator);
         }
-        return $this->achievementsService->pageView($userId);
+        return $this->achievementsService->view($userId);
     }
 
 

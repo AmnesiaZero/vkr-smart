@@ -100,7 +100,7 @@ class EloquentUserRepository implements UserRepositoryInterface
             $departmentsIds = $data['selected_departments'];
             $query = $query->whereIn('department_id',$departmentsIds);
         }
-        return  $query->paginate(5,'*','page',$data['page']);
+        return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
 
 
 
@@ -124,7 +124,7 @@ class EloquentUserRepository implements UserRepositoryInterface
 //                return $user->departments->whereIn('id', $departmentsIds)->isNotEmpty();
 //            });
 //        }
-        return $users;
+//        return $users;
     }
 
     public function get(int $organizationId, array $roles = []): Collection
@@ -160,7 +160,7 @@ class EloquentUserRepository implements UserRepositoryInterface
                 });
             }
         }
-        return $query->paginate(5,'*','page',$data['page']);
+        return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
 
     }
 

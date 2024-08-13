@@ -240,6 +240,7 @@ Route::group([
         Route::group([
             'prefix' => 'achievements'
         ],function (){
+
             Route::get('you',[AchievementsController::class, 'youAchievementsView']);
             Route::post('create',[AchievementsController::class,'create']);
             Route::get('get',[AchievementsController::class,'get']);

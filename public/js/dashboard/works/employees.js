@@ -580,7 +580,7 @@ function getSelfCheckDescription(selfCheck)
 function works(page= 1)
 {
     let data = {
-       page:page,
+        page:page,
         user_type:userType
     };
     if(role!=='admin')
@@ -599,25 +599,15 @@ function works(page= 1)
             if (response.success)
             {
                 const pagination = response.data.works;
-                const links = pagination.links;
-                //Обрезаем из массива линков Previos и Next
-                links.shift();
-                links.pop();
-                pagination.links = links;
                 const works = pagination.data;
                 const worksTable = $("#works_table");
                 worksTable.html($("#work_tmpl").tmpl(works));
-                const currentPage = pagination.current_page;
-                const perPage = pagination.per_page;
-                const totalItems = pagination.total;
-                $("#works_count").text(totalItems);
-                const totalPages = pagination.links.length;
-                updateWorksPagination(currentPage,totalItems,totalPages,perPage);
+                updateWorksPagination(pagination);
                 console.log('Echo');
                 console.log(window.Echo);
                 works.forEach(work =>{
                     const workId = work.id;
-                    const channel =  window.Echo.channel(`works.${workId}`)
+                    window.Echo.channel(`works.${workId}`)
                         .listen('.WorkUpdated', (e) => {
                             console.log('Work updated:', e);
                             reloadWork(workId);
@@ -723,22 +713,11 @@ function searchWorks(page=1) {
             if (response.success)
             {
                 const pagination = response.data.works;
-                const links = pagination.links;
-                //Обрезаем из массива линков Previos и Next
-                links.shift();
-                links.pop();
-                pagination.links = links;
                 const works = pagination.data;
                 console.log(works);
                 const worksTable = $("#works_table");
                 worksTable.html($("#work_tmpl").tmpl(works));
-                const currentPage = pagination.current_page;
-                const perPage = pagination.per_page;
-                const totalItems = pagination.total;
-                const totalPages = pagination.links.length;
-                console.log('total items = ' + totalItems);
-                $("#works_count").text(totalItems);
-                updateWorksPagination(currentPage,totalItems,totalPages,perPage);
+                updateWorksPagination(pagination);
             }
             else
             {

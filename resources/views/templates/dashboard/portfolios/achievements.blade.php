@@ -245,7 +245,7 @@
           <ul class="dropdown-menu">
               <li>
                   @{{if record_type_id==1}}
-                      <a href="/dashboard/portfolio/achievements/records/download?id=${id}"  class="text-decoration-none text-grey">
+                      <a href="/dashboard/portfolios/achievements/records/download?id=${id}"  class="text-decoration-none text-grey">
                           <span class="d-flex align-items-center gap-2">
                               <i class="bi bi-pencil"></i>
                               Открыть
