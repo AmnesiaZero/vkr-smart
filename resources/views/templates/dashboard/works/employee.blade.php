@@ -149,9 +149,11 @@
                                 <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 me-3"
                                         onclick="resetSearch();return false">Сбросить
                                 </button>
+                                @role('admin|inspector')
                                 <button class="btn bg-green br-100 text-grey fs-14 py-1" onclick="exportWorks()">
                                     Выгрузить<img
                                         src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
+                                @endrole
                             </div>
                         </div>
                     </div>
@@ -162,6 +164,7 @@
 
         </div>
         <div class="d-flex justify-content-end mt-5">
+            @role('admin|employee')
             <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 w-25 me-3"
                     onclick="openModal('add_work_modal')" data-bs-target="#add_work_modal" data-bs-toggle="modal">
                 Добавить работу
@@ -172,6 +175,7 @@
                 Импорт из файла
                 <img src="/images/File_Download_green.svg" alt="" class="ps-2">
             </button>
+            @endrole
         </div>
 
         <p class="fs-16 pt-3">

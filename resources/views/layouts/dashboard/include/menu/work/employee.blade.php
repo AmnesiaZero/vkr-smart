@@ -1,4 +1,5 @@
 <div class="info-box dropdown-menu" id="info_box" aria-labelledby="work-menu-button">
+    @role('admin|employee')
     <p class="fs-14 lh-17 mb-3">Направление подготовки обучающегося</p>
     <div class="d-flex align-items-center cursor-p mb-2">
         <img src="/images/Edit_Pencil.svg" alt="" class="pe-3">
@@ -46,6 +47,7 @@
         <p class="fs-14 lh-17 text-grey m-0" id="upload_certificate_button">Загрузить или заменить справку<br> о самопроверке по другим
             системам</p>
     </div>
+    @endrole
     <p class="fs-14 lh-17 mt-2 mt-4 mb-3">Дополнительные файлы</p>
     <div class="d-flex align-items-center cursor-p mb-2">
         <img src="/images/href_light.svg" alt="" class="pe-3">

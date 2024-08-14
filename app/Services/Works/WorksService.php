@@ -219,10 +219,10 @@ class WorksService extends Services
 
     public function search(array $data): JsonResponse
     {
-        if(isset($data['date_range']))
+        if(isset($data['daterange']))
         {
-            Log::debug($data['date_range']);
-            $protectDateRange = $data['date_range'];
+            Log::debug($data['daterange']);
+            $protectDateRange = $data['daterange'];
             // Разделение строки на начальную и конечную даты
             $dateParts = explode(" - ", $protectDateRange);
             if (count($dateParts) != 2) {
@@ -232,9 +232,11 @@ class WorksService extends Services
                 ]);
             }
             $startDateString = trim($dateParts[0]); // начальная дата
+            Log::debug($startDateString);
             $endDateString = trim($dateParts[1]);   // конечная дата
-            $startDate = Carbon::createFromFormat('d.m.Y', $startDateString);
-            $endDate = Carbon::createFromFormat('d.m.Y', $endDateString);
+            Log::debug($endDateString);
+            $startDate = Carbon::createFromFormat('d.m.y', $startDateString);
+            $endDate = Carbon::createFromFormat('d.m.y', $endDateString);
             $formattedStartDate = $startDate->toDateString();
             $formattedEndDate = $endDate->toDateString();
             $data['start_date'] = $formattedStartDate;

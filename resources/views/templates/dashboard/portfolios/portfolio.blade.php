@@ -333,6 +333,12 @@
 
 @section('scripts')
     <script src="{{'/js/dashboard/portfolios/card.js'}}"></script>
+    <script>
+         function getAvatar()
+         {
+            return  "{{ asset('images/my-image.png') }}";
+        }
+    </script>
     <script id="achievement_tmpl" type="text/x-jquery-tmpl">
         <tr id="achievement_${id}">
             <td>

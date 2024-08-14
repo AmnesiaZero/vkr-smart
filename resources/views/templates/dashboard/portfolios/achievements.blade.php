@@ -328,7 +328,7 @@
                              <div class="col-sm-4">
                                  <div class="profile-sidebar">
                                      <div class="profile-userpic">
-                                         <img src="/images/default.png" alt="" class="img-responsive">
+                                         <img src="${avatar_path}" alt="" class="img-responsive">
                                      </div>
                                      <div class="profile-usertitle">
                                          <div class="profile-usertitle-name">

@@ -11,9 +11,9 @@ class Organization extends Model
 {
     use HasFactory, SoftDeletes;
 
-
-    public function specialties(): BelongsToMany
+    //Если честно,я хз,почему ключи в таком порядке,хотя должны быть наоборот. Но так работает,а иначе - нет
+    public function inspectors_specialties(): BelongsToMany
     {
-        return $this->belongsToMany(Specialty::class, 'inspectors_access');
+        return $this->belongsToMany(ProgramSpecialty::class, 'inspectors_access','organization_id','specialty_id');
     }
 }

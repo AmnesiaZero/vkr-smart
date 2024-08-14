@@ -6,6 +6,8 @@ var role;
 
 var departmentsIds = [];
 
+var specialtiesIds = [];
+
 
 
 
@@ -34,11 +36,19 @@ $(document).ready(function () {
                     console.log(user);
                     userId = response.data.you.id;
                     role = user.roles[0].slug;
-                    console.log('role = ' + role);
                     const departments = user.departments;
-                    departmentsIds.push(...departments.map(department => department.id));
+                    if(departments)
+                    {
+                        departmentsIds.push(...departments.map(department => department.id));
+                    }
+                    const specialties = user.organization.inspectors_specialties;
+                    if(specialties)
+                    {
+                        specialtiesIds.push(...specialties.map(specialty => specialty.id));
+                    }
                     deferred.resolve(); // Сообщаем, что функция завершена
-                } else {
+                }
+                else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                     deferred.reject(); // Сообщаем об ошибке
                 }
@@ -253,7 +263,7 @@ $(document).ready(function () {
             startDate: start,
             endDate: end,
             "locale": {
-                "format": "DD MMM. YYYY",
+                "format": "DD.MM.YYYY",
                 "separator": " - ",
                 "applyLabel": "Apply",
                 "cancelLabel": "Cancel",
@@ -391,7 +401,7 @@ $(function () {
         startDate: start,
         endDate: end,
         "locale": {
-            "format": "DD MMM. YYYY",
+            "format": "DD.MM.YYYY",
             "separator": " - ",
             "applyLabel": "Apply",
             "cancelLabel": "Cancel",
@@ -583,13 +593,20 @@ function works(page= 1)
         page:page,
         user_type:userType
     };
-    if(role!=='admin')
+    let additionalData = '';
+    if(role==='employee' || role==='teacher')
     {
-        const additionalData = {
+        additionalData = {
             selected_departments:departmentsIds
         };
-        data = $.extend(data,additionalData);
     }
+    else if(role==='inspector')
+    {
+        additionalData = {
+            selected_specialties:specialtiesIds
+        };
+    }
+    data = $.extend(data,additionalData);
     $.ajax({
         url: "/dashboard/works/get",
         type: 'GET',
@@ -695,10 +712,16 @@ function searchWorks(page=1) {
             selected_faculties: selectedFaculties
         };
     }
-    else
+    else if(role==='teacher' || role==='employee')
     {
         additionalData = {
             selected_departments:departmentsIds
+        };
+    }
+    else if(role==='inspector')
+    {
+        additionalData = {
+            selected_specialties:specialtiesIds
         };
     }
     additionalData['user_type'] = userType;
@@ -732,6 +755,10 @@ function searchWorks(page=1) {
 
 function resetSearch()
 {
+    localStorage.setItem('selected_years', '');
+    localStorage.setItem('selected_faculties', '');
+    localStorage.setItem('selected_departments', '');
+    $(".out-kod").empty();
     $("#default_specialty").prop('selected',true);
     $("#student_input").val('');
     $("#work_name_input").val('');
@@ -1010,7 +1037,8 @@ function updateSelfCheckStatus()
         success: function(response) {
             if (response.success)
             {
-                $("#self_check_value").html($("#self_check_tmpl").tmpl(response.data));
+                const selfCheckStatus = getSelfCheckDescription(response.data.self_check);
+                $("#self_check_value").text(selfCheckStatus);
                 $.notify(response.data.title + ":" + response.data.message, "success");
             }
             else

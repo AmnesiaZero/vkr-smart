@@ -72,7 +72,7 @@
                                 <button class="btn pe-3 py-0 fs-14" disabled>
                                     <img src="/images/Calendar.svg" alt="">
                                 </button>
-                                <input type="text" name="date_rang" value="01/01/2023 - 01/15/2023"
+                                <input type="text" name="daterange" value="01/01/2023 - 01/15/2023"
                                        class=" fs-14 text-grey p-date w-75"/>
                             </div>
                         </div>
@@ -281,8 +281,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4">Самопроверка работы студентом</label>
-                                    <div class="col-sm-8" id="self_check_value">
-                                        <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-warning btn-sm"> ${getSelfCheckDescription(self_check)}
+                                    <div class="col-sm-8">
+                                        <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-warning btn-sm"> <span id="self_check_value"> ${getSelfCheckDescription(self_check)} </span>
                                             <span class="glyphicon glyphicon-refresh">
                                 </span>
                                         </a>

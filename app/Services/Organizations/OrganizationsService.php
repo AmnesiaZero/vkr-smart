@@ -26,8 +26,9 @@ class OrganizationsService extends Services
     {
         $organization = $this->_repository->find($id);
         try {
-            $organization->specialties()->sync($specialtiesIds);
-        } catch (QueryException $e) {
+            $organization->inspectorsSpecialties()->sync($specialtiesIds);
+        }
+        catch (QueryException $e) {
             return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'При привязке специальностей к проверяющим произошла ошибка'
