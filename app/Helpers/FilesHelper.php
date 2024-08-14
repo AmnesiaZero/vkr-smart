@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 class FilesHelper
 {
-   public static function acceptableFile(UploadedFile $file): bool
+   public static function acceptableDocumentFile(UploadedFile $file): bool
    {
        $extension = $file->extension();
        $acceptableExtension = ['doc','docx','pdf','txt'];
@@ -18,6 +18,13 @@ class FilesHelper
    {
        $extension = $file->extension();
        $acceptableExtension = ['xls','csv','xlsx'];
+       return in_array($extension,$acceptableExtension);
+   }
+
+   public static function acceptableImage(UploadedFile $image):bool
+   {
+       $extension = $image->extension();
+       $acceptableExtension = ['jpeg','png','webp'];
        return in_array($extension,$acceptableExtension);
    }
 }

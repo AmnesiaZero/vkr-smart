@@ -3,6 +3,7 @@
 namespace App\Services\Users;
 
 
+use App\Helpers\FilesHelper;
 use App\Helpers\JsonHelper;
 use App\Mail\ResetPassword;
 use App\Models\AchievementMode;
@@ -213,7 +214,7 @@ class UsersService extends Services
             ]);
         }
 
-        $users = $this->_repository->search($data);
+        $users = $this->_repository->searchPaginate($data);
         return self::sendJsonResponse(true, [
             'title' => 'Успех',
             'message' => 'Пользователи успешно найдены',
@@ -351,11 +352,21 @@ class UsersService extends Services
         }
         if(isset($data['avatar']))
         {
-            $avatar = $data['avatar'];
-            $extension = $avatar->extension();
-            $avatarFileName = $id.'.'.$extension;
-            $avatar->storeAs('public/avatars',$avatarFileName);
-            $data['avatar_path'] = 'storage/avatars/'.$avatarFileName;
+            if(FilesHelper::acceptableImage($data['avatar']))
+            {
+                $avatar = $data['avatar'];
+                $extension = $avatar->extension();
+                $avatarFileName = $id.'.'.$extension;
+                $avatar->storeAs('public/avatars',$avatarFileName);
+                $data['avatar_path'] = 'storage/avatars/'.$avatarFileName;
+            }
+            else
+            {
+                return self::sendJsonResponse(false,[
+                    'title' => 'Ошибка',
+                    'message' => 'Загруженное изображение должно быть формата jpeg,png,webp'
+                ]);
+            }
         }
 
 

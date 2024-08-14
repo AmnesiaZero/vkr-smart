@@ -99,13 +99,9 @@ class EloquentWorkRepository implements WorkRepositoryInterface
         {
             $query = $query->where('specialty_id','=',$data['specialty_id']);
         }
-        if (isset($data['start_date']))
+        if (isset($data['start_date']) and isset($data['end_date']))
         {
-            $query = $query->where('created_at','>=',$data['start_date']);
-        }
-        if (isset($data['end_date']))
-        {
-            $query = $query->where('created_at','=<',$data['end_date']);
+            $query = $query->whereBetween('created_at',[$data['start_date'],$data['end_date']]);
         }
         if (isset($data['selected_faculties']) and count($data['selected_faculties'])>0) {
             Log::debug('selected_faculties = '.print_r($data['selected_faculties'],true));

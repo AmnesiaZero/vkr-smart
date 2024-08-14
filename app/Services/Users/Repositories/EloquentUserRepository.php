@@ -46,7 +46,64 @@ class EloquentUserRepository implements UserRepositoryInterface
         return $this->find($id)->update($data);
     }
 
-    public function search(array $data,array $relations=['roles', 'departments','works']): LengthAwarePaginator
+    public function search(array $data, array $relations=['roles', 'departments','works'])
+    {
+        $query = User::with($relations);
+        if (isset($data['organization_id'])) {
+            $query = $query->where('organization_id', '=', $data['organization_id']);
+        }
+        if (isset($data['name'])) {
+            $query = $query->where('name', 'like', '%' . $data['name'] . '%');
+        }
+        if (isset($data['where_in'])) {
+            $values = $data['where_in'];
+            $query = $query->whereIn('id', $values);
+        }
+        if (isset($data['email'])) {
+            $query = $query->where('email', 'like', '%' . $data['email'] . '%');
+        }
+        if (isset($data['is_active'])) {
+            $query = $query->where('is_active', '=', $data['is_active']);
+        }
+        if (isset($data['group'])) {
+            $query = $query->where('group', 'like', '%' . $data['group'] . '%');
+        }
+        if (isset($data['selected_years']) and count($data['selected_years'])>0) {
+            $yearsIds = $data['selected_years'];
+            $query = $query->whereHas('year', function ($query) use ($yearsIds) {
+                $query->whereIn('id', $yearsIds);
+            });
+        }
+        if (isset($data['selected_faculties']) and count($data['selected_faculties'])>0) {
+            $facultiesIds = $data['selected_faculties'];
+            $query = $query->whereHas('faculty', function ($query) use ($facultiesIds) {
+                $query->whereIn('id', $facultiesIds);
+            });
+        }
+        if (isset($data['roles'])) {
+            $roles = $data['roles'];
+            $query = $query->filter(function ($user) use ($roles) {
+                return $user->roles->whereIn('slug', $roles)->isNotEmpty();
+            });
+            $query = $query->whereHas('roles', function ($query) use ($roles) {
+                $query->whereIn('slug', $roles);
+            });
+        }
+        if (isset($data['role'])) {
+            $role = $data['role'];
+            $query = $query->whereHas('roles', function ($query) use ($role) {
+                $query->where('slug','=', $role);
+            });
+        }
+        if(isset($data['selected_departments']))
+        {
+            $departmentsIds = $data['selected_departments'];
+            $query = $query->whereIn('department_id',$departmentsIds);
+        }
+        return $query->get();
+    }
+
+    public function searchPaginate(array $data, array $relations=['roles', 'departments','works']): LengthAwarePaginator
     {
         $query = User::with($relations);
         if (isset($data['organization_id'])) {
@@ -101,30 +158,6 @@ class EloquentUserRepository implements UserRepositoryInterface
             $query = $query->whereIn('department_id',$departmentsIds);
         }
         return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
-
-
-
-//        if (isset($data['roles'])) {
-//            $roles = $data['roles'];
-//            $users = $users->filter(function ($user) use ($roles) {
-//                return $user->roles->whereIn('slug', $roles)->isNotEmpty();
-//            });
-//        }
-//        if (isset($data['role'])) {
-//            $role = $data['role'];
-//            $users = $users->filter(function ($user) use ($role) {
-//                return $user->roles->where('slug', '=', $role)->isNotEmpty();
-//            });
-//        }
-
-//        if (isset($data['selected_departments']) and count($data['selected_departments'])>0) {
-//            Log::debug('Вошёл в условие');
-//            $departmentsIds = $data['selected_departments'];
-//            $users = $users->filter(function ($user) use ($departmentsIds) {
-//                return $user->departments->whereIn('id', $departmentsIds)->isNotEmpty();
-//            });
-//        }
-//        return $users;
     }
 
     public function get(int $organizationId, array $roles = []): Collection
