@@ -149,7 +149,7 @@ class WorksService extends Services
         {
             //Вообще,можно в отдельную функцию вынести разбиение по директориям,но лучше не надо
             $workId = $work->id;
-            if (isset($data['work_file']) and is_file($data['work_file']) and FilesHelper::acceptableFile($data['work_file']))
+            if (isset($data['work_file']) and is_file($data['work_file']) and FilesHelper::acceptableDocumentFile($data['work_file']))
             {
                 $workFile = $data['work_file'];
                 $directoryNumber = ceil($workId/1000);
@@ -183,7 +183,7 @@ class WorksService extends Services
             }
             if(isset($data['certificate_file']))
             {
-                if(is_file($data['certificate_file']) and FilesHelper::acceptableFile($data['certificate_file']))
+                if(is_file($data['certificate_file']) and FilesHelper::acceptableDocumentFile($data['certificate_file']))
                 {
                     $certificateFile = $data['certificate_file'];
                     $certificateFileName = $workId.'.'.$certificateFile->extension();
@@ -219,10 +219,10 @@ class WorksService extends Services
 
     public function search(array $data): JsonResponse
     {
-        if(isset($data['date_range']))
+        if(isset($data['daterange']))
         {
-            Log::debug($data['date_range']);
-            $protectDateRange = $data['date_range'];
+            Log::debug($data['daterange']);
+            $protectDateRange = $data['daterange'];
             // Разделение строки на начальную и конечную даты
             $dateParts = explode(" - ", $protectDateRange);
             if (count($dateParts) != 2) {
@@ -232,7 +232,9 @@ class WorksService extends Services
                 ]);
             }
             $startDateString = trim($dateParts[0]); // начальная дата
+            Log::debug($startDateString);
             $endDateString = trim($dateParts[1]);   // конечная дата
+            Log::debug($endDateString);
             $startDate = Carbon::createFromFormat('d.m.Y', $startDateString);
             $endDate = Carbon::createFromFormat('d.m.Y', $endDateString);
             $formattedStartDate = $startDate->toDateString();
@@ -319,7 +321,7 @@ class WorksService extends Services
                     ]);
                 }
             }
-            if(!isset($workFile) or !is_file($workFile) or !FilesHelper::acceptableFile($workFile))
+            if(!isset($workFile) or !is_file($workFile) or !FilesHelper::acceptableDocumentFile($workFile))
             {
                 return self::sendJsonResponse(false,[
                     'title' => 'Ошибка',

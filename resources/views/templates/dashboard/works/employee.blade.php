@@ -123,8 +123,7 @@
                                 <button class="btn pe-3 py-0 fs-14" disabled>
                                     <img src="/images/Calendar.svg" alt="">
                                 </button>
-                                {{--                                Временно поменял имя,чтобы не мешалось--}}
-                                <input type="text" name="daterange" value="04.06.2024 - 07.06.2024"
+                                <input type="text" name="daterange" value=""
                                        class=" fs-14 text-grey p-date w-75"/>
                             </div>
                         </div>
@@ -149,9 +148,11 @@
                                 <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 me-3"
                                         onclick="resetSearch();return false">Сбросить
                                 </button>
-                                <button class="btn bg-green br-100 text-grey fs-14 py-1" onclick="exportWorks()">
-                                    Выгрузить<img
-                                        src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
+                                @role('admin|inspector')
+                                <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 me-3" onclick="exportWorks();return false;">
+                                    Выгрузить
+                                    <img src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
+                                @endrole
                             </div>
                         </div>
                     </div>
@@ -162,6 +163,7 @@
 
         </div>
         <div class="d-flex justify-content-end mt-5">
+            @role('admin|employee')
             <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 w-25 me-3"
                     onclick="openModal('add_work_modal')" data-bs-target="#add_work_modal" data-bs-toggle="modal">
                 Добавить работу
@@ -172,6 +174,7 @@
                 Импорт из файла
                 <img src="/images/File_Download_green.svg" alt="" class="ps-2">
             </button>
+            @endrole
         </div>
 
         <p class="fs-16 pt-3">
@@ -224,5 +227,56 @@
                     src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     @include('layouts.dashboard.include.tmpls.works_page')
+
+            <script id="work_tmpl" type="text/x-jquery-tmpl">
+      @{{if visibility==1}}
+     <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
+    <th scope="row">${specialty.name}</th>
+    <td>${student}</td>
+    <td>${group}</td>
+    <td>${protect_date}</td>
+    <td>${name} - ${work_type}</td>
+    <td>${getAssessmentDescription(assessment)}</td>
+    <td>${getSelfCheckDescription(self_check)}</td>
+        <td>
+            @{{if report_status==0}}
+            <div class="mt-2">
+            <span class="bg-waiting px-2 d-flex align-items-center">
+            <div class="me-2 yellow-c">
+            </div>
+              В очереди на проверку
+            </span>
+            </div>
+            @{{/if}}
+            @{{if report_status==1}}
+            <div class="mt-2" onclick="openReport(${id})">
+            <span class="bg-active px-2 d-flex align-items-center">
+            <div class="me-2 green-c">
+            </div>
+              Отчет
+            </span>
+            </div>
+            @{{/if}}
+            @{{if report_status==2}}
+            <div>
+                <span class="bg-error p-2 d-flex align-items-center gap-2">
+                    <span class="red-c"></span>
+                    Не&nbsp;проверена
+                </span>
+            </div>
+            @{{/if}}
+
+        </td>
+        <td>
+            <img src="/images/three_dots.svg" alt="" id="work-menu-button" class="btn-info-box cursor-p dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            @include('layouts.dashboard.include.menu.work.employee')
+                </td>
+            </tr>
+            @{{/if}}
+
+
+</script>
 
 @endsection

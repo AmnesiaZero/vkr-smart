@@ -23,7 +23,13 @@
                         ${date_of_birth}
                     </p>
                     <p class="text-grey fs-14 mb-1">
-                        ${email}
+                        @{{if email_visibility==1}}
+                                           ${email}
+                                           @{{else}}
+                                           *******@*******
+                                           <br>
+                                           (скрыто настройками приватности)
+                                           @{{/if}}
                     </p>
                 </div>
                 <p class="mb-1"><img src="/images/doc_grey_img.svg" alt=""><a href="#"

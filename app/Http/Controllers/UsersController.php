@@ -62,12 +62,17 @@ class UsersController extends Controller
             'login' => ['required', Rule::exists('users', 'login')],
             'password' => 'required'
         ]);
-        if (Auth::attempt($credentials)) {
+        $remember = $request->has('remember');
+
+        if (Auth::attempt($credentials,$remember)) {
             $user = Auth::user();
-            if ($user->is_active == 0) {
+            //Надо будет изменить
+            if ($user->is_active == 0)
+            {
                 return back()->withErrors(['Вы заблокированы']);
             }
             $request->session()->regenerate();
+
             if($user->hasRole('admin'))
             {
                 return redirect('/dashboard/settings/organizations-structure');
@@ -89,9 +94,14 @@ class UsersController extends Controller
     }
 
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
         return redirect('login');
     }
 

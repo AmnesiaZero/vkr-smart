@@ -72,7 +72,7 @@
                                 <button class="btn pe-3 py-0 fs-14" disabled>
                                     <img src="/images/Calendar.svg" alt="">
                                 </button>
-                                <input type="text" name="date_rang" value="01/01/2023 - 01/15/2023"
+                                <input type="text" name="daterange" value="01/01/2023 - 01/15/2023"
                                        class=" fs-14 text-grey p-date w-75"/>
                             </div>
                         </div>
@@ -94,9 +94,10 @@
                                     Применить
                                 </button>
                                 <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 me-3"
-                                        onclick="works();resetSearch()">Сбросить
+                                        onclick="resetSearch();return false;">Сбросить
                                 </button>
-                                <button class="btn bg-green br-100 text-grey fs-14 py-1" onclick="exportWorks()">
+                                <button class="btn bg-green br-100 text-grey fs-14 py-1"
+                                        onclick="exportWorks();return false;">
                                     Выгрузить
                                     <img src="/images/File_Download_green.svg" alt="" class="ps-2">
                                 </button>
@@ -133,7 +134,6 @@
                     @include('layouts.dashboard.include.menu.work.student')
                 </table>
             </div>
-            @include('layouts.dashboard.include.menu.work.employee')
 
             <div id="about_work">
             </div>
@@ -153,161 +153,245 @@
             <script src="/js/dashboard/works/employees.js"></script>
             <script src="/js/dashboard/works/students.js"></script>
             <script src="{{'/js/bootstrap-select.js'}}"></script>
-            <script id="work_info_student_tmpl" type="text/x-jquery-tmpl">
-            <div id="work_info_student" class="modal" style="display: block;">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                        <h3>Информация о работе</h3>
-                    </div>
-                    <div class="modal-body">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#main-information" aria-controls="main-information" role="tab" data-toggle="tab">Основная информация</a></li>
-                            <li role="presentation"><a href="#comments" aria-controls="comments" role="tab" data-toggle="tab">Комментарии</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <h3 class="bc-post-title bc-post-title-sm">Информация о работе</h3>
-                            <form class="form form-horizontal" id="infoWorkForm" onsubmit="workInfo(); return false;">
-                                <div class="form-group">
-                                    <label class="col-sm-4">Год выпуска</label>
+            <script id="work_tmpl" type="text/x-jquery-tmpl">
+                @{{if visibility==1}}
+               <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
+                {{--    <th scope="row">${specialty.name}</th>--}}
+                <td>${student}</td>
+                <td>${group}</td>
+                <td>${protect_date}</td>
+                <td>${name} - ${work_type}</td>
+                <td>${getAssessmentDescription(assessment)}</td>
+                <td>${getSelfCheckDescription(self_check)}</td>
+                    <td>
+                        @{{if report_status==0}}
+                        <div class="mt-2">
+                        <span class="bg-waiting px-2 d-flex align-items-center">
+                        <div class="me-2 yellow-c">
+                        </div>
+                          В очереди на проверку
+                        </span>
+                        </div>
+                        @{{/if}}
+                        @{{if report_status==1}}
+                        <div class="mt-2" onclick="openReport(${id})">
+                        <span class="bg-active px-2 d-flex align-items-center">
+                        <div class="me-2 green-c">
+                        </div>
+                          Отчет
+                        </span>
+                        </div>
+                        @{{/if}}
+                        @{{if report_status==2}}
+                        <div>
+                            <span class="bg-error p-2 d-flex align-items-center gap-2">
+                                <span class="red-c"></span>
+                                Не&nbsp;проверена
+                            </span>
+                        </div>
+                        @{{/if}}
+
+                    </td>
+                    <td>
+                        <img src="/images/three_dots.svg" alt="" id="work-menu-button" class="btn-info-box cursor-p dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                @include('layouts.dashboard.include.menu.work.student')
+                </td>
+            </tr>
+            @{{/if}}
+
+
+            </script>
+
+<script id="work_info_student_tmpl" type="text/x-jquery-tmpl">
+    <div id="work_info_student" class="modal fade" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h3>Информация о работе</h3>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" id="tabs-list" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a href="#"
+                            @{{ if activeTabpanel === 'main-information'}}
+                                class="nav-link active"
+                            @{{ else }}
+                                class="nav-link"
+                            @{{/if}}
+                            id="main-information-tab" data-bs-toggle="tab"
+                                data-bs-target="#main-information" type="button" role="tab" aria-controls="main-information"
+                                aria-selected="true">Основная информация</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a href="#"
+{{--                            @{{ if activeTabpanel === 'comments'}}--}}
+{{--                                class="nav-link active"--}}
+{{--                            @{{ else }}--}}
+{{--                                class="nav-link"--}}
+{{--                            @{{/if}}--}}
+                            id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments"
+                                type="button" role="tab" aria-controls="comments" aria-selected="false">Комментарии</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="main-information" role="tabpanel"
+                            aria-labelledby="main-information-tab">
+                            <form class="form form-horizontal d-flex flex-column gap-4 mt-4" id="infoWorkForm" onsubmit="workInfo(); return false;">
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Год выпуска</label>
                                     <div class="col-sm-8" id="value_year_id">${year.year}</div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Факультет</label>
+                                @{{if faculty}}
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Факультет</label>
                                     <div class="col-sm-8" id="faculty_id">${faculty.name}</div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Кафедра</label>
+                                @{{/if}}
+                                @{{if department}}
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Кафедра</label>
                                     <div class="col-sm-8" id="value_department_id">${department.name}</div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Образовательная программа (специальность)</label>
+                                @{{/if}}
+                                @{{if specialty}}
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Образовательная программа (специальность)</label>
                                     <div class="col-sm-8">${specialty.name}</div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Кто загрузил работу</label>
+                                @{{/if}}
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Кто загрузил работу</label>
                                     <div class="col-sm-8">${user.name}</div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">ФИО обучающегося</label>
-                                    <div class="col-sm-8" >${student}</div>
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">ФИО обучающегося</label>
+                                    <div class="col-sm-8">${student}</div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Группа обучающегося</label>
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Группа обучающегося</label>
                                     <div class="col-sm-8">${group}</div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Наименование работы</label>
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Наименование работы</label>
                                     <div class="col-sm-8" id="value_name">${name}</div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Тип работы</label>
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Тип работы</label>
                                     <div class="col-sm-8" id="value_worktype">${work_type}</div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Научный руководитель</label>
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Научный руководитель</label>
                                     <div class="col-sm-8" id="value_scientific_adviser">${scientific_supervisor}</div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Дата защиты</label>
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Дата защиты</label>
                                     <div class="col-sm-8" id="value_protectdate">${protect_date}</div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Дата загрузки работы</label>
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Дата загрузки работы</label>
                                     <div class="col-sm-8" id="value_createdon">${created_at}</div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Оценка</label>
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Оценка</label>
                                     <div class="col-sm-8" id="value_assessment">${getAssessmentDescription(assessment)}</div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Согласие на размещение работы</label>
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Согласие на размещение работы</label>
                                     <div class="col-sm-8" id="value_agreement">${getAgreementDescription(agreement)}</div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Файл работы</label>
-                                    <div class="col-sm-8" id="value_workfile"><a onclick="downloadWork(); return false;" href="#"><span class="glyphicon glyphicon-save-file"></span> Скачать файл работы</a></div>
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Файл работы</label>
+                                    <div class="col-sm-8" id="value_workfile"><a onclick="downloadWork(); return false;"
+                                            href="#"><span class="glyphicon glyphicon-save-file"></span> Скачать файл работы</a>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Самопроверка работы студентом</label>
-                                    <div class="col-sm-8" id="self_check_value">
-                                        <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-warning btn-sm"> ${getSelfCheckDescription(self_check)}
-                                            <span class="glyphicon glyphicon-refresh">
-                                </span>
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Самопроверка работы студентом</label>
+                                    <div class="col-sm-8">
+                                        <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-sm" style="background: whitesmoke;"> <span
+                                                id="self_check_value"> ${getSelfCheckDescription(self_check)} </span>
+                                            <span class="glyphicon glyphicon-refresh"></span>
                                         </a>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Справка о самопроверке работы обучающимся по системе заимствований</label>
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Справка о самопроверке работы обучающимся по системе
+                                        заимствований</label>
                                     @{{if certificate}}
-                                    <a class="col-sm-8" onclick="downloadCertificate()">Скачать файл самопроверки </a>
+                                    <a class="col-sm-8" onclick="downloadCertificate()">Скачать файл самопроверки</a>
                                     @{{else}}
                                     <div class="col-sm-8" id="value_certificate">Файл справки не загружен</div>
                                     @{{/if}}
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Отчет о заимствованиях по базам ВКР-ВУЗ</label>
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Отчет о заимствованиях по базам ВКР-ВУЗ</label>
                                     @{{if borrowings_percent}}
-                                    <div class="col-sm-8" id="value_percent_person">Фактических некорректных заимствований: ${borrowings_percent}</div>
+                                    <div class="col-sm-8" id="value_percent_person">Фактических некорректных заимствований:
+                                        ${borrowings_percent}</div>
                                     @{{/if}}
                                 </div>
                                 <div id="works-add-alert"></div>
                             </form>
                         </div>
-
-
-                        <div role="tabpanel" class="tab-pane" id="comments">
-                            <form class="form form-horizontal" id="add_comment_form" onsubmit="addComment(); return false;">
-                                <div class="form-group">
-                                    <label class="col-sm-4">Заголовок</label>
+                        <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+                            <form class="form form-horizontal mt-4 d-flex flex-column gap-4" id="add_comment_form" onsubmit="addComment(); return false;">
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Заголовок</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="title" placeholder="Укажите заголовок комментария" required="">
+                                        <input type="text" class="form-control" name="title"
+                                            placeholder="Укажите заголовок комментария" required="">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4">Текст комментария</label>
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold">Текст комментария</label>
                                     <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="text">
+                                        <input type="text" class="form-control"
+                                        name="text" placeholder="Укажите комментарий">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4"></label>
-                                    <div class="col-sm-8">
-                                        <button type="submit" class="btn btn-success">Добавить</button>
+                                <div class="row g-4">
+                                    <label class="col-sm-4 fs-16 fw-bold"></label>
+                                    <div class="col-sm-8 text-end">
+                                        <button type="submit" class="btn btn-secondary fs-14 text-grey py-1">
+                                            Добавить
+                                        </button>
                                     </div>
                                 </div>
                             </form>
-                            <hr>
-                            <h3>Комментарии к работе:</h3>
+                            <h3 class="mb-3">Комментарии к работе:</h3>
                             <div class="row work-comment-pagination pagination pagination-sm" id="comments_list"></div>
-
                             <div class="work-comment-pagination pagination pagination-sm"></div>
                         </div>
-                        </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeTmplModal('work_info_student')">Закрыть окно</button>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close"
+                        onclick="closeTmplModal('work_info_student')">Закрыть окно</button>
                 </div>
             </div>
         </div>
+    </div>
 
-
-
-
-
-            </script>
+</script>
 
             <script id="comment_tmpl" type="text/x-jquery-tmpl">
                 <div id="comment_${id}" class="mb-3" style="border-bottom: 1px solid #ccc">
                 <div class="row row-comment">
 					<div class="col-sm-12">
 						<div class="row">
-							<div class="col-sm-2">
-								<span class="comment_date">${created_at}</span>
+							<div class="col-sm-4">
+								<span class="comment_date">
+								    <span class="fw-bold">Дата написания:</span>
+								    ${created_at}
+								</span>
 							</div>
-							<div class="col-sm-8">
-								<span class="sender_name">${sender.name}</span>
+							<div class="col-sm-6 fw-500">
+								<span class="sender_name">
+								    <span class="fw-bold">Автор:</span>
+								    ${sender.name}
+								</span>
 							</div>
 							<div class="col-sm-2">
 								<a href="#" onclick="deleteComment(${id}); return false;">Удалить</a>
@@ -316,17 +400,14 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="comment_content">
-									<h5 class="comment_title">${title}</h5>
-									<p>${text}</p>
-
+									<h5 class="comment_title mb-0 mt-3">${title}</h5>
+									<p class="mb-2 pt-3">${text}</p>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				</div>
-
-
 
 
             </script>

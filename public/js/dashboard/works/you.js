@@ -676,6 +676,10 @@ function searchWorks() {
 
 function resetSearch()
 {
+    localStorage.setItem('selected_years', '');
+    localStorage.setItem('selected_faculties', '');
+    localStorage.setItem('selected_departments', '');
+    $(".out-kod").empty();
     $("#default_specialty").prop('selected',true);
     $("#student_input").val('');
     $("#work_name_input").val('');

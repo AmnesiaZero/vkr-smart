@@ -1240,6 +1240,18 @@ span.current {
     text-decoration: none !important;
 }
 
+#tabs-list .nav-item .nav-link {
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: transparent;
+}
+#tabs-list .nav-item .nav-link.active {
+    background-color: #78C2C9;
+    color: white;
+}
+#tabs-list.nav-tabs {
+    border-bottom: 1px solid #78C2C9;
+}
 /* bs-select */
 .btn.dropdown-toggle.btn-light {
     background-color: white;

@@ -1,13 +1,15 @@
-<div class="info-box" id="student_info_box">
+<div class="info-box dropdown-menu" id="student_info_box">
     @role('user|admin')
     <p class="fs-14 lh-17">Операции над работой</p>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/info.svg" alt="" class="pe-2">
-        <p class="fs-14 lh-17 text-grey m-0" onclick="workInfo()">Просмотр информации о работе</p>
+        <p class="fs-14 lh-17 text-grey m-0" onclick="workInfoStudent('main-information')">
+            Просмотр информации о работе
+        </p>
     </div>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/Chat.svg" alt="" class="pe-2">
-        <p class="fs-14 lh-17 text-grey m-0" onclick="workInfoStudent()">Оставить комментарий</p>
+        <p class="fs-14 lh-17 text-grey m-0" onclick="workInfoStudent('comments')">Оставить комментарий</p>
     </div>
     @endrole
     @role('admin')

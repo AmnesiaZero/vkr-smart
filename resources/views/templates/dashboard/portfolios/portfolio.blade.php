@@ -92,7 +92,13 @@
                                     <label class="col-sm-4 col-xs-4 fw-bold fs-14 text-grey">Адрес электронной почты</label>
                                     <div class="col-sm-8 col-xs-8 fs-14 fw-500">
                                         @if(isset($user->email))
+                                            @if($user->email_visibility==1)
                                             {{$user->email}}
+                                            @else
+                                                *******@*******
+                                                <br>
+                                                (скрыто настройками приватности)
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -333,6 +339,12 @@
 
 @section('scripts')
     <script src="{{'/js/dashboard/portfolios/card.js'}}"></script>
+    <script>
+         function getAvatar()
+         {
+            return  "{{ asset('images/my-image.png') }}";
+        }
+    </script>
     <script id="achievement_tmpl" type="text/x-jquery-tmpl">
         <tr id="achievement_${id}">
             <td>

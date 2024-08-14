@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="background-color: #fff;">
             <div class="modal-header">
-                <h4 class="modal-title">Создать факультет</h4>
+                <h4 class="modal-title">Добавить сотрудника</h4>
             </div>
             <div class="modal-body p-4">
                 <form method="post" id="create_employee_form" class="d-flex flex-column gap-2"
@@ -66,8 +66,8 @@
                         <div class="col-sm-6 justify-content-center">
                             <label class="col-sm-12">Год выпуска</label>
                             <div class="col-sm-12">
-                                <select class="selectpicker form-control" name="year_id" id="years_list" required=""
-                                        data-title="Выбрать...">
+                                <select class=" form-control" name="year_id" id="years_list" required="" title="Выбрать...">
+
                                 </select>
                             </div>
                         </div>
@@ -104,4 +104,3 @@
         </div>
     </div>
 </div>
-

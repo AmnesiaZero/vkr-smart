@@ -27,6 +27,7 @@ class WorksController extends Controller
         'scientific_supervisor',
         'work_type',
         'protect_date',
+        'daterange',
         'assessment',
         'agreement',
         'work_file',
@@ -34,6 +35,7 @@ class WorksController extends Controller
         'certificate_file',
         'selected_faculties',
         'selected_years',
+        'selected_specialties',
         'verification_method',
         'delete_type',
         'import_file',
@@ -76,7 +78,8 @@ class WorksController extends Controller
             'page' => 'required|integer',
             'user_type' => 'required|integer|in:1,2',
             'selected_departments.*' => ['integer',Rule::exists('departments','id')],
-            'user_id' => ['integer',Rule::exists('users','id')]
+            'user_id' => ['integer',Rule::exists('users','id')],
+            'selected_specialties.*' => ['integer',Rule::exists('programs_specialties','id')],
         ]);
         if ($validator->fails())
         {
@@ -161,6 +164,8 @@ class WorksController extends Controller
             'name' => 'max:250',
             'selected_faculties.*' => ['integer', Rule::exists('faculties', 'id')],
             'selected_years.*' => ['integer', Rule::exists('organizations_years', 'id')],
+            'selected_departments.*' => ['integer',Rule::exists('departments','id')],
+            'selected_specialties.*' => ['integer',Rule::exists('programs_specialties','id')],
             'user_id' => ['integer', Rule::exists('users', 'id')]
         ]);
         if ($validator->fails())
@@ -357,7 +362,9 @@ class WorksController extends Controller
             'work_type' => 'max:250',
             'name' => 'max:250',
             'selected_faculties.*' => ['integer', Rule::exists('faculties', 'id')],
-            'selected_years.*' => ['integer', Rule::exists('organizations_years', 'id')]
+            'selected_years.*' => ['integer', Rule::exists('organizations_years', 'id')],
+            'selected_departments.*' => ['integer',Rule::exists('departments','id')],
+            'selected_specialties.*' => ['integer',Rule::exists('programs_specialties','id')],
         ]);
         if ($validator->fails())
         {

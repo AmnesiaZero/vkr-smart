@@ -64,13 +64,21 @@ interface UserRepositoryInterface
      */
     public function update(int $id, array $data): int;
 
+
+    /**
+     * @param array $data
+     * @param array $relations
+     * @return mixed
+     */
+    public function search(array $data, array $relations=['roles', 'departments','works']);
+
     /**
      * Поиск по пользователям
      * @param array $data
      * @param array $relations
      * @return LengthAwarePaginator
      */
-    public function search(array $data,array $relations=['roles', 'departments','works']): LengthAwarePaginator;
+    public function searchPaginate(array $data, array $relations=['roles', 'departments','works']): LengthAwarePaginator;
 
 
     /**

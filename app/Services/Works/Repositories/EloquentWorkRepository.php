@@ -33,6 +33,11 @@ class EloquentWorkRepository implements WorkRepositoryInterface
             $departmentsIds = $data['selected_departments'];
             $query = $query->whereIn('department_id',$departmentsIds);
         }
+        if(isset($data['selected_specialties']))
+        {
+            $specialtiesIds = $data['selected_specialties'];
+            $query = $query->whereIn('specialty_id',$specialtiesIds);
+        }
         return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
     }
 
@@ -94,13 +99,9 @@ class EloquentWorkRepository implements WorkRepositoryInterface
         {
             $query = $query->where('specialty_id','=',$data['specialty_id']);
         }
-        if (isset($data['start_date']))
+        if (isset($data['start_date']) and isset($data['end_date']))
         {
-            $query = $query->where('protect_date','>',$data['start_date']);
-        }
-        if (isset($data['end_date']))
-        {
-            $query = $query->where('protect_date','<',$data['end_date']);
+            $query = $query->whereBetween('created_at',[$data['start_date'],$data['end_date']]);
         }
         if (isset($data['selected_faculties']) and count($data['selected_faculties'])>0) {
             Log::debug('selected_faculties = '.print_r($data['selected_faculties'],true));
@@ -116,6 +117,11 @@ class EloquentWorkRepository implements WorkRepositoryInterface
         {
             $departmentsIds = $data['selected_departments'];
             $query = $query->whereIn('department_id',$departmentsIds);
+        }
+        if(isset($data['selected_specialties']))
+        {
+            $specialtiesIds = $data['selected_specialties'];
+            $query = $query->whereIn('specialty_id',$specialtiesIds);
         }
         return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
     }
