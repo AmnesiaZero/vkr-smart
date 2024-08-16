@@ -26,9 +26,6 @@
                 <li class="list-select"><a href="/dashboard/settings/handbook-management"
                                            class="select-a @if(request()->is('*/handbook-management')) list-select-active @endif">Управление
                         <br>справочниками</a></li>
-                <li class="list-select"><a href="/dashboard/settings/"
-                                           class="select-a @if(request()->is('*/view')) list-select-active @endif">Оформление</a>
-                </li>
                 <li class="list-select"><a href="/dashboard/settings/integration"
                                            class="select-a @if(request()->is('*/integration')) list-select-active @endif">Интеграция</a>
                 </li>

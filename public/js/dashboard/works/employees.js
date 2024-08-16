@@ -707,9 +707,11 @@ function searchWorks(page=1) {
     {
         const selectedYears = getArrayFromLocalStorage('selected_years');
         const selectedFaculties = getArrayFromLocalStorage('selected_faculties');
+        const selectedDepartments = getArrayFromLocalStorage('selected_departments');
         additionalData = {
             selected_years: selectedYears,
-            selected_faculties: selectedFaculties
+            selected_faculties: selectedFaculties,
+            selected_departments:selectedDepartments
         };
     }
     else if(role==='teacher' || role==='employee')
@@ -741,6 +743,17 @@ function searchWorks(page=1) {
                 const worksTable = $("#works_table");
                 worksTable.html($("#work_tmpl").tmpl(works));
                 updateWorksPagination(pagination);
+                works.forEach(work =>{
+                    const workId = work.id;
+                    window.Echo.channel(`works.${workId}`)
+                        .listen('.WorkUpdated', (e) => {
+                            console.log('Work updated:', e);
+                            reloadWork(workId);
+                        })
+                        .error((error) => {
+                            console.error('Error:', error);
+                        });
+                });
             }
             else
             {

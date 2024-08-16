@@ -44,7 +44,8 @@ class WorksController extends Controller
         'page',
         'selected_departments',
         'work_status',
-        'user_id'
+        'user_id',
+        'visibility'
     ];
 
     protected WorksService $worksService;
@@ -153,7 +154,7 @@ class WorksController extends Controller
     public function search(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(),[
-            'user_type' => 'required|integer|in:1,2',
+            'user_type' => 'integer|in:1,2',
             'specialty_id' => ['integer',Rule::exists('programs_specialties','id')],
             'delete_type' => 'integer|in:0,1,2',
             'student' => 'max:250',

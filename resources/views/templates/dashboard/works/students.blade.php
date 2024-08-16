@@ -72,7 +72,7 @@
                                 <button class="btn pe-3 py-0 fs-14" disabled>
                                     <img src="/images/Calendar.svg" alt="">
                                 </button>
-                                <input type="text" name="daterange" value="01/01/2023 - 01/15/2023"
+                                <input type="text" name="daterang" value="01/01/2023 - 01/15/2023"
                                        class=" fs-14 text-grey p-date w-75"/>
                             </div>
                         </div>
@@ -150,6 +150,7 @@
 
         @section('scripts')
             <script src="/js/dashboard/works/employees.js"></script>
+            <script src="/js/bootstrap.js"></script>
             <script src="/js/dashboard/works/students.js"></script>
             <script src="{{'/js/bootstrap-select.js'}}"></script>
             <script id="work_tmpl" type="text/x-jquery-tmpl">

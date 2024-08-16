@@ -43,13 +43,8 @@
                               <div class="d-flex justify-content-between">
                                 <p class="text-grey fs-14 mb-2">${getRoleName(role_id)}</p>
                                 <p class="text-grey fs-14 mb-2">
-{{--                                @{{if roles_users[0]}}--}}
-                {{--                                    ${roles_users[0].users.length}--}}
-                {{--                                 @{{else}}--}}
-                {{--                                   0--}}
-                {{--                                @{{/if}}--}}
 
-                ${users.length}
+                               ${users.length}
                </p>
            </div>
            @{{/each}}
@@ -64,27 +59,37 @@
                         Портфолио всего
                         <span class="fs-24 text-grey fw-600">${users.length}</span>
                     </div>
-
-
-
-                @{{each roles_achievements}}
-                <div class="d-flex justify-content-between brt-green-light-2 mt-3">
-                        <p class="text-grey fs-14 mb-3 mt-1">${getRoleName(role_id)}</p>
+                @{{if findRole(roles_achievements,'user')}}
+                  <div class="d-flex justify-content-between brt-green-light-2 mt-3">
+                        <p class="text-grey fs-14 mb-3 mt-1">Студенты</p>
                     </div>
                     <div class="d-flex justify-content-between">
                         <p class="text-grey fs-14 mb-2">Записи достижений:</p>
                         <p class="text-grey fs-14 mb-2">
-                           ${getAchievementsCount(users)}
+                           ${roles_achievements[getRoleIndex()].achievements_count}
                         </p>
                     </div>
                     <div class="d-flex justify-content-between brb-green-light-2">
                         <p class="text-grey fs-14 mb-2">Прикреплено ресурсов:</p>
-                        <p class="text-grey fs-14 mb-2">
-                            ${achievementsRecordsCount(users)}
+                        <p class="text-grey fs-14 mb-2">${roles_achievements[getRoleIndex()].records_count}</p>
+                    </div>
+                @{{/if}}
 
+                @{{if findRole(roles_achievements,'teacher')}}
+                  <div class="d-flex justify-content-between brt-green-light-2 mt-3">
+                        <p class="text-grey fs-14 mb-3 mt-1">Преподаватели</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p class="text-grey fs-14 mb-2">Записи достижений:</p>
+                        <p class="text-grey fs-14 mb-2">
+                           ${roles_achievements[getRoleIndex()].achievements_count}
                         </p>
                     </div>
-                @{{/each}}
+                    <div class="d-flex justify-content-between brb-green-light-2">
+                        <p class="text-grey fs-14 mb-2">Прикреплено ресурсов:</p>
+                        <p class="text-grey fs-14 mb-2">${roles_achievements[getRoleIndex()].records_count}</p>
+                    </div>
+                @{{/if}}
 
                 </div>
             </div>
@@ -103,22 +108,42 @@
                 ${works.length}
               </p>
              </div>
-           @{{/each}}
-                <div class="d-flex justify-content-between">
+              @{{/each}}
+
+              @{{if findRole(roles_works,'user')}}
+                  <div class="d-flex justify-content-between">
                     <p class="text-grey fs-14 mb-3 mt-1">Обучающимися</p>
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="text-grey fs-14 mb-2">Одобрено:</p>
-                    <p class="text-grey fs-14 mb-2">2</p>
+                    <p class="text-grey fs-14 mb-2">${worksStatusCount(roles_works[getRoleIndex()].works,1)}</p>
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="text-grey fs-14 mb-2">Отправлено на доработку:</p>
-                    <p class="text-grey fs-14 mb-2">1</p>
+                    <p class="text-grey fs-14 mb-2">${worksStatusCount(roles_works[getRoleIndex()].works,2)}</p>
                 </div>
                 <div class="d-flex justify-content-between brb-green-light-2">
                     <p class="text-grey fs-14 mb-2">Ожидают одобрения:</p>
-                    <p class="text-grey fs-14 mb-2">1</p>
+                    <p class="text-grey fs-14 mb-2">${worksStatusCount(roles_works[getRoleIndex()].works,0)}</p>
                 </div>
+                @{{else}}
+                  <div class="d-flex justify-content-between">
+                    <p class="text-grey fs-14 mb-3 mt-1">Обучающимися</p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p class="text-grey fs-14 mb-2">Одобрено:</p>
+                    <p class="text-grey fs-14 mb-2">0</p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p class="text-grey fs-14 mb-2">Отправлено на доработку:</p>
+                    <p class="text-grey fs-14 mb-2">0</p>
+                </div>
+                <div class="d-flex justify-content-between brb-green-light-2">
+                    <p class="text-grey fs-14 mb-2">Ожидают одобрения:</p>
+                    <p class="text-grey fs-14 mb-2">0</p>
+                </div>
+                @{{/if}}
+
             </div>
         </div>
     </div>

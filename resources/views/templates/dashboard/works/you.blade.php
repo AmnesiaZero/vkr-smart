@@ -93,7 +93,7 @@
                                     <img src="/images/Calendar.svg" alt="">
                                 </button>
                                 {{--                                Временно поменял имя,чтобы не мешалось--}}
-                                <input type="text" name="daterange" value="04.06.2024 - 07.06.2024"
+                                <input type="text" name="daterang" value="04.06.2024 - 07.06.2024"
                                        class=" fs-14 text-grey p-date w-75"/>
                             </div>
                         </div>

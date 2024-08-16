@@ -138,7 +138,7 @@
                         <div class="col-sm-8">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="self_check" value="1" checked=""> Да
+                                    <input type="checkbox" name="visibility" value="1" checked=""> Да
                                 </label>
                             </div>
                         </div>

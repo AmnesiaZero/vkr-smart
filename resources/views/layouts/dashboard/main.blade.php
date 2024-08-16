@@ -42,25 +42,8 @@
                 <li><a class="nav-link text-black-black" href="/portfolio">Портфолио</a></li>
                 <li><a class="nav-link text-black-black" href="/check-reference">Проверка&nbsp;справки</a></li>
                 <li><a class="nav-link text-black-black" href="https://api.vkr-vuz.ru" target="_blank">API</a></li>
-
-                <li class="user-menu col-sm-5 text-right">
-                    <a href="admin-office/" class="btn btn-default btn-testaccess"><span class="glyphicon glyphicon-user"></span> Личный кабинет</a>
-
-                    <a href="#" class="btn dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="caret"></span>
-                    </a>
-
-                    <ul class="header dropdown-menu" aria-labelledby="dropdownMenu">
-                        <li><a class="dropdown-item" href="/organization-settings">Настройки</a></li>
-                        <li><a class="dropdown-item" href="/organization-works">Работы</a></li>
-                        <li><a class="dropdown-item" href="/org-users">Электронное портфолио</a></li>
-                        <li><a class="dropdown-item" href="/organization-reports">Отчеты</a></li>
-                        <li><a class="dropdown-item" href="/organization-documents">Документация</a></li>
-                        <li><a class="dropdown-item" href="/dashboard/users/logout">Выйти</a></li>
-                        <li class="dropdown-item organization-info"></li>
-                    </ul>
-                </li>
             </ul>
+            @include('layouts.common.menu.dropdown')
         </div>
     </nav>
 </header>

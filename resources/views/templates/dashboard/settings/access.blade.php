@@ -144,13 +144,7 @@
                                       <p class="text-grey fs-14 pt-4">${date_of_birth}</p>
                                       <p class="text-grey fs-14">${phone}</p>
                                       <p class="text-grey fs-14 mb-0">
-                                          @{{if email_visibility==1}}
-                                           ${email}
-                                           @{{else}}
-                                           *******@*******
-                                           <br>
-                                           (скрыто настройками приватности)
-                                           @{{/if}}
+                                          @{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}
                                       </p>
                                       <a href="#" class="text-grey link-active-hover fs-14" onclick="resetUserPassword('${email}')">отправить пароль на email</a>
                                       <div class="pas cursor-p mt-2">
@@ -214,13 +208,7 @@
                       </div>
                      @{{/if}}
                     <p class="text-grey fs-14 mt-3 mb-2">
-                               @{{if email_visibility==1}}
-                                           ${email}
-                                           @{{else}}
-                                           *******@*******
-                                           <br>
-                                           (скрыто настройками приватности)
-                                           @{{/if}}</p>
+                    @{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}
                     <a href="#" class="text-grey link-active-hover fs-14"  onclick="resetUserPassword('${email}')">Отправить пароль на email</a>
                 </div>
             </div>
@@ -244,14 +232,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="
-                            @{{if email_visibility==1}}
-                                           ${email}
-                                           @{{else}}
-                                           *******@*******
-                                           <br>
-                                           (скрыто настройками приватности)
-                                           @{{/if}}" placeholder="Ввод...">
+                            <input type="email" class="form-control" id="email" name="email" value="@{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}"
                         </div>
                         <div class="mb-3">
                             <label for="login" class="form-label">Логин</label>
@@ -326,15 +307,7 @@
             <div class="mb-3">
                 <label for="email">Email-адрес</label>
                 <input type="text" name="email" class="form-control bg-grey-form fs-14 text-grey fw-500" id="email"
-                       value="
-                       @{{if email_visibility==1}}
-                                           ${email}
-                                           @{{else}}
-                                           *******@*******
-                                           <br>
-                                           (скрыто настройками приватности)
-                        @{{/if}}
-                       ">
+                       value="@{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}">
             </div>
             <div class="mb-3">
                 <label for="email">Дата рождения </label>
