@@ -229,7 +229,7 @@
     @include('layouts.dashboard.include.tmpls.works_page')
 
             <script id="work_tmpl" type="text/x-jquery-tmpl">
-      @{{if visibility & visibility==1}}
+      @{{if visibility && visibility==1}}
      <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
     <th scope="row">${specialty.name}</th>
     <td>${student}</td>
