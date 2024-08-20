@@ -154,7 +154,7 @@
             <script src="/js/dashboard/works/students.js"></script>
             <script src="{{'/js/bootstrap-select.js'}}"></script>
             <script id="work_tmpl" type="text/x-jquery-tmpl">
-      @{{if visibility==1}}
+      @{{if visibility & visibility==1}}
      <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
     <th scope="row">${specialty.name}</th>
     <td>${student}</td>
