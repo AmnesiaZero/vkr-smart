@@ -11,7 +11,7 @@
         <link href="{{'/css/select2.min.css'}}" rel="stylesheet"/>
         <link rel="stylesheet" href="{{'/css/bootstrap-select.css'}}">
 
-        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet"
+        <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet"
               type="text/css"/>
         <link rel="stylesheet" type="text/css" href="{{'/css/dashboard.css'}}">
         <link rel="stylesheet" type="text/css" href="{{'/css/fancy_style.css'}}">
