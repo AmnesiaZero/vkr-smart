@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('works', function (Blueprint $table) {
-            $table->boolean('visibility')->default(0)->change();
+            $table->boolean('visibility')->default(1)->change();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('works', function (Blueprint $table) {
-            $table->boolean('visibility')->default(1)->change();
+            $table->boolean('visibility')->default(0)->change();
         });
     }
 };
