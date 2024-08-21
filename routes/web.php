@@ -224,7 +224,7 @@ Route::group([
         Route::group([
             'prefix' => 'report',
         ],function (){
-           Route::get('get',[WorksController::class,'getReport']);
+           Route::get('get',[WorksController::class,'getReport'])->withoutMiddleware(['web', 'auth']);
         });
 
     });
