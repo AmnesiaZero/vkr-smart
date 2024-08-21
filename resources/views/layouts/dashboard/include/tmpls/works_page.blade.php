@@ -323,7 +323,7 @@
                         </thead>
                         <table>
                             <tbody id="report_assets_list">
-                            @{{each reportAssets}}
+                            @{{each report_assets}}
                             <tr>
                                 <td><a  class="ng-binding">${name}</a></td>
                                 <td><a target="_blank" href="${link}" class="ng-binding"></a></td>
