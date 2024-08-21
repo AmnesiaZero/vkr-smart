@@ -292,7 +292,7 @@
 
 
 <script id="report_tmpl" type="text/x-jquery-tmpl">
- <div id="report_modal" class="modal">
+ <div id="report_modal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
