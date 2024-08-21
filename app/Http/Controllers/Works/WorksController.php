@@ -366,7 +366,7 @@ class WorksController extends Controller
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
-        $documentId = $request->document_id;
+        $documentId = $request->id;
         return $this->worksService->getReport($documentId);
     }
 
