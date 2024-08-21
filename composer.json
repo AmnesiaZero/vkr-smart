@@ -27,7 +27,8 @@
         "spatie/laravel-permission": "^6.9",
         "symfony/http-client": "^6.2",
         "symfony/mailgun-mailer": "^6.4",
-        "vkrsmart/sdk": "dev-master"
+        "vkrsmart/sdk": "dev-master",
+        "maatwebsite/excel":"^3.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
