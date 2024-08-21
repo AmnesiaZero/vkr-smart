@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/achievements.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/profile-card.css') }}">
-    <link rel="stylesheet" href="{{asset('/css/bootstrap-select.css')}}">
+    <link rel="stylesheet" href="{{asset('css/profile.css',true)}}">
+    <link rel="stylesheet" href="{{ asset('css/achievements.css',true) }}">
+    <link rel="stylesheet" href="{{ asset('css/profile-card.css',true) }}">
+    <link rel="stylesheet" href="{{asset('/css/bootstrap-select.css',true)}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 @endsection
 @section('content')
