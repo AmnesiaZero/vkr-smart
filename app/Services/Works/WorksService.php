@@ -605,7 +605,7 @@ class WorksService extends Services
                         'work_id' => $work->id,
                         'name' => $document['title'],
                         'link' => $document['link'],
-                        'unique_percent' => $document['percent']
+                        'borrowings_percent' => $document['percent']
                     ];
                     Log::debug('report data = '.print_r($data,true));
                     $this->reportAssetRepository->create($data);
