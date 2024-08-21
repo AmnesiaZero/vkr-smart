@@ -12,8 +12,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-3 col-lg-3 col-xs-3">
-                    <a href="http://www.vkr-vuz.ru/">
-                        <img src="{{ asset('images/logo.png') }}" class="img-fluid" alt="ВКР-ВУЗ">
+                    <a href="{{url('/')}}">
+                        <img src="{{ asset('images/logo.png',true) }}" class="img-fluid" alt="ВКР-ВУЗ">
                     </a>
                 </div>
                 <div class="col-sm-9 col-lg-9 col-xs-9">
@@ -30,7 +30,7 @@
             <div class="col-sm-3 col-lg-3 col-xs-3">
                 <div class="profile-sidebar">
                     <div class="profile-userpic d-flex align-items-center justify-content-center">
-                        <img id="user-avatar" src="{{asset($user->avatar_path)}}" alt=""
+                        <img id="user-avatar" src="{{asset($user->avatar_path,true)}}" alt=""
                              class="img-fluid img-responsive" style="border-radius: 6px;">
                     </div>
                     <div class="profile-usertitle">
@@ -342,7 +342,7 @@
     <script>
          function getAvatar()
          {
-            return  "{{ asset('images/my-image.png') }}";
+            return  "{{ asset('images/my-image.png',true) }}";
         }
     </script>
     <script id="achievement_tmpl" type="text/x-jquery-tmpl">
