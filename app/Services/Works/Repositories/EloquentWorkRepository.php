@@ -48,7 +48,7 @@ class EloquentWorkRepository implements WorkRepositoryInterface
 
     public function find(int $id): Model
     {
-        return Work::withTrashed()->with('specialty','year','faculty','department','user')->find($id);
+        return Work::withTrashed()->with('specialty','year','faculty','department','user','reportAssets')->find($id);
     }
 
     public function search(array $data): LengthAwarePaginator

@@ -678,16 +678,15 @@ function openReport(workId)
         id:workId
     };
     $.ajax({
-        url: "/dashboard/works/report/show",
+        url: "/dashboard/works/find",
         type: 'GET',
         data:data,
         dataType: "json",
         success: function(response) {
             if (response.success)
             {
-                // const work = response.data.work;
-                const report = response.data.report;
-                $("#report_container").html($("#report_tmpl").tmpl(report));
+                const work = response.data.work;
+                $("#report_container").html($("#report_tmpl").tmpl(work));
             }
             else
             {
