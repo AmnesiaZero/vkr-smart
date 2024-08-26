@@ -229,6 +229,18 @@ Route::group([
 
     });
 
+    Route::group([
+        'prefix' => 'platform',
+//        'middleware' => 'role:platformAdmin'
+    ],function () {
+       Route::get('/',[UsersController::class,'mainPlatformView']);
+       Route::group([
+           'prefix' => 'organization'
+       ],function (){
+           Route::get('departments',[DepartmentsController::class,'view']);
+       });
+    });
+
 
     Route::group([
         'prefix' => 'portfolios'
@@ -316,6 +328,7 @@ Route::group([
         Route::group([
             'prefix' => 'departments'
         ], function () {
+            Route::get('all',[DepartmentsController::class,'all']);
             Route::get('get', [DepartmentsController::class, 'get']);
             Route::post('create', [DepartmentsController::class, 'create']);
             Route::post('update', [DepartmentsController::class, 'update']);

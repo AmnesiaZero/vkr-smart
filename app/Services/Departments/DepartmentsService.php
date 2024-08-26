@@ -4,6 +4,7 @@ namespace App\Services\Departments;
 
 use App\Helpers\JsonHelper;
 use App\Models\Department;
+use App\Models\Organization;
 use App\Services\Departments\Repositories\DepartmentRepositoryInterface;
 use App\Services\Faculties\Repositories\FacultyRepositoryInterface;
 use App\Services\OrganizationsYears\Repositories\OrganizationYearRepositoryInterface;
@@ -11,6 +12,7 @@ use App\Services\Services;
 use App\Services\Users\Repositories\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class DepartmentsService extends Services
@@ -171,6 +173,29 @@ class DepartmentsService extends Services
         return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'При получении специальностей произошла ошибка',
+        ]);
+    }
+
+    public function view()
+    {
+        $you = Auth::user();
+        $organizations = Organization::all();
+        return view('templates.dashboard.platform.organization.departments',['user' => $you,'organizations' => $organizations]);
+    }
+
+    public function all(): JsonResponse
+    {
+        $departments = Department::all();
+        if($departments and is_iterable($departments))
+        {
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'departments' => $departments
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Ошибка при получении подразделений'
         ]);
     }
 

@@ -239,17 +239,16 @@
     <td>${getAssessmentDescription(assessment)}</td>
     <td>${getSelfCheckDescription(self_check)}</td>
         <td>
-{{--            @{{if report_status==0}}--}}
-{{--            <div class="mt-2">--}}
-{{--            <span class="bg-waiting px-2 d-flex align-items-center">--}}
-{{--            <div class="me-2 yellow-c">--}}
-{{--            </div>--}}
-{{--              В очереди на проверку--}}
-{{--            </span>--}}
-{{--            </div>--}}
-{{--            @{{/if}}--}}
-{{--            @{{if report_status==1}}--}}
-                @{{if report_id}}
+            @{{if report_status==0}}
+            <div class="mt-2">
+            <span class="bg-waiting px-2 d-flex align-items-center">
+            <div class="me-2 yellow-c">
+            </div>
+              В очереди на проверку
+            </span>
+            </div>
+            @{{/if}}
+            @{{if report_status==1}}
             <div class="mt-2" onclick="openReport(${id})">
             <span class="bg-active px-2 d-flex align-items-center">
             <div class="me-2 green-c">
@@ -257,27 +256,20 @@
               Отчет
             </span>
             </div>
-            @{{else}}
-              <div>
+            @{{/if}}
+            @{{if report_status==2}}
+            <div>
                 <span class="bg-error p-2 d-flex align-items-center gap-2">
                     <span class="red-c"></span>
                     Не&nbsp;проверена
                 </span>
             </div>
             @{{/if}}
-{{--            @{{if report_status==2}}--}}
-{{--            <div>--}}
-{{--                <span class="bg-error p-2 d-flex align-items-center gap-2">--}}
-{{--                    <span class="red-c"></span>--}}
-{{--                    Не&nbsp;проверена--}}
-{{--                </span>--}}
-{{--            </div>--}}
-{{--            @{{/if}}--}}
 
         </td>
         <td>
             <img src="/images/three_dots.svg" alt="" id="work-menu-button" class="btn-info-box cursor-p dropdown-toggle"
-            type="button"
+            type="button" onclick="openInfoBox(${id})"
             data-bs-toggle="dropdown" aria-expanded="false">
             @include('layouts.dashboard.include.menu.work.employee')
                 </td>

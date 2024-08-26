@@ -44,6 +44,7 @@ class WorksController extends Controller
         'page',
         'selected_departments',
         'work_status',
+        'status',
         'user_id',
         'visibility'
     ];

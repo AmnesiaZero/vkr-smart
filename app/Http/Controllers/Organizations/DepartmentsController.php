@@ -28,6 +28,16 @@ class DepartmentsController extends Controller
         $this->departmentsService = $departmentsService;
     }
 
+    public function view()
+    {
+        return $this->departmentsService->view();
+    }
+
+    public function all(): JsonResponse
+    {
+        return $this->departmentsService->all();
+    }
+
     public function get(Request $request): JsonResponse
     {
         Log::debug('Вошёл в get у faculty departments');

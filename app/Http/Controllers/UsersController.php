@@ -85,6 +85,10 @@ class UsersController extends Controller
             {
                 return redirect('/dashboard/works/employees');
             }
+            else if($user->hasRole('platformadmin'))
+            {
+                return redirect('/dashboard/platform');
+            }
             else
             {
                 return redirect('/dashboard/personal-cabinet');
@@ -382,6 +386,11 @@ class UsersController extends Controller
     public function teacherDepartmentsView()
     {
         return $this->usersService->teacherDepartmentsView();
+    }
+
+    public function mainPlatformView()
+    {
+        return $this->usersService->mainPlatformView();
     }
 
     public function openPortfolio(int $id)

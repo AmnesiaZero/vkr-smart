@@ -72,7 +72,8 @@ class ReportsService extends Services
                 'users.organization_id',
                 'users.year_id',
                 'users.faculty_id',
-                'users.department_id'
+                'users.department_id',
+                'roles.slug as slug'
             );
 
         // Применение фильтров
@@ -99,6 +100,7 @@ class ReportsService extends Services
                 $rolesUsers[$result->role_id] = [
                     'role_id' => $result->role_id,
                     'role_name' => $result->role_name,
+                    'slug' => $result->slug,
                     'users' => []
                 ];
             }
@@ -113,7 +115,7 @@ class ReportsService extends Services
         }
         $rolesUsers = array_values($rolesUsers);
 
-        $query = Role::query()->whereIn('slug',['teacher','admin','employee','user']); //Здесь подгружаем у работ всю работу для фильтрации
+        $query = Role::query()->whereIn('slug',['teacher','admin','employee','user']); //Здесь подгружаем у работ всю инфу для фильтрации
         $worksQuery = $query
             ->join('role_user', 'roles.id', '=', 'role_user.role_id')
             ->join('users', 'role_user.user_id', '=', 'users.id')
@@ -122,21 +124,24 @@ class ReportsService extends Services
             ->select(
                 'roles.id as role_id',
                 'roles.name as role_name',
-                'users.id as user_id',
-                'users.name as user_name',
-                'works.id as work_id',
+                'roles.slug as slug',
                 'works.organization_id',
                 'works.year_id',
                 'works.faculty_id',
                 'works.department_id',
-                'works.work_status'
+                'works.work_status as work_status',
+                DB::raw('COUNT(DISTINCT works.id) as works_count'),
+            )
+            ->groupBy(
+                'roles.id',
+                'roles.slug',
+                'roles.name',
+                'works.organization_id',
+                'works.year_id',
+                'works.faculty_id',
+                'works.department_id',
+                'works.work_status',
             );
-
-// Применение фильтров
-//        if (isset($data['organization_id'])) {
-//            $worksQuery->where('works.organization_id', $data['organization_id']);
-//        }
-
 
         if (isset($data['year_id'])) {
             $worksQuery->where('works.year_id','=', $data['year_id']);
@@ -155,6 +160,10 @@ class ReportsService extends Services
                 $rolesWorks[$result->role_id] = [
                     'role_id' => $result->role_id,
                     'role_name' => $result->role_name,
+                    'slug' => $result->slug,
+                    'work_wait' => 0,
+                    'work_approved' => 0,
+                    'work_denied' => 0,
                     'works' => []
                 ];
             }
@@ -164,8 +173,20 @@ class ReportsService extends Services
                 'year_id' => $result->year_id,
                 'faculty_id' => $result->faculty_id,
                 'department_id' => $result->department_id,
-                'work_status' => $result->work_status
+                'work_status' => $result->work_status,
             ];
+            $array = [
+                0 => 'work_wait',
+                1 => 'work_approved',
+                2 => 'work_denied',
+            ];
+            foreach ($array as $key=>$value)
+            {
+                if($result->slug=='user' and $result->work_status==$key)
+                {
+                    $rolesWorks[$result->role_id][$value] += $result->works_count;
+                }
+            }
         }
 
 
@@ -185,18 +206,18 @@ class ReportsService extends Services
             ->select(
                 'roles.id as role_id',
                 'roles.name as role_name',
+                'roles.slug as slug',
                 'users.id as user_id',
                 'users.name as user_name',
                 'users.organization_id',
                 'users.year_id',
                 'users.faculty_id',
                 'users.department_id',
-//                'achievements.id as achievement_id',
-//                'achievements_records.id as record_id',
                 DB::raw('COUNT(DISTINCT achievements.id) as achievements_count'),
                 DB::raw('COUNT(achievements_records.id) as records_count')
             ) ->groupBy(
                 'roles.id',
+                'roles.slug',
                 'roles.name',
                 'users.id',
                 'users.name',
@@ -204,7 +225,7 @@ class ReportsService extends Services
                 'users.year_id',
                 'users.faculty_id',
                 'users.department_id'
-            );;
+            );
         if (isset($data['year_id'])) {
                 $query->where('year_id','=',$data['year_id']);
         }
@@ -226,6 +247,7 @@ class ReportsService extends Services
                 $rolesAchievements[$result->role_id] = [
                     'role_id' => $result->role_id,
                     'role_name' => $result->role_name,
+                    'slug' => $result->slug,
                     'achievements_count' => 0,
                     'records_count' => 0
                 ];

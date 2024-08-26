@@ -822,14 +822,6 @@ function openInfoBox(id)
             }
         });
     }
-
-    if(userType===2)
-    {
-        $("#info_box").fadeToggle(100);
-    }
-    else {
-        $("#student_info_box").fadeToggle(100);
-    }
 }
 
 function checkDeleted()

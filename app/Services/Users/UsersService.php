@@ -536,5 +536,16 @@ class UsersService extends Services
         return view('templates.dashboard.profile',['user' => $you]);
     }
 
+    public function mainPlatformView()
+    {
+        $data = [
+            'role' => 'admin',
+            'page' => 1
+        ];
+        $you = Auth::user();
+        $users = $this->_repository->searchPaginate($data,[]);
+        return view('templates.dashboard.platform.index',['users' => $users,'user' => $you]);
+    }
+
 
 }

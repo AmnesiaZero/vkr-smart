@@ -58,10 +58,19 @@ function getReport(data={})
         dataType: "json",
         success: function (response) {
             const roles = {
-              'Администраторы' : 'admin'
+              'admin' : 'Администраторы',
+                'teacher' : 'Преподаватели',
+                'employee' : 'Сотрудники',
+                'user' : 'Студенты',
+                'inspector' : 'Проверяющие'
             };
+            const report = response.data;
+            report.roles = $.map(roles, function(value, key) {
+                return [[key, value]];
+            });
+            console.log(report);
             if (response.success) {
-                $("#report_container").html($("#report_tmpl").tmpl(response.data));
+                $("#report_container").html($("#report_tmpl").tmpl(report));
             }
             else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
