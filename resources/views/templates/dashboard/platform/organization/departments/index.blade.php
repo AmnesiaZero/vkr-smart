@@ -46,33 +46,22 @@
                 </tr>
                 </thead>
                 <tbody id="departments_list">
-                @if(isset($departments) && is_iterable($departments))
-                    @foreach($departments as $item)
-                        @include('templates.dashboard.platform.organization.departments.inc.item-row', array(
-                            'item'=>$item,
-                        ))
-                    @endforeach
-                @else
-                    <tr>
-                        <td colspan="6" class="text-center">
-                            Для просмотра отделений выберите организацию
-                        </td>
-                    </tr>
-                @endif
                 </tbody>
             </table>
         </div>
     </div>
-    @include('templates.dashboard.platform.organization.departments.inc.item-row')
+
+{{--    @include('templates.dashboard.platform.organization.departments.inc.item-row')--}}
 @endsection
 
 @section('scripts')
+    @include('layouts.dashboard.include.tmpls.modal.update.department')
     <script>
         $('select[name="organization_id"]').on('change', function(e) {
             $(this).closest('form').submit();
         });
     </script>
-{{--    <script src="/js/dashboard/platform/organization/departments.js"></script>--}}
+    <script src="/js/dashboard/platform/organization/departments.js"></script>
     @include('templates.dashboard.platform.organization.departments.inc.department_tmpl')
 
 

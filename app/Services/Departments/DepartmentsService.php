@@ -121,9 +121,16 @@ class DepartmentsService extends Services
     public function find(int $id): JsonResponse
     {
         $department = $this->departmentRepository->find($id);
-        return self::sendJsonResponse(true, [
-            'title' => 'Успех',
-            'department' => $department
+        if($department and $department->id)
+        {
+            return self::sendJsonResponse(true, [
+                'title' => 'Успех',
+                'department' => $department
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Данного подразделения не существует'
         ]);
     }
 
@@ -202,6 +209,20 @@ class DepartmentsService extends Services
             'title' => 'Ошибка',
             'message' => 'Ошибка при получении подразделений'
         ]);
+    }
+
+    public function updateView(int $id)
+    {
+        $department = $this->departmentRepository->find($id);
+        $you = Auth::user();
+        if($department and $department->id)
+        {
+            return view('templates.dashboard.platform.organization.departments.edit',[
+                'department' => $department,
+                'user' => $you
+            ]);
+        }
+        return back()->withErrors(['Возникла ошибка при получении данного подразделения']);
     }
 
 

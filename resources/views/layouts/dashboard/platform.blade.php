@@ -194,6 +194,9 @@
         </footer>
     </div>
 </div>
+<div id="tmpl_container">
+
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

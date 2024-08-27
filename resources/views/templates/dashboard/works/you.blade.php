@@ -165,7 +165,6 @@
                 </ul>
             </nav>
         </div>
-        @include('layouts.dashboard.include.menu.work.you')
 
         <div id="report_container">
 
@@ -244,6 +243,7 @@
         </td>
         <td>
             <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p" onclick="openInfoBox(${id})">
+        @include('layouts.dashboard.include.menu.work.you')
         </td>
     </tr>
 

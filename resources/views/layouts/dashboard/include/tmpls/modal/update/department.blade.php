@@ -1,11 +1,11 @@
 <script id="update_department_tmpl" type="text/x-jquery-tmpl">
-    <div class="modal" id="update_department">
+    <div id="update_department">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Редактирование кафедры</h4>
                 </div>
-                <form onsubmit="updateDepartment(${id});return false;" id="department_update_${id}">
+                <form onsubmit="updateDepartment(${id});return false;" id="department_update">
                     <div class="modal-body">
                         <div class="row g-0">
                             <div class="col-sm-3">
@@ -14,7 +14,7 @@
                             <div class="col-sm-9">
                                 <input id="edited1" type="text" name="name"
                                        class="form-control box-shadow-none fs-15 p-0 px-2 py-1 br-2 edited w-100"
-                                       value="">
+                                       value="${name}">
                             </div>
                         </div>
                         <div class="row g-0">
@@ -24,7 +24,7 @@
                             <div class="col-sm-9">
                                 <input id="edited1" type="text" name="description"
                                        class="form-control box-shadow-none fs-15 p-0 px-2 py-1 br-2 edited w-100"
-                                       value="">
+                                       value="${description}">
                             </div>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                         <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
                             Применить
                         </button>
-                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" onclick="closeTmplModal('update_department')">
                             Закрыть
                         </button>
                     </div>

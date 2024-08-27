@@ -3,7 +3,7 @@
 		{{ $item->id }}
 	</td>
 	<td class="title">
-		<a href="{{ route('dashboard.organizations.departments.update', $item->id) }}" class="name">{{ $item->title }}</a>
+		<a href="/dashboard/organizations/departments/update/{{$item->id}}" class="name">{{ $item->name }}</a>
 	</td>
 	<td class="status-blocked text-center">
 		@if($item->deleted_at)
@@ -21,14 +21,14 @@
 			<a href="" id="status_{{ $item->id }}" data-item-id="{{ $item->id }}" class="restore d-inline mr-2">
                 <i id="stat_{{ $item->id }}" class="icon fas fa-trash-restore"></i>
             </a>
-			<a href="{{ route('dashboard.organizations.departments.delete', $item->id) }}" data-item-id="{{ $item->id }}" class="delete d-inline">
+			<a href="/dashboard/organizations/departments/delete?{{$item->id}}" data-item-id="{{ $item->id }}" class="delete d-inline">
                 <i class="icon far fa-trash-alt"></i>
             </a>
 		@else
-			<a href="{{ route('dashboard.organizations.departments.update', $item->id) }}" class="d-inline mr-2">
+			<a href="/dashboard/organizations/departments/update/{{$item->id}}" class="d-inline mr-2">
                 <i class="icon fas fa-edit"></i>
             </a>
-            <a href="{{ route('dashboard.organizations.departments.delete', $item->id) }}" data-item-id="{{ $item->id }}" class="destroy d-inline">
+            <a href="/dashboard/organizations/departments/delete?{{$item->id}}" data-item-id="{{ $item->id }}" class="destroy d-inline">
                 <i class="icon far fa-trash-alt"></i>
             </a>
 		@endif

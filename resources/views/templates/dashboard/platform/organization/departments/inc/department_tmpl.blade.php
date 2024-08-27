@@ -27,10 +27,10 @@
                     <i class="icon far fa-trash-alt"></i>
                 </a>
                 @{{else}}
-                <a href="" class="d-inline mr-2" data-bs-toggle="modal" data-bs-target="#update_department">
+                <a href="" class="d-inline mr-2" onclick="openUpdateDepartmentModal(${id});return false">
                 <i class="icon fas fa-edit" ></i>
                 </a>
-                <a href="" data-item-id="${id}" class="destroy d-inline">
+                <a href="" data-item-id="${id}" class="destroy d-inline" onclick="deleteDepartment(${id})">
                     <i class="icon far fa-trash-alt"></i>
                 </a>
                 @{{/if}}

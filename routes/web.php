@@ -328,6 +328,8 @@ Route::group([
         Route::group([
             'prefix' => 'departments'
         ], function () {
+            Route::get('update/{id}',[DepartmentsController::class, 'updateView']);
+            Route::get('find',[DepartmentsController::class,'find']);
             Route::get('all',[DepartmentsController::class,'all']);
             Route::get('get', [DepartmentsController::class, 'get']);
             Route::post('create', [DepartmentsController::class, 'create']);
