@@ -180,7 +180,12 @@ class DepartmentsService extends Services
     {
         $you = Auth::user();
         $organizations = Organization::all();
-        return view('templates.dashboard.platform.organization.departments',['user' => $you,'organizations' => $organizations]);
+        $departments = Department::all();
+        return view('templates.dashboard.platform.organization.departments.index',[
+            'user' => $you,
+            'organizations' => $organizations,
+            'departments' => $departments
+        ]);
     }
 
     public function all(): JsonResponse

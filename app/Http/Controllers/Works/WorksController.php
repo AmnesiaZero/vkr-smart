@@ -371,17 +371,6 @@ class WorksController extends Controller
         return $this->worksService->getReport($documentId);
     }
 
-    public function showReport(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'id' => ['required','integer',Rule::exists('works','id')]
-        ]);
-        if ($validator->fails()) {
-            return ValidatorHelper::error($validator);
-        }
-        $id = $request->id;
-        return $this->worksService->showReport($id);
-    }
 
 
 }

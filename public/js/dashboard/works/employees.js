@@ -1174,8 +1174,8 @@ function updateWorkCore(data,workId)
         success: function(response) {
             if (response.success)
             {
-                const work = response.data.work;
-                $("#work_" + workId).replaceWith($("#work_tmpl").tmpl(work));
+                // const work = response.data.work;
+                // $("#work_" + workId).replaceWith($("#work_tmpl").tmpl(work));
                 $.notify(response.data.title + ":" + response.data.message, "success");
 
             }
