@@ -6,6 +6,7 @@ namespace App\Services\Departments\Repositories;
 use App\Models\Department;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EloquentDepartmentRepository implements DepartmentRepositoryInterface
 {
@@ -20,9 +21,18 @@ class EloquentDepartmentRepository implements DepartmentRepositoryInterface
         return Department::query()->where('year_id', '=', $yearId)->get();
     }
 
-    public function get(int $facultyId): Collection
+    public function get(array $data): Collection|LengthAwarePaginator
     {
-        return Department::query()->where('faculty_id', '=', $facultyId)->get();
+        $query = Department::query();
+        if(isset($data['faculty_id']))
+        {
+            $query = $query->where('faculty_id', '=', $data['faculty_id']);
+        }
+        if(isset($data['paginate']) and $data['paginate'])
+        {
+            return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
+        }
+        return $query->get();
     }
 
     public function update(int $id, array $data): int
@@ -52,5 +62,19 @@ class EloquentDepartmentRepository implements DepartmentRepositoryInterface
         return $department->programs->map(function ($program) {
             return $program->programSpecialties;
         })->collapse();
+    }
+
+    public function search(array $data): LengthAwarePaginator
+    {
+        $query = Department::query();
+        if(isset($data['name']))
+        {
+            $query = $query->where('name','like','%'.$data['name'].'%');
+        }
+        if(isset($data['organization_id']))
+        {
+            $query = $query->where('organization_id','=',$data['organization_id']);
+        }
+        return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
     }
 }

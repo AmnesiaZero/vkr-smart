@@ -1,76 +1,67 @@
-@extends('layouts.dashboard.'.config('settings.dashboard_theme').'.index')
 
-@section('content')
-    <div class="list">
-        <div class="list-header">
-            <h2 class="block-title">Новое отделение</h2>
-        </div>
-        <form id="formContent" action="{{ route('dashboard.organizations.departments.store') }}" data-action-index="{{ route('dashboard.organizations.departments.index') }}" method="POST">
-            {{ csrf_field() }}
-            <div class="row">
-                <div class="col-8">
-                    <div class="post">
-                        <div class="form-group">
-                            <label for="organization_id">Выберите организацию</label>
-                            <select id="organization_id" name="organization_id" class="form-control">
-                                <option value="">-- Выберите организацию --</option>
-                                @if(isset($organizations) && !empty($organizations))
-                                    @foreach($organizations as $organization)
-                                        <option value="{{ $organization->id }}">{{ $organization->name }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
+<div class="modal fade" id="add_department_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Добавление работы</h3>
+            </div>
+            <form class="form form-horizontal" id="create_department_form" onsubmit="createDepartment();return false">
+                <div class="modal-body">
+
+                    <div class="d-flex flex-column gap-3">
+                        <div class="row">
+                            <label class="col-sm-4">Организация</label>
+                            <div class="col-sm-8">
+                                <select name="organization_id" class="form-control" id="organizations_list" data-width="100%">
+                                    <option value="">Выбрать...</option>
+                                    @if(isset($organizations) and is_iterable($organizations))
+                                        @foreach($organizations as $organization)
+                                            <option value="{{$organization->id}}">{{$organization->name}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="title">Название отделения</label>
-                            <input id="title" type="text" name="title" class="form-control">
+                        <div class="row">
+                            <label class="col-sm-4">Год выпуска</label>
+                            <div class="col-sm-8">
+                                <select name="year_id" class="form-control" id="years_list" data-width="100%">
+                                    <option value="" disabled="" selected="selected">Уточните организацию</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="description">Дополнительная информация</label>
-                            <textarea id="description" name="description" rows="4" class="form-control"></textarea>
+                        <div class="row">
+                            <label class="col-sm-4">Факультет</label>
+                            <div class="col-sm-8">
+                                <select name="faculty_id" class="form-control" id="faculties_list" data-width="100%">
+                                    <option value="" disabled="" selected="selected">Уточните год выпуска</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="hidden" name="chief_id" value="{{ $user->id }}">
-                            <input type="hidden" name="id" value="0" />
+                        <div class="row">
+                            <label class="col-sm-4">Название подразделения</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="name" placeholder="Ввод...">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-4">Дополнительная информация</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="description" placeholder="Ввод..." required="">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
-        <div class="form-group">
-            <button id="save-close" class="btn btn-primary">Сохранить и закрыть</button>
-            <button id="save" class="btn btn-primary">Сохранить</button>
-            <button id="close" class="btn btn-secondary">Отмена</button>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
+                        Добавить
+                    </button>
+                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                        Закрыть
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-@endsection
+</div>
 
-@section('scripts')
-    <script src="{{ secure_asset('/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script>
-    <script>
-        jQuery(function(){
-            jQuery('#date_timepicker_start').datetimepicker({
-                lang: 'ru',
-                format:'Y/m/d',
-                scrollMonth: false,
-                onShow:function( ct ){
-                    this.setOptions({
-                        maxDate:jQuery('#date_timepicker_end').val()?jQuery('#date_timepicker_end').val():false
-                    })
-                },
-                timepicker:false
-            });
-            jQuery('#date_timepicker_end').datetimepicker({
-                lang: 'ru',
-                format:'Y/m/d',
-                scrollMonth: false,
-                onShow:function( ct ){
-                    this.setOptions({
-                        minDate:jQuery('#date_timepicker_start').val()?jQuery('#date_timepicker_start').val():false
-                    })
-                },
-                timepicker:false
-            });
-        });
-    </script>
-@endsection

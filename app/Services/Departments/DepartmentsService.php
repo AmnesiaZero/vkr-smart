@@ -41,6 +41,12 @@ class DepartmentsService extends Services
 
     public function create(array $data): JsonResponse
     {
+        $user = Auth::user();
+        $data['user_id'] = $user->id;
+        if(!isset($data['organization_id']))
+        {
+            $data['organization_id'] = $user->organization_id;
+        }
         if (!isset($data['faculty_id'])) {
             return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
@@ -70,15 +76,10 @@ class DepartmentsService extends Services
         ], 403);
     }
 
-    public function getModels(int $facultyId): Collection
-    {
-        return $this->departmentRepository->get($facultyId);
 
-    }
-
-    public function get(int $facultyId): JsonResponse
+    public function get(array $data): JsonResponse
     {
-        $facultyDepartments = $this->departmentRepository->get($facultyId);
+        $facultyDepartments = $this->departmentRepository->get($data);
         Log::debug('departments = ' . $facultyDepartments);
         return self::sendJsonResponse(true, [
             'title' => 'Успешно получены кафедры',
@@ -223,6 +224,22 @@ class DepartmentsService extends Services
             ]);
         }
         return back()->withErrors(['Возникла ошибка при получении данного подразделения']);
+    }
+
+    public function search(array $data): JsonResponse
+    {
+        $departments = $this->departmentRepository->search($data);
+        if($departments and is_iterable($departments))
+        {
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'departments' => $departments
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Возникла ошибка при поиске подразделений'
+        ]);
     }
 
 

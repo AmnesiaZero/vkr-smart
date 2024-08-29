@@ -113,6 +113,10 @@ p {
     font-weight: 700 !important;
 }
 
+td.list-group .dropdown {
+    margin-bottom: 0px;
+}
+
 .lh-23 {
     line-height: 23px;
 }

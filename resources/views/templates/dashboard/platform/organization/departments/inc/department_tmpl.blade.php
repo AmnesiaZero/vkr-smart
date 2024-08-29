@@ -3,7 +3,7 @@
             <td class="id">
                ${id}
             </td>
-            <td class="title">
+            <td class="title" onclick="departmentInfo(${id});return false">
                 <a href="" class="name">${name}</a>
             </td>
             <td class="status-blocked text-center">
@@ -30,7 +30,7 @@
                 <a href="" class="d-inline mr-2" onclick="openUpdateDepartmentModal(${id});return false">
                 <i class="icon fas fa-edit" ></i>
                 </a>
-                <a href="" data-item-id="${id}" class="destroy d-inline" onclick="deleteDepartment(${id})">
+                <a href="" data-item-id="${id}" class="destroy d-inline" onclick="deleteDepartment(${id});return false">
                     <i class="icon far fa-trash-alt"></i>
                 </a>
                 @{{/if}}

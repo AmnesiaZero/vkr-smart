@@ -214,7 +214,7 @@ class UsersService extends Services
             ]);
         }
 
-        $users = $this->_repository->searchPaginate($data);
+        $users = $this->_repository->search($data);
         return self::sendJsonResponse(true, [
             'title' => 'Успех',
             'message' => 'Пользователи успешно найдены',
@@ -418,23 +418,12 @@ class UsersService extends Services
         return view('templates.dashboard.settings.user_management', ['years' => $years]);
     }
 
-    public function get(array $roles): JsonResponse
-    {
-        $you = Auth::user();
-        $organizationId = $you->organization_id;
-        $users = $this->_repository->get($organizationId, $roles)->except(['id' => $you->id]);
-        //Сюда можно добавить ещё какую-нибудь инфу
-        return self::sendJsonResponse(true, [
-            'title' => 'Успешно',
-            'users' => $users
-        ]);
-    }
 
-    public function getPaginate(array $data)
+    public function get(array $data): JsonResponse
     {
         $you = Auth::user();
         $data['organization_id'] = $you->organization_id;
-        $users = $this->_repository->getPaginate($data);
+        $users = $this->_repository->get($data);
         return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'users' => $users
@@ -474,7 +463,12 @@ class UsersService extends Services
         $organizationId = $you->organization_id;
         $years = $this->yearRepository->get($organizationId);
         $roles = ['teacher'];
-        $users = $this->_repository->get($organizationId,$roles);
+        $data = [
+            'organization_id' => $organizationId,
+            'roles' => $roles,
+            'paginate' => false
+        ];
+        $users = $this->_repository->get($data);
         return view('templates.dashboard.portfolios.teachers',['years' => $years,'users' => $users]);
     }
 
@@ -494,8 +488,16 @@ class UsersService extends Services
         $organizationId = $you->organization_id;
         $years = $this->yearRepository->get($organizationId);
         $roles = ['user'];
-        $users = $this->_repository->get($organizationId,$roles);
-        return view('templates.dashboard.portfolios.students',['years' => $years,'users' => $users]);
+        $data = [
+            'organization_id' => $organizationId,
+            'roles' => $roles,
+            'paginate' => false
+        ];
+        $users = $this->_repository->get($data);
+        return view('templates.dashboard.portfolios.students',[
+            'years' => $years,
+            'users' => $users]
+        );
     }
 
     public function teacherPersonalCabinetView()
@@ -510,7 +512,12 @@ class UsersService extends Services
         $organizationId = $you->organization_id;
         $years = $this->yearRepository->get($organizationId);
         $roles = ['user'];
-        $users = $this->_repository->get($organizationId,$roles);
+        $data = [
+            'organization_id' => $organizationId,
+            'roles' => $roles,
+            'paginate' => false
+        ];
+        $users = $this->_repository->get($data);
         return view('templates.dashboard.portfolios.students',['years' => $years,'users' => $users]);
 
     }
@@ -543,7 +550,7 @@ class UsersService extends Services
             'page' => 1
         ];
         $you = Auth::user();
-        $users = $this->_repository->searchPaginate($data,[]);
+        $users = $this->_repository->search($data);
         return view('templates.dashboard.platform.index',['users' => $users,'user' => $you]);
     }
 

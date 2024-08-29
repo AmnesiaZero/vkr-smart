@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class EloquentUserRepository implements UserRepositoryInterface
@@ -46,33 +47,33 @@ class EloquentUserRepository implements UserRepositoryInterface
         return $this->find($id)->update($data);
     }
 
-    public function search(array $data, array $relations=['roles', 'departments','works'])
-    {
-        $query = User::with($relations);
-        if (isset($data['organization_id'])) {
-            $query = $query->where('organization_id', '=', $data['organization_id']);
-        }
-        if (isset($data['selected_years']) and count($data['selected_years'])>0) {
-            $yearsIds = $data['selected_years'];
-            $query = $query->whereHas('year', function ($query) use ($yearsIds) {
-                $query->whereIn('id', $yearsIds);
-            });
-        }
-        if (isset($data['selected_faculties']) and count($data['selected_faculties'])>0) {
-            $facultiesIds = $data['selected_faculties'];
-            $query = $query->whereHas('faculty', function ($query) use ($facultiesIds) {
-                $query->whereIn('id', $facultiesIds);
-            });
-        }
-        if(isset($data['selected_departments']))
-        {
-            $departmentsIds = $data['selected_departments'];
-            $query = $query->whereIn('department_id',$departmentsIds);
-        }
-        return $query->get();
-    }
+//    public function search(array $data, array $relations=['roles', 'departments','works'])
+//    {
+//        $query = User::with($relations);
+//        if (isset($data['organization_id'])) {
+//            $query = $query->where('organization_id', '=', $data['organization_id']);
+//        }
+//        if (isset($data['selected_years']) and count($data['selected_years'])>0) {
+//            $yearsIds = $data['selected_years'];
+//            $query = $query->whereHas('year', function ($query) use ($yearsIds) {
+//                $query->whereIn('id', $yearsIds);
+//            });
+//        }
+//        if (isset($data['selected_faculties']) and count($data['selected_faculties'])>0) {
+//            $facultiesIds = $data['selected_faculties'];
+//            $query = $query->whereHas('faculty', function ($query) use ($facultiesIds) {
+//                $query->whereIn('id', $facultiesIds);
+//            });
+//        }
+//        if(isset($data['selected_departments']))
+//        {
+//            $departmentsIds = $data['selected_departments'];
+//            $query = $query->whereIn('department_id',$departmentsIds);
+//        }
+//        return $query->get();
+//    }
 
-    public function searchPaginate(array $data, array $relations=['roles', 'departments','works']): LengthAwarePaginator
+    public function search(array $data, array $relations=['roles', 'departments','works']):Collection|LengthAwarePaginator
     {
         $query = User::with($relations);
         if (isset($data['organization_id'])) {
@@ -126,22 +127,15 @@ class EloquentUserRepository implements UserRepositoryInterface
             $departmentsIds = $data['selected_departments'];
             $query = $query->whereIn('department_id',$departmentsIds);
         }
-        return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
-    }
-
-    public function get(int $organizationId, array $roles = []): Collection
-    {
-        $users =  User::with(['roles', 'departments','works'])->where('organization_id', '=', $organizationId);
-        if(isset($roles))
+        if(isset($data['paginate']) and $data['paginate'])
         {
-            return $users->get()->filter(function ($user) use ($roles) {
-                return $user->roles->whereIn('slug', $roles)->isNotEmpty();
-            })->values();
+            return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
         }
-        return $users->get();
+        return $query->get();
     }
 
-    public function getPaginate(array $data):LengthAwarePaginator
+
+    public function get(array $data):Collection|LengthAwarePaginator
     {
         $query =  User::with(['roles', 'departments','works'])->where('organization_id', '=', $data['organization_id']);
         $roles = $data['roles'];
@@ -162,8 +156,16 @@ class EloquentUserRepository implements UserRepositoryInterface
                 });
             }
         }
-        return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
-
+        $you = Auth::user();
+        if($you and $you->id)
+        {
+            $query = $query->where('id','!=',$you->id);
+        }
+        if(isset($data['paginate']) and $data['paginate'])
+        {
+            return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
+        }
+        return $query->get();
     }
 
     public function filterUsers(Collection $users, array $data): Collection

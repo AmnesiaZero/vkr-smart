@@ -1,4 +1,4 @@
-var mainPageUrl = '/dashboard/organizations/departments';
+var mainPageUrl = '/dashboard/organizations';
 
 $(document).ready(function () {
     departments();
@@ -33,7 +33,7 @@ function departments(page=1) {
         page:page
     };
     $.ajax({
-        url: "/dashboard/organizations/departments/get",
+        url: "/dashboard/organizations/get",
         data:data,
         dataType: "json",
         type: "get",
@@ -58,7 +58,7 @@ function departments(page=1) {
 function years(organizationId)
 {
     const data = {
-       organization_id: organizationId
+        organization_id: organizationId
     };
     $.ajax({
         url: "/dashboard/organizations/years/get",
@@ -109,7 +109,7 @@ function createDepartment()
 {
     let data = $("#create_department_form").serialize();
     $.ajax({
-        url: "/dashboard/organizations/departments/create",
+        url: "/dashboard/organizations/create",
         dataType: "json",
         data: data,
         type: "POST",
@@ -139,7 +139,7 @@ function openUpdateDepartmentModal(id)
         id:id
     };
     $.ajax({
-        url: "/dashboard/organizations/departments/find",
+        url: "/dashboard/organizations/find",
         dataType: "json",
         type: "GET",
         data: data,
@@ -166,7 +166,7 @@ function updateDepartment(id)
     };
     data += '&' + $.param(additionalData);
     $.ajax({
-        url: "/dashboard/organizations/departments/update",
+        url: "/dashboard/organizations/update",
         dataType: "json",
         type: "post",
         data: data,
@@ -194,7 +194,7 @@ function departmentInfo(id)
         id:id
     };
     $.ajax({
-        url: "/dashboard/organizations/departments/find",
+        url: "/dashboard/organizations/find",
         data:data,
         dataType: "json",
         type: "get",
@@ -226,7 +226,7 @@ function searchDepartments(page=1)
     data +='&' + $.param(additionalData);
     data = serializeRemoveNull(data);
     $.ajax({
-        url: "/dashboard/organizations/departments/search",
+        url: "/dashboard/organizations/search",
         data:data,
         dataType: "json",
         type: "get",
@@ -276,30 +276,30 @@ function deleteDepartment(id)
 {
     if(confirm('Вы действительно хотите удалить данное подразделение?'))
     {
-    const data = {
-      id:id
-    };
-    $.ajax({
-        url: "/dashboard/organizations/departments/delete",
-        dataType: "json",
-        data: data,
-        type: "POST",
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (response) {
-            if (response.success) {
-                $("#department_" + id).remove();
-                $.notify(response.data.title + ":" + response.data.message, "success");
+        const data = {
+            id:id
+        };
+        $.ajax({
+            url: "/dashboard/organizations/delete",
+            dataType: "json",
+            data: data,
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                if (response.success) {
+                    $("#department_" + id).remove();
+                    $.notify(response.data.title + ":" + response.data.message, "success");
+                }
+                else {
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                }
+            },
+            error: function () {
+                $.notify("Произошла ошибка при выборе года", "error");
             }
-            else {
-                $.notify(response.data.title + ":" + response.data.message, "error");
-            }
-        },
-        error: function () {
-            $.notify("Произошла ошибка при выборе года", "error");
-        }
-    });
+        });
 
     }
 }

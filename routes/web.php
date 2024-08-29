@@ -235,8 +235,9 @@ Route::group([
     ],function () {
        Route::get('/',[UsersController::class,'mainPlatformView']);
        Route::group([
-           'prefix' => 'organization'
+           'prefix' => 'organizations'
        ],function (){
+           Route::get('/',[OrganizationsController::class,'view']);
            Route::get('departments',[DepartmentsController::class,'view']);
        });
     });
@@ -328,7 +329,7 @@ Route::group([
         Route::group([
             'prefix' => 'departments'
         ], function () {
-            Route::get('update/{id}',[DepartmentsController::class, 'updateView']);
+            Route::get('search',[DepartmentsController::class,'search']);
             Route::get('find',[DepartmentsController::class,'find']);
             Route::get('all',[DepartmentsController::class,'all']);
             Route::get('get', [DepartmentsController::class, 'get']);
@@ -370,7 +371,6 @@ Route::group([
         'prefix' => 'users'
     ], function () {
         Route::get('get', [UsersController::class, 'get']);
-        Route::get('get-paginate',[UsersController::class,'getPaginate']);
         Route::post('create', [UsersController::class, 'create']);
         Route::post('delete', [UsersController::class, 'delete']);
         Route::get('find', [UsersController::class, 'find']);

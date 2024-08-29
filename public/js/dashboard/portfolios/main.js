@@ -69,7 +69,8 @@ function users(page=1)
 {
     let data = {
         roles:[usersRole],
-        page:page
+        page:page,
+        paginate:1
     };
     if(role==='teacher' || role==='employee')
     {
@@ -79,7 +80,7 @@ function users(page=1)
         data = $.extend(data,additionalData);
     }
     $.ajax({
-        url: "/dashboard/users/get-paginate",
+        url: "/dashboard/users/get",
         data:data,
         type: "GET",
         dataType: "json",

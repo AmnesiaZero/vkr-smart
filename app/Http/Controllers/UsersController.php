@@ -46,7 +46,8 @@ class UsersController extends Controller
         'selected_years',
         'selected_departments',
         'avatar',
-        'page'
+        'page',
+        'paginate'
     ];
 
     public function __construct(UsersService $usersService)
@@ -192,30 +193,20 @@ class UsersController extends Controller
         return $this->usersService->newPassword($password, $token);
     }
 
-    public function get(Request $request): JsonResponse
-    {
-        $validator = Validator::make($request->all(), [
-            'roles.*' => ['required', Rule::exists('roles', 'slug')]
-        ]);
-        if ($validator->fails()) {
-            return ValidatorHelper::error($validator);
-        }
-        $roles = $request->roles;
-        return $this->usersService->get($roles);
-    }
 
-    public function getPaginate(Request $request):JsonResponse
+    public function get(Request $request):JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'roles.*' => ['required', Rule::exists('roles', 'slug')],
-            'page' => 'required|integer',
-            'selected_departments.*' => ['integer',Rule::exists('departments','id')]
+            'page' => 'integer',
+            'selected_departments.*' => ['integer',Rule::exists('departments','id')],
+            'paginate' => 'bool'
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
-        return $this->usersService->getPaginate($data);
+        return $this->usersService->get($data);
     }
 
     public function create(Request $request): JsonResponse
@@ -313,7 +304,8 @@ class UsersController extends Controller
             'is_active' => 'integer:in:0,1',
             'selected_departments.*' => ['integer', Rule::exists('departments', 'id')],
             'selected_years.*' => ['integer', Rule::exists('organizations_years', 'id')],
-            'page' => 'integer'
+            'page' => 'integer',
+            'paginate' => 'bool'
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);

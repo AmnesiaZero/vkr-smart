@@ -20,11 +20,20 @@
   text-transform: none;
 }
 
-@media only screen and (max-width: 1920px) {
-  .navbar .dropdown-menu {
-    width: auto;
-  }
-}
+/*@media only screen and (max-width: 1920px) {*/
+/*  .navbar .dropdown-menu {*/
+/*    width: auto;*/
+/*  }*/
+/*}*/
+
+/*td.list-group .dropdown {*/
+/*    margin-bottom: 0px;*/
+/*}*/
+
+/*.dropdown.bootstrap-select li.disabled a span {*/
+/*    color: #000 !important;*/
+/*    font-weight: 700 !important;*/
+/*}*/
 
 #content .nav-blocks {
   display: grid;
