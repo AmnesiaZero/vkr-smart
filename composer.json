@@ -27,7 +27,8 @@
         "spatie/laravel-permission": "^6.9",
         "symfony/http-client": "^6.2",
         "symfony/mailgun-mailer": "^6.4",
-        "vkrsmart/sdk": "dev-master"
+        "vkrsmart/sdk": "dev-master",
+        "maatwebsite/excel":"^3.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -57,7 +58,7 @@
         }
     },
     "github-oauth": {
-        "github.com": "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"
+        "github.com": "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"
     },
     "scripts": {
         "post-autoload-dump": [

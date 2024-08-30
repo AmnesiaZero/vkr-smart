@@ -49,8 +49,8 @@
                 </ul>
                 <p class="fw-600 pt-4">Пример ссылки перехода:</p>
                 <p class="text-grey fs-14 mb-1">*для проверки ссылки, откройте ее в другом браузере</p>
-                <a href="http://www.vkr-vuz.ru/autologin?&domain=595&id=31252&time=20230217181850&sign=a38647e6ab5be848682afc0975e62d70"
-                   class="text-grey fs-14 td-none ww-break">http://www.vkr-vuz.ru/autologin?&domain=595&id=31252&time=20230217181850&sign=a38647e6ab5be848682afc0975e62d70</a>
+                <a href="https://www.vkr-vuz.ru/autologin?&domain=595&id=31252&time=20230217181850&sign=a38647e6ab5be848682afc0975e62d70"
+                   class="text-grey fs-14 td-none ww-break">https://www.vkr-vuz.ru/autologin?&domain=595&id=31252&time=20230217181850&sign=a38647e6ab5be848682afc0975e62d70</a>
             </div>
         </div>
     </div>

@@ -93,7 +93,7 @@
                                     <img src="/images/Calendar.svg" alt="">
                                 </button>
                                 {{--                                Временно поменял имя,чтобы не мешалось--}}
-                                <input type="text" name="daterange" value="04.06.2024 - 07.06.2024"
+                                <input type="text" name="daterang" value="04.06.2024 - 07.06.2024"
                                        class=" fs-14 text-grey p-date w-75"/>
                             </div>
                         </div>
@@ -165,7 +165,6 @@
                 </ul>
             </nav>
         </div>
-        @include('layouts.dashboard.include.menu.work.you')
 
         <div id="report_container">
 
@@ -244,6 +243,7 @@
         </td>
         <td>
             <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p" onclick="openInfoBox(${id})">
+        @include('layouts.dashboard.include.menu.work.you')
         </td>
     </tr>
 

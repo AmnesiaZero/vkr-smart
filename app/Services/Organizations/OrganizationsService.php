@@ -3,6 +3,7 @@
 namespace App\Services\Organizations;
 
 use App\Helpers\JsonHelper;
+use App\Models\Organization;
 use App\Services\Organizations\Repositories\OrganizationRepositoryInterface;
 use App\Services\Services;
 use App\Services\Specialties\Repositories\SpecialtyRepositoryInterface;
@@ -59,5 +60,11 @@ class OrganizationsService extends Services
         $organizationId = $you->organization_id;
         $organization = $this->_repository->find($organizationId);
         return view('templates.dashboard.settings.integration', ['organization' => $organization]);
+    }
+
+    public function view()
+    {
+        $you = Auth::user();
+        return view('templates.dashboard.platform.organization.organizations.index',['user' => $you]);
     }
 }

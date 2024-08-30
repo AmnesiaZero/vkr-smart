@@ -69,6 +69,7 @@ $(document).ready(function () {
     achievements();
 });
 
+
 function achievements()
 {
     const data = {
@@ -364,6 +365,8 @@ function searchAchievements()
         }
     });
 }
+
+
 
 function openTextRecord(recordId)
 {

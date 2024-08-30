@@ -219,6 +219,8 @@ function deleteTreeElement(id) {
 
 
 function updateWorksPagination(pagination) {
+    console.log('pagination');
+    console.log(pagination);
 
     const displayedPages = pagination.links.length - 2; //Без Previous и Next
     const totalItems = pagination.total;

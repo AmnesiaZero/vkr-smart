@@ -583,6 +583,7 @@ class WorksService extends Services
 
     public function getReport(int $documentId): JsonResponse
     {
+        Log::debug('Вошёл в сервис getReport');
         $client = new MasterClient(config('sdk.master_key'));
         $report = new Report($client,true);
         $report->get($documentId);
@@ -602,13 +603,15 @@ class WorksService extends Services
                 {
                     $data = [
                         'work_id' => $work->id,
-                        'name' => $document->title,
-                        'link' => $document->link,
-                        'unique_percent' => $document->percent
+                        'name' => $document['title'],
+                        'link' => $document['link'],
+                        'borrowings_percent' => $document['percent']
                     ];
+                    Log::debug('report data = '.print_r($data,true));
                     $this->reportAssetRepository->create($data);
                 }
             }
+            Log::debug('Отчет отправлен');
             return self::sendJsonResponse(true,[
                 'title' => 'Успешно',
                 'message' => 'Репорт был успешно добавлен в систему'

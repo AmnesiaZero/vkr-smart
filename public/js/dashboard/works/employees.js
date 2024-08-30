@@ -688,7 +688,7 @@ function openReport(workId)
             if (response.success)
             {
                 const work = response.data.work;
-                $("#report_container").html($("#record_tmpl").tmpl(work));
+                $("#report_container").html($("#report_tmpl").tmpl(work));
             }
             else
             {
@@ -709,9 +709,11 @@ function searchWorks(page=1) {
     {
         const selectedYears = getArrayFromLocalStorage('selected_years');
         const selectedFaculties = getArrayFromLocalStorage('selected_faculties');
+        const selectedDepartments = getArrayFromLocalStorage('selected_departments');
         additionalData = {
             selected_years: selectedYears,
-            selected_faculties: selectedFaculties
+            selected_faculties: selectedFaculties,
+            selected_departments:selectedDepartments
         };
     }
     else if(role==='teacher' || role==='employee')
@@ -743,6 +745,17 @@ function searchWorks(page=1) {
                 const worksTable = $("#works_table");
                 worksTable.html($("#work_tmpl").tmpl(works));
                 updateWorksPagination(pagination);
+                works.forEach(work =>{
+                    const workId = work.id;
+                    window.Echo.channel(`works.${workId}`)
+                        .listen('.WorkUpdated', (e) => {
+                            console.log('Work updated:', e);
+                            reloadWork(workId);
+                        })
+                        .error((error) => {
+                            console.error('Error:', error);
+                        });
+                });
             }
             else
             {
@@ -810,14 +823,6 @@ function openInfoBox(id)
                 $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
             }
         });
-    }
-
-    if(userType===2)
-    {
-        $("#info_box").fadeToggle(100);
-    }
-    else {
-        $("#student_info_box").fadeToggle(100);
     }
 }
 
@@ -1171,8 +1176,8 @@ function updateWorkCore(data,workId)
         success: function(response) {
             if (response.success)
             {
-                const work = response.data.work;
-                $("#work_" + workId).replaceWith($("#work_tmpl").tmpl(work));
+                // const work = response.data.work;
+                // $("#work_" + workId).replaceWith($("#work_tmpl").tmpl(work));
                 $.notify(response.data.title + ":" + response.data.message, "success");
 
             }

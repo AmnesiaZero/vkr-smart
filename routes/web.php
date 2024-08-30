@@ -224,9 +224,22 @@ Route::group([
         Route::group([
             'prefix' => 'report',
         ],function (){
-           Route::get('get',[WorksController::class,'getReport']);
+           Route::get('get',[WorksController::class,'getReport'])->withoutMiddleware(['web', 'auth']);
         });
 
+    });
+
+    Route::group([
+        'prefix' => 'platform',
+//        'middleware' => 'role:platformAdmin'
+    ],function () {
+       Route::get('/',[UsersController::class,'mainPlatformView']);
+       Route::group([
+           'prefix' => 'organizations'
+       ],function (){
+           Route::get('/',[OrganizationsController::class,'view']);
+           Route::get('departments',[DepartmentsController::class,'view']);
+       });
     });
 
 
@@ -316,6 +329,9 @@ Route::group([
         Route::group([
             'prefix' => 'departments'
         ], function () {
+            Route::get('search',[DepartmentsController::class,'search']);
+            Route::get('find',[DepartmentsController::class,'find']);
+            Route::get('all',[DepartmentsController::class,'all']);
             Route::get('get', [DepartmentsController::class, 'get']);
             Route::post('create', [DepartmentsController::class, 'create']);
             Route::post('update', [DepartmentsController::class, 'update']);
@@ -355,7 +371,6 @@ Route::group([
         'prefix' => 'users'
     ], function () {
         Route::get('get', [UsersController::class, 'get']);
-        Route::get('get-paginate',[UsersController::class,'getPaginate']);
         Route::post('create', [UsersController::class, 'create']);
         Route::post('delete', [UsersController::class, 'delete']);
         Route::get('find', [UsersController::class, 'find']);

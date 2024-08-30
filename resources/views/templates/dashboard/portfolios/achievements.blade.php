@@ -88,6 +88,7 @@
 
 @section('scripts')
     <script src="/js/dashboard/portfolios/achievement.js"></script>
+
     <script id="achievement_tmpl" type="text/x-jquery-tmpl">
         <tr id="achievement_${id}">
            <td>
@@ -328,7 +329,7 @@
                              <div class="col-sm-4">
                                  <div class="profile-sidebar">
                                      <div class="profile-userpic">
-                                         <img src="${avatar_path}" alt="" class="img-responsive">
+                                         <img src="{{url('/')}}/${avatar_path}" alt="" class="img-responsive img-fluid">
                                      </div>
                                      <div class="profile-usertitle">
                                          <div class="profile-usertitle-name">

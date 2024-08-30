@@ -1,3 +1,6 @@
+var roleIndex;
+
+
 $(document).ready(function () {
     $('.js-example-basic-single').select2();
     $(".fancytree-title").on('click', function () {
@@ -54,8 +57,20 @@ function getReport(data={})
         type: "GET",
         dataType: "json",
         success: function (response) {
+            const roles = {
+              'admin' : 'Администраторы',
+                'teacher' : 'Преподаватели',
+                'employee' : 'Сотрудники',
+                'user' : 'Студенты',
+                'inspector' : 'Проверяющие'
+            };
+            const report = response.data;
+            report.roles = $.map(roles, function(value, key) {
+                return [[key, value]];
+            });
+            console.log(report);
             if (response.success) {
-                $("#report_container").html($("#report_tmpl").tmpl(response.data));
+                $("#report_container").html($("#report_tmpl").tmpl(report));
             }
             else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
@@ -67,29 +82,48 @@ function getReport(data={})
     });
 }
 
+function findRole(roles,slug)
+{
+    let index = roles.findIndex(role => role.slug === slug);
 
-function getAchievementsCount(users) {
-    let achievementsCount = 0;
-    users.forEach(user => {
-        const achievements = user.achievements;
-        if (achievements) {
-            achievementsCount += achievements.length;
-        }
-    });
-    return achievementsCount;
+    if (index !== -1) {
+        roleIndex = index;
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
-function achievementsRecordsCount(users) {
+
+function worksStatusCount(works,workStatus)
+{
+    let count = 0;
+    works.forEach(work => {
+        if(work.work_status===workStatus)
+        {
+            count++;
+        }
+    });
+    return count;
+}
+
+function getRoleIndex()
+{
+    return roleIndex;
+}
+
+
+function getAchievementsCount(achievements) {
+    return achievements.length;
+}
+
+function achievementsRecordsCount(achievements) {
     let achievementsRecordsCount = 0;
-    users.forEach(user => {
-        const achievements = user.achievements;
-        if (achievements) {
-            achievements.forEach(achievement => {
-                const records = achievement.records;
-                if (records) {
-                    achievementsRecordsCount += records.length;
-                }
-            });
+    achievements.forEach(achievement => {
+        const records = achievement.records;
+        if (records) {
+            achievementsRecordsCount += records.length;
         }
     });
     return achievementsRecordsCount;

@@ -1,9 +1,9 @@
 @extends('layouts.dashboard.main')
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/achievements.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/profile-card.css') }}">
-    <link rel="stylesheet" href="{{asset('/css/bootstrap-select.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/profile.css',true) }}">
+    <link rel="stylesheet" href="{{ asset('css/achievements.css',true) }}">
+    <link rel="stylesheet" href="{{ asset('css/profile-card.css',true) }}">
+    <link rel="stylesheet" href="{{asset('/css/bootstrap-select.css',true)}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 @endsection
 @section('content')
@@ -15,7 +15,7 @@
                     <div class="profile-sidebar">
                         <div class="profile-userpic d-flex align-items-center justify-content-center"
                              id="avatar_container">
-                            <img id="user_avatar" src="{{asset($user->avatar_path)}}" alt=""
+                            <img id="user_avatar" src="{{asset($user->avatar_path,true)}}" alt=""
                                  class="img-fluid img-responsive" style="border-radius: 6px;">
                         </div>
                         <a href="#" id="change_avatar_button" class="btn btn-avatar btn-block">

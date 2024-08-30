@@ -4,6 +4,7 @@ namespace App\Services\Departments\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface DepartmentRepositoryInterface
 {
@@ -16,10 +17,10 @@ interface DepartmentRepositoryInterface
 
     /**
      * Получить кафедры по id факультета
-     * @param int $facultyId
-     * @return Collection
+     * @param array $data
+     * @return Collection|LengthAwarePaginator
      */
-    public function get(int $facultyId): Collection;
+    public function get(array $data): Collection|LengthAwarePaginator;
 
     /**
      * Получить по году
@@ -61,6 +62,12 @@ interface DepartmentRepositoryInterface
      * @return mixed
      */
     public function getProgramSpecialties(int $id);
+
+    /**
+     * @param array $data
+     * @return LengthAwarePaginator
+     */
+    public function search(array $data):LengthAwarePaginator;
 
 
 }

@@ -2,6 +2,9 @@ var userId = '';
 
 var user = '';
 
+var userType;
+
+
 
 $(document).ready(function () {
     function getUser() {
@@ -14,7 +17,15 @@ $(document).ready(function () {
         success: function(response) {
             if (response.success) {
                 user = response.data.you;
-                console.log(user);
+                const roleId = user.roles[0].id;
+                if(roleId===2)
+                {
+                    userType=1;
+                }
+                else
+                {
+                    userType=2;
+                }
                 userId = response.data.you.id;
                 deferred.resolve(); // Сообщаем, что функция завершена
             } else {
@@ -106,15 +117,13 @@ $(document).ready(function () {
 
         // Создаем объект FormData и добавляем в него данные формы
         const formData = new FormData(this);
-        const yearId = user.year_id;
-        const facultyId = user.faculty_id;
-        const student = user.name;
         const additionalData = {
             user_id:userId,
-            year_id:yearId,
-            faculty_id:facultyId,
-            user_type:2,
-            student:student
+            year_id: user.year_id,
+            faculty_id:user.faculty_id,
+            specialty_id: user.specialty_id,
+            user_type:userType,
+            student:user.name
         };
         console.log(additionalData);
         for (const key in additionalData) {
@@ -343,7 +352,6 @@ $(document).ready(function () {
 
 
 function works(page = 1) {
-    console.log('user id 2 = ' + userId);
     const data = {
         page: page,
         user_id: userId
@@ -356,24 +364,15 @@ function works(page = 1) {
         success: function(response) {
             if (response.success) {
                 const pagination = response.data.works;
-                const links = pagination.links;
-                // Обрезаем из массива линков Previos и Next
-                links.shift();
-                links.pop();
-                pagination.links = links;
                 const works = pagination.data;
-                console.log(works);
                 const worksTable = $("#works_table");
                 worksTable.html($("#work_tmpl").tmpl(works));
-                const currentPage = pagination.current_page;
-                const perPage = pagination.per_page;
-                const totalItems = pagination.total;
-                $("#works_count").text(totalItems);
-                const totalPages = pagination.links.length;
-                updateWorksPagination(currentPage, totalItems, totalPages, perPage);
-                works.forEach(work => {
+                updateWorksPagination(pagination);
+                console.log('Echo');
+                console.log(window.Echo);
+                works.forEach(work =>{
                     const workId = work.id;
-                    const channel = window.Echo.channel(`works.${workId}`)
+                    window.Echo.channel(`works.${workId}`)
                         .listen('.WorkUpdated', (e) => {
                             console.log('Work updated:', e);
                             reloadWork(workId);
@@ -629,11 +628,11 @@ function openReport(workId)
     });
 }
 
-function searchWorks() {
+function searchWorks(page=1) {
     let data = $("#search_form").serialize();
     data = serializeRemoveNull(data);
     const additionalData = {
-        user_type:2,
+        page:page,
         user_id:userId
     };
     data += '&' + $.param(additionalData);
@@ -646,22 +645,23 @@ function searchWorks() {
             if (response.success)
             {
                 const pagination = response.data.works;
-                const links = pagination.links;
-                //Обрезаем из массива линков Previos и Next
-                links.shift();
-                links.pop();
-                pagination.links = links;
                 const works = pagination.data;
-                console.log(works);
                 const worksTable = $("#works_table");
                 worksTable.html($("#work_tmpl").tmpl(works));
-                const currentPage = pagination.current_page;
-                const perPage = pagination.per_page;
-                const totalItems = pagination.total;
-                const totalPages = pagination.links.length;
-                console.log('total items = ' + totalItems);
-                $("#works_count").text(totalItems);
-                updateWorksPagination(currentPage,totalItems,totalPages,perPage);
+                updateWorksPagination(pagination);
+                console.log('Echo');
+                console.log(window.Echo);
+                works.forEach(work =>{
+                    const workId = work.id;
+                    window.Echo.channel(`works.${workId}`)
+                        .listen('.WorkUpdated', (e) => {
+                            console.log('Work updated:', e);
+                            reloadWork(workId);
+                        })
+                        .error((error) => {
+                            console.error('Error:', error);
+                        });
+                });
             }
             else
             {

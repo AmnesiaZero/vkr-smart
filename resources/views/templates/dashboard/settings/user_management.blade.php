@@ -148,13 +148,7 @@
                         <p class="text-grey fs-14 m-0">Группа: ${group}</p>
                         <p class="text-grey fs-14 m-0">${date_of_birth}</p>
                         <p class="text-grey fs-14 m-0">
-                          @{{if email_visibility==1}}
-                                           ${email}
-                                           @{{else}}
-                                           *******@*******
-                                           <br>
-                                           (скрыто настройками приватности)
-                                           @{{/if}}
+                         @{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}
                         </p>
                     </div>
                     @{{if is_active}}
@@ -212,15 +206,7 @@
             <div class="mb-3">
                 <label for="email">Email-адрес</label>
                 <input type="text" name="email" class="form-control bg-grey-form fs-14 text-grey fw-500" id="email"
-                       value="
-                       @{{if email_visibility==1}}
-                                           ${email}
-                                           @{{else}}
-                                           *******@*******
-                                           <br>
-                                           (скрыто настройками приватности)
-                                           @{{/if}}
-                       ">
+                       value="@{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}">
             </div>
             <div class="mb-3">
                 <label for="date_registration">Дата регистрации</label>

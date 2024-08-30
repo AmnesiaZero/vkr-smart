@@ -11,7 +11,7 @@
         <link href="{{'/css/select2.min.css'}}" rel="stylesheet"/>
         <link rel="stylesheet" href="{{'/css/bootstrap-select.css'}}">
 
-        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet"
+        <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet"
               type="text/css"/>
         <link rel="stylesheet" type="text/css" href="{{'/css/dashboard.css'}}">
         <link rel="stylesheet" type="text/css" href="{{'/css/fancy_style.css'}}">
@@ -42,25 +42,8 @@
                 <li><a class="nav-link text-black-black" href="/portfolio">Портфолио</a></li>
                 <li><a class="nav-link text-black-black" href="/check-reference">Проверка&nbsp;справки</a></li>
                 <li><a class="nav-link text-black-black" href="https://api.vkr-vuz.ru" target="_blank">API</a></li>
-
-                <li class="user-menu col-sm-5 text-right">
-                    <a href="admin-office/" class="btn btn-default btn-testaccess"><span class="glyphicon glyphicon-user"></span> Личный кабинет</a>
-
-                    <a href="#" class="btn dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="caret"></span>
-                    </a>
-
-                    <ul class="header dropdown-menu" aria-labelledby="dropdownMenu">
-                        <li><a class="dropdown-item" href="/organization-settings">Настройки</a></li>
-                        <li><a class="dropdown-item" href="/organization-works">Работы</a></li>
-                        <li><a class="dropdown-item" href="/org-users">Электронное портфолио</a></li>
-                        <li><a class="dropdown-item" href="/organization-reports">Отчеты</a></li>
-                        <li><a class="dropdown-item" href="/organization-documents">Документация</a></li>
-                        <li><a class="dropdown-item" href="/dashboard/users/logout">Выйти</a></li>
-                        <li class="dropdown-item organization-info"></li>
-                    </ul>
-                </li>
             </ul>
+            @include('layouts.common.menu.dropdown')
         </div>
     </nav>
 </header>
@@ -87,8 +70,9 @@
 <script src="{{'/js/select2.min.js'}}"></script>
 <script type="text/javascript" src="/js/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-<script src="http://www.vkr-vuz.ru/assets/templates/c/js/jquery.fancytree.min.js"></script>
+{{--<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>--}}
+{{--<script src="http://www.vkr-vuz.ru/assets/templates/c/js/jquery.fancytree.min.js"></script>--}}
+<script src="/js/jquery/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.15.0/printThis.min.js"></script>
 

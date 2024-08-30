@@ -1,9 +1,4 @@
 <div class="info-box" id="info_box">
-    <p class="fs-14 lh-17">Направление подготовки обучающегося</p>
-    <div class="d-flex cursor-p mb-2">
-        <img src="/images/Edit_Pencil.svg" alt="" class="pe-2">
-        <p class="fs-14 lh-17 text-grey m-0" onclick="openModal('update_work_specialty_modal')">Изменить направление подготовки</p>
-    </div>
     <p class="fs-14 lh-17">Операции над работой</p>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/info.svg" alt="" class="pe-2">

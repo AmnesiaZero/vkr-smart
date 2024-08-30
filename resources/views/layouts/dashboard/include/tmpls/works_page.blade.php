@@ -348,7 +348,7 @@
 
 
 <script id="report_tmpl" type="text/x-jquery-tmpl">
- <div id="report_modal" class="modal">
+ <div id="report_modal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -379,12 +379,12 @@
                         </thead>
                         <table>
                             <tbody id="report_assets_list">
-                            @{{each reportAssets}}
+                            @{{each report_assets}}
                             <tr>
-                                <td><a  class="ng-binding">${value.name}</a></td>
-                                <td><a target="_blank" href="${value.link}" class="ng-binding"></a></td>
+                                <td><a  class="ng-binding">${name}</a></td>
+                                <td><a target="_blank" href="${link}" class="ng-binding"></a></td>
                                 <td>Интернет</td>
-                                <td class="ng-binding">${value.borrowings_percent}%</td>
+                                <td class="ng-binding">${borrowings_percent}%</td>
                             </tr>
                             @{{/each}}
                             </tbody>

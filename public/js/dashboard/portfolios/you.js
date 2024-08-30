@@ -494,7 +494,6 @@ function works(page= 1)
 {
     const data = {
         page:page,
-        user_type:2,
         user_id:userId
     };
     $.ajax({

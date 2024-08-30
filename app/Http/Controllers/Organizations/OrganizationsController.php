@@ -27,6 +27,11 @@ class OrganizationsController extends Controller
         return view('templates.dashboard.settings.organizations_structure');
     }
 
+    public function view()
+    {
+        return $this->organizationsService->view();
+    }
+
 
     public function configureInspectorsAccess(Request $request): JsonResponse
     {

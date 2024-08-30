@@ -27,17 +27,11 @@ interface UserRepositoryInterface
 
     /**
      * Получить список пользователей по их организации
-     * @param int $organizationId
-     * @param array $roles
-     * @return Collection
-     */
-    public function get(int $organizationId, array $roles): Collection;
-
-    /**
      * @param array $data
-     * @return LengthAwarePaginator
+     * @return Collection|LengthAwarePaginator
      */
-    public function getPaginate(array $data):LengthAwarePaginator;
+    public function get(array $data): Collection|LengthAwarePaginator;
+
 
     /**
      * @param int $id
@@ -68,17 +62,10 @@ interface UserRepositoryInterface
     /**
      * @param array $data
      * @param array $relations
-     * @return mixed
+     * @return Collection|LengthAwarePaginator
      */
-    public function search(array $data, array $relations=['roles', 'departments','works']);
+    public function search(array $data, array $relations=['roles', 'departments','works']):Collection|LengthAwarePaginator;
 
-    /**
-     * Поиск по пользователям
-     * @param array $data
-     * @param array $relations
-     * @return LengthAwarePaginator
-     */
-    public function searchPaginate(array $data, array $relations=['roles', 'departments','works']): LengthAwarePaginator;
 
 
     /**
