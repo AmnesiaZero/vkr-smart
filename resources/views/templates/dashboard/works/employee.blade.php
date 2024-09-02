@@ -123,7 +123,7 @@
                                 <button class="btn pe-3 py-0 fs-14" disabled>
                                     <img src="/images/Calendar.svg" alt="">
                                 </button>
-                                <input type="text" name="daterang" value=""
+                                <input type="text" name="daterange" value=""
                                        class=" fs-14 text-grey p-date w-75"/>
                             </div>
                         </div>

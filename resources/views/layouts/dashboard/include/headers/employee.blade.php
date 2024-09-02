@@ -1,22 +1,12 @@
-<div class="accordion-item">
-    <p class="accordion-header work" id="headingTwo">
-        <button class="accordion-button fs-16 fw-600 box-shadow-none px-0 py-2 m-0 collapsed"
-                type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                aria-expanded="false" aria-controls="collapseTwo"><span
-                style="width: 40px; height: 24px;" class="pe-3"></span>Персональная информация
-        </button>
-    </p>
-    <div id="collapseTwo"
-         class="accordion-collapse collapse @if(request()->is('dashboard/personal-cabinet')) show @endif"
-         aria-labelledby="headingTwo" data-bs-parent="#accordionTwo" style="">
-        <div class="accordion-body p-0">
-            <ul class="list-custom-1 m-0">
-                <li class="list-select"><a href="/dashboard/profile"
-                                           class="select-a @if(request()->is('*/personal-cabinet')) nav-link-active @endif">Профиль</a></li>
-            </ul>
-        </div>
-    </div>
+<div class="text-grey fw-600 d-flex py-2">
+    <img src="/images/File_Document.svg" alt="" class="pe-3">
+    <a href="/dashboard/profile"
+        class="text-grey text-grey-hover fw-600 td-none @if(request()->is('*/personal-cabinet')) nav-link-active @endif">
+        Персональная&nbsp;информация
+    </a>
 </div>
+
+
 <div class="accordion-item">
     <p class="accordion-header work" id="headingTwo">
         <button class="accordion-button fs-16 fw-600 box-shadow-none px-0 py-2 m-0 collapsed"

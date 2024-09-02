@@ -352,7 +352,7 @@ td.list-group .dropdown {
 }
 
 .bg-green-light {
-    background-color: #D9F1F3;
+    background-color: #D9F1F3 !important;
 }
 
 .badge {
