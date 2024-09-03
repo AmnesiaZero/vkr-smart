@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="background-color: #fff;">
             <div class="modal-header">
-                <h4 class="modal-title">Создать администратора</h4>
+                <h4 class="modal-title">Добавить администратора</h4>
             </div>
             <div class="modal-body p-4">
                 <form method="post" id="create_admin_form" class="d-flex flex-column gap-2"
@@ -47,7 +47,7 @@
                         <div class="row justify-items-center">
                             <label class="col-sm-4">Пол</label>
                             <div class="col-sm-8">
-                                <select name="gender" class="form-control">
+                                <select name="gender" class="selectpicker form-control">
                                     <option value="1">Муж.</option>
                                     <option value="2">Жен.</option>
                                 </select>
@@ -56,7 +56,7 @@
                         <div class="row justify-items-center">
                             <label class="col-sm-4">Статус</label>
                             <div class="col-sm-8">
-                                <select name="is_active" class="form-control">
+                                <select name="is_active" class="selectpicker form-control">
                                     <option value="1">Активен</option>
                                     <option value="0">Заблокирован</option>
                                 </select>

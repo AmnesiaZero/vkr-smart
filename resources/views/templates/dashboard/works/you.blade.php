@@ -337,7 +337,8 @@
                             <div class="form-group">
                                 <label class="col-sm-4">Самопроверка работы студентом</label>
                                 <div class="col-sm-8" id="self_check_value">
-                                <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-warning btn-sm"> ${getSelfCheckDescription(self_check)}
+                                <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-sm" style="background: whitesmoke;">
+                                    ${getSelfCheckDescription(self_check)}
                                 <span class="glyphicon glyphicon-refresh">
                                 </span>
                                 </a>
@@ -396,11 +397,10 @@
             </script>
 
             <script id="self_check_tmpl" type="text/x-jquery-tmpl">
-       <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-warning btn-sm"> ${getSelfCheckDescription(self_check)}
-          <span class="glyphicon glyphicon-refresh">
-                                </span>
-
-
+       <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-sm" style="background: whitesmoke;">
+          ${getSelfCheckDescription(self_check)}
+          <span class="glyphicon glyphicon-refresh"></span>
+       </a>
             </script>
 
             <script id="additional_file_tmpl" type="text/x-jquery-tmpl">

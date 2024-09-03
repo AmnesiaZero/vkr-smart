@@ -1,7 +1,7 @@
 
 
 
-function workInfoStudent()
+function workInfoStudent(activeTabpanel)
 {
     const workId = localStorage.getItem('work_id');
     const data = {
@@ -16,8 +16,10 @@ function workInfoStudent()
             if (response.success)
             {
                 const work = response.data.work;
-                $("#about_work").html($("#work_info_student_tmpl").tmpl(work));
+                $("#about_work").html($("#work_info_student_tmpl").tmpl(work)).appendTo('');
                 comments();
+                const modalElement = new bootstrap.Modal(document.getElementById('work_info_student'));
+                modalElement.show();
             }
             else
             {

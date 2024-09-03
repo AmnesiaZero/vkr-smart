@@ -23,7 +23,9 @@ function showEditBlock(int) {
 
 $(document).ready(function () {
     // Инициализация селект 2
-    $('.js-example-basic-single').select2();
+    $('.js-example-basic-single').select2({
+        placeholder: "Выберите...",
+    });
 
     $('#specialties_list').select2({
         placeholder: 'Выбор...',

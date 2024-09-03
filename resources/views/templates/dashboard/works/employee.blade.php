@@ -47,7 +47,7 @@
                             <div id="bg-white" class="bg-white">
                                 <select class="js-example-basic-single w-100" name="scientific_supervisor"
                                         id="scientific_supervisors_list">
-                                    <option value="">Выбрать</option>
+                                    <option></option>
                                     @if(isset($scientific_supervisors) and is_iterable($scientific_supervisors))
                                         )
                                         @foreach($scientific_supervisors as $scientific_supervisor)
@@ -123,7 +123,7 @@
                                 <button class="btn pe-3 py-0 fs-14" disabled>
                                     <img src="/images/Calendar.svg" alt="">
                                 </button>
-                                <input type="text" name="daterang" value=""
+                                <input type="text" name="daterange" value=""
                                        class=" fs-14 text-grey p-date w-75"/>
                             </div>
                         </div>
@@ -149,9 +149,9 @@
                                         onclick="resetSearch();return false">Сбросить
                                 </button>
                                 @role('admin|inspector')
-                                <button class="btn bg-green br-100 text-grey fs-14 py-1" onclick="exportWorks();return false;">
-                                    Выгрузить<img
-                                        src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
+                                <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 me-3" onclick="exportWorks();return false;">
+                                    Выгрузить
+                                    <img src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
                                 @endrole
                             </div>
                         </div>

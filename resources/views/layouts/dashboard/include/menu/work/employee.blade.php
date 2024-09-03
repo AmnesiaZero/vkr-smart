@@ -4,7 +4,6 @@
     <div class="d-flex align-items-center cursor-p mb-2">
         <img src="/images/Edit_Pencil.svg" alt="" class="pe-3">
         <p class="fs-14 lh-17 text-grey m-0"
-           onclick="openModal('update_work_specialty_modal')"
             data-bs-target="#update_work_specialty_modal" data-bs-toggle="modal">
             Изменить направление подготовки
         </p>
@@ -13,7 +12,6 @@
     <div class="d-flex align-items-center cursor-p mb-2">
         <img src="/images/info.svg" alt="" class="pe-3">
         <p class="fs-14 lh-17 text-grey m-0"
-           data-bs-target="#work_info_modal" data-bs-toggle="modal"
            onclick="workInfo()">Просмотр информации о работе</p>
     </div>
     <div class="d-flex align-items-center cursor-p mb-2">
@@ -28,8 +26,7 @@
     <div class="d-flex align-items-center cursor-p mb-2">
         <img src="/images/Edit_Pencil.svg" alt="" class="pe-3">
         <p class="fs-14 lh-17 text-grey m-0"
-           onclick="openUpdateWorkModal()"
-           data-bs-target="#update_work_modal" data-bs-toggle="modal">
+           onclick="openUpdateWorkModal()">
             Изменить информацию о работе
         </p>
     </div>

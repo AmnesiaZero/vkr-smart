@@ -2,7 +2,9 @@ $(document).ready(function () {
     users();
     years('years_list');
     getYou();
-    $('.js-example-basic-single').select2();
+    $('.js-example-basic-single').select2({
+        placeholder: "Выберите...",
+    });
 
     $('#years_list').change(function () {
         const yearId = $(this).val();
@@ -72,8 +74,12 @@ function years(htmlId) {
         success: function (response) {
             const years = response.data.years;
             const yearsList = $("#" + htmlId);
+
+            yearsList.empty();
+            yearsList.selectpicker('destroy');
             yearsList.html($("#year_tmpl").tmpl(years));
-            yearsList.prepend('<option value="" selected>Выбрать...</option>');
+            yearsList.selectpicker('render');
+
         },
         error: function (response) {
             $.notify(response.data.title + ":" + response.data.message, "error");
@@ -95,9 +101,9 @@ function faculties(data, htmlId) {
             if (response.success) {
                 const faculties = response.data.faculties;
                 const facultiesList = $("#" + htmlId);
-                facultiesList.empty();
+                facultiesList.selectpicker('destroy');
                 facultiesList.html($("#faculty_tmpl").tmpl(faculties));
-                facultiesList.prepend('<option value="" selected>Выберите.......</option>');
+                facultiesList.selectpicker('render');
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -119,7 +125,7 @@ function departments(data, htmlId) {
                 const departments = response.data.departments
                 console.log(departments);
                 const departmentsList = $("#" + htmlId);
-                const dropdownList = $('.selectpicker');
+                const dropdownList = $('#departments_menu_list.selectpicker');
                 dropdownList.empty();
                 dropdownList.selectpicker('destroy');
                 departmentsList.html($("#department_list_tmpl").tmpl(departments));

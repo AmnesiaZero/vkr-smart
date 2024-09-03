@@ -73,8 +73,8 @@
                         <p class="m-0 fw-600">Для преподавателей</p>
                         <a href="#" onclick="downloadTeachersCodes()"
                            class="badge bg-green br-100 text-grey fs-14 cursor-p px-3 py-2 text-decoration-none">Выгрузить <img
-                                src="/images/File_Download.svg" alt="" class="ps-1"></a>
-
+                                src="/images/File_Download.svg" alt="" class="ps-1">
+                        </a>
                     </div>
                     <div id="teachers_codes_list">
 
