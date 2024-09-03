@@ -5,6 +5,7 @@ namespace App\Services\Organizations\Repositories;
 use App\Models\Organization;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EloquentOrganizationRepository implements OrganizationRepositoryInterface
 {
@@ -19,4 +20,18 @@ class EloquentOrganizationRepository implements OrganizationRepositoryInterface
         return Organization::query()->find($id);
     }
 
+    public function get(array $data=[]): Collection|LengthAwarePaginator
+    {
+        $query = Organization::query();
+        if(isset($data['paginate']) and $data['paginate'])
+        {
+            return $query->paginate(config('pagination.per_page'),'*','page',$page);
+        }
+        return $query->get();
+    }
+
+    public function update(int $id,array $data)
+    {
+        return $this->find($id)->update($data);
+    }
 }

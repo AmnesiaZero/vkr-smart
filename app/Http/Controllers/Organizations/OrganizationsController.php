@@ -9,9 +9,28 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class OrganizationsController extends Controller
 {
+
+    protected array $fillable = [
+        'id',
+        'name',
+        'parent_id' ,
+        'logo',
+        'address',
+        'phone',
+        'website',
+        'email',
+        'info',
+        'start_date',
+        'end_data',
+        'is_head',
+        'is_premium',
+        'is_testing',
+        'is_blocked'
+    ];
 
     public OrganizationsService $organizationsService;
 
@@ -30,6 +49,60 @@ class OrganizationsController extends Controller
     public function view()
     {
         return $this->organizationsService->view();
+    }
+
+    public function get(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'paginate' => 'bool',
+            'page' => 'integer'
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $paginate = $request->paginate;
+        $page = $request->page;
+        return $this->organizationsService->get($paginate,$page);
+
+    }
+
+    public function editView(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required','integer',Rule::exists('organizations','id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $id = $request->id;
+        return $this->organizationsService->editView($id);
+    }
+
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required','integer',Rule::exists('organizations','id')],
+            'name' => 'max:250',
+            'parent_id' => ['required','integer',Rule::exists('organizations','id')],
+            'logo' => 'file',
+            'address' => 'max:250',
+            'phone' => 'max:250',
+            'website' => 'max:250',
+            'email' => 'max:250',
+            'info' => 'max:250',
+            'start_date' => 'date',
+            'end_data' => 'date',
+            'is_head' => 'bool',
+            'is_premium' => 'bool',
+            'is_testing' => 'bool',
+            'is_blocked' => 'bool'
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $id = $request->id;
+        $data = $request->only($this->fillable);
+        return $this->organizationsService->update($id,$data);
     }
 
 

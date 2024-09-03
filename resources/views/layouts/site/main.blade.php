@@ -54,7 +54,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link @if(request()->is('portfolios')) nav-link-active @endif" href="/portfolio">
+                        <a class="nav-link @if(request()->is('portfolios')) nav-link-active @endif" href="/portfolios">
                             Портфолио</a>
                     </li>
                     <li>
@@ -117,16 +117,16 @@
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Для установки одной из кнопок системы «ВКР-ВУЗ» на свой сайт, скопируйте код из
+                                    <p>Для установки одной из кнопок системы «ВКР-СМАРТ» на свой сайт, скопируйте код из
                                         соответствующего поля и поместите его в необходимом месте на вашем сайте</p>
                                     <hr>
                                     <div class="row">
                                         <div class="col-sm-3">
-                                            <img src="/images/vkr.png" class="img-responsive">
+                                            <img src="/images/VKR.svg" class="img-responsive">
                                         </div>
                                         <div class="col-sm-9">
                                             <textarea class="form-control" rows="4"
-                                                      onclick="$(this).select(); return false;">&lt;a href="http://www.vkr-vuz.ru"&gt;&lt;img src="http://www.vkr-vuz.ru/assets/templates/c/img/footer/vkr.png" /&gt;&lt;/a&gt;</textarea>
+                                                      onclick="$(this).select(); return false;">&lt;a href="{{url('/')}}"&gt;&lt;img src="{{url('/')}}/images/footer/VKR.svg" </textarea>
                                         </div>
                                     </div>
                                     <hr class="hr-xs">
@@ -136,12 +136,13 @@
                                         </div>
                                         <div class="col-sm-9">
                                             <textarea class="form-control" rows="4"
-                                                      onclick="$(this).select(); return false;">&lt;a href="http://www.vkr-vuz.ru"&gt;&lt;img src="http://www.vkr-vuz.ru/assets/templates/c/img/footer/vkr-sm.png" /&gt;&lt;/a&gt;</textarea>
+                                                      onclick="$(this).select(); return false;">&lt;a href="{{url('/')}}"&gt;&lt;img src="{{url('/')}}/images/vkr-sm.png"</textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Закрыть окно</button>
+                                    <button type="button" class="btn" data-bs-dismiss="modal"
+                                            aria-label="Close">Закрыть окно</button>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +152,7 @@
                     <p class="m-0 fs-14">Звонок по России бесплатный</p>
                 </div>
                 <div class="col-xxl-7 col-lg-6 col-sm-8 col-12">
-                    <p class="lh-18 fs-12">Программа для ЭВМ «ВКР -СМАРТ» — «умная» система проверки на заимствования и
+                    <p class="lh-18 fs-12">Программа для ЭВМ «ВКР-СМАРТ» — «умная» система проверки на заимствования и
                         хранения ВКР», зарегистрирована Федеральной службой по интеллектуальной собственности 01.09.2021
                         г. свидетельство о государственной регистрации программы для ЭВМ № 2 021 664 219</p>
                     <p class="lh-18 fs-12 m-0">ООО «Профобразование» включено в Реестр аккредитованных IT компаний, на

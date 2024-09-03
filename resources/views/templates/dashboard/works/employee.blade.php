@@ -231,7 +231,12 @@
             <script id="work_tmpl" type="text/x-jquery-tmpl">
 {{--      @{{if visibility==1}}--}}
      <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
-    <th scope="row">${specialty.name}</th>
+    <th scope="row">@{{if specialty}}
+                                ${specialty.name}
+                                @{{else}}
+                                Не указан
+                                @{{/if}}
+                                </th>
     <td>${student}</td>
     <td>${group}</td>
     <td>${protect_date}</td>

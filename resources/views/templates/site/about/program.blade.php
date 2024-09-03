@@ -7,7 +7,7 @@
                 @include('layouts.site.include.menu.about')
                 <div class="col-lg-9 px-lg-0 px-4">
                     <div class="block-75">
-                        <p class="text-black-black">Система ВКР-ВУЗ.РФ — модульный программный комплекс, который состоит
+                        <p class="text-black-black">Система ВКР-СМАРТ.РФ — модульный программный комплекс, который состоит
                             из:</p>
                         <ul class="text-black fs-14">
                             <li class="pb-1">специального модуля систематизации, размещения и хранения выпускных
@@ -31,10 +31,10 @@
                         <div class="bg-black p-4 br-20 my-5">
                             <div class="row">
                                 <div class="col-7">
-                                    <h6 class="text-white fs-16">Система ВКР-ВУЗ <br>зарегистрирована как программа для
+                                    <h6 class="text-white fs-16">Система ВКР-СМАРТ <br>зарегистрирована как программа для
                                         ЭВМ
                                     </h6>
-                                    <p class="text-white">Сайт системы ВКР-ВУЗ.РФ является средством массовой информации
+                                    <p class="text-white">Сайт системы ВКР-СМАРТ.РФ является средством массовой информации
                                         и
                                         <a href="https://rkn.gov.ru/mass-communications/reestr/media/?id=602231&print=1"
                                            class="text-white">зарегистрирован Роскомнадзором</a> в соответсвии с

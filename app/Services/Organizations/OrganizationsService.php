@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OrganizationsService extends Services
 {
-    public $_repository;
+    public OrganizationRepositoryInterface $_repository;
 
     public SpecialtyRepositoryInterface $specialtyRepository;
 
@@ -65,6 +65,42 @@ class OrganizationsService extends Services
     public function view()
     {
         $you = Auth::user();
-        return view('templates.dashboard.platform.organization.organizations.index',['user' => $you]);
+        $organizations = $this->_repository->get();
+        return view('templates.dashboard.platform.organization.organizations.index',[
+            'user' => $you,
+            'organizations' => $organizations
+        ]);
+    }
+
+    public function get(bool $paginate,int $page): JsonResponse
+    {
+        $organizations = $this->_repository->get($paginate,$page);
+        if($organizations and is_iterable($organizations))
+        {
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'organizations' => $organizations
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Ошибка при получении организаций'
+        ]);
+    }
+
+    public function editView(int $id)
+    {
+        $you = Auth::user();
+        $organization = $this->_repository->find($id);
+        return view('templates.dashboard.platform.organization.organizations.update',[
+            'user' => $you,
+            'organization' => $organization
+        ]);
+    }
+
+    public function update(int $id,array $data)
+    {
+        $result = $this->_repository->update($id,$data);
+
     }
 }

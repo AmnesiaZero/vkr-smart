@@ -77,11 +77,6 @@
                 </tbody>
             </table>
         </div>
-        <nav aria-label="Page navigation example" class="custom_pagination" id="departments_pagination">
-            <ul class="pagination m-0" id="pages">
-
-            </ul>
-        </nav>
     </div>
 
     @include('templates.dashboard.platform.organization.departments.create')

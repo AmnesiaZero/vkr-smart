@@ -89,7 +89,7 @@ Route::get('test-access', function () {
 });
 
 Route::get('portfolios', function () {
-    return view('templates.site.portfolios.portfolios');
+    return view('templates.site.portfolio.portfolio');
 });
 
 Route::get('reviews', function () {
@@ -303,6 +303,21 @@ Route::group([
     Route::group([
         'prefix' => 'organizations'
     ], function () {
+
+        Route::get('get',[OrganizationsController::class,'get'])->name('organizations.get');
+
+        Route::post('create',[OrganizationsController::class,'create']);
+        Route::get('create',[OrganizationsController::class,'createView'])->name('organizations.create');
+
+        Route::post('delete',[OrganizationsController::class,'delete']);
+        Route::get('delete',[OrganizationsController::class,'deleteView'])->name('organizations.delete');
+
+        Route::post('update',[OrganizationsController::class,'update'])->name('organizations.update');;
+        Route::get('edit',[OrganizationsController::class, 'editView'])->name('organizations.edit');
+
+        Route::get('restore',[OrganizationsController::class,'restore'])->name('organizations.restore');
+
+
 
         Route::get('find', [OrganizationsController::class, 'find']);
         Route::post('inspectors-access', [OrganizationsController::class, 'configureInspectorsAccess']);

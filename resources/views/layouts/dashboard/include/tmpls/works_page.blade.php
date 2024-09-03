@@ -22,26 +22,56 @@
                     <div class="modal-body">
                         <form class="form form-horizontal" id="infoWorkForm" onsubmit="workInfo(); return false;">
                             <div class="d-flex flex-column gap-4">
-                            <div class="row">
-                                <label class="col-sm-4">Год выпуска</label>
-                                <div class="col-sm-8" id="value_year_id">${year.year}</div>
-                            </div>
-                                <div class="row">
-                                    <label class="col-sm-4">Факультет</label>
-                                    <div class="col-sm-8" id="faculty_id">${faculty.name}</div>
-                                </div>
-                                <div class="row">
-                                    <label class="col-sm-4">Кафедра</label>
-                                    <div class="col-sm-8" id="value_department_id">${department.name}</div>
-                                </div>
-                                <div class="row">
-                                    <label class="col-sm-4">Образовательная программа (специальность)</label>
-                                    <div class="col-sm-8">${specialty.name}</div>
-                                </div>
-                                <div class="row">
-                                    <label class="col-sm-4">Кто загрузил работу</label>
-                                    <div class="col-sm-8">${user.name}</div>
-                                </div>
+                            <div class="form-group">
+                                        <label class="col-sm-4">Год выпуска</label>
+                                        <div class="col-sm-8" id="value_year_id">
+                                            @{{if year}}
+                                            ${year.year}
+                                            @{{else}}
+                                            Не указан
+                                            @{{/if}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Факультет</label>
+                                        <div class="col-sm-8" id="faculty_id">
+                                            @{{if faculty}}
+                                            ${faculty.name}
+                                            @{{else}}
+                                            Не указан
+                                            @{{/if}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Кафедра</label>
+                                        <div class="col-sm-8" id="value_department_id">
+                                            @{{if department}}
+                                            ${department.name}
+                                            @{{else}}
+                                            Не указан
+                                            @{{/if}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Образовательная программа (специальность)</label>
+                                        <div class="col-sm-8">
+                                            @{{if specialty}}
+                                            ${specialty.name}
+                                            @{{else}}
+                                            Не указан
+                                            @{{/if}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Кто загрузил работу</label>
+                                        <div class="col-sm-8">
+                                            @{{if user}}
+                                            ${user.name}
+                                            @{{else}}
+                                            Не указан
+                                            @{{/if}}
+                                        </div>
+                                    </div>
                                 <div class="row">
                                     <label class="col-sm-4">ФИО обучающегося</label>
                                     <div class="col-sm-8" >${student}</div>
