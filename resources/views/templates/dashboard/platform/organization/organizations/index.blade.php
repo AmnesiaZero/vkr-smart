@@ -5,7 +5,7 @@
         <div class="list-header">
             <h2 class="block-title">Организации</h2>
             <div>
-                <a href="{{ route('organizations.create') }}" class="btn btn-danger add-button"><i
+                <a href="{{ route('organizations.add') }}" class="btn btn-danger add-button"><i
                         class="fas fa-plus"></i> Добавить</a>
             </div>
         </div>

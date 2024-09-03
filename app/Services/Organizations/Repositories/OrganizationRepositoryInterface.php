@@ -34,4 +34,10 @@ interface OrganizationRepositoryInterface
      * @return mixed
      */
     public function update(int $id,array $data);
+
+    /**
+     * @param int $organizationId
+     * @return Collection
+     */
+    public function parents(int $organizationId):Collection;
 }

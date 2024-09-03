@@ -306,8 +306,8 @@ Route::group([
 
         Route::get('get',[OrganizationsController::class,'get'])->name('organizations.get');
 
-        Route::post('create',[OrganizationsController::class,'create']);
-        Route::get('create',[OrganizationsController::class,'createView'])->name('organizations.create');
+        Route::post('create',[OrganizationsController::class,'create'])->name('organizations.create');;
+        Route::get('add',[OrganizationsController::class, 'addView'])->name('organizations.add');
 
         Route::post('delete',[OrganizationsController::class,'delete']);
         Route::get('delete',[OrganizationsController::class,'deleteView'])->name('organizations.delete');

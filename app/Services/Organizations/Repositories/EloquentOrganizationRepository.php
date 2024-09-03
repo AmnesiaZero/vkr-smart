@@ -34,4 +34,9 @@ class EloquentOrganizationRepository implements OrganizationRepositoryInterface
     {
         return $this->find($id)->update($data);
     }
+
+    public function parents(int $organizationId): Collection
+    {
+        return Organization::query()->where('id','!=',$organizationId)->get();
+    }
 }

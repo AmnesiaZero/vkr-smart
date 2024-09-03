@@ -29,7 +29,8 @@ class OrganizationsController extends Controller
         'is_head',
         'is_premium',
         'is_testing',
-        'is_blocked'
+        'is_blocked',
+        'redirect'
     ];
 
     public OrganizationsService $organizationsService;
@@ -83,26 +84,35 @@ class OrganizationsController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => ['required','integer',Rule::exists('organizations','id')],
             'name' => 'max:250',
-            'parent_id' => ['required','integer',Rule::exists('organizations','id')],
-            'logo' => 'file',
+//            'parent_id' => ['integer',Rule::exists('organizations','id')],
+//            'logo' => 'file',
             'address' => 'max:250',
             'phone' => 'max:250',
             'website' => 'max:250',
             'email' => 'max:250',
             'info' => 'max:250',
-            'start_date' => 'date',
-            'end_data' => 'date',
+//            'start_date' => 'date',
+//            'end_date' => 'date',
             'is_head' => 'bool',
             'is_premium' => 'bool',
             'is_testing' => 'bool',
             'is_blocked' => 'bool'
         ]);
+//        dd($request);
         if ($validator->fails()) {
             return ValidatorHelper::redirectError($validator);
         }
         $id = $request->id;
         $data = $request->only($this->fillable);
+        $data =array_filter($data, function ($value) {
+            return !is_null($value);
+        });
         return $this->organizationsService->update($id,$data);
+    }
+
+    public function addView()
+    {
+        return $this->organizationsService->addView();
     }
 
 

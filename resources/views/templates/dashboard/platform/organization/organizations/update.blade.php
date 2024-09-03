@@ -5,8 +5,8 @@
         <div class="list-header">
             <h2 class="block-title">Редактирование организации: {{ $organization->name }}</h2>
         </div>
-        <form id="update_organization_form" action="{{ route('organizations.update', ['id' => $organization->id] )}}"  method="POST">
-            {{ csrf_field() }}
+        <form id="update_organization_form" enctype="multipart/form-data"  action="{{ route('organizations.update', ['id' => $organization->id] )}}"  method="POST">
+            @csrf
             <div class="row">
                 <div class="col-8">
                     <div class="post">
@@ -17,7 +17,7 @@
                         <div class="form-group">
                             <label for="parent_id">Является связанной для организации:</label>
                             <select id="parent_id" name="parent_id" class="form-control">
-                                <option value="">--Выберите--</option>
+                                <option value="0">--Выберите--</option>
                                 @if(isset($parents) && !empty($parents))
                                     @foreach($parents as $parent)
                                         <option value="{{ $parent->id }}" @if($parent->id == $organization->parent_id) selected @endif>{{ $parent->name }}</option>
@@ -56,21 +56,21 @@
                             <textarea id="info" name="info" rows="4" class="form-control editor">{{ $organization->info }}</textarea>
                         </div>
                         <div class="form-group">
-                            <label for="date_start">Дата начала доступа</label>
+                            <label for="start_date">Дата начала доступа</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span id="date-start" class="input-group-text" style="font-size: 16px;"><i class="far fa-calendar-alt"></i></span>
                                 </div>
-                                <input id="date_timepicker_start" type="text" name="start_date" value="@if($organization->date_start){!! date('Y/m/d', $organization->date_start) !!}@endif" aria-describedby="date-start" class="form-control">
+                                <input id="date_timepicker_start" type="text" name="start_date" value="@if($organization->start_date){!! date('Y/m/d', $organization->start_date) !!}@endif" aria-describedby="date-start" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="date_end">Дата окончания доступа</label>
+                            <label for="end_date">Дата окончания доступа</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span id="date-end" class="input-group-text" style="font-size: 16px;"><i class="far fa-calendar-alt"></i></span>
                                 </div>
-                                <input id="date_timepicker_end" type="text" name="end_date" value="@if($organization->date_end){!! date('Y/m/d', $organization->date_end) !!}@endif" aria-describedby="date-end" class="form-control">
+                                <input id="date_timepicker_end" type="text" name="end_date" value="@if($organization->end_date){!! date('Y/m/d', $organization->end_date) !!}@endif" aria-describedby="date-end" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
@@ -108,89 +108,9 @@
                                 <option value="1" @if($organization->is_blocked) selected @endif>Да</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <input type="hidden" name="_method" value="PATCH">
-                            <input type="hidden" name="id" value="{{ $organization->id }}">
-                        </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label for="is_blocked">Организация заблокирована</label>
-                        <select id="is_blocked" name="is_blocked" class="form-control">
-                            <option value="0">Нет</option>
-                            <option value="1">Да</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="date_start">Дата начала доступа</label>
-                        <div class="input-group mb-0">
-                            <div class="input-group-prepend">
-                                <span id="date-start" class="input-group-text" style="font-size: 16px;"><i class="far fa-calendar-alt"></i></span>
-                            </div>
-                            <input id="date_timepicker_start" type="text" name="date_start" value="{{$organization->date_start}}" aria-describedby="date-start" class="form-control" autocomplete="off">
-                        </div>
-                        <small id="emailHelp" class="form-text text-muted">Укажите дату в формате <strong>yyyy/mm/dd</strong></small>
-                    </div>
-                    <div class="form-group">
-                        <label for="date_end">Дата окончания доступа</label>
-                        <div class="input-group mb-0">
-                            <div class="input-group-prepend">
-                                <span id="date-end" class="input-group-text" style="font-size: 16px;"><i class="far fa-calendar-alt"></i></span>
-                            </div>
-                            <input id="date_timepicker_end" type="text" name="date_end" value="{{$organization->end_date}}" aria-describedby="date-end" class="form-control" autocomplete="off">
-                        </div>
-                        <small id="emailHelp" class="form-text text-muted">Укажите дату в формате <strong>yyyy/mm/dd</strong></small>
-                    </div>
-                    <h3 class="mb-3">Доп. параметры</h3>
-                    <div class="form-group">
-                        <div class="custom-control custom-switch">
-                            <input id="is_head" type="checkbox" name="is_head" value="1" class="custom-control-input" @if($organization->is_head) checked @endif>
-                            <label for="is_head" class="custom-control-label" style="font-size: 14px; font-weight: normal">Головная организация</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="custom-control custom-switch">
-                            <input id="is_basic" type="checkbox" name="is_basic" value="1" class="custom-control-input" @if($organization->is_basic) checked @endif>
-                            <label for="is_basic" class="custom-control-label" style="font-size: 14px; font-weight: normal">Базовый доступ</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="custom-control custom-switch">
-                            <input id="is_premium" type="checkbox" name="is_premium" value="1" class="custom-control-input" @if($organization->is_premium) checked @endif>
-                            <label for="is_premium" class="custom-control-label" style="font-size: 14px; font-weight: normal">Доступ Premium (все издания доступны)</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="custom-control custom-switch">
-                            <input id="is_testing" type="checkbox" name="is_testing" value="1" class="custom-control-input" @if($organization->is_testing) checked @endif>
-                            <label for="is_testing" class="custom-control-label" style="font-size: 14px; font-weight: normal">Тестовый доступ</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="custom-control custom-switch">
-                            <input id="is_demo" type="checkbox" name="is_demo" value="1" class="custom-control-input" @if($organization->is_demo) checked @endif>
-                            <label for="is_demo" class="custom-control-label" style="font-size: 14px; font-weight: normal">Демо-организация (для презентаций и технических работ)</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="custom-control custom-switch">
-                            <input id="member_transfer_network" type="checkbox" name="member_transfer_network" value="1" class="custom-control-input" @if($organization->member_transfer_network) checked @endif>
-                            <label for="member_transfer_network" class="custom-control-label" style="font-size: 14px; font-weight: normal">Участник сети трансферов</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="custom-control custom-switch">
-                            <input id="show_catalog" type="checkbox" name="show_catalog" value="1" class="custom-control-input" @if($organization->show_catalog) checked @endif>
-                            <label for="show_catalog" class="custom-control-label" style="font-size: 14px; font-weight: normal">Показывать в каталоге</label>
-                        </div>
-                    </div>
-                    <h3 class="mb-3">Структура организации</h3>
-                    <div class="d-flex justify-content-between">
-                        <button type="button" data-toggle="modal" data-target="#modalDepartments" data-organization-id="{{ $organization->id }}" class="btn btn-info" style="width: 48%;"><i class="fas fa-network-wired"></i> Отделения</button>
-                        <button type="button" data-toggle="modal" data-target="#modalDepartments" data-organization-id="{{ $organization->id }}" class="btn btn-info" style="width: 48%;"><i class="fas fa-users"></i> Группы</button>
-                    </div>
-                </div>
+                <input type="checkbox" id="redirect" name="redirect" style="display: none;">
 
             </div>
         </form>
@@ -211,4 +131,5 @@
     <script src="{{ secure_asset('/plugins/ckfinder/ckfinder.js') }}"></script>
     <script>CKFinder.config({connectorPath: '/ckfinder/connector'});</script>
     <script src="{{ secure_asset('/dashboards/sleek/js/cke_init.js') }}"></script>
+    <script src="/js/dashboard/platform/organization/organizations.js"></script>
 @endsection

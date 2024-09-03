@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::table('organizations', function (Blueprint $table) {
             $table->string('other_names')->nullable()->after('name');
             $table->string('info')->nullable()->after('other_names');
-            $table->string('logo_path')->nullable()->after('info');
+            $table->integer('parent_id')->default(0)->after('info');
+            $table->string('logo_path')->nullable()->after('parent_id');
             $table->string('address')->nullable()->after('logo_path');
             $table->string('phone')->nullable()->after('address');
             $table->string('email')->nullable()->after('phone');

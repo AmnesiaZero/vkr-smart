@@ -1,10 +1,10 @@
 var mainPageUrl = '/dashboard/organizations';
 
 $(document).ready(function () {
-    organizations();
-
     $('#save-close').on('click', function() {
         // Здесь можно добавить логику для закрытия формы или перехода на другую страницу
+        $('#redirect').prop('checked', true);
+
         $('#update_organization_form').submit(); // Сабмит формы
     });
 
@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     $('#close').on('click', function() {
         // Здесь можно добавить логику для отмены, например, переход на другую страницу
-        window.location.href = '/'; // Перенаправление на главную страницу
+        window.location.href = '/dashboard/platform/organizations'; // Перенаправление на главную страницу
     });
 
     $('.js-example-basic-single').select2();

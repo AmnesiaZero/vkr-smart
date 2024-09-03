@@ -24,7 +24,7 @@ class FilesHelper
    public static function acceptableImage(UploadedFile $image):bool
    {
        $extension = $image->extension();
-       $acceptableExtension = ['jpeg','png','webp'];
+       $acceptableExtension = ['jpeg','jpg','png','webp'];
        return in_array($extension,$acceptableExtension);
    }
 }
