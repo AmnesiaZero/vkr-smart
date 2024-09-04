@@ -12,7 +12,7 @@ function generateApiKey() {
         success: function (response) {
             if (response.success) {
                 const data = response.data;
-                $("#generate_key_form").append($("#jwt_tmpl").tmpl(data));
+                $("#vkr-logo").append($("#jwt_tmpl").tmpl(data));
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
