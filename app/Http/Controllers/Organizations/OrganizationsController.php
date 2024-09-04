@@ -139,6 +139,18 @@ class OrganizationsController extends Controller
         return $this->organizationsService->update($id,$data);
     }
 
+    public function updatePremium(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required','integer',Rule::exists('organizations','id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $id = $request->id;
+        return $this->organizationsService->updatePremium($id);
+    }
+
     public function addView()
     {
         return $this->organizationsService->addView();

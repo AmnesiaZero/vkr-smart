@@ -6,7 +6,11 @@
 
         </div>
         <div class="row">
-            <form class="row" onsubmit="generateApiKey();return false" id="generate_key_form">
+            <form class="row"
+                  @if(isset($organization->jwt_key))
+                  onsubmit="generateApiKey();return false"
+                  @endif
+                  id="generate_key_form">
                 <div class="col-xxl-5 col-xl-6 col-lg-7 mb-lg-0 mb-md-5 mb-0 p-5 col-12">
                     <p class="fw-600">«Подключение и настройка»</p>
                     <p class="fs-14 text-grey lh-17">Для подключения к сервису Вам необходимы 3 параметра:<br>2
@@ -33,9 +37,13 @@
                             <a href="#" class="password-control" onclick="return show_hide_password(this);"></a>
                         </div>
                     </div>
-                    <button class="btn btn-secondary w-100 mt-3 text-grey">
-                        Создать ключ защиты API
-                    </button>
+                    @if(isset($organization->jwt_key))
+                        Ранее вы уже выполнили запрос на их получение..
+                    @else
+                        <button class="btn btn-secondary w-100 mt-3 text-grey">
+                            Создать ключ защиты API
+                        </button>
+                    @endif
                 </div>
                 <div id="vkr-logo" class="col-xxl-6 col-lg-10 col-12">
                     <div class="br-green-light-2 br-15 p-3 mb-3">
@@ -62,8 +70,12 @@
                             </div>
                         </div>
                     </div>
+                    <div id="token_container">
+
+                    </div>
                 </div>
             </form>
+
         </div>
     </div>
 @endsection
@@ -75,7 +87,7 @@
     <script type="text/x-jquery-tmpl" id="jwt_tmpl">
         <span class="fs-20">
             Ваш JWT-ключ: <br>
-            <span id="token" class="fs-24 fw-bold text-green cursor-p">Ваш_токен_здесь</span>
+            <span id="token" class="fs-24 fw-bold text-green cursor-p">${token}</span>
         </span>
     </script>
 @endsection

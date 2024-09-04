@@ -10,6 +10,7 @@ use App\Services\Services;
 use App\Services\Specialties\Repositories\SpecialtyRepositoryInterface;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -109,13 +110,14 @@ class OrganizationsService extends Services
         {
             if(is_file($data['logo']) and FilesHelper::acceptableImage($data['logo']))
             {
-            $logoFile = $data['logo'];
-            $directoryNumber = ceil($id/1000);
-            $logoDirectory = 'logos/'.$directoryNumber;
-            Storage::makeDirectory($logoDirectory);
-            $logoFileName = $id.'.'.$logoFile->extension();
-            $logoPath =  $logoFile->storeAs($logoDirectory,$logoFileName);
-            $data['logo_path'] = $logoPath;
+                $logoFile = $data['logo'];
+                $directoryNumber = ceil($id/1000);
+                $logoDirectory = 'logos/'.$directoryNumber;
+                Storage::makeDirectory($logoDirectory);
+                $logoFileName = $id.'.'.$logoFile->extension();
+                $logoFile->storeAs($logoDirectory,$logoFileName);
+                $data['logo_path'] = $logoFileName;
+                $data['logo_file_name'] = $logoFile->getClientOriginalName();
             }
             else
             {
@@ -162,9 +164,10 @@ class OrganizationsService extends Services
                     $directoryNumber = ceil($id/1000);
                     $logoDirectory = 'logos/'.$directoryNumber;
                     Storage::makeDirectory($logoDirectory);
-                    $workFileName = $id.'.'.$logoFile->extension();
-                    $logoPath =  $logoFile->storeAs($logoDirectory,$workFileName);
+                    $logoFileName = $id.'.'.$logoFile->extension();
+                    $logoPath =  $logoFile->storeAs($logoDirectory,$logoFileName);
                     $updatedData['logo_path'] = $logoPath;
+                    $updatedData['logo_file_name'] = $logoFile->getClientOriginalName();
                 }
                 else
                 {
@@ -187,5 +190,23 @@ class OrganizationsService extends Services
             }
         }
         return back()->withErrors(['Ошибка при создании организации']);
+    }
+
+    public function updatePremium(int $id)
+    {
+        $organization = $this->_repository->find($id);
+        if($organization and $organization->id)
+        {
+            $isPremium = $organization->is_premium;
+            if($isPremium)
+            {
+                $organization->is_premium = true;
+            }
+            else
+            {
+                $organization->is_premium = false;
+            }
+            $organization->save();
+        }
     }
 }

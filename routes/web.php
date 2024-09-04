@@ -233,12 +233,12 @@ Route::group([
         'prefix' => 'platform',
 //        'middleware' => 'role:platformAdmin'
     ],function () {
-       Route::get('/',[UsersController::class,'mainPlatformView']);
+       Route::get('/',[UsersController::class,'mainPlatformView'])->name('platform.index');;
        Route::group([
            'prefix' => 'organizations'
        ],function (){
            Route::get('/',[OrganizationsController::class,'view'])->name('organizations.index');
-           Route::get('departments',[DepartmentsController::class,'view']);
+           Route::get('departments',[DepartmentsController::class,'view'])->name('departments.index');
        });
     });
 
@@ -312,7 +312,14 @@ Route::group([
         Route::post('delete',[OrganizationsController::class,'delete']);
         Route::get('delete',[OrganizationsController::class,'deleteView'])->name('organizations.delete');
 
-        Route::post('update',[OrganizationsController::class,'update'])->name('organizations.update');;
+        Route::group([
+            'prefix' => 'update'
+        ],function (){
+            Route::post('/',[OrganizationsController::class,'update'])->name('organizations.update');
+            Route::post('basic',[OrganizationsController::class,'updateBasic'])->name('organizations.update.basic');
+            Route::post('premium',[OrganizationsController::class,'updatePremium'])->name('organizations.update.premium');
+
+        });
         Route::get('edit',[OrganizationsController::class, 'editView'])->name('organizations.edit');
 
         Route::get('restore',[OrganizationsController::class,'restore'])->name('organizations.restore');
@@ -344,11 +351,15 @@ Route::group([
         Route::group([
             'prefix' => 'departments'
         ], function () {
+            Route::get('add',[DepartmentsController::class,'addView'])->name('departments.add');
+            Route::get('edit',[DepartmentsController::class,'editView'])->name('departments.view.edit');
+            Route::post('edit',[DepartmentsController::class,'edit'])->name('departments.edit');
             Route::get('search',[DepartmentsController::class,'search']);
             Route::get('find',[DepartmentsController::class,'find']);
             Route::get('all',[DepartmentsController::class,'all']);
             Route::get('get', [DepartmentsController::class, 'get']);
             Route::post('create', [DepartmentsController::class, 'create']);
+            Route::post('store',[DepartmentsController::class,'store'])->name('departments.store');
             Route::post('update', [DepartmentsController::class, 'update']);
             Route::post('delete', [DepartmentsController::class, 'delete']);
             Route::get('by-user', [DepartmentsController::class, 'getByUserId']);

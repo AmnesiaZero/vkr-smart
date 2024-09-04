@@ -15,9 +15,9 @@
 	</td>
     <td class="status-basic text-center">
         @if($item->is_basic)
-            <a href="" id="status_{{ $item->id }}" data-item-id="{{ $item->id }}" class="toggle-basic-status"><i id="basic_{{ $item->id }}" class="far fa-check-square basic"></i></a>
+            <a onclick="updateBasic({{$item->id}})" id="basic_status_{{ $item->id }}" data-item-id="{{ $item->id }}" class="toggle-basic-status"><i id="basic_{{ $item->id }}" class="far fa-check-square basic"></i></a>
         @elseif(!$item->is_basic)
-            <a href="" id="status_{{ $item->id }}" data-item-id="{{ $item->id }}" class="toggle-basic-status"><i id="basic_{{ $item->id }}" class="far fa-square not-basic"></i></a>
+            <a onclick="updateBasic({{$item->id}})" id="basic_status_{{ $item->id }}" data-item-id="{{ $item->id }}" class="toggle-basic-status"><i id="basic_{{ $item->id }}" class="far fa-square not-basic"></i></a>
         @endif
     </td>
 	<td class="status-premium text-center">

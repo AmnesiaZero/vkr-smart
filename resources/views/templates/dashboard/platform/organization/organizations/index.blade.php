@@ -59,3 +59,10 @@
         </div>
     </div>
 @endsection
+
+@section('scripts')
+    <script src="/js/dashboard/platform/organization/organizations.js"></script>
+    <script id="basic_status_tmpl" type="text/x-jquery-tmpl">
+        <a onclick="updateBasic(${id})" id="basic_status_${id}" data-item-id="${id}" class="toggle-basic-status"><i id="basic_${id}" class="far @{{if is_basic}} fa-check-square basic @{{else}} fa-square not-basic @{{/if}}"></i></a>
+    </script>
+@endsection

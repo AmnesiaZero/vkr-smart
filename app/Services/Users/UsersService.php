@@ -554,5 +554,22 @@ class UsersService extends Services
         return view('templates.dashboard.platform.index',['users' => $users,'user' => $you]);
     }
 
+    public function apiView()
+    {
+        $you = Auth::user();
+        $apiKey = config('jwt.api_key');
+        $organizationId = $you->organization_id;
+        $organization = $this->organizationRepository->find($organizationId);
+        if($organization and $organization->id)
+        {
+            return view('templates.dashboard.settings.api', [
+                'you' => $you,
+                'api_key' => $apiKey,
+                'organization' => $organization
+            ]);
+        }
+        return back()->withErrors(['Ошибка при поиске привязанной организации']);
+    }
+
 
 }

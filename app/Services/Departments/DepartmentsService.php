@@ -61,13 +61,13 @@ class DepartmentsService extends Services
                 'message' => 'Пустой массив данных'
             ]);
         }
-        $facultyDepartment = $this->departmentRepository->create($data);
-        Log::debug('department = ' . $facultyDepartment);
-        if ($facultyDepartment and $facultyDepartment->id) {
+        $department = $this->departmentRepository->create($data);
+        Log::debug('department = ' . $department);
+        if ($department and $department->id) {
             return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Кафедра успешно создана',
-                'department' => $facultyDepartment
+                'department' => $department
             ]);
         }
         return self::sendJsonResponse(false, [
@@ -79,11 +79,11 @@ class DepartmentsService extends Services
 
     public function get(array $data): JsonResponse
     {
-        $facultyDepartments = $this->departmentRepository->get($data);
-        Log::debug('departments = ' . $facultyDepartments);
+        $departments = $this->departmentRepository->get($data);
+        Log::debug('departments = ' . $departments);
         return self::sendJsonResponse(true, [
             'title' => 'Успешно получены кафедры',
-            'departments' => $facultyDepartments
+            'departments' => $departments
         ]);
     }
 
@@ -104,19 +104,43 @@ class DepartmentsService extends Services
         $result = $this->departmentRepository->update($id, $data);
 
         if ($result) {
-            $facultyDepartment = Department::query()->find($id);
+            $department = $this->departmentRepository->find($id);
             return self::sendJsonResponse(true, [
                 'title' => 'Успех',
                 'message' => 'Информация успешно сохранена',
-                'department' => $facultyDepartment
+                'department' => $department
             ]);
-        } else {
+        }
+        else {
             return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'При сохранении данных произошла ошибка',
                 'id' => $result->id
             ]);
         }
+    }
+
+    public function edit(int $id, array $data)
+    {
+        if (empty($data)) {
+            return back()->withErrors(['Пустой массив данных']);
+        }
+
+        $result = $this->departmentRepository->update($id,$data);
+        if($result)
+        {
+            $you = Auth::user();
+            if(isset($data['redirect']))
+            {
+                return redirect('/dashboard/platform/organizations/departments');
+            }
+            $department = $this->departmentRepository->find($id);
+            return view('templates.dashboard.platform.organization.departments.edit',[
+                'department' => $department,
+                'user' => $you
+            ]);
+        }
+        return back()->withErrors(['Ошибка при обновлении подразделения']);
     }
 
     public function find(int $id): JsonResponse
@@ -212,7 +236,7 @@ class DepartmentsService extends Services
         ]);
     }
 
-    public function updateView(int $id)
+    public function editView(int $id)
     {
         $department = $this->departmentRepository->find($id);
         $you = Auth::user();
@@ -240,6 +264,38 @@ class DepartmentsService extends Services
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при поиске подразделений'
         ]);
+    }
+
+    public function addView()
+    {
+        $you = Auth::user();
+        $organizations = Organization::all();
+        return view('templates.dashboard.platform.organization.departments.create',[
+            'user' => $you,
+            'organizations' => $organizations
+        ]);
+    }
+
+    public function store(array $data)
+    {
+        $you = Auth::user();
+        $data['user_id'] = $you->id;
+        if (empty($data)) {
+            return back()->withErrors(['Пустой массив данных']);
+        }
+        $department = $this->departmentRepository->create($data);
+        if ($department and $department->id) {
+
+            if(isset($data['redirect']))
+            {
+                return redirect('/dashboard/platform/departments');
+            }
+            return view('templates.dashboard.platform.organization.departments.create',[
+                'department' => $department,
+                'user' => $you
+            ]);
+        }
+        return back()->withErrors(['Ошибка при создании департамента']);
     }
 
 
