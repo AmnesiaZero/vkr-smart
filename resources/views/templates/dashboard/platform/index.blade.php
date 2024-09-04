@@ -21,7 +21,7 @@
                                     <p class="m-0 fw-bold">{{ $userElement->name }}</p>
                                     <p class="m-0 fw-normal text-muted">{{ $userElement->roles[0]->name }}</p>
                                     <p class="m-0 fw-normal text-muted">
-                                        @if($userElement->organization->name)
+                                        @if($userElement->organization)
                                             {{ $userElement->organization->name }}
                                         @else
                                             Не указано
