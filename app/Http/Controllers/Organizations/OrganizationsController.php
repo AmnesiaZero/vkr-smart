@@ -79,6 +79,35 @@ class OrganizationsController extends Controller
         return $this->organizationsService->editView($id);
     }
 
+    public function create(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'max:250',
+//            'parent_id' => ['integer',Rule::exists('organizations','id')],
+//            'logo' => 'file',
+            'address' => 'max:250',
+            'phone' => 'max:250',
+            'website' => 'max:250',
+            'email' => 'max:250',
+            'info' => 'max:250',
+//            'start_date' => 'date',
+//            'end_date' => 'date',
+            'is_head' => 'bool',
+            'is_premium' => 'bool',
+            'is_testing' => 'bool',
+            'is_blocked' => 'bool'
+        ]);
+//        dd($request);
+        if ($validator->fails()) {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $data = $request->only($this->fillable);
+        $data =array_filter($data, function ($value) {
+            return !is_null($value);
+        });
+        return $this->organizationsService->create($data);
+    }
+
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [

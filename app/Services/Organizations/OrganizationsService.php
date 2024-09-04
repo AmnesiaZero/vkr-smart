@@ -113,8 +113,8 @@ class OrganizationsService extends Services
             $directoryNumber = ceil($id/1000);
             $logoDirectory = 'logos/'.$directoryNumber;
             Storage::makeDirectory($logoDirectory);
-            $workFileName = $id.'.'.$logoFile->extension();
-            $logoPath =  $logoFile->storeAs($logoDirectory,$workFileName);
+            $logoFileName = $id.'.'.$logoFile->extension();
+            $logoPath =  $logoFile->storeAs($logoDirectory,$logoFileName);
             $data['logo_path'] = $logoPath;
             }
             else
@@ -145,5 +145,47 @@ class OrganizationsService extends Services
         return view('templates.dashboard.platform.organization.organizations.create',[
             'user' => $you,
         ]);
+    }
+
+    public function create(array $data)
+    {
+        $organization = $this->_repository->create($data);
+        if($organization and $organization->id)
+        {
+            $updatedData = [];
+            $id = $organization->id;
+            if(isset($data['logo']))
+            {
+                if(is_file($data['logo']) and FilesHelper::acceptableImage($data['logo']))
+                {
+                    $logoFile = $data['logo'];
+                    $directoryNumber = ceil($id/1000);
+                    $logoDirectory = 'logos/'.$directoryNumber;
+                    Storage::makeDirectory($logoDirectory);
+                    $workFileName = $id.'.'.$logoFile->extension();
+                    $logoPath =  $logoFile->storeAs($logoDirectory,$workFileName);
+                    $updatedData['logo_path'] = $logoPath;
+                }
+                else
+                {
+                    return back()->withErrors(['Некорректный файл логотипа. Проверьте расширение файла. Допустимые расширения : jpeg,png,webp,jpg']);
+                }
+            }
+            $result = $this->_repository->update($id,$updatedData);
+            if($result)
+            {
+                $updatedOrganization = $this->_repository->find($id);
+                $you = Auth::user();
+                if(isset($data['redirect']))
+                {
+                    return redirect('/dashboard/platform/organizations');
+                }
+                return view('templates.dashboard.platform.organization.organizations.update',[
+                    'organization' => $updatedOrganization,
+                    'user' => $you
+                ]);
+            }
+        }
+        return back()->withErrors(['Ошибка при создании организации']);
     }
 }

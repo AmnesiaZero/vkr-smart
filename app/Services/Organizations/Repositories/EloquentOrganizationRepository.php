@@ -23,10 +23,6 @@ class EloquentOrganizationRepository implements OrganizationRepositoryInterface
     public function get(array $data=[]): Collection|LengthAwarePaginator
     {
         $query = Organization::query();
-        if(isset($data['paginate']) and $data['paginate'])
-        {
-            return $query->paginate(config('pagination.per_page'),'*','page',$page);
-        }
         return $query->get();
     }
 
@@ -38,5 +34,10 @@ class EloquentOrganizationRepository implements OrganizationRepositoryInterface
     public function parents(int $organizationId): Collection
     {
         return Organization::query()->where('id','!=',$organizationId)->get();
+    }
+
+    public function create(array $data):Model
+    {
+        return Organization::query()->create($data);
     }
 }
