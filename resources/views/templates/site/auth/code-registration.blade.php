@@ -1,10 +1,187 @@
 @extends('layouts.site.main')
 
 @section('content')
-    <div class="bc-post p-4">
-        <h2 class="bc-post-title" id="bc-post-title">Регистрация по коду приглашения</h2>
+    <div class="container bc-post p-5">
+        <h2 class="bc-post-title mb-0" id="bc-post-title">Регистрация по коду приглашения</h2>
         <div id="ajax-content">
-            <div class="row">
+            <div class="row mt-4">
+                <div class="col-sm-6" id="code_registration">
+                    <form class="form-horizontal d-flex flex-column gap-2" id="registration_form" onsubmit="registration(); return false;">
+                        <div class="row">
+                            <div class="col-auto">
+                                <label class="form-label">
+                                    <span class="fs-16">Ваша организация:</span>
+                                </label>
+                            </div>
+
+                            <span class="col">
+                                {{$organization_name}}
+                            </span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-auto">
+                                <label class="form-label"><span class="fs-16">Ваш тип пользователя:</span></label>
+                            </div>
+                            @if($code->type==1)
+                                <span class="col">Студент</span>
+                            @else
+                                <span class="col">Преподаватель</span>
+                            @endif
+                        </div>
+
+                        <div class="row pt-4">
+                            <div class="col-sm-12">
+                                <h4 class="bc-post-title-xs">
+                                    <span>Укажите сведения о себе:</span>
+                                </h4>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col-sm-4">
+                                <span class="fs-16">Год выпуска</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <select class="selectpicker form-control" id="years_list" name="year_id"
+                                title="Выбрать...">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col-sm-4">
+                                <span class="fs-16">Факультет</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <select class="selectpicker form-control" id="faculties_list" name="faculty_id"
+                                        title="Выбрать...">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col-sm-4">
+                                <span class="fs-16">Кафедры</span>
+                            </label>
+                            <div class="col-sm-8">
+                                @if($code->type==1)
+                                    <select class="selectpicker form-control" id="departments_list" name="department_id"
+                                    title="Выбрать...">
+                                    </select>
+                                @else
+                                    <select name="departments_ids[]" id="departments_list_multiple"
+                                            class="selectpicker form-control bs-select-hidden"
+                                            data-title="Выбрать несколько..." data-width="100%"
+                                            multiple>
+                                        <option value="" selected>Выбрать</option>
+
+                                    </select>
+                                @endif
+                            </div>
+                        </div>
+
+                        @if($code->type==1)
+                            <div class="row">
+                                <label class="col-sm-4">
+                                    <span class="fs-16">Выберите направление подготовки</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    <select class="selectpicker form-control" name="specialty_id"
+                                            id="programs_specialties_list" title="Выбрать...">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-sm-4">
+                                    <span class="fs-16">Укажите вашу группу</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="group"
+                                           placeholder="Уточните группу, в которой вы обучаетесь..." required="">
+                                </div>
+                            </div>
+                        @endif
+
+                        <div class="row">
+                            <label class="form-label col-sm-4"><span class="fs-16">Укажите ваше ФИО:</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="name" placeholder="ФИО" required="">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col-sm-4">
+                                <span class="fs-16">Номер телефона</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="phone" placeholder="+7 999 999 99 99">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-4">
+                                <span class="fs-16">Дата рождения</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" name="date_of_birth">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-4">
+                                <span class="fs-16">Пол</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <select name="gender" class="selectpicker form-control">
+                                    <option value="1">Муж.</option>
+                                    <option value="2">Жен.</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="form-label col-sm-4">
+                                <span class="fs-16">Укажите ваш email-адрес:</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="email"
+                                       placeholder="Необходимо для формирования логина..."
+                                       required="">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="form-label col-sm-4">
+                                <span class="fs-16">Придумайте пароль:</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="password" id="password" class="form-control" name="password"
+                                       placeholder="Не менее 8 символов..."
+                                       required="" aria-autocomplete="list">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="form-label col-sm-4">
+                                <span class="fs-16">Повторите ввод пароля:</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="password" id="repassword" class="form-control" name="repassword"
+                                       placeholder="Подтвердите пароль"
+                                       required="">
+                            </div>
+                        </div>
+
+                        <div class="row pt-2 justify-content-end">
+                            <div class="col-sm-8 mb-2 text-end">
+                                <button class="btn btn-primary btn-block" id="registration-button" type="submit">
+                                    Зарегистрироваться
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="col-sm-6">
                     <blockquote>
                         <p>Добро пожаловать в систему персональной регистрации пользователей комплекса систем хранения и
@@ -20,188 +197,19 @@
                             ранее или авторизованы автоматически в Вашем вузе, нажмите кнопку "Авторизация", вы будете
                             перемещены на
                             форму входа.</p>
-                        <a href="/login" class="btn btn-success btn-block">Авторизация</a>
+                        <div class="text-end">
+                            <a href="/login" class="btn btn-primary btn-block">Авторизация</a>
+                        </div>
                     </blockquote>
-                </div>
-                <div class="col-sm-6" id="code_registration">
-                    <form class="form-horizontal" id="registration_form" onsubmit="registration(); return false;">
-                        <div class="form-group">
-                            <label class="form-label">
-                                <span>Ваша организация:</span>
-                            </label>
-
-                            <span class="col-sm-8">
-                                {{$organization_name}}
-                            </span>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label"><span>Ваш тип пользователя:</span></label>
-                            @if($code->type==1)
-                                <span class="col-sm-8">Студент</span>
-                            @else
-                                <span class="col-sm-8">Преподаватель</span>
-                            @endif
-                        </div>
-
-
-                        <div class="form-group pt-4">
-                            <div class="col-sm-12">
-                                <h4 class="bc-post-title-xs">
-                                    <span>Укажите сведения о себе:</span>
-                                </h4>
-                            </div>
-                        </div>
-
-                        <div class="form-group pt-2">
-                            <label class="col-sm-4">
-                                <span>Год выпуска</span>
-                            </label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="years_list" name="year_id">
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group pt-2">
-                            <label class="col-sm-4">
-                                <span>Факультет</span>
-                            </label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="faculties_list" name="faculty_id">
-                                    <option value="" selected>Выбрать</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group pt-2">
-                            <label class="col-sm-4">
-                                <span>Кафедры</span>
-                            </label>
-                            <div class="col-sm-8">
-                                @if($code->type==1)
-                                    <select class="form-control" id="departments_list" name="department_id">
-                                        <option value="" selected>Выбрать</option>
-                                    </select>
-                                @else
-                                    <select name="departments_ids[]" id="departments_list_multiple"
-                                            class="selectpicker form-control bs-select-hidden"
-                                            data-title="Выбрать несколько..." data-width="100%"
-                                            multiple>
-                                        <option value="" selected>Выбрать</option>
-
-                                    </select>
-                                @endif
-                            </div>
-                        </div>
-
-                        @if($code->type==1)
-                            <div class="form-group pt-2">
-                                <label class="col-sm-4">
-                                    <span>Выберите направление подготовки</span>
-                                </label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" name="specialty_id" id="programs_specialties_list">
-                                        <option value="" selected>Выбрать</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group pt-2">
-                                <label class="col-sm-4">
-                                    <span>Укажите вашу группу</span>
-                                </label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="group"
-                                           placeholder="Уточните группу, в которой вы обучаетесь..." required="">
-                                </div>
-                            </div>
-
-                        @endif
-
-
-                        <div class="form-group pt-2">
-                            <label class="form-label col-sm-4"><span>Укажите ваше ФИО:</span></label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="name" placeholder="ФИО" required="">
-                            </div>
-                        </div>
-                        <div class="form-group pt-2">
-                            <label class="col-sm-4">
-                                <span>Номер телефона</span>
-                            </label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="phone" placeholder="+7 999 999 99 99">
-                            </div>
-                        </div>
-                        <div class="form-group pt-2">
-                            <label class="col-sm-4">
-                                <span>Дата рождения</span>
-                            </label>
-                            <div class="col-sm-8">
-                                <input type="date" class="form-control" name="date_of_birth">
-                            </div>
-                        </div>
-                        <div class="form-group pt-2">
-                            <label class="col-sm-4">
-                                <span>Пол</span>
-                            </label>
-                            <div class="col-sm-8">
-                                <select name="gender" class="form-control">
-                                    <option value="1">Муж.</option>
-                                    <option value="2">Жен.</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group pt-2">
-                            <label class="form-label col-sm-4">
-                                <span>Укажите ваш email-адрес:</span>
-                            </label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="email"
-                                       placeholder="Необходимо для формирования логина..."
-                                       required="">
-                            </div>
-                        </div>
-                        <div class="form-group pt-2">
-                            <label class="form-label col-sm-4">
-                                <span>Придумайте пароль:</span>
-                            </label>
-                            <div class="col-sm-8">
-                                <input type="password" id="password" class="form-control" name="password"
-                                       placeholder="Не менее 8 символов..."
-                                       required="" aria-autocomplete="list">
-                            </div>
-                        </div>
-                        <div class="form-group pt-2">
-                            <label class="form-label col-sm-4">
-                                <span>Повторите ввод пароля:</span>
-                            </label>
-                            <div class="col-sm-8">
-                                <input type="password" id="repassword" class="form-control" name="repassword"
-                                       placeholder="Подтвердите пароль"
-                                       required="">
-                            </div>
-                        </div>
-                        <div class="form-group pt-2">
-                            <label class="form-label col-sm-4">
-                                <span>Действия:</span>
-                            </label>
-                            <div class="col-sm-8 mb-2">
-                                <button class="btn btn-success" id="registration-button" type="submit">
-                                    Зарегистрироваться
-                                </button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
 
                 <div id="success_registration">
-
                 </div>
             </div>
+        </div>
+    </div>
 
-            @endsection
+@endsection
 
             @section('scripts')
 
@@ -243,3 +251,4 @@
 
                 <script src="/js/site/code-register.js"></script>
 @endsection
+

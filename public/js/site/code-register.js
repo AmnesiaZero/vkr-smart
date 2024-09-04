@@ -37,8 +37,10 @@ function years() {
         success: function (response) {
             const years = response.data.years;
             const yearsList = $("#years_list");
+            yearsList.empty();
+            yearsList.selectpicker('destroy');
             yearsList.html($("#year_tmpl").tmpl(years));
-            yearsList.prepend('<option value="" selected>Выбрать...</option>');
+            yearsList.selectpicker('render');
         },
         error: function (response) {
             $.notify(response.data.title + ":" + response.data.message, "error");
@@ -60,8 +62,9 @@ function faculties(data, htmlId) {
                 const faculties = response.data.faculties;
                 const facultiesList = $("#" + htmlId);
                 facultiesList.empty();
+                facultiesList.selectpicker('destroy');
                 facultiesList.html($("#faculty_tmpl").tmpl(faculties));
-                facultiesList.prepend('<option value="" selected>Выберите.......</option>');
+                facultiesList.selectpicker('render');
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -85,7 +88,10 @@ function departments(data) {
                 let departmentsList = '';
                 if ($("#departments_list").length > 0) {
                     departmentsList = $("#departments_list");
+                    departmentsList.empty();
+                    departmentsList.selectpicker('destroy');
                     departmentsList.html($("#department_list_tmpl").tmpl(departments));
+                    departmentsList.selectpicker('render');
                 }
                 else {
                     departmentsList = $("#departments_list_multiple");
@@ -95,8 +101,6 @@ function departments(data) {
                     departmentsList.html($("#department_list_tmpl").tmpl(departments));
                     dropdownList.selectpicker('render');
                 }
-                departmentsList.prepend('<option value="" selected>Выберите.......</option>');
-
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -117,7 +121,10 @@ function programsSpecialties(data) {
             if (response.success) {
                 const programSpecialties = response.data.program_specialties;
                 const programsSpecialtiesList = $("#programs_specialties_list");
+                programsSpecialtiesList.empty();
+                programsSpecialtiesList.selectpicker('destroy');
                 programsSpecialtiesList.html($("#program_specialty_tmpl").tmpl(programSpecialties));
+                programsSpecialtiesList.selectpicker('render');
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }

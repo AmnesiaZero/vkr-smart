@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{'/css/bootstrap.min.css'}}">
     <link rel="stylesheet" href="{{'/css/bootstrap-select.css'}}">
     <link rel="stylesheet" type="text/css" href="{{ '/css/app.css' }}">
+    <link rel="stylesheet" type="text/css" href="{{ '/css/dashboard.css' }}">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     @yield('styles')
 </head>

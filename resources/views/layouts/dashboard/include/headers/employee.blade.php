@@ -5,8 +5,6 @@
         Персональная&nbsp;информация
     </a>
 </div>
-
-
 <div class="accordion-item">
     <p class="accordion-header work" id="headingTwo">
         <button class="accordion-button fs-16 fw-600 box-shadow-none px-0 py-2 m-0 collapsed"
