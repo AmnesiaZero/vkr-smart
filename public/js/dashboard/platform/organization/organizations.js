@@ -648,3 +648,14 @@ $(document).delegate('.delete-book', 'click', function (e) {
         }
     });
 });
+
+$(document).ready(function () {
+    $('#button-select-image').on('click', function() {
+        $('#logo_load').click();
+    });
+
+    $('#logo_load').on('change', function() {
+        var fileName = $(this).val().split('\\').pop();
+        $('#logo').val(fileName);
+    });
+});

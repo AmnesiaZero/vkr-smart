@@ -28,9 +28,13 @@
                         <div class="form-group">
                             <label for="logo">Логотип</label>
                             <div class="input-group">
-                                <input id="logo" type="text" value="{{ $organization->logo }}" class="form-control" placeholder="Выберите изображение" aria-label="Выберите изображение" aria-describedby="button-select-image">
+                                <input id="logo" type="text" value="{{ $organization->logo }}" class="form-control"
+                                       placeholder="Выберите изображение" aria-label="Выберите изображение"
+                                       aria-describedby="button-select-image" readonly>
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button" id="button-select-image" onclick="toggleFile('logo_load')">Загрузить</button>
+                                    <button class="btn btn-primary" type="button" id="button-select-image"
+                                            onclick="toggleFile('logo_load')">Загрузить
+                                    </button>
                                 </div>
                             </div>
                             <input type="file" id="logo_load" name="logo" style="display: none">
@@ -58,19 +62,14 @@
                         <div class="form-group">
                             <label for="start_date">Дата начала доступа</label>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span id="date-start" class="input-group-text" style="font-size: 16px;"><i class="far fa-calendar-alt"></i></span>
-                                </div>
-                                <input id="date_timepicker_start" type="text" name="start_date" value="@if($organization->start_date) {{ \Carbon\Carbon::parse($organization->start_date)->format('d.m.Y') }} @endif" aria-describedby="date-start" class="form-control">
+                                <input id="date_timepicker_start" type="date" name="start_date"
+                                       value="@if($organization->start_date) {{ \Carbon\Carbon::parse($organization->start_date)->format('d.m.Y') }} @endif" aria-describedby="date-start" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="end_date">Дата окончания доступа</label>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span id="date-end" class="input-group-text" style="font-size: 16px;"><i class="far fa-calendar-alt"></i></span>
-                                </div>
-                                <input id="date_timepicker_end" type="text" name="end_date" value="@if($organization->end_date) {{ \Carbon\Carbon::parse($organization->end_date)->format('d.m.Y') }} @endif" aria-describedby="date-end" class="form-control">
+                                <input id="date_timepicker_end" type="date" name="end_date" value="@if($organization->end_date) {{ \Carbon\Carbon::parse($organization->end_date)->format('d.m.Y') }} @endif" aria-describedby="date-end" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
