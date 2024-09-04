@@ -22,3 +22,14 @@ function generateApiKey() {
         }
     });
 }
+
+$(document).ready(function(){
+    $('#token').click(function(){
+        const $temp = $('<textarea>');
+        $('body').append($temp);
+        $temp.val($(this).text()).select();
+        document.execCommand('copy');
+        $temp.remove();
+        alert('Токен скопирован в буфер обмена!');
+    });
+});

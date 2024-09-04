@@ -75,7 +75,7 @@
     <script type="text/x-jquery-tmpl" id="jwt_tmpl">
         <span class="fs-20">
             Ваш JWT-ключ: <br>
-            <span class="fs-24 fw-bold text-green">${token}</span>
+            <span id="token" class="fs-24 fw-bold text-green cursor-p">Ваш_токен_здесь</span>
         </span>
     </script>
 @endsection
