@@ -20,7 +20,13 @@
                                 <th>
                                     <p class="m-0 fw-bold">{{ $userElement->name }}</p>
                                     <p class="m-0 fw-normal text-muted">{{ $userElement->roles[0]->name }}</p>
-                                    <p class="m-0 fw-normal text-muted">{{ $userElement->organization->name }}</p>
+                                    <p class="m-0 fw-normal text-muted">
+                                        @if($userElement->organization->name)
+                                            {{ $userElement->organization->name }}
+                                        @else
+                                            Не указано
+                                        @endif
+                                    </p>
                                 </th>
                                 <th>{{ $userElement->login }}</th>
                                 <th style="white-space: nowrap">{{ $userElement->created_at }}</th>
