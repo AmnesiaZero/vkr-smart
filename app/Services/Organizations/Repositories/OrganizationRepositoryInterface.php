@@ -4,6 +4,7 @@ namespace App\Services\Organizations\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface OrganizationRepositoryInterface
 {
@@ -20,4 +21,23 @@ interface OrganizationRepositoryInterface
      * @return bool
      */
     public function exist(int $id): bool;
+
+    /**
+     * @param array $data
+     * @return Collection|LengthAwarePaginator
+     */
+    public function get(array $data):Collection|LengthAwarePaginator;
+
+    /**
+     * @param int $id
+     * @param array $data
+     * @return mixed
+     */
+    public function update(int $id,array $data);
+
+    /**
+     * @param int $organizationId
+     * @return Collection
+     */
+    public function parents(int $organizationId):Collection;
 }

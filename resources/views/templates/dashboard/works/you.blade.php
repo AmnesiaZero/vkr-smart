@@ -265,16 +265,34 @@
                         <form class="form form-horizontal" id="infoWorkForm" onsubmit="workInfo(); return false;">
                             <div class="form-group">
                                 <label class="col-sm-4">Год выпуска</label>
-                                <div class="col-sm-8" id="value_year_id">${year.year}</div>
+                                <div class="col-sm-8" id="value_year_id">
+                                @{{if year}}
+                                ${year.year}
+                                @{{else}}
+                                Не указан
+                                @{{/if}}
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4">Факультет</label>
-                                <div class="col-sm-8" id="faculty_id">${faculty.name}</div>
+                                <div class="col-sm-8" id="faculty_id">
+                                @{{if faculty}}
+                                ${faculty.name}
+                                @{{else}}
+                                Не указан
+                                @{{/if}}
+                                </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-4">Кто загрузил работу</label>
-                                <div class="col-sm-8">${user.name}</div>
+                                <div class="col-sm-8">
+                                @{{if user}}
+                                ${user.name}
+                                @{{else}}
+                                Не указан
+                                @{{/if}}
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4">ФИО обучающегося</label>

@@ -6,7 +6,7 @@
             <div class="row">
                 @include('layouts.site.include.menu.about')
                 <div class="col-lg-9 px-lg-0 px-4">
-                    <h6 class="lh-25 pb-4 mb-2">Система хранения работ организации <br>на платформе ВКР-ВУЗ.РФ — это
+                    <h6 class="lh-25 pb-4 mb-2">Система хранения работ организации <br>на платформе ВКР-СМАРТ.РФ — это
                         удобно и безопасно!</h6>
                     <div class="list-custom-green block-75">
                         <ul class="text-black lh-23 ps-0">
@@ -44,7 +44,7 @@
                         <div class="col-xl-10 col-md-9 col-12">
                             <div class="bg-green br-20 p-4">
                                 <h6 class="lh-28">Минимальный срок хранения архива — 5 лет после окончания договора на
-                                    использование ВКР-ВУЗ.РФ!</h6>
+                                    использование ВКР-СМАРТ.РФ!</h6>
                             </div>
                         </div>
                     </div>

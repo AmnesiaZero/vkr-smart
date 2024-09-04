@@ -1,11 +1,11 @@
-@extends('layouts.dashboard.'.config('settings.dashboard_theme').'.index')
+@extends('layouts.dashboard.platform')
 
 @section('content')
     <div class="list">
         <div class="list-header">
             <h2 class="block-title">Новая организация</h2>
         </div>
-        <form id="formContent" action="{{ route('dashboard.organizations.store') }}" data-action-index="{{ route('dashboard.organizations.index') }}" method="POST">
+        <form id="formContent" action="{{ route('organizations.create') }}"  method="POST">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-8">
@@ -54,60 +54,6 @@
                             <label for="info">Дополнительная информация</label>
                             <textarea id="info" name="info" rows="4" class="form-control editor"></textarea>
                         </div>
-{{--                        <div class="form-group">--}}
-{{--                            <label for="date_start">Дата начала доступа</label>--}}
-{{--                            <div class="input-group">--}}
-{{--                                <div class="input-group-prepend">--}}
-{{--                                    <span id="date-start" class="input-group-text" style="font-size: 16px;"><i class="far fa-calendar-alt"></i></span>--}}
-{{--                                </div>--}}
-{{--                                <input id="date_timepicker_start" type="text" name="date_start" aria-describedby="date-start" class="form-control">--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group">--}}
-{{--                            <label for="date_end">Дата окончания доступа</label>--}}
-{{--                            <div class="input-group">--}}
-{{--                                <div class="input-group-prepend">--}}
-{{--                                    <span id="date-end" class="input-group-text" style="font-size: 16px;"><i class="far fa-calendar-alt"></i></span>--}}
-{{--                                </div>--}}
-{{--                                <input id="date_timepicker_end" type="text" name="date_end" aria-describedby="date-end" class="form-control">--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-                        {{--<div class="form-group">
-                            <label for="is_head">Голованя организация</label>
-                            <select id="is_head" name="is_head" class="form-control">
-                                <option value="0">Нет</option>
-                                <option value="1">Да</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="is_premium">Доступ Premium (все издания доступны)</label>
-                            <select id="is_premium" name="is_premium" class="form-control">
-                                <option value="0">Нет</option>
-                                <option value="1">Да</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="is_testing">Тестовый доступ</label>
-                            <select id="is_testing" name="is_testing" class="form-control">
-                                <option value="0">Нет</option>
-                                <option value="1">Да</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="is_demo">Демо-организация (для презентаций и технических работ)</label>
-                            <select name="is_demo" class="form-control" id="published">
-                                <option value="0">Нет</option>
-                                <option value="1">Да</option>
-                            </select>
-                        </div>
-                        --}}
-{{--                        <div class="form-group">--}}
-{{--                            <label for="is_blocked">Организация заблокирована</label>--}}
-{{--                            <select id="is_blocked" name="is_blocked" class="form-control">--}}
-{{--                                <option value="0">Нет</option>--}}
-{{--                                <option value="1">Да</option>--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
                         <div class="form-group">
                             <input type="hidden" name="id" value="0" />
                         </div>

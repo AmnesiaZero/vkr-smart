@@ -10,60 +10,11 @@
      <option value="${id}">${name}</option>
 </script>
 
-<script id="work_tmpl" type="text/x-jquery-tmpl">
-      @{{if visibility==1}}
-     <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
-{{--    <th scope="row">${specialty.name}</th>--}}
-    <td>${student}</td>
-    <td>${group}</td>
-    <td>${protect_date}</td>
-    <td>${name} - ${work_type}</td>
-    <td>${getAssessmentDescription(assessment)}</td>
-    <td>${getSelfCheckDescription(self_check)}</td>
-        <td>
-            @{{if report_status==0}}
-            <div class="mt-2">
-            <span class="bg-waiting px-2 d-flex align-items-center">
-            <div class="me-2 yellow-c">
-            </div>
-              В очереди на проверку
-            </span>
-            </div>
-            @{{/if}}
-            @{{if report_status==1}}
-            <div class="mt-2" onclick="openReport(${id})">
-            <span class="bg-active px-2 d-flex align-items-center">
-            <div class="me-2 green-c">
-            </div>
-              Отчет
-            </span>
-            </div>
-            @{{/if}}
-            @{{if report_status==2}}
-            <div>
-                <span class="bg-error p-2 d-flex align-items-center gap-2">
-                    <span class="red-c"></span>
-                    Не&nbsp;проверена
-                </span>
-            </div>
-            @{{/if}}
 
-        </td>
-        <td>
-            <img src="/images/three_dots.svg" alt="" id="work-menu-button" class="btn-info-box cursor-p dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            @include('layouts.dashboard.include.menu.work.employee')
-        </td>
-    </tr>
-    @{{/if}}
-
-
- </script>
 
 <script id="work_info_tmpl" type="text/x-jquery-tmpl">
         <div class="modal fade" id="work_info_modal">
-            <div class="modal-dialog modal-md">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3>Информация о работе</h3>
@@ -72,87 +23,86 @@
                         <form class="form form-horizontal" id="infoWorkForm" onsubmit="workInfo(); return false;">
                             <div class="d-flex flex-column gap-4">
                             <div class="row">
-                                <label class="col-sm-6">Год выпуска</label>
-                                <div class="col-sm-6" id="value_year_id">${year.year}</div>
+                                <label class="col-sm-4">Год выпуска</label>
+                                <div class="col-sm-8" id="value_year_id">@{{if year}}${year.year}@{{/if}}</div>
                             </div>
-{{--                                <div class="row">--}}
-{{--                                    <label class="col-sm-6">Факультет</label>--}}
-{{--                                    <div class="col-sm-6" id="faculty_id">${faculty.name}</div>--}}
-{{--                                </div>--}}
-{{--                                <div class="row">--}}
-{{--                                    <label class="col-sm-6">Кафедра</label>--}}
-{{--                                    <div class="col-sm-6" id="value_department_id">${department.name}</div>--}}
-{{--                                </div>--}}
-{{--                                <div class="row">--}}
-{{--                                    <label class="col-sm-6">Образовательная программа (специальность)</label>--}}
-{{--                                    <div class="col-sm-6">${specialty.name}</div>--}}
-{{--                                </div>--}}
                                 <div class="row">
-                                    <label class="col-sm-6">Кто загрузил работу</label>
-                                    <div class="col-sm-6">${user.name}</div>
+                                    <label class="col-sm-4">Факультет</label>
+                                    <div class="col-sm-8" id="faculty_id">@{{if faculty}} ${faculty.name} @{{/if}}</div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-6">ФИО обучающегося</label>
-                                    <div class="col-sm-6" >${student}</div>
+                                    <label class="col-sm-4">Кафедра</label>
+                                    <div class="col-sm-8" id="value_department_id">@{{if department}} ${department.name} @{{/if}}</div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-6">Группа обучающегося</label>
-                                    <div class="col-sm-6">${group}</div>
+                                    <label class="col-sm-4">Образовательная программа (специальность)</label>
+                                    <div class="col-sm-8">@{{if specialty}} ${specialty.name} @{{/if}}</div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-6">Наименование работы</label>
-                                    <div class="col-sm-6" id="value_name">${name}</div>
+                                    <label class="col-sm-4">Кто загрузил работу</label>
+                                    <div class="col-sm-8">@{{if user}} ${user.name} @{{/if}}</div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-6">Тип работы</label>
-                                    <div class="col-sm-6" id="value_worktype">${work_type}</div>
+                                    <label class="col-sm-4">ФИО обучающегося</label>
+                                    <div class="col-sm-8" >${student}</div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-6">Научный руководитель</label>
-                                    <div class="col-sm-6" id="value_scientific_adviser">${scientific_supervisor}</div>
+                                    <label class="col-sm-4">Группа обучающегося</label>
+                                    <div class="col-sm-8">${group}</div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-6">Дата защиты</label>
-                                    <div class="col-sm-6" id="value_protectdate">${protect_date}</div>
+                                    <label class="col-sm-4">Наименование работы</label>
+                                    <div class="col-sm-8" id="value_name">${name}</div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-6">Дата загрузки работы</label>
-                                    <div class="col-sm-6" id="value_createdon">${created_at}</div>
+                                    <label class="col-sm-4">Тип работы</label>
+                                    <div class="col-sm-8" id="value_worktype">${work_type}</div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-6">Оценка</label>
-                                    <div class="col-sm-6" id="value_assessment">${getAssessmentDescription(assessment)}</div>
+                                    <label class="col-sm-4">Научный руководитель</label>
+                                    <div class="col-sm-8" id="value_scientific_adviser">${scientific_supervisor}</div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-6">Согласие на размещение работы</label>
-                                    <div class="col-sm-6" id="value_agreement">${getAgreementDescription(agreement)}</div>
+                                    <label class="col-sm-4">Дата защиты</label>
+                                    <div class="col-sm-8" id="value_protectdate">${protect_date}</div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-6">Файл работы</label>
-                                    <div class="col-sm-6" id="value_workfile"><a onclick="downloadWork(); return false;" href="#"><span class="glyphicon glyphicon-save-file"></span> Скачать файл работы</a></div>
+                                    <label class="col-sm-4">Дата загрузки работы</label>
+                                    <div class="col-sm-8" id="value_createdon">${created_at}</div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-6">Самопроверка работы студентом</label>
-                                    <div class="col-sm-6" id="self_check_value">
-                                        <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-sm"
-                                        style="background: whitesmoke;" data-toggle="tooltip" title="Сменить статус">
-                                            ${getSelfCheckDescription(self_check)}
-                                            <span class="glyphicon glyphicon-refresh"></span>
-                                        </a>
+                                    <label class="col-sm-4">Оценка</label>
+                                    <div class="col-sm-8" id="value_assessment">${getAssessmentDescription(assessment)}</div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-sm-4">Согласие на размещение работы</label>
+                                    <div class="col-sm-8" id="value_agreement">${getAgreementDescription(agreement)}</div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-sm-4">Файл работы</label>
+                                    <div class="col-sm-8" id="value_workfile"><a onclick="downloadWork(); return false;" href="#"><span class="glyphicon glyphicon-save-file"></span> Скачать файл работы</a></div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-sm-4">Самопроверка работы студентом</label>
+                                    <div class="col-sm-8">
+                                    <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-sm"> <span id="self_check_value"> ${getSelfCheckDescription(self_check)} </span>
+                                    <span class="glyphicon glyphicon-refresh">
+                                    </span>
+                                    </a>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-6">Справка о самопроверке работы обучающимся по системе заимствований</label>
+                                    <label class="col-sm-4">Справка о самопроверке работы обучающимся по системе заимствований</label>
                                     @{{if certificate}}
-                                    <a class="col-sm-6" onclick="downloadCertificate()">Скачать файл самопроверки </a>
+                                    <a class="col-sm-8" onclick="downloadCertificate()">Скачать файл самопроверки </a>
                                     @{{else}}
-                                    <div class="col-sm-6" id="value_certificate">Файл справки не загружен</div>
+                                    <div class="col-sm-8" id="value_certificate">Файл справки не загружен</div>
                                     @{{/if}}
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-6">Отчет о заимствованиях по базам ВКР-ВУЗ</label>
+                                    <label class="col-sm-4">Отчет о заимствованиях по базам ВКР-ВУЗ</label>
                                     @{{if borrowings_percent}}
-                                    <div class="col-sm-6" id="value_percent_person">Фактических некорректных заимствований: ${borrowings_percent}</div>
+                                    <div class="col-sm-8" id="value_percent_person">Фактических некорректных заимствований: ${borrowings_percent}</div>
                                     @{{/if}}
                                 </div></div>
                                 <div id="works-add-alert"></div>
@@ -192,12 +142,6 @@
 
             </script>
 
-<script id="self_check_tmpl" type="text/x-jquery-tmpl">
-       <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-sm" style="background: whitesmoke;"> ${getSelfCheckDescription(self_check)}
-          <span class="glyphicon glyphicon-refresh">
-                                </span>
-
-            </script>
 
 <script id="additional_file_tmpl" type="text/x-jquery-tmpl">
         <tr id="additional_file_${id}">
@@ -217,7 +161,7 @@
 
 <script id="update_work_tmpl" type="text/x-jquery-tmpl">
     <div class="modal fade" id="update_work_modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">
