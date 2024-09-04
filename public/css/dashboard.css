@@ -1269,6 +1269,10 @@ span.current {
 .dropdown-item.selected.active {
     background: #D9F1F3;
 }
+.dropdown-item:active {
+    background: #e9ecef;
+    color: #1e2125;
+}
 .filter-option-inner-inner {
     font-weight: 400;
 }

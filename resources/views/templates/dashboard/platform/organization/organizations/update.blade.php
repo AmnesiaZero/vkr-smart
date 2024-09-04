@@ -61,7 +61,7 @@
                                 <div class="input-group-prepend">
                                     <span id="date-start" class="input-group-text" style="font-size: 16px;"><i class="far fa-calendar-alt"></i></span>
                                 </div>
-                                <input id="date_timepicker_start" type="text" name="start_date" value="@if($organization->start_date){!! date('Y/m/d', $organization->start_date) !!}@endif" aria-describedby="date-start" class="form-control">
+                                <input id="date_timepicker_start" type="text" name="start_date" value="@if($organization->start_date) {{ \Carbon\Carbon::parse($item->start_date)->format('d.m.Y') }} @endif" aria-describedby="date-start" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
@@ -70,7 +70,7 @@
                                 <div class="input-group-prepend">
                                     <span id="date-end" class="input-group-text" style="font-size: 16px;"><i class="far fa-calendar-alt"></i></span>
                                 </div>
-                                <input id="date_timepicker_end" type="text" name="end_date" value="@if($organization->end_date){!! date('Y/m/d', $organization->end_date) !!}@endif" aria-describedby="date-end" class="form-control">
+                                <input id="date_timepicker_end" type="text" name="end_date" value="@if($organization->end_date) {{ \Carbon\Carbon::parse($item->end_date)->format('d.m.Y') }} @endif" aria-describedby="date-end" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
