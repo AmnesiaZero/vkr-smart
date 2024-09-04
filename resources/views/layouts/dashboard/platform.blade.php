@@ -59,7 +59,11 @@
                         </a>
                     </li>
                     <li class="has-sub {{ (request()->segment(2) == 'organizations') ? 'expand' : '' }}">
-                        <a href="javascript:void(0)" class="sidenav-item-link {{ (request()->segment(2) == 'organizations') ? 'collapsed' : '' }}" data-toggle="collapse" data-target="#organizations" aria-expanded="{{ (request()->segment(2) == 'organizations') ? 'true' : 'false' }}" aria-controls="organizations">
+                        <a href="javascript:void(0)"
+                           class="sidenav-item-link {{ (request()->segment(2) == 'organizations') ? 'collapsed' : '' }}"
+                           data-bs-toggle="collapse" data-bs-target="#organizations"
+                           aria-expanded="{{ (request()->segment(2) == 'organizations') ? 'true' : 'false' }}"
+                           aria-controls="organizations">
                             <i class="mdi mdi-rhombus-split"></i>
                             <span class="nav-text">Организации</span> <span class="caret"></span>
                         </a>
@@ -88,8 +92,6 @@
                             </div>
                         </ul>
                     </li>
-
-
 
                     <li class="{{ request()->routeIs('dashboard.users.index') ? 'active' : '' }}">
                         <a href="" class="sidenav-item-link">
