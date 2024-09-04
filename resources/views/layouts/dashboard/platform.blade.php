@@ -58,14 +58,14 @@
                             <span class="nav-text">Новости</span>
                         </a>
                     </li>
-                    <li class="has-sub {{ (request()->segment(2) == 'organizations') ? 'expand' : '' }}">
-                        <a href="javascript:void(0)" class="sidenav-item-link {{ (request()->segment(2) == 'organizations') ? 'collapsed' : '' }}" data-toggle="collapse" data-target="#organizations" aria-expanded="{{ (request()->segment(2) == 'organizations') ? 'true' : 'false' }}" aria-controls="organizations">
+                    <li class="has-sub {{ (request()->segment(3) == 'organizations') ? 'expand' : '' }}">
+                        <a href="javascript:void(0)" class="sidenav-item-link {{ (request()->segment(3) == 'organizations') ? 'collapsed' : '' }}" data-toggle="collapse" data-target="#organizations" aria-expanded="{{ (request()->segment(3) == 'organizations') ? 'true' : 'false' }}" aria-controls="organizations">
                             <i class="mdi mdi-rhombus-split"></i>
                             <span class="nav-text">Организации</span> <span class="caret"></span>
                         </a>
-                        <ul id="organizations" class="collapse {{ (request()->segment(2) == 'organizations') ? 'show' : ''}}">
+                        <ul id="organizations" class="collapse {{ (request()->segment(3) == 'organizations') ? 'show' : ''}}">
                             <div class="sub-menu">
-                                <li class="{{ request()->routeIs('dashboard.organizations.index') ? 'active' : '' }}">
+                                <li class="{{ request()->routeIs('organizations.index') ? 'active' : '' }}">
                                     <a href="" class="sidenav-item-link">
                                         <span class="nav-text">Организации</span>
                                     </a>

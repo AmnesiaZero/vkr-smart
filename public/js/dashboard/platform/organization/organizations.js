@@ -5,12 +5,12 @@ $(document).ready(function () {
         // Здесь можно добавить логику для закрытия формы или перехода на другую страницу
         $('#redirect').prop('checked', true);
 
-        $('#update_organization_form').submit(); // Сабмит формы
+        $('#organization_form').submit(); // Сабмит формы
     });
 
     $('#save').on('click', function() {
         // Здесь можно добавить логику для сохранения данных без закрытия
-        $('#update_organization_form').submit(); // Сабмит формы
+        $('#organization_form').submit(); // Сабмит формы
     });
 
     $('#close').on('click', function() {
@@ -308,30 +308,30 @@ $('#button-select-image').on('click', function () {
 $(document).on('focus', '.date', function() {
     $(this).mask('00.00.0000', {placeholder: "__.__.____"});
 });
-jQuery(function(){
-    jQuery('#date_timepicker_start').datetimepicker({
-        lang: 'ru',
-        format:'Y/m/d',
-        scrollMonth: false,
-        onShow:function( ct ){
-            this.setOptions({
-                maxDate:jQuery('#date_timepicker_end').val()?jQuery('#date_timepicker_end').val():false
-            })
-        },
-        timepicker:false
-    });
-    jQuery('#date_timepicker_end').datetimepicker({
-        lang: 'ru',
-        format:'Y/m/d',
-        scrollMonth: false,
-        onShow:function( ct ){
-            this.setOptions({
-                minDate:jQuery('#date_timepicker_start').val()?jQuery('#date_timepicker_start').val():false
-            })
-        },
-        timepicker:false
-    });
-});
+// jQuery(function(){
+//     jQuery('#date_timepicker_start').datetimepicker({
+//         lang: 'ru',
+//         format:'Y/m/d',
+//         scrollMonth: false,
+//         onShow:function( ct ){
+//             this.setOptions({
+//                 maxDate:jQuery('#date_timepicker_end').val()?jQuery('#date_timepicker_end').val():false
+//             })
+//         },
+//         timepicker:false
+//     });
+//     jQuery('#date_timepicker_end').datetimepicker({
+//         lang: 'ru',
+//         format:'Y/m/d',
+//         scrollMonth: false,
+//         onShow:function( ct ){
+//             this.setOptions({
+//                 minDate:jQuery('#date_timepicker_start').val()?jQuery('#date_timepicker_start').val():false
+//             })
+//         },
+//         timepicker:false
+//     });
+// });
 
 $('#modalDepartments').on('show.bs.modal', function (event) {
     let button = $(event.relatedTarget);

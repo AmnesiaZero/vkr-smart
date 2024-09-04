@@ -237,7 +237,7 @@ Route::group([
        Route::group([
            'prefix' => 'organizations'
        ],function (){
-           Route::get('/',[OrganizationsController::class,'view']);
+           Route::get('/',[OrganizationsController::class,'view'])->name('organizations.index');
            Route::get('departments',[DepartmentsController::class,'view']);
        });
     });

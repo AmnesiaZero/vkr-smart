@@ -5,7 +5,7 @@
         <div class="list-header">
             <h2 class="block-title">Редактирование организации: {{ $organization->name }}</h2>
         </div>
-        <form id="update_organization_form" enctype="multipart/form-data"  action="{{ route('organizations.update', ['id' => $organization->id] )}}"  method="POST">
+        <form id="organization_form" enctype="multipart/form-data"  action="{{ route('organizations.update', ['id' => $organization->id] )}}"  method="POST">
             @csrf
             <div class="row">
                 <div class="col-8">
@@ -129,7 +129,7 @@
     <script src="{{ secure_asset('/plugins/jquery/jquery-mask/jquery.mask.min.js') }}"></script>
     <script src="{{ secure_asset('/plugins/editors/CKEditor/v5/ckeditor.js') }}"></script>
     <script src="{{ secure_asset('/plugins/ckfinder/ckfinder.js') }}"></script>
-    <script>CKFinder.config({connectorPath: '/ckfinder/connector'});</script>
     <script src="{{ secure_asset('/dashboards/sleek/js/cke_init.js') }}"></script>
     <script src="/js/dashboard/platform/organization/organizations.js"></script>
+
 @endsection

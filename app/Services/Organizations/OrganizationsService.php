@@ -180,7 +180,7 @@ class OrganizationsService extends Services
                 {
                     return redirect('/dashboard/platform/organizations');
                 }
-                return view('templates.dashboard.platform.organization.organizations.update',[
+                return view('templates.dashboard.platform.organization.organizations.create',[
                     'organization' => $updatedOrganization,
                     'user' => $you
                 ]);

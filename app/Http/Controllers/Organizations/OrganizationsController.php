@@ -82,7 +82,7 @@ class OrganizationsController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'max:250',
+            'name' => 'required|max:250',
 //            'parent_id' => ['integer',Rule::exists('organizations','id')],
 //            'logo' => 'file',
             'address' => 'max:250',

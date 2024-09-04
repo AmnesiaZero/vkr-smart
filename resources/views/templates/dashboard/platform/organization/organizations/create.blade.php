@@ -5,8 +5,8 @@
         <div class="list-header">
             <h2 class="block-title">Новая организация</h2>
         </div>
-        <form id="formContent" action="{{ route('organizations.create') }}"  method="POST">
-            {{ csrf_field() }}
+        <form id="organization_form" action="{{ route('organizations.create') }}"  method="POST">
+            @csrf
             <div class="row">
                 <div class="col-8">
                     <div class="post">
@@ -150,36 +150,9 @@
     <script src="{{ secure_asset('/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script>
     <script src="{{ secure_asset('/plugins/editors/CKEditor/v5/ckeditor.js') }}"></script>
     <script src="{{ secure_asset('/plugins/ckfinder/ckfinder.js') }}"></script>
-    <script>CKFinder.config({connectorPath: '/ckfinder/connector'});</script>
     <script src="{{ secure_asset('/dashboards/sleek/js/cke_init.js') }}"></script>
-    <script>
-        $('#button-select-image').on('click', function () {
-            selectFileWithCKFinder('logo');
-        });
+    <script src="/js/dashboard/platform/organization/organizations.js"></script>
 
-        jQuery(function(){
-            jQuery('#date_timepicker_start').datetimepicker({
-                lang: 'ru',
-                format:'Y/m/d',
-                scrollMonth: false,
-                onShow:function( ct ){
-                    this.setOptions({
-                        maxDate:jQuery('#date_timepicker_end').val()?jQuery('#date_timepicker_end').val():false
-                    })
-                },
-                timepicker:false
-            });
-            jQuery('#date_timepicker_end').datetimepicker({
-                lang: 'ru',
-                format:'Y/m/d',
-                scrollMonth: false,
-                onShow:function( ct ){
-                    this.setOptions({
-                        minDate:jQuery('#date_timepicker_start').val()?jQuery('#date_timepicker_start').val():false
-                    })
-                },
-                timepicker:false
-            });
-        });
-    </script>
+
+
 @endsection

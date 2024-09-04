@@ -36,6 +36,7 @@ return new class extends Migration
             $table->integer('store_size')->nullable()->after('sub_domen');
             $table->boolean('is_head')->default(0)->after('store_size');
             $table->boolean('is_basic')->default(0)->after('is_head');
+            //nullable(0) лол
             $table->boolean('is_premium')->nullable(0)->after('is_basic');
             $table->boolean('is_testing')->nullable(0)->after('is_premium');
             $table->boolean('member_transfer_network')->nullable(0)->after('is_testing');

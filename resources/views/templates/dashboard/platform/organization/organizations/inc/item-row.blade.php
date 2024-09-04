@@ -9,7 +9,7 @@
         @if(is_null($item->start_date) || is_null($item->end_date))
             неограниченный
         @else
-            //Делал через касты, но они не работают. Пока оставлю так
+{{--            Делал через касты, но они не работают. Пока оставлю так--}}
             {{ \Carbon\Carbon::parse($item->start_date)->format('d.m.Y') }} по {{ \Carbon\Carbon::parse($item->end_date)->format('d.m.Y') }}
         @endif
 	</td>
