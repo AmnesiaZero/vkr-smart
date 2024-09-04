@@ -40,4 +40,6 @@ interface OrganizationRepositoryInterface
      * @return Collection
      */
     public function parents(int $organizationId):Collection;
+
+    public function create(array $data);
 }

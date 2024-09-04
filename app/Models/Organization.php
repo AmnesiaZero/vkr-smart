@@ -31,6 +31,11 @@ class Organization extends Model
         'is_blocked'
     ];
 
+    protected $casts = [
+        'start_date' => 'date:d.m.Y',
+        'end_date' => 'date:d.m.Y',
+    ];
+
     //Если честно,я хз,почему ключи в таком порядке,хотя должны быть наоборот. Но так работает,а иначе - нет
     public function inspectors_specialties(): BelongsToMany
     {
