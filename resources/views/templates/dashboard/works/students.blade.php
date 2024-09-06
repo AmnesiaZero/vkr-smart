@@ -1,5 +1,10 @@
 @extends('layouts.dashboard.main')
 
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+@endsection
+
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
         <div class="row pt-4 g-3 px-md-0 px-3 mb-4">
@@ -72,7 +77,7 @@
                                 <button class="btn pe-3 py-0 fs-14" disabled>
                                     <img src="/images/Calendar.svg" alt="">
                                 </button>
-                                <input type="text" name="daterang" value="01/01/2023 - 01/15/2023"
+                                <input type="text" name="daterange"
                                        class=" fs-14 text-grey p-date w-75"/>
                             </div>
                         </div>
@@ -153,6 +158,8 @@
             <script src="/js/bootstrap.js"></script>
             <script src="/js/dashboard/works/students.js"></script>
             <script src="{{'/js/bootstrap-select.js'}}"></script>
+            <script type="text/javascript"
+                    src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
             <script id="work_tmpl" type="text/x-jquery-tmpl">
       @{{if visibility & visibility==1}}
      <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>

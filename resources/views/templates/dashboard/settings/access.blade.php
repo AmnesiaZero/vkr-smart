@@ -88,11 +88,11 @@
 
 
     <script id="department_tmpl" type="text/x-jquery-tmpl">
-        <div class="bg-green col-lg-8 mb-3">
-                                            <p class="text-grey m-0 fs-14">Кафедра: «${name}»</p>
-                                            <p class="text-grey m-0 fs-14">Подразделение: «${faculty.name}»</p>
-                                            <p class="text-grey m-0 fs-14">Год выпуска: «${year.year}»</p>
-                                    </div>
+        <div class="col-lg-8 mb-3">
+                <p class="text-green m-0 fs-14">Кафедра: «${name}»</p>
+                <p class="text-green m-0 fs-14">Подразделение: «${faculty.name}»</p>
+                <p class="text-green m-0 fs-14">Год выпуска: «${year.year}»</p>
+        </div>
 
 
 
@@ -114,16 +114,20 @@
                                       </p>
 
                                        @{{each departments}}
-                                          <div class="bg-green col-lg-8 mb-3">
-                                            <p class="text-grey m-0 fs-14">Кафедра: «${name}»</p>
-                                            <p class="text-grey m-0 fs-14">Подразделение: «${faculty.name}»</p>
-                                            <p class="text-grey m-0 fs-14">Год выпуска: «${year.year}»</p>
+                                          <div class="col-lg-8 mb-3">
+                                            <p class="text-green m-0 fs-14">Кафедра: «${name}»</p>
+                                            <p class="text-green m-0 fs-14">Подразделение: «${faculty.name}»</p>
+                                            <p class="text-green m-0 fs-14">Год выпуска: «${year.year}»</p>
                                           </div>
                                        @{{/each}}
 
                                       <div class="me-3">
-                                          <button class="btn btn-secondary br-none w-100 br-100 mt-4 text-grey fs-14 py-1" onclick="years('add_department_years_list');openAddDepartmentModal(${id})">
-                                              добавить<img src="/images/Plus.svg" alt="" class="ps-3"></button>
+                                          <button class="btn btn-secondary br-none w-100 br-100 mt-4 text-grey fs-14 py-1"
+                                                  onclick="years('add_department_years_list');openAddDepartmentModal(${id})"
+                                                  data-bs-target="#add_department" data-bs-toggle="modal">
+                                                  Добавить
+                                                  <img src="/images/Plus.svg" alt="" class="ps-3">
+                                          </button>
                                       </div>
                                   </div>
                                   <div class="col brl-grey-2"></div>

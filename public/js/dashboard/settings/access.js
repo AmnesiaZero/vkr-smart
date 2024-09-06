@@ -79,7 +79,6 @@ function years(htmlId) {
             yearsList.selectpicker('destroy');
             yearsList.html($("#year_tmpl").tmpl(years));
             yearsList.selectpicker('render');
-
         },
         error: function (response) {
             $.notify(response.data.title + ":" + response.data.message, "error");
@@ -125,11 +124,11 @@ function departments(data, htmlId) {
                 const departments = response.data.departments
                 console.log(departments);
                 const departmentsList = $("#" + htmlId);
-                const dropdownList = $('#departments_menu_list.selectpicker');
-                dropdownList.empty();
-                dropdownList.selectpicker('destroy');
+
+                departmentsList.empty();
+                departmentsList.selectpicker('destroy');
                 departmentsList.html($("#department_list_tmpl").tmpl(departments));
-                dropdownList.selectpicker('render');
+                departmentsList.selectpicker('render');
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -433,7 +432,8 @@ function openCreateUserCanvas(id) {
 
 function openAddDepartmentModal(userId) {
     localStorage.setItem('user_id', userId);
-    openModal('add_department');
+    // openModal('add_department');
+
 }
 
 
