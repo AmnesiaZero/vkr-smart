@@ -135,7 +135,10 @@ const addBadge = function (clickedElement) {
             console.log('вошёл');
             document.querySelector('.out-kod').style.display = "block";
             const elemOutKod = document.querySelector('.out-kod');
-            elemOutKod.innerHTML += `<span class="badge text-black bg-green-light br-100 fs-12 me-3 mb-2 clicked" id="clicked_${id}" onclick="deleteTreeElement('${id}')">${text}</span>`;
+            elemOutKod.innerHTML += `<span class="badge text-black bg-green-light br-100 fs-12 me-3 mb-2 clicked" id="clicked_${id}">
+                ${text}
+                <i class="fa fa-times ms-2 cursor-p text-black fs-12" onclick="deleteTreeElement('${id}')"></i>
+            </span>`;
         }
         localStorage.setItem('selected_years', selectedYears.join(','));
     }
@@ -148,7 +151,10 @@ const addBadge = function (clickedElement) {
             selectedFaculties.push(number);
             document.querySelector('.out-kod').style.display = "block";
             const elemOutKod = document.querySelector('.out-kod');
-            elemOutKod.innerHTML += `<span class="badge text-black bg-green-light br-100 fs-12 me-3 mb-2 clicked" id="clicked_${id}"  onclick="deleteTreeElement('${id}')">${text}</span>`;
+            elemOutKod.innerHTML += `<span class="badge text-black bg-green-light br-100 fs-12 me-3 mb-2 clicked" id="clicked_${id}">
+                ${text}
+                <i class="fa fa-times ms-2 cursor-p text-black fs-12" onclick="deleteTreeElement('${id}')"></i>
+            </span>`;
         }
         localStorage.setItem('selected_faculties', selectedFaculties.join(','));
     }
@@ -161,7 +167,10 @@ const addBadge = function (clickedElement) {
             selectedDepartments.push(number);
             document.querySelector('.out-kod').style.display = "block";
             const elemOutKod = document.querySelector('.out-kod');
-            elemOutKod.innerHTML += `<span class="badge text-black bg-green-light br-100 fs-12 me-3 mb-2 clicked" id="clicked_${id}"  onclick="deleteTreeElement('${id}')">${text}</span>`;
+            elemOutKod.innerHTML += `<span class="badge text-black bg-green-light br-100 fs-12 me-3 mb-2 clicked" id="clicked_${id}">
+                ${text}
+                <i class="fa fa-times ms-2 cursor-p text-black fs-12" onclick="deleteTreeElement('${id}')"></i>
+            </span>`;
         }
         localStorage.setItem('selected_departments', selectedDepartments.join(','));
     }

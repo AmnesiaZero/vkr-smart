@@ -88,11 +88,11 @@
 
 
     <script id="department_tmpl" type="text/x-jquery-tmpl">
-        <div class="bg-green col-lg-8 mb-3">
-                                            <p class="text-grey m-0 fs-14">Кафедра: «${name}»</p>
-                                            <p class="text-grey m-0 fs-14">Подразделение: «${faculty.name}»</p>
-                                            <p class="text-grey m-0 fs-14">Год выпуска: «${year.year}»</p>
-                                    </div>
+        <div class="col-lg-8 mb-3">
+                <p class="text-green m-0 fs-14">Кафедра: «${name}»</p>
+                <p class="text-green m-0 fs-14">Подразделение: «${faculty.name}»</p>
+                <p class="text-green m-0 fs-14">Год выпуска: «${year.year}»</p>
+        </div>
 
 
 
@@ -114,10 +114,10 @@
                                       </p>
 
                                        @{{each departments}}
-                                          <div class="bg-green col-lg-8 mb-3">
-                                            <p class="text-grey m-0 fs-14">Кафедра: «${name}»</p>
-                                            <p class="text-grey m-0 fs-14">Подразделение: «${faculty.name}»</p>
-                                            <p class="text-grey m-0 fs-14">Год выпуска: «${year.year}»</p>
+                                          <div class="col-lg-8 mb-3">
+                                            <p class="text-green m-0 fs-14">Кафедра: «${name}»</p>
+                                            <p class="text-green m-0 fs-14">Подразделение: «${faculty.name}»</p>
+                                            <p class="text-green m-0 fs-14">Год выпуска: «${year.year}»</p>
                                           </div>
                                        @{{/each}}
 
