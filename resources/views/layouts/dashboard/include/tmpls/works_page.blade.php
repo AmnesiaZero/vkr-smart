@@ -292,7 +292,7 @@
 
 
 <script id="report_tmpl" type="text/x-jquery-tmpl">
- <div id="report_modal">
+ <div class="modal fade"  id="report_modal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -337,7 +337,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeTmplModal('add_achievement_modal')">Закрыть окно</button>
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal" aria-label="Close">Закрыть окно</button>
             </div>
         </div>
     </div>

@@ -23,7 +23,8 @@ class DepartmentsController extends Controller
         'year_id',
         'organization_id',
         'page',
-        'paginate'
+        'paginate',
+        'description'
     ];
 
     public function __construct(DepartmentsService $departmentsService)
@@ -41,14 +42,26 @@ class DepartmentsController extends Controller
         return $this->departmentsService->all();
     }
 
-    public function updateView(int $id)
+    public function editView(Request $request)
     {
-        return $this->departmentsService->updateView($id);
+        $validator = Validator::make($request->all(), [
+            'id' => ['required','integer',Rule::exists('departments','id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $id = $request->id;
+        return $this->departmentsService->editView($id);
     }
+
+    public function addView()
+    {
+        return $this->departmentsService->addView();
+    }
+
 
     public function get(Request $request): JsonResponse
     {
-        Log::debug('Вошёл в get у faculty departments');
         $validator = Validator::make($request->all(), [
             'faculty_id' => 'integer',
             'paginate' => 'bool'
@@ -73,6 +86,19 @@ class DepartmentsController extends Controller
         return $this->departmentsService->create($data);
     }
 
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'organization_id' => ['integer',Rule::exists('organizations','id')],
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $data = $request->only($this->fillable);
+        return $this->departmentsService->store($data);
+    }
+
     public function update(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -83,8 +109,20 @@ class DepartmentsController extends Controller
         }
         $id = $request->id;
         $data = $request->only($this->fillable);
-        Log::debug('data = ' . print_r($data, true));
         return $this->departmentsService->update($id, $data);
+    }
+
+    public function edit(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required', 'integer']
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $id = $request->id;
+        $data = $request->only($this->fillable);
+        return $this->departmentsService->edit($id, $data);
     }
 
     public function delete(Request $request): JsonResponse

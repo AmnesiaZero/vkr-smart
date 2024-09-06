@@ -691,6 +691,8 @@ function openReport(workId)
             {
                 const work = response.data.work;
                 $("#report_container").html($("#report_tmpl").tmpl(work));
+                const modalElement = new bootstrap.Modal(document.getElementById('report_modal'));
+                modalElement.show();
             }
             else
             {

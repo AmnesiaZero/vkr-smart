@@ -28,7 +28,7 @@
                         <div class="form-group">
                             <label for="logo">Логотип</label>
                             <div class="input-group">
-                                <input id="logo" type="text" value="{{ $organization->logo }}" class="form-control"
+                                <input id="logo" type="text" value="@if($organization->logo_file_name) {{$organization->logo_file_name}} @endif" class="form-control"
                                        placeholder="Выберите изображение" aria-label="Выберите изображение"
                                        aria-describedby="button-select-image" readonly>
                                 <div class="input-group-append">

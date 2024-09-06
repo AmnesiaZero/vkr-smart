@@ -359,9 +359,7 @@ class UsersController extends Controller
 
     public function apiView()
     {
-        $you = Auth::user();
-        $apiKey = config('jwt.api_key');
-        return view('templates.dashboard.settings.api', ['you' => $you, 'api_key' => $apiKey]);
+        return $this->usersService->apiView();
     }
 
     public function teachersPortfoliosView()

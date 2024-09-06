@@ -221,7 +221,6 @@ class WorksService extends Services
     {
         if(isset($data['daterange']))
         {
-            Log::debug($data['daterange']);
             $protectDateRange = $data['daterange'];
             // Разделение строки на начальную и конечную даты
             $dateParts = explode(" - ", $protectDateRange);
@@ -232,9 +231,7 @@ class WorksService extends Services
                 ]);
             }
             $startDateString = trim($dateParts[0]); // начальная дата
-            Log::debug($startDateString);
             $endDateString = trim($dateParts[1]);   // конечная дата
-            Log::debug($endDateString);
             $startDate = Carbon::createFromFormat('d.m.Y', $startDateString);
             $endDate = Carbon::createFromFormat('d.m.Y', $endDateString);
             $formattedStartDate = $startDate->toDateString();
@@ -588,6 +585,7 @@ class WorksService extends Services
         $report = new Report($client,true);
         $report->get($documentId);
         $unique = $report->getUnique();
+        Log::debug('unique = '.$unique);
         $data = [
             'report_status' => 1,
             'unique_percent' => $unique

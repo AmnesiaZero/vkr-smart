@@ -18,6 +18,7 @@ class Organization extends Model
         'name',
         'parent_id' ,
         'logo_path',
+        'logo_file_name',
         'address',
         'phone',
         'website',

@@ -47,7 +47,7 @@
             <div class="sidebar-scrollbar">
                 <ul class="nav sidebar-inner" id="sidebar-menu">
                     <li class="{{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
-                        <a href="" class="sidenav-item-link">
+                        <a href="{{route('platform.index')}}" class="sidenav-item-link">
                             <i class="mdi mdi-view-dashboard-outline"></i>
                             <span class="nav-text">Главная</span>
                         </a>
@@ -69,24 +69,14 @@
                         </a>
                         <ul id="organizations" class="collapse {{ (request()->segment(2) == 'organizations') ? 'show' : ''}}">
                             <div class="sub-menu">
-                                <li class="{{ request()->routeIs('dashboard.organizations.index') ? 'active' : '' }}">
-                                    <a href="" class="sidenav-item-link">
+                                <li class="{{ request()->routeIs('organizations.index') ? 'active' : '' }}">
+                                    <a href="{{route('organizations.index')}}" class="sidenav-item-link">
                                         <span class="nav-text">Организации</span>
                                     </a>
                                 </li>
-                                <li class="{{ request()->routeIs('dashboard.organizations.departments.index') ? 'active' : '' }}">
-                                    <a href="" class="sidenav-item-link">
+                                <li class="{{ request()->routeIs('departments.index') ? 'active' : '' }}">
+                                    <a href="{{route('departments.index')}}" class="sidenav-item-link">
                                         <span class="nav-text">Отделения</span>
-                                    </a>
-                                </li>
-                                <li class="{{ request()->routeIs('dashboard.organizations.groups.index') ? 'active' : '' }}">
-                                    <a href="" class="sidenav-item-link">
-                                        <span class="nav-text">Группы</span>
-                                    </a>
-                                </li>
-                                <li class="{{ request()->routeIs('dashboard.organizations.digital-departments.index') ? 'active' : '' }}">
-                                    <a href="" class="sidenav-item-link">
-                                        <span class="nav-text">Цифровые кафедры</span>
                                     </a>
                                 </li>
                             </div>
