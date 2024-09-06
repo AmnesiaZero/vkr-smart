@@ -96,10 +96,10 @@ function departments(data) {
                 else {
                     departmentsList = $("#departments_list_multiple");
                     const dropdownList = $('.selectpicker');
-                    dropdownList.empty();
-                    dropdownList.selectpicker('destroy');
+                    departmentsList.empty();
+                    departmentsList.selectpicker('destroy');
                     departmentsList.html($("#department_list_tmpl").tmpl(departments));
-                    dropdownList.selectpicker('render');
+                    departmentsList.selectpicker('render');
                 }
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
