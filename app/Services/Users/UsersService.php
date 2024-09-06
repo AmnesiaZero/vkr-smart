@@ -571,12 +571,32 @@ class UsersService extends Services
         return back()->withErrors(['Ошибка при поиске привязанной организации']);
     }
 
-    public function index()
+    public function index(array $data)
     {
         $you = Auth::user();
-        return view('templates.dashboard.platform.users.index',[
-            'user' => $you
-        ]);
+        $users = $this->_repository->get($data);
+        if($users)
+        {
+            return view('templates.dashboard.platform.users.index',[
+                'user' => $you,
+                'users' => $users
+            ]);
+        }
+        return back()->withErrors(['Ошибка при получении пользователей']);
+    }
+
+    public function edit(int $id)
+    {
+        $user = $this->_repository->find($id);
+        if($user and $user->id)
+        {
+            $you = Auth::user();
+            return view('templates.dashboard.platform.users.edit',[
+                'item' => $user,
+                'user'  => $you
+            ]);
+        }
+        return back()->withErrors(['Возникла ошибка при получении пользователей']);
     }
 
 

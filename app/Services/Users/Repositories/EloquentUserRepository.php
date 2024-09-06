@@ -137,11 +137,18 @@ class EloquentUserRepository implements UserRepositoryInterface
 
     public function get(array $data):Collection|LengthAwarePaginator
     {
-        $query =  User::with(['roles', 'departments','works'])->where('organization_id', '=', $data['organization_id']);
-        $roles = $data['roles'];
-        $query->whereHas('roles', function ($query) use ($roles) {
-            $query->whereIn('slug', $roles);
-        });
+        $query =  User::with(['roles', 'departments','works']);
+        if(isset($data['organization_id']))
+        {
+            $query = $query->where('organization_id', '=', $data['organization_id']);
+        }
+        if(isset($data['roles']))
+        {
+            $roles = $data['roles'];
+            $query->whereHas('roles', function ($query) use ($roles) {
+                $query->whereIn('slug', $roles);
+            });
+        }
         if(isset($data['selected_departments']))
         {
             $departmentsIds = $data['selected_departments'];

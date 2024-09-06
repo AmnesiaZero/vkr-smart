@@ -1,11 +1,11 @@
-@extends('templates.dashboard.' . config('settings.dashboard_theme') . '.index')
+@extends('layouts.dashboard.platform')
 
 @section('content')
     <div class="list">
         <div class="list-header">
             <h2 class="block-title">Редактирование пользователя: {{ $user->name }}</h2>
         </div>
-        <form id="formContent" action="{{ route('dashboard.users.update', $user->id) }}" data-action-index="{{ route('dashboard.users.index') }}" method="POST">
+        <form id="formContent" action="{{ route('users.update', $user->id) }}" data-action-index="{{ route('users.index') }}" method="POST">
             {{ csrf_field() }}
             <div class="post">
                 <div class="row">
@@ -175,7 +175,7 @@
                                     <tbody>
                                         @if(isset($ip_ranges) && count($ip_ranges) > 0)
                                             @foreach($ip_ranges as $ip)
-                                                @include('templates.dashboard.' . config('settings.dashboard_theme') . '.pages.users.inc.ip-row', array(
+                                                @include('templates.' . config('settings.dashboard_theme') . '.pages.users.inc.ip-row', array(
                                                     'ip'=>$ip,
                                                 ))
                                             @endforeach
@@ -204,7 +204,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="addIPForm" action="{{ route('dashboard.users.bind-ip') }}" method="POST">
+                        <form id="addIPForm" action="" method="POST">
                             <div class="error"></div>
                             <div class="form-row">
                                 <div class="col-md-6 col-12">
@@ -224,7 +224,6 @@
                 </div>
             </div>
         </div>
-        @include('templates.dashboard.' . config('settings.dashboard_theme') . '.pages.users.inc.modalAddBooks')
         <div class="form-group">
             <button id="save-close" class="btn btn-primary">Сохранить и закрыть</button>
             <button id="save" class="btn btn-primary">Сохранить</button>

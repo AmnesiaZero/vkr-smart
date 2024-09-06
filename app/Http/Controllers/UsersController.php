@@ -57,7 +57,8 @@ class UsersController extends Controller
 
     public function index(Request $request)
     {
-        return $this->usersService->index();
+        $data = $request->only($this->fillable);
+        return $this->usersService->index($data);
     }
 
 
@@ -282,6 +283,18 @@ class UsersController extends Controller
         $id = $request->id;
         $data = $request->only($this->fillable);
         return $this->usersService->update($id, $data);
+    }
+
+    public function edit(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required','integer',Rule::exists('users','id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $id = $request->id;
+        return $this->usersService->edit($id);
     }
 
     public function addDepartment(Request $request): JsonResponse

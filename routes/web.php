@@ -412,12 +412,18 @@ Route::group([
         'prefix' => 'users'
     ], function () {
         Route::get('index',[UsersController::class,'index'])->name('users.index');
-        Route::post('filete',[UsersController::class,'filter'])->name('users.filter');
+        Route::post('filter',[UsersController::class,'filter'])->name('users.filter');
+        Route::post('create/view',[UsersController::class,'createView'])->name('users.create');
+        Route::get('edit',[UsersController::class,'edit'])->name('users.edit');
+        Route::post('delete/view',[UsersController::class,'deleteView'])->name('users.delete');
+        Route::post('destroy/view',[UsersController::class,'destroyView'])->name('users.destroy');
+        Route::post('restore/view',[UsersController::class,'restoreView'])->name('users.restore');
         Route::get('get', [UsersController::class, 'get']);
         Route::post('create', [UsersController::class, 'create']);
         Route::post('delete', [UsersController::class, 'delete']);
         Route::get('find', [UsersController::class, 'find']);
         Route::post('update', [UsersController::class, 'update']);
+        Route::post('update/view',[UsersController::class,'updateView'])->name('users.update');
         Route::post('add-department', [UsersController::class, 'addDepartment']);
         Route::get('search', [UsersController::class, 'search']);
         Route::get('you', [UsersController::class, 'you']);
