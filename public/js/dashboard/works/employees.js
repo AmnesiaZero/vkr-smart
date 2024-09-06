@@ -258,8 +258,9 @@ $(document).ready(function () {
 
     $(function() {
         let start = moment();
-        let end =  moment().add(29, 'days');
+        let end = moment().add(29, 'days');
         $('input[name="daterange"]').daterangepicker({
+            autoUpdateInput: false,  // Отключаем автоматическое обновление поля
             startDate: start,
             endDate: end,
             "locale": {
@@ -298,6 +299,8 @@ $(document).ready(function () {
             },
             opens: 'left'
         }, function(start, end, label) {
+            // Обновляем значение поля при выборе диапазона
+            $('input[name="daterange"]').val(start.format('DD.MM.YYYY') + ' - ' + end.format('DD.MM.YYYY'));
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
     });
@@ -397,11 +400,8 @@ function specialties(data,htmlId) {
 
 
 $(function () {
-    let start = moment();
-    let end = moment().add(29, 'days');
     $('input[name="daterange"]').daterangepicker({
-        startDate: start,
-        endDate: end,
+        autoUpdateInput: false,  // Отключаем автоматическое обновление поля
         "locale": {
             "format": "DD.MM.YYYY",
             "separator": " - ",
@@ -438,6 +438,8 @@ $(function () {
         },
         opens: 'left'
     }, function (start, end, label) {
+        // Обновляем значение поля при выборе диапазона
+        $('input[name="daterange"]').val(start.format('DD.MM.YYYY') + ' - ' + end.format('DD.MM.YYYY'));
         console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
     });
 });
@@ -650,7 +652,7 @@ function works(page= 1)
 function reloadWork(workId)
 {
     const data = {
-      id:workId
+        id:workId
     };
     $.ajax({
         url: "/dashboard/works/find",
@@ -1124,29 +1126,29 @@ function deleteAdditionalFile(additionalFileId)
     const data = {
         id:additionalFileId
     };
-   $.ajax({
-       url: "/dashboard/works/additional-files/delete",
-       type: 'POST',
-       data: data,
-       headers: {
-           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-       },
-       dataType: "json",
-       success: function (response) {
-           if (response.success)
-           {
-               $("#additional_file_" + additionalFileId).remove();
-               $.notify(response.data.title + ":" + response.data.message, "success");
-           }
-           else
-           {
-               $.notify(response.data.title + ":" + response.data.message, "error");
-           }
-       },
-       error: function () {
-           $.notify("Ошибка при получении дополнительных файлов. Обратитесь к системному администратору", "error");
-       }
-   });
+    $.ajax({
+        url: "/dashboard/works/additional-files/delete",
+        type: 'POST',
+        data: data,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        dataType: "json",
+        success: function (response) {
+            if (response.success)
+            {
+                $("#additional_file_" + additionalFileId).remove();
+                $.notify(response.data.title + ":" + response.data.message, "success");
+            }
+            else
+            {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function () {
+            $.notify("Ошибка при получении дополнительных файлов. Обратитесь к системному администратору", "error");
+        }
+    });
 }
 
 function exportWorks()
@@ -1204,8 +1206,3 @@ function updateWorksCount()
         $('#works_count').text(worksCount);
     }
 }
-
-
-
-
-
