@@ -258,7 +258,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-sm-4">Способ проверки работы по базе ВКР-ВУЗ:</label>
+                            <label class="col-sm-4">Способ проверки работы по базе ВКР-СМАРТ:</label>
                             <div class="col-sm-8">
                                 <div class="radio">
                                     <label>

@@ -13,7 +13,7 @@
                                                           class="link @if(request()->is('about/for-whom')) nav-link-active @endif">Для кого предназначено программное обеспечение </a> </span>
         </li>
         <li class="mb-3"><span class="pb-1 text-grey"> <a href="/about/benefits"
-                                                          class="link @if(request()->is('about/benefits')) nav-link-active @endif"> Преимущества<br>системы ВКР-ВУЗ.РФ </a> </span>
+                                                          class="link @if(request()->is('about/benefits')) nav-link-active @endif"> Преимущества<br>системы ВКР-СМАРТ.РФ </a> </span>
         </li>
         <li class="mb-3"><span class="pb-1 text-black"> <a href="/about/price"
                                                            class="link @if(request()->is('about/price')) nav-link-active @endif"> Стоимость и состав услуг </a> </span>

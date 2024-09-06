@@ -100,7 +100,7 @@
                                     @{{/if}}
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-4">Отчет о заимствованиях по базам ВКР-ВУЗ</label>
+                                    <label class="col-sm-4">Отчет о заимствованиях по базам ВКР-СМАРТ</label>
                                     @{{if borrowings_percent}}
                                     <div class="col-sm-8" id="value_percent_person">Фактических некорректных заимствований: ${borrowings_percent}</div>
                                     @{{/if}}
@@ -252,7 +252,7 @@
 </div>
 
 <div class="row">
-<label class="col-sm-4">Способ проверки работы по базе ВКР-ВУЗ:</label>
+<label class="col-sm-4">Способ проверки работы по базе ВКР-СМАРТ:</label>
 <div class="col-sm-8">
     <div class="radio">
     <label>
@@ -305,7 +305,7 @@
                     <span> Полный отчет по работе </span>
                     <div class="col-sm-8">
                         <ol style="padding-left:15px;">
-                            <li>Результаты проверки по базам данных ВКР-ВУЗ:
+                            <li>Результаты проверки по базам данных ВКР-СМАРТ:
                                 <ul>
                                     <li>Оригинальность текста документа: <strong id="borrowings_percent" class="ng-binding">${unique_percent}%</strong></li>
                                 </ul>

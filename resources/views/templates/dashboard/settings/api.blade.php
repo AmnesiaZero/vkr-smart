@@ -55,7 +55,7 @@
                                 <p class="fs-16 m-0">
                                     <img src="/images/href.svg" alt="" class="pe-2">
                                     <a href="#" class="text-grey td-none text-grey-hover fw-600">
-                                        ВКР-ВУЗ API
+                                        ВКР-СМАРТ API
                                     </a>
                                 </p>
                                 <div class="mt-3">
@@ -65,7 +65,7 @@
                                             Документация к сервису
                                         </a>
                                     </p>
-                                    <p class="text-grey fs-14 mt-2 mb-0">Основной перечень запросов ВКР-ВУЗ API</p>
+                                    <p class="text-grey fs-14 mt-2 mb-0">Основной перечень запросов ВКР-СМАРТ API</p>
                                 </div>
                             </div>
                         </div>
