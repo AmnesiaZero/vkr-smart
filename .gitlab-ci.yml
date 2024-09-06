@@ -30,7 +30,7 @@ app021_dev_vkr_smart_ru:
     - echo "$CI_PRIVKEY_DRIVE1" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan $CI_PHP_HOST >> ~/.ssh/known_hosts
+    - ssh-keyscan $PHP_HOST >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - rsync -ar $PWD/* $CI_PHP_HOST:$DST_PATH
     - ssh $PHP_HOST "cd $DST_PATH/ && composer update"
@@ -78,16 +78,16 @@ app022_vkr_smart_ru:
 get dev log:
   stage: debug
   variables:
-    CI_NFS_HOST: "192.168.19.121"
-    CI_NFS_PATH: "app021_dev_vkr_smart_ru"
+    SRC_PATH: "/srv/app021_dev_vkr_smart_ru"
+    SRC_HOST: "192.168.19.157"
   script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
     - echo "$CI_PRIVKEY_DRIVE1" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan $CI_NFS_HOST >> ~/.ssh/known_hosts
-    - scp $CI_NFS_HOST:/srv/$CI_NFS_PATH/storage/logs/laravel.log .
+    - ssh-keyscan $SRC_HOST >> ~/.ssh/known_hosts
+    - scp $SRC_HOST:/$SRC_PATH/storage/logs/laravel.log .
   artifacts:
     paths:
       - laravel.log
