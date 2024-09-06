@@ -32,7 +32,10 @@ function updateBasic(id)
         url: "/dashboard/organizations/update/basic",
         data:data,
         dataType: "json",
-        type: "get",
+        type: "POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
         success: function (response) {
             if (response.success)
             {
@@ -48,6 +51,66 @@ function updateBasic(id)
         }
     });
 }
+
+function updatePremium(id)
+{
+    const data = {
+        id:id
+    };
+    $.ajax({
+        url: "/dashboard/organizations/update/premium",
+        data:data,
+        dataType: "json",
+        type: "POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (response) {
+            if (response.success)
+            {
+                const organization = response.data.organization;
+                $("#premium_status_" + id).replaceWith($("#premium_status_tmpl").tmpl(organization));
+            }
+            else {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function () {
+            $.notify("Произошла ошибка при обновлении статуса организации", "error");
+        }
+    });
+}
+
+function updateStatus(id)
+{
+    const data = {
+        id:id
+    };
+    $.ajax({
+        url: "/dashboard/organizations/update/status",
+        data:data,
+        dataType: "json",
+        type: "POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (response) {
+            if (response.success)
+            {
+                const organization = response.data.organization;
+                $("#status_" + id).replaceWith($("#status_tmpl").tmpl(organization));
+            }
+            else {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function () {
+            $.notify("Произошла ошибка при обновлении статуса организации", "error");
+        }
+    });
+}
+
+
 
 
 

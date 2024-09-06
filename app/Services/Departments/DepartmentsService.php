@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\Organization;
 use App\Services\Departments\Repositories\DepartmentRepositoryInterface;
 use App\Services\Faculties\Repositories\FacultyRepositoryInterface;
+use App\Services\Organizations\Repositories\OrganizationRepositoryInterface;
 use App\Services\OrganizationsYears\Repositories\OrganizationYearRepositoryInterface;
 use App\Services\Services;
 use App\Services\Users\Repositories\UserRepositoryInterface;
@@ -17,6 +18,9 @@ use Illuminate\Support\Facades\Log;
 
 class DepartmentsService extends Services
 {
+
+    public OrganizationRepositoryInterface $organizationRepository;
+
     public DepartmentRepositoryInterface $departmentRepository;
 
     public FacultyRepositoryInterface $facultyRepository;
@@ -30,13 +34,15 @@ class DepartmentsService extends Services
         DepartmentRepositoryInterface       $departmentRepository,
         FacultyRepositoryInterface          $facultyRepository,
         UserRepositoryInterface             $userRepository,
-        OrganizationYearRepositoryInterface $yearRepository
+        OrganizationYearRepositoryInterface $yearRepository,
+        OrganizationRepositoryInterface $organizationRepository
     )
     {
         $this->departmentRepository = $departmentRepository;
         $this->facultyRepository = $facultyRepository;
         $this->userRepository = $userRepository;
         $this->yearRepository = $yearRepository;
+        $this->organizationRepository = $organizationRepository;
     }
 
     public function create(array $data): JsonResponse
@@ -208,16 +214,20 @@ class DepartmentsService extends Services
         ]);
     }
 
-    public function view()
+    public function view(array $data)
     {
         $you = Auth::user();
-        $organizations = Organization::all();
-        $departments = Department::all();
-        return view('templates.dashboard.platform.organization.departments.index',[
-            'user' => $you,
-            'organizations' => $organizations,
-            'departments' => $departments
-        ]);
+        $organizations = $this->organizationRepository->get($data);
+        $departments = $this->departmentRepository->get($data);
+        if($organizations and $departments)
+        {
+            return view('templates.dashboard.platform.organization.departments.index',[
+                'user' => $you,
+                'organizations' => $organizations,
+                'departments' => $departments
+            ]);
+        }
+        return back()->withErrors(['Возникла ошибка при получении организаций и департаментов']);
     }
 
     public function all(): JsonResponse
@@ -296,6 +306,71 @@ class DepartmentsService extends Services
             ]);
         }
         return back()->withErrors(['Ошибка при создании департамента']);
+    }
+
+    public function updateStatus(int $id): JsonResponse
+    {
+        $department = $this->departmentRepository->find($id);
+        if($department and $department->id)
+        {
+            $isBlocked = $department->is_blocked;
+            if($isBlocked==0)
+            {
+                $department->is_blocked = 1;
+            }
+            else
+            {
+                $department->is_blocked = 0;
+            }
+            $department->save();
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'department'=> $department
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Возникла ошибка при обновлении статуса подразделения'
+        ]);
+    }
+
+    public function deleteView(int $id)
+    {
+        $result = $this->departmentRepository->delete($id);
+        if ($result)
+        {
+            return back();
+        }
+        else
+        {
+            return back()->withErrors(['Ошибка при удалении из базы данных']);
+        }
+    }
+
+    public function destroy(int $id)
+    {
+        $result = $this->departmentRepository->destroy($id);
+        if ($result)
+        {
+            return back();
+        }
+        else
+        {
+            return back()->withErrors(['Ошибка при удалении из базы данных']);
+        }
+    }
+
+    public function restore(int $id)
+    {
+        $result = $this->departmentRepository->restore($id);
+        if ($result)
+        {
+            return back();
+        }
+        else
+        {
+            return back()->withErrors(['Ошибка при удалении из базы данных']);
+        }
     }
 
 

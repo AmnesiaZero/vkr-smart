@@ -55,6 +55,11 @@ class UsersController extends Controller
         $this->usersService = $usersService;
     }
 
+    public function index(Request $request)
+    {
+        return $this->usersService->index();
+    }
+
 
 
     public function login(Request $request): RedirectResponse

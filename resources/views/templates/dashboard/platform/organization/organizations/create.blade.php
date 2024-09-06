@@ -154,5 +154,4 @@
     <script src="/js/dashboard/platform/organization/organizations.js"></script>
 
 
-
 @endsection

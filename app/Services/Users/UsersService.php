@@ -571,5 +571,13 @@ class UsersService extends Services
         return back()->withErrors(['Ошибка при поиске привязанной организации']);
     }
 
+    public function index()
+    {
+        $you = Auth::user();
+        return view('templates.dashboard.platform.users.index',[
+            'user' => $you
+        ]);
+    }
+
 
 }

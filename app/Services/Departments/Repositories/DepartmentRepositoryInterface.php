@@ -47,6 +47,20 @@ interface DepartmentRepositoryInterface
 
     /**
      * @param int $id
+     * @return bool
+     */
+    public function destroy(int $id): bool;
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function restore(int $id): bool;
+
+
+
+    /**
+     * @param int $id
      * @return Model
      */
     public function find(int $id): Model;

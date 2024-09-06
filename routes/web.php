@@ -309,8 +309,9 @@ Route::group([
         Route::post('create',[OrganizationsController::class,'create'])->name('organizations.create');;
         Route::get('add',[OrganizationsController::class, 'addView'])->name('organizations.add');
 
-        Route::post('delete',[OrganizationsController::class,'delete']);
-        Route::get('delete',[OrganizationsController::class,'deleteView'])->name('organizations.delete');
+        Route::get('delete',[OrganizationsController::class,'delete'])->name('organizations.delete');
+        Route::get('destroy',[OrganizationsController::class,'destroy'])->name('organizations.destroy');
+
 
         Route::group([
             'prefix' => 'update'
@@ -318,6 +319,7 @@ Route::group([
             Route::post('/',[OrganizationsController::class,'update'])->name('organizations.update');
             Route::post('basic',[OrganizationsController::class,'updateBasic'])->name('organizations.update.basic');
             Route::post('premium',[OrganizationsController::class,'updatePremium'])->name('organizations.update.premium');
+            Route::post('status',[OrganizationsController::class,'updateStatus'])->name('organizations.update.status');
 
         });
         Route::get('edit',[OrganizationsController::class, 'editView'])->name('organizations.edit');
@@ -360,8 +362,21 @@ Route::group([
             Route::get('get', [DepartmentsController::class, 'get']);
             Route::post('create', [DepartmentsController::class, 'create']);
             Route::post('store',[DepartmentsController::class,'store'])->name('departments.store');
-            Route::post('update', [DepartmentsController::class, 'update']);
-            Route::post('delete', [DepartmentsController::class, 'delete']);
+            Route::group([
+                'prefix' => 'update'
+            ],function (){
+                Route::post('/', [DepartmentsController::class, 'update']);
+                Route::post('status',[DepartmentsController::class,'updateStatus']);
+
+            });
+            Route::group([
+                'prefix' => 'delete'
+            ],function (){
+                Route::post('/', [DepartmentsController::class, 'delete']);
+                Route::get('view',[DepartmentsController::class,'deleteView'])->name('departments.view.delete');
+            });
+            Route::get('destroy',[DepartmentsController::class,'destroy'])->name('departments.destroy');
+            Route::get('restore',[DepartmentsController::class,'restore'])->name('departments.restore');
             Route::get('by-user', [DepartmentsController::class, 'getByUserId']);
             Route::get('get-info', [DepartmentsController::class, 'find']);
             Route::get('program-specialties', [DepartmentsController::class, 'getProgramSpecialties']);
@@ -396,6 +411,8 @@ Route::group([
     Route::group([
         'prefix' => 'users'
     ], function () {
+        Route::get('index',[UsersController::class,'index'])->name('users.index');
+        Route::post('filete',[UsersController::class,'filter'])->name('users.filter');
         Route::get('get', [UsersController::class, 'get']);
         Route::post('create', [UsersController::class, 'create']);
         Route::post('delete', [UsersController::class, 'delete']);

@@ -23,6 +23,8 @@
     <!-- PLUGINS CSS STYLE -->
     <!-- SLEEK CSS -->
     <link rel="stylesheet" href="/css/platform/sleek.css"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+
     @yield('styles')
     <link rel="stylesheet" href="/css/platform/main.css"/>
 
@@ -70,12 +72,12 @@
                         <ul id="organizations" class="collapse {{ (request()->segment(2) == 'organizations') ? 'show' : ''}}">
                             <div class="sub-menu">
                                 <li class="{{ request()->routeIs('organizations.index') ? 'active' : '' }}">
-                                    <a href="{{route('organizations.index')}}" class="sidenav-item-link">
+                                    <a href="{{route('organizations.index',['with_trashed' => 1])}}" class="sidenav-item-link">
                                         <span class="nav-text">Организации</span>
                                     </a>
                                 </li>
                                 <li class="{{ request()->routeIs('departments.index') ? 'active' : '' }}">
-                                    <a href="{{route('departments.index')}}" class="sidenav-item-link">
+                                    <a href="{{route('departments.index',['with_trashed' => 1])}}" class="sidenav-item-link">
                                         <span class="nav-text">Отделения</span>
                                     </a>
                                 </li>
@@ -83,8 +85,8 @@
                         </ul>
                     </li>
 
-                    <li class="{{ request()->routeIs('dashboard.users.index') ? 'active' : '' }}">
-                        <a href="" class="sidenav-item-link">
+                    <li class="{{ request()->routeIs('users.index') ? 'active' : '' }}">
+                        <a href="{{route('users.index')}}" class="sidenav-item-link">
                             <i class="mdi mdi-book-open-page-variant"></i>
                             <span class="nav-text">Пользователи</span>
                         </a>

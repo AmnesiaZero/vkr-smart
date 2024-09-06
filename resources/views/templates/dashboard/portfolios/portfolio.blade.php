@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-sm-3 col-lg-3 col-xs-3">
                     <a href="{{url('/')}}">
-                        <img src="{{ asset('images/logo.png',true) }}" class="img-fluid" alt="ВКР-ВУЗ">
+                        <img src="{{ asset('images/logo.png',true) }}" class="img-fluid" alt="ВКР-СМАРТ">
                     </a>
                 </div>
                 <div class="col-sm-9 col-lg-9 col-xs-9">

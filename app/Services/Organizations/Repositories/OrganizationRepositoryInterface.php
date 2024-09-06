@@ -41,5 +41,30 @@ interface OrganizationRepositoryInterface
      */
     public function parents(int $organizationId):Collection;
 
-    public function create(array $data);
+    /**
+     * @param array $data
+     * @return Model
+     */
+    public function create(array $data):Model;
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function delete(int $id):bool;
+
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function destroy(int $id):bool;
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function restore(int $id):bool;
+
+
 }

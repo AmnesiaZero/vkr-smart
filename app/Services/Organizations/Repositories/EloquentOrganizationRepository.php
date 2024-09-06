@@ -22,9 +22,17 @@ class EloquentOrganizationRepository implements OrganizationRepositoryInterface
 
     public function get(array $data=[]): Collection|LengthAwarePaginator
     {
-        $query = Organization::query();
+        if(isset($data['with_trashed']))
+        {
+            $query = Organization::withTrashed();
+        }
+        else
+        {
+            $query = Organization::query();
+        }
         return $query->get();
     }
+
 
     public function update(int $id,array $data)
     {
@@ -39,5 +47,21 @@ class EloquentOrganizationRepository implements OrganizationRepositoryInterface
     public function create(array $data):Model
     {
         return Organization::query()->create($data);
+    }
+
+    public function delete(int $id): bool
+    {
+        return $this->find($id)->delete();
+    }
+
+
+    public function destroy(int $id): bool
+    {
+        return Organization::withTrashed()->find($id)->forceDelete();
+    }
+
+    public function restore(int $id): bool
+    {
+        return Organization::withTrashed()->where('id','=',$id)->first()->restore();
     }
 }

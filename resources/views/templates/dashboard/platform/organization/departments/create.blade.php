@@ -11,14 +11,27 @@
                 <div class="col-8">
                     <div class="post">
                         <div class="form-group">
-                            <label for="organization_id">Выберите организацию</label>
-                            <select id="organization_id" name="organization_id" class="form-control">
+                            <label for="organizations_list">Выберите организацию</label>
+                            <select id="organizations_list" name="organization_id" class="form-control">
                                 <option value="">-- Выберите организацию --</option>
                                 @if(isset($organizations) && !empty($organizations))
                                     @foreach($organizations as $organization)
                                         <option value="{{ $organization->id }}">{{ $organization->name }}</option>
                                     @endforeach
                                 @endif
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="years_list">Выберите год выпуска:</label>
+                            <select id="years_list" name="year_id" class="form-control">
+                                <option> Выберите организацию </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="faculties_list">Выберите факультет:</label>
+                            <select id="faculties_list" name="faculty_id" class="form-control">
+                                <option> Выберите год выпуска </option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -73,5 +86,14 @@
                 timepicker:false
             });
         });
+    </script>
+
+    <script id="year_tmpl" type="text/x-jquery-tmpl">
+        <option value="${id}">${year}</option>
+    </script>
+
+
+    <script id="faculty_tmpl" type="text/x-jquery-tmpl">
+        <option value="${id}">${name}</option>
     </script>
 @endsection
