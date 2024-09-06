@@ -32,7 +32,7 @@ app021_dev_vkr_smart_ru:
     - chmod 700 ~/.ssh
     - ssh-keyscan $PHP_HOST >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - rsync -ar $PWD/* $CI_PHP_HOST:$DST_PATH
+    - rsync -ar $PWD/* $PHP_HOST:$DST_PATH
     - ssh $PHP_HOST "cd $DST_PATH/ && composer update"
     - ssh $PHP_HOST "cd $DST_PATH/ && composer install"
     - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan migrate"
