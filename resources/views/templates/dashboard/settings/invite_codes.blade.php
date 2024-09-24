@@ -27,12 +27,14 @@
                                 <div class="mb-3 col-lg-3">
                                     <label for="amount" class="form-label fs-16 fw-600">Количество</label>
                                     <span
-                                        class="d-flex gap-2 br-green-light-2 br-100 px-3 text-pale-grey fs-14 align-items-center"
+                                        class="d-flex gap-2 br-green-light-2 br-100 px-3
+                                               text-pale-grey fs-14 align-items-center"
                                         style="width: 138px">
                                                 <button type="button" onclick="dec('amount')"
                                                         class="btn btn-minus btn-minus-white"></button>
                                                 <input id="amount" type="text" name="amount" step="1"
-                                                       class="text-center form-control text-blue form-control-minute-custom ps-0 fs-16"
+                                                       class="text-center form-control text-blue
+                                                              form-control-minute-custom ps-0 fs-16 fw-600"
                                                        readonly="" value="0">
                                                 <button type="button" onclick="inc('amount')"
                                                         class="btn btn-plus btn-plus-white"></button>
