@@ -54,7 +54,7 @@ class OrganizationsService extends Services
         return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'organization' => $organization,
-            'user' => $user
+            'you' => $user
         ]);
     }
 
@@ -73,7 +73,7 @@ class OrganizationsService extends Services
         if($organizations)
         {
             return view('templates.dashboard.platform.organization.organizations.index',[
-                'user' => $you,
+                'you' => $you,
                 'organizations' => $organizations
             ]);
         }
@@ -102,7 +102,7 @@ class OrganizationsService extends Services
         $organization = $this->_repository->find($id);
         $parents = $this->_repository->parents($id);
         return view('templates.dashboard.platform.organization.organizations.update',[
-            'user' => $you,
+            'you' => $you,
             'organization' => $organization,
             'parents' => $parents
         ]);
@@ -140,7 +140,7 @@ class OrganizationsService extends Services
             $organization = $this->_repository->find($id);
             return view('templates.dashboard.platform.organization.organizations.update',[
                 'organization' => $organization,
-                'user' => $you
+                'you' => $you
             ]);
         }
         return back()->withErrors(['Ошибка при обновлении организации']);
@@ -150,7 +150,7 @@ class OrganizationsService extends Services
     {
         $you = Auth::user();
         return view('templates.dashboard.platform.organization.organizations.create',[
-            'user' => $you,
+            'you' => $you,
         ]);
     }
 
@@ -190,7 +190,7 @@ class OrganizationsService extends Services
                 }
                 return view('templates.dashboard.platform.organization.organizations.create',[
                     'organization' => $updatedOrganization,
-                    'user' => $you
+                    'you' => $you
                 ]);
             }
         }
@@ -278,42 +278,60 @@ class OrganizationsService extends Services
         ]);
     }
 
-    public function delete(int $id)
+    public function delete(int $id): JsonResponse
     {
         $result = $this->_repository->delete($id);
         if ($result)
         {
-            return back();
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'message' => 'Данный элемент был успешно удален'
+            ]);
         }
         else
         {
-            return back()->withErrors(['Ошибка при удалении из базы данных']);
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Возникла ошибка при удалении организации из базы данных'
+            ]);
         }
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id): JsonResponse
     {
         $result = $this->_repository->destroy($id);
         if ($result)
         {
-            return back();
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'message' => 'Данный элемент был успешно удален'
+            ]);
         }
         else
         {
-            return back()->withErrors(['Ошибка при удалении из базы данных']);
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Возникла ошибка при удалении организации из базы данных'
+            ]);
         }
     }
 
-    public function restore(int $id)
+    public function restore(int $id): JsonResponse
     {
         $result = $this->_repository->restore($id);
         if ($result)
         {
-            return back();
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'message' => 'Данный элемент был успешно восстановлен'
+            ]);
         }
         else
         {
-            return back()->withErrors(['Ошибка при удалении из базы данных']);
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Возникла ошибка при восстановлении'
+            ]);
         }
     }
 }

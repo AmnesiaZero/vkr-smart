@@ -16,6 +16,66 @@ $(document).ready(function() {
         modal.find('form').attr('onsubmit', 'updateYear(' + id + ');return false;');
         modal.find('form').attr('id', 'year_update_' + id);
     });
+
+
+});
+
+$(document).ready(function() {
+    $('.delete-link').on('click', function(e) {
+        e.preventDefault(); // Отключаем стандартное действие ссылки
+
+        let url = $(this).attr('href'); // Получаем URL из ссылки
+        if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
+            $.ajax({
+                url: url, // URL для DELETE запроса
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    if(response.success)
+                    {
+                        location.reload(); // Обновляем страницу (опционально)
+                        $.notify(response.data.title + ":" + response.data.message, "success");
+                    }
+                    else
+                    {
+                        $.notify(response.data.title + ":" + response.data.message, "error");
+                    }
+                },
+                error: function(xhr) {
+                    // Ошибка при удалении
+                    $.notify("Ошибка при удалении элемента","error");
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+    });
+
+    $('.restore-link').on('click', function(e) {
+        e.preventDefault(); // Отключаем стандартное действие ссылки
+
+        let url = $(this).attr('href'); // Получаем URL из ссылки
+        if (confirm('Вы уверены, что хотите восстановить этот элемент?')) {
+            $.ajax({
+                url: url, // URL для DELETE запроса
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    // Успешное удаление, можно обновить страницу или удалить элемент из DOM
+                    location.reload(); // Обновляем страницу (опционально)
+                    $.notify(response.data.title + ":" + response.data.message, "success");
+                },
+                error: function(xhr) {
+                    // Ошибка при удалении
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+    });
 });
 
 /* Кнопка открытия модального окна для update_faculty */
@@ -248,6 +308,10 @@ function updateWorksPagination(pagination) {
         }
     });
 }
+
+
+
+
 function toggleFile(htmlId)
 {
     $('#' + htmlId).click(); // Открываем диалог выбора файла

@@ -52,6 +52,36 @@ function updateBasic(id)
     });
 }
 
+// function deleteOrganization(id) {
+//
+//     const data = {
+//       id:id
+//     };
+//     if (confirm('Вы уверены, что хотите удалить эту организацию?')) {
+//         $.ajax({
+//             url: '/dashboard/organizations/delete',
+//             type: 'DELETE',
+//             data:data
+//             headers: {
+//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//             },
+//             success: function (response) {
+//                 if(response.success)
+//                 {
+//                     $.notify(response.title + ":" + response.message, "success");
+//                 }
+//                 else
+//                 {
+//                     $.notify(response.title + ":" + response.message, "error");
+//                 }
+//             },
+//             error: function (err) {
+//                 $.notify("Произошла ошибка при удалении организации", "error");
+//             }
+//         });
+//     }
+// }
+
 function updatePremium(id)
 {
     const data = {

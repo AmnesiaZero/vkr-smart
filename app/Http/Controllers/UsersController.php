@@ -61,6 +61,11 @@ class UsersController extends Controller
         return $this->usersService->index($data);
     }
 
+    public function addView()
+    {
+        return $this->usersService->addView();
+    }
+
 
 
     public function login(Request $request): RedirectResponse
@@ -239,6 +244,21 @@ class UsersController extends Controller
         return $this->usersService->create($data);
     }
 
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'login' => 'required|string|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|max:255',
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $data = $request->only($this->fillable);
+        return $this->usersService->store($data);
+    }
+
     public function delete(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -249,6 +269,30 @@ class UsersController extends Controller
         }
         $id = $request->id;
         return $this->usersService->delete($id);
+    }
+
+    public function destroy(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required', 'integer', Rule::exists('users', 'id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->usersService->destroy($id);
+    }
+
+    public function restore(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required', 'integer', Rule::exists('users', 'id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->usersService->restore($id);
     }
 
     public function find(Request $request): JsonResponse
@@ -285,7 +329,43 @@ class UsersController extends Controller
         return $this->usersService->update($id, $data);
     }
 
+    public function updateStatus(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required', 'integer', Rule::exists('users', 'id')],
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->usersService->updateStatus($id);
+    }
+
     public function edit(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required', 'integer', Rule::exists('users', 'id')],
+            'name' => 'string|max:255',
+            'login' => 'string|max:255',
+            'email' => 'string|email|max:255',
+            'password' => 'max:255',
+            'gender' => 'integer',
+            'is_active' => 'integer',
+            'departments_ids.*' => ['integer',Rule::exists('departments','id')],
+            'role' => [Rule::exists('roles', 'slug')],
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $id = $request->id;
+        $data = $request->only($this->fillable);
+        $data =array_filter($data, function ($value) {
+            return !is_null($value);
+        });
+        return $this->usersService->edit($id, $data);
+    }
+
+    public function editView(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'id' => ['required','integer',Rule::exists('users','id')]
@@ -294,7 +374,7 @@ class UsersController extends Controller
             return ValidatorHelper::redirectError($validator);
         }
         $id = $request->id;
-        return $this->usersService->edit($id);
+        return $this->usersService->editView($id);
     }
 
     public function addDepartment(Request $request): JsonResponse
@@ -309,6 +389,19 @@ class UsersController extends Controller
         $userId = $request->user_id;
         $departmentsIds = $request->departments_ids;
         return $this->usersService->addDepartment($userId, $departmentsIds);
+    }
+
+    public function filter(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'max:255',
+            'email' => ['max:250'],
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $data = $request->only($this->fillable);
+        return $this->usersService->filter($data);
     }
 
     public function search(Request $request): JsonResponse

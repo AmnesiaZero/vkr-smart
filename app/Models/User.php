@@ -41,7 +41,8 @@ class User extends Authenticatable
         'specialty_id',
         'is_active',
         'secret_key',
-        'avatar_path'
+        'avatar_path',
+        'avatar_file_name'
     ];
 
     /**

@@ -42,10 +42,7 @@
                             <label for="description">Дополнительная информация</label>
                             <textarea id="description" name="description" rows="4" class="form-control"></textarea>
                         </div>
-                        <div class="form-group">
-                            <input type="hidden" name="chief_id" value="{{ $user->id }}">
-                            <input type="hidden" name="id" value="0" />
-                        </div>
+                        <input type="checkbox" name="redirect" id="redirect" style="display: none">
                     </div>
                 </div>
             </div>

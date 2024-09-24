@@ -53,6 +53,18 @@ interface UserRepositoryInterface
 
     /**
      * @param int $id
+     * @return bool
+     */
+    public function destroy(int $id): bool;
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function restore(int $id):bool;
+
+    /**
+     * @param int $id
      * @param array $data
      * @return int
      */

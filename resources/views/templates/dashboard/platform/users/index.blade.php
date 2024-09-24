@@ -11,7 +11,12 @@
         <div class="row">
             <div class="col-lg-3">
                 <h2 class="block-title mb-3">Фильтр</h2>
-                <form action="{{ route('users.filter') }}">
+                <form action="{{ route('users.filter') }}" method="GET">
+                    <div class="mb-3">
+                        <label for="name">Имя</label>
+                        <input id="name" type="text" name="name" value="{{ request()->input('name') }}"
+                               class="form-control">
+                    </div>
                     <div class="mb-3">
                         <label for="login">Логин</label>
                         <input id="login" type="text" name="login" value="{{ request()->input('login') }}"
@@ -36,7 +41,7 @@
                     </div>
                     <div>
                         <a href="{{ route('users.index') }}" class="btn btn-secondary">Сбросить</a>
-                        <input type="submit" value="Фильтровать" class="btn btn-primary">
+                        <input type="submit" id="save" value="Фильтровать" class="btn btn-primary">
                     </div>
                 </form>
             </div>
@@ -44,7 +49,7 @@
                 <div class="list-header">
                     <h2 class="block-title">Список пользователей</h2>
                     <div>
-                        <a href="{{ route('users.create') }}" class="btn btn-danger add-button"><i
+                        <a href="{{ route('users.add') }}" class="btn btn-danger add-button"><i
                                 class="fas fa-plus"></i> Добавить</a>
                     </div>
                 </div>
@@ -92,10 +97,16 @@
 @endsection
 
 @section('scripts')
+    <script src="/js/dashboard/platform/users.js"></script>
     <script src="{{ secure_asset('/plugins/select2/js/select2.min.js') }}"></script>
     <script>
         $('#organization_id').select2({
             theme: 'bootstrap4'
         });
     </script>
+
+    <script id="status_icon_tmpl" type="text/x-jquery-tmpl">
+        <a onclick="updateStatus(${id})" id="status_${id}" data-item-id="${id}" class="toggle-blocked-status"><i id="stat_${id}" class="fas fa-lock @{{if is_active}} fa-lock-open unblocked @{{else}} fa-lock-close blocked @{{/if}} @{{if deleted_at}} disabled @{{/if}}"></i></a>
+    </script>
+
 @endsection

@@ -135,7 +135,6 @@ class OrganizationsController extends Controller
             'is_testing' => 'bool',
             'is_blocked' => 'bool'
         ]);
-//        dd($request);
         if ($validator->fails()) {
             return ValidatorHelper::redirectError($validator);
         }
@@ -183,7 +182,7 @@ class OrganizationsController extends Controller
         return $this->organizationsService->updateStatus($id);
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'id' => ['required','integer',Rule::exists('organizations','id')]
@@ -195,7 +194,7 @@ class OrganizationsController extends Controller
         return $this->organizationsService->delete($id);
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'id' => ['required','integer',Rule::exists('organizations','id')]
@@ -207,7 +206,7 @@ class OrganizationsController extends Controller
         return $this->organizationsService->destroy($id);
     }
 
-    public function restore(Request $request)
+    public function restore(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'id' => ['required','integer',Rule::exists('organizations','id')]

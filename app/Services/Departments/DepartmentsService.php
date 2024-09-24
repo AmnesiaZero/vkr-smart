@@ -143,7 +143,7 @@ class DepartmentsService extends Services
             $department = $this->departmentRepository->find($id);
             return view('templates.dashboard.platform.organization.departments.edit',[
                 'department' => $department,
-                'user' => $you
+                'you' => $you
             ]);
         }
         return back()->withErrors(['Ошибка при обновлении подразделения']);
@@ -222,7 +222,7 @@ class DepartmentsService extends Services
         if($organizations and $departments)
         {
             return view('templates.dashboard.platform.organization.departments.index',[
-                'user' => $you,
+                'you' => $you,
                 'organizations' => $organizations,
                 'departments' => $departments
             ]);
@@ -254,7 +254,7 @@ class DepartmentsService extends Services
         {
             return view('templates.dashboard.platform.organization.departments.edit',[
                 'department' => $department,
-                'user' => $you
+                'you' => $you
             ]);
         }
         return back()->withErrors(['Возникла ошибка при получении данного подразделения']);
@@ -281,7 +281,7 @@ class DepartmentsService extends Services
         $you = Auth::user();
         $organizations = Organization::all();
         return view('templates.dashboard.platform.organization.departments.create',[
-            'user' => $you,
+            'you' => $you,
             'organizations' => $organizations
         ]);
     }
@@ -298,11 +298,11 @@ class DepartmentsService extends Services
 
             if(isset($data['redirect']))
             {
-                return redirect('/dashboard/platform/departments');
+                return redirect('/dashboard/platform/organizations/departments');
             }
             return view('templates.dashboard.platform.organization.departments.create',[
                 'department' => $department,
-                'user' => $you
+                'you' => $you
             ]);
         }
         return back()->withErrors(['Ошибка при создании департамента']);
@@ -334,42 +334,42 @@ class DepartmentsService extends Services
         ]);
     }
 
-    public function deleteView(int $id)
-    {
-        $result = $this->departmentRepository->delete($id);
-        if ($result)
-        {
-            return back();
-        }
-        else
-        {
-            return back()->withErrors(['Ошибка при удалении из базы данных']);
-        }
-    }
 
-    public function destroy(int $id)
+    public function destroy(int $id): JsonResponse
     {
         $result = $this->departmentRepository->destroy($id);
         if ($result)
         {
-            return back();
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'message' => 'Данный элемент был успешно удален'
+            ]);
         }
         else
         {
-            return back()->withErrors(['Ошибка при удалении из базы данных']);
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Возникла ошибка при удалении департамента из базы данных'
+            ]);
         }
     }
 
-    public function restore(int $id)
+    public function restore(int $id): JsonResponse
     {
         $result = $this->departmentRepository->restore($id);
         if ($result)
         {
-            return back();
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'message' => 'Данный элемент был успешно восстановлен'
+            ]);
         }
         else
         {
-            return back()->withErrors(['Ошибка при удалении из базы данных']);
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Возникла ошибка при восстановлении'
+            ]);
         }
     }
 

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use function Symfony\Component\Translation\t;
 
 class DepartmentsController extends Controller
 {
@@ -25,7 +26,8 @@ class DepartmentsController extends Controller
         'page',
         'paginate',
         'description',
-        'with_trashed'
+        'with_trashed',
+        'redirect'
     ];
 
     public function __construct(DepartmentsService $departmentsService)
@@ -105,6 +107,7 @@ class DepartmentsController extends Controller
             return ValidatorHelper::redirectError($validator);
         }
         $data = $request->only($this->fillable);
+        Log::debug('data = '.print_r($data,true));
         return $this->departmentsService->store($data);
     }
 
@@ -164,7 +167,7 @@ class DepartmentsController extends Controller
             'id' => ['required','integer',Rule::exists('departments','id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::redirectError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->departmentsService->destroy($id);
@@ -176,23 +179,12 @@ class DepartmentsController extends Controller
             'id' => ['required','integer',Rule::exists('departments','id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::redirectError($validator);
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->departmentsService->restore($id);
     }
 
-    public function deleteView(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'id' => ['required', 'integer', Rule::exists('departments', 'id')]
-        ]);
-        if ($validator->fails()) {
-            return ValidatorHelper::redirectError($validator);
-        }
-        $facultyId = $request->id;
-        return $this->departmentsService->deleteView($facultyId);
-    }
 
     public function search(Request $request): JsonResponse
     {
