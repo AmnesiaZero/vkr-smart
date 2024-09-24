@@ -5,7 +5,7 @@
         <div class="container py-5 fs-m">
             <div class="row justify-content-center pb-3">
                 <div class="col-xl-5 col-lg-6">
-                    <div class="bg-grey br-40 p-5">
+                    <div class="br-40 p-5">
                         <div class="text-before-form">
                             <h2 class="m-0">Авторизация</h2>
                             <p class="my-4 text-grey fs-14 lh-17">Для авторизации в системе введите данные, полученные
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="col-xl-5 col-lg-6 mt-lg-0 mt-5">
-                    <div class="bg-grey br-40 p-5">
+                    <div class="br-40 p-5">
                         <div class="text-before-form">
                             <h2 class="m-0">Регистрация <br>по приглашению</h2>
                             <p class="my-4 text-grey fs-14 lh-17">Чтобы пройти регистрацию, <br> введите выданный вам
