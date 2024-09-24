@@ -1,5 +1,9 @@
 @extends('layouts.dashboard.main')
 
+@section('styles')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+@endsection
+
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
         <div class="row pt-5 px-0 px-sm-4 mx-sm-0 mx-4">
@@ -10,8 +14,11 @@
                 </div>
                 @if(isset($works_types) and is_iterable($works_types))
                     @foreach($works_types as $works_type)
-                        <div class="badge text-black-black bg-green-light br-100 fs-14 me-1 mb-1" onclick="deleteWorkType({{$works_type->id}})" id="work_type_{{$works_type->id}}">
-                            {{$works_type->name}}
+                        <div class="badge text-black-black bg-green-light br-100 fs-14 me-1 mb-1"
+                             id="work_type_{{$works_type->id}}">
+                             {{$works_type->name}}
+                             <i class="fa fa-times ms-2 cursor-p text-black fs-12"
+                                onclick="deleteWorkType({{$works_type->id}})"></i>
                         </div>
                     @endforeach
                 @endif
@@ -26,7 +33,12 @@
                 </div>
                 @if(isset($scientific_supervisors) and is_iterable($scientific_supervisors))
                     @foreach($scientific_supervisors as $scientific_supervisor)
-                        <div class="badge text-black-black bg-green-light br-100 fs-14 me-1 mb-1" onclick="deleteScientificSupervisor({{$scientific_supervisor->id}})" id="scientific_supervisor_{{$scientific_supervisor->id}}">{{$scientific_supervisor->name}}</div>
+                        <div class="badge text-black-black bg-green-light br-100 fs-14 me-1 mb-1"
+                             id="scientific_supervisor_{{$scientific_supervisor->id}}">
+                             {{$scientific_supervisor->name}}
+                             <i class="fa fa-times ms-2 cursor-p text-black fs-12"
+                                onclick="deleteScientificSupervisor({{$scientific_supervisor->id}})"></i>
+                        </div>
                     @endforeach
                 @endif
             </div>

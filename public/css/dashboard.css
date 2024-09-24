@@ -6,6 +6,9 @@
     font-size: 50px !important;
 }
 
+.vertical-align-middle {
+    vertical-align: middle;
+}
 .box-shadow-none {
     box-shadow: none !important;
 }

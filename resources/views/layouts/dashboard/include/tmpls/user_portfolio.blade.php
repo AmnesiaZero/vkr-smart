@@ -32,18 +32,27 @@
                                            @{{/if}}
                     </p>
                 </div>
-                <p class="mb-1"><img src="/images/doc_grey_img.svg" alt=""><a href="#"
-                                                                              class="text-grey ps-2 fs-14 link-active-hover" onclick="openWorks(${id})">работы</a>
+                <p class="mb-1">
+                    <img src="/images/doc_grey_img.svg" alt="">
+                    <a href="#" class="text-grey ps-2 fs-14 link-active-hover" onclick="openWorks(${id})">
+                        Работы
+                    </a>
                 </p>
                 @{{if portfolio_card_access==1}}
-                <p class="mb-1"><img src="/images/User_Card_Id_Grey.svg" alt=""><a href="/dashboard/portfolios/${id}"
-                                                                                   class="text-grey ps-2 fs-14 link-active-hover">портфолио</a>
+                <p class="mb-1">
+                    <img src="/images/User_Card_Id_Grey.svg" alt="">
+                    <a href="/dashboard/portfolios/${id}" class="text-grey ps-2 fs-14 link-active-hover">
+                        Портфолио
+                    </a>
                 </p>
                 @{{/if}}
                 @role('admin')
-                <p class="mb-1"><img src="/images/setting_grey.svg" alt=""><a href="/dashboard/portfolios/achievements/${id}"
-                                                                              class="text-grey ps-2 fs-14 link-active-hover">управление
-                    портфолио</a></p>
+                <p class="mb-1">
+                    <img src="/images/setting_grey.svg" alt="">
+                    <a href="/dashboard/portfolios/achievements/${id}" class="text-grey ps-2 fs-14 link-active-hover">
+                        Управление портфолио
+                    </a>
+                </p>
                 @endrole
             </div>
         </div>

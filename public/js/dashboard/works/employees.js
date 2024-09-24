@@ -13,6 +13,7 @@ var specialtiesIds = [];
 
 
 $(document).ready(function () {
+    $('.selectpicker').selectpicker();
 
     const siteUrl = window.location.href;
     if(siteUrl.includes('employees'))
@@ -317,8 +318,6 @@ $(document).ready(function () {
     $('.js-example-basic-single').select2({
         placeholder: "Выберите...",
     });
-
-
 });
 
 
@@ -338,9 +337,10 @@ function faculties(data,htmlId) {
                 const facultiesList = $("#" + htmlId);
                 console.log('faculties = ');
                 console.log(faculties);
+                facultiesList.empty();
+                facultiesList.selectpicker('destroy');
                 facultiesList.html($("#faculty_tmpl").tmpl(faculties));
-                facultiesList.prepend('<option value="" selected>Выберите.......</option>');
-                console.log('')
+                facultiesList.selectpicker('render');
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -361,8 +361,11 @@ function departments(data,htmlId) {
             if (response.success) {
                 const departments = response.data.departments;
                 const departmentsList = $("#" + htmlId);
+
+                departmentsList.empty();
+                departmentsList.selectpicker('destroy');
                 departmentsList.html($("#department_tmpl").tmpl(departments));
-                departmentsList.prepend('<option value="" selected>Выберите.......</option>');
+                departmentsList.selectpicker('render');
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -386,8 +389,11 @@ function specialties(data,htmlId) {
                 console.log('specialties');
                 console.log(specialties);
                 const specialtiesList = $("#" + htmlId);
+
+                specialtiesList.empty();
+                specialtiesList.selectpicker('destroy');
                 specialtiesList.html($("#specialty_tmpl").tmpl(specialties));
-                specialtiesList.prepend('<option value="" selected>Выберите.......</option>');
+                specialtiesList.selectpicker('render');
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -909,6 +915,9 @@ function openUpdateWorkModal()
             {
                 const work = response.data.work;
                 $("#tmpl_modals").html($("#update_work_tmpl").tmpl(work));
+
+                $('.selectpicker').selectpicker();
+
                 const modalElement = new bootstrap.Modal(document.getElementById('update_work_modal'));
                 modalElement.show();
             }

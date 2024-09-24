@@ -188,6 +188,11 @@ function openUpdateAchievementModal()
             if (response.success) {
                 const achievement = response.data.achievement;
                 $("#tmpl_container").html($("#update_achievement_modal_tmpl").tmpl(achievement));
+
+                $('.selectpicker').selectpicker();
+
+                const modal = new bootstrap.Modal(document.getElementById('update_achievement_modal'));
+                modal.show();
             }
             else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
