@@ -53,13 +53,12 @@
                 <img src="/images/Plus.svg" class="ps-2" alt="">
             </button>
             <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25"
-                    onclick="openOverView()"
-            >
+                    onclick="openOverView()">
                 Обзор
                 <img src="/images/File_Download_green.svg" alt="" class="ps-2">
             </button>
-            <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25" onclick="openPortfolio()">Карточка<img
-                    src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
+            <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25" onclick="openPortfolio()">Карточка
+                <img src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
         </div>
         <div class="pt-5 px-md-0 px-3">
             <div class="big-table">
@@ -110,7 +109,8 @@
           </td>
           <td class="text-center vertical-align-middle">
             <img src="/images/three_dots.svg" alt="" aria-haspopup="true" data-bs-toggle="dropdown"
-                 class="btn-info-box cursor-p" onclick="openInfoBox(${id})">
+                 class="btn-info-box cursor-p dropdown-toggle" onclick="openInfoBox(${id})" type="button"
+                 aria-expanded="false">
             @include('layouts.dashboard.include.menu.achievement')
           </td>
          </tr>
@@ -148,7 +148,7 @@
                 <div class="modal-header">
                     <h3 class="modal-title">Изменить достижение</h3>
                 </div>
-                    <form id="update_achievement_form" onsubmit="updateAchievement(); return false;" class="form-inline">
+                <form id="update_achievement_form" onsubmit="updateAchievement(); return false;" class="form-inline">
                     <div class="modal-body">
                             <div class="d-flex flex-column gap-3">
                                 <div class="row">
@@ -236,12 +236,16 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <div class="col-sm-8">
-                                        <button type="submit" class="btn btn-success" onclick="closeTmplModal('update_achievement_modal')">Добавить достижение</button>
-                                    </div>
+                        <button type="submit" class="btn btn-secondary fs-14 text-grey py-1"
+                                onclick="closeTmplModal('update_achievement_modal')">
+                            Сохранить
+                        </button>
 
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close"
-                                onclick="closeTmplModal('update_achievement_modal')">Закрыть окно</button>
+                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
+                                data-bs-dismiss="modal" aria-label="Close"
+                                onclick="closeTmplModal('update_achievement_modal')">
+                            Закрыть
+                        </button>
                     </div>
                 </form>
             </div>

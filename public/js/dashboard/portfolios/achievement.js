@@ -237,7 +237,7 @@ function updateAchievement()
 
 function openInfoBox(id)
 {
-    $("#info_box").fadeToggle(100);
+    // $("#info_box").fadeToggle(100);
     achievementId = id;
 }
 
