@@ -23,6 +23,8 @@
     <!-- PLUGINS CSS STYLE -->
     <!-- SLEEK CSS -->
     <link rel="stylesheet" href="/css/platform/sleek.css"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+
     @yield('styles')
     <link rel="stylesheet" href="/css/platform/main.css"/>
 
@@ -70,12 +72,12 @@
                         <ul id="organizations" class="collapse {{ (request()->segment(2) == 'organizations') ? 'show' : ''}}">
                             <div class="sub-menu">
                                 <li class="{{ request()->routeIs('organizations.index') ? 'active' : '' }}">
-                                    <a href="{{route('organizations.index')}}" class="sidenav-item-link">
+                                    <a href="{{route('organizations.index',['with_trashed' => 1])}}" class="sidenav-item-link">
                                         <span class="nav-text">Организации</span>
                                     </a>
                                 </li>
                                 <li class="{{ request()->routeIs('departments.index') ? 'active' : '' }}">
-                                    <a href="{{route('departments.index')}}" class="sidenav-item-link">
+                                    <a href="{{route('departments.index',['with_trashed' => 1])}}" class="sidenav-item-link">
                                         <span class="nav-text">Отделения</span>
                                     </a>
                                 </li>
@@ -83,8 +85,8 @@
                         </ul>
                     </li>
 
-                    <li class="{{ request()->routeIs('dashboard.users.index') ? 'active' : '' }}">
-                        <a href="" class="sidenav-item-link">
+                    <li class="{{ request()->routeIs('users.index') ? 'active' : '' }}">
+                        <a href="{{route('users.index')}}" class="sidenav-item-link">
                             <i class="mdi mdi-book-open-page-variant"></i>
                             <span class="nav-text">Пользователи</span>
                         </a>
@@ -117,15 +119,15 @@
                     <ul class="nav navbar-nav">
                         <li class="dropdown user-menu">
                             <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                <img src="/images/no-user-image.jpg" class="user-image" alt="{{ $user->name }}"/>
-                                <span class="d-none d-lg-inline-block">{{ $user->name }}</span>
+                                <img src="/images/no-user-image.jpg" class="user-image" alt="{{ $you->name }}"/>
+                                <span class="d-none d-lg-inline-block">{{ $you->name }}</span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <!-- User image -->
                                 <li class="dropdown-header">
-                                    <img src="/images/no-user-image.jpg" class="img-circle" alt="{{ $user->email }}"/>
+                                    <img src="/images/no-user-image.jpg" class="img-circle" alt="{{ $you->email }}"/>
                                     <div class="d-inline-block">
-                                        {{ $user->name }} <small class="pt-1">{{ $user->email }}</small>
+                                        {{ $you->name }} <small class="pt-1">{{ $you->email }}</small>
                                     </div>
                                 </li>
                                 <li>
@@ -133,18 +135,6 @@
                                         <i class="mdi mdi-account"></i> Мой профиль
                                     </a>
                                 </li>
-                                <!-- <li class="right-sidebar-in">
-                                    <a href="javascript:0"> <i class="mdi mdi-settings"></i> Setting </a>
-                                </li> -->
-{{--                                <li class="dropdown-footer">--}}
-{{--                                    <form method="POST" action=">--}}
-{{--                                        {{ csrf_field() }}--}}
-{{--                              --}}
-{{--                                           onclick="event.preventDefault(); this.closest('form').submit();">--}}
-{{--                                            <i class="mdi mdi-logout"></i> Выйти--}}
-{{--                                        </a>--}}
-{{--                                    </form>--}}
-{{--                                </li>--}}
                             </ul>
                         </li>
                     </ul>

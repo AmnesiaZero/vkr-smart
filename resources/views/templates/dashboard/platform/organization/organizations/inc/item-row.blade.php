@@ -22,9 +22,9 @@
     </td>
 	<td class="status-premium text-center">
 		@if($item->is_premium)
-			<a href="" id="status_{{ $item->id }}" data-item-id="{{ $item->id }}" class="toggle-premium-status"><i id="prem_{{ $item->id }}" class="far fa-check-square premium"></i></a>
+			<a onclick="updatePremium({{$item->id}})" id="premium_status_{{ $item->id }}" data-item-id="{{ $item->id }}" class="toggle-premium-status"><i id="premium_{{ $item->id }}" class="far fa-check-square premium"></i></a>
 		@elseif(!$item->is_premium)
-			<a href="" id="status_{{ $item->id }}" data-item-id="{{ $item->id }}" class="toggle-premium-status"><i id="prem_{{ $item->id }}" class="far fa-square not-premium"></i></a>
+			<a onclick="updatePremium({{$item->id}})" id="premium_status_{{ $item->id }}" data-item-id="{{ $item->id }}" class="toggle-premium-status"><i id="premium_{{ $item->id }}" class="far fa-square not-premium"></i></a>
 		@endif
 	</td>
 	<td class="status-blocked text-center">
@@ -32,25 +32,25 @@
 			<i class="far fa-circle"></i>
 		@else
 			@if(!$item->is_blocked)
-				<a href="" id="status_{{ $item->id }}" data-item-id="{{ $item->id }}" class="toggle-blocked-status"><i id="stat_{{ $item->id }}" class="fas fa-lock-open unblocked"></i></a>
+				<a onclick="updateStatus({{$item->id}})" id="status_{{ $item->id }}" data-item-id="{{ $item->id }}" class="toggle-blocked-status"><i id="stat_{{ $item->id }}" class="fas fa-lock-open unblocked"></i></a>
 			@elseif($item->is_blocked)
-				<a href="" id="status_{{ $item->id }}" data-item-id="{{ $item->id }}" class="toggle-blocked-status"><i id="stat_{{ $item->id }}" class="fas fa-lock blocked"></i></a>
+				<a onclick="updateStatus({{$item->id}})" id="status_{{ $item->id }}" data-item-id="{{ $item->id }}" class="toggle-blocked-status"><i id="stat_{{ $item->id }}" class="fas fa-lock blocked"></i></a>
 			@endif
 		@endif
 	</td>
 	<td class="actions text-center">
 		@if($item->deleted_at)
-			<a href="{{ route('organizations.restore', ['id' => $item->id])}}" id="status_{{ $item->id }}" data-item-id="{{ $item->id }}" class="restore d-inline mr-2">
+			<a href="{{ route('organizations.restore', ['id' => $item->id])}}" id="status_{{ $item->id }}" data-item-id="{{ $item->id }}" class="restore d-inline mr-2 restore-link">
                 <i id="stat_{{ $item->id }}" class="icon fas fa-trash-restore"></i>
             </a>
-			<a href="{{ route('organizations.delete', ['id' => $item->id])}}" data-item-id="{{ $item->id }}" class="delete d-inline">
+            <a href="{{ route('organizations.destroy', ['id' => $item->id])}}" data-item-id="{{ $item->id }}" class="destroy d-inline delete-link">
                 <i class="icon far fa-trash-alt"></i>
             </a>
 		@else
 			<a href="{{ route('organizations.edit', ['id' => $item->id])}}" class="d-inline mr-2">
                 <i class="icon fas fa-edit"></i>
             </a>
-            <a href="{{ route('organizations.delete', ['id' => $item->id])}}" data-item-id="{{ $item->id }}" class="destroy d-inline">
+            <a href="{{ route('organizations.delete', ['id' => $item->id])}}" data-item-id="{{ $item->id }}" class="delete d-inline delete-link">
                 <i class="icon far fa-trash-alt"></i>
             </a>
 		@endif

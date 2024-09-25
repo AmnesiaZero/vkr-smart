@@ -12,6 +12,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class OrganizationsService extends Services
@@ -53,7 +54,7 @@ class OrganizationsService extends Services
         return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'organization' => $organization,
-            'user' => $user
+            'you' => $user
         ]);
     }
 
@@ -65,31 +66,35 @@ class OrganizationsService extends Services
         return view('templates.dashboard.settings.integration', ['organization' => $organization]);
     }
 
-    public function view()
+    public function view(array $data)
     {
         $you = Auth::user();
-        $organizations = $this->_repository->get();
-        return view('templates.dashboard.platform.organization.organizations.index',[
-            'user' => $you,
-            'organizations' => $organizations
-        ]);
+        $organizations = $this->_repository->get($data);
+        if($organizations)
+        {
+            return view('templates.dashboard.platform.organization.organizations.index',[
+                'you' => $you,
+                'organizations' => $organizations
+            ]);
+        }
+        return back()->withErrors(['Ошибка при получении организаций']);
     }
 
-//    public function get(bool $paginate,int $page): JsonResponse
-//    {
-//        $organizations = $this->_repository->get($paginate,$page);
-//        if($organizations and is_iterable($organizations))
-//        {
-//            return self::sendJsonResponse(true,[
-//                'title' => 'Успешно',
-//                'organizations' => $organizations
-//            ]);
-//        }
-//        return self::sendJsonResponse(false,[
-//            'title' => 'Ошибка',
-//            'message' => 'Ошибка при получении организаций'
-//        ]);
-//    }
+    public function get(bool $paginate,int $page): JsonResponse
+    {
+        $organizations = $this->_repository->get($paginate,$page);
+        if($organizations and is_iterable($organizations))
+        {
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'organizations' => $organizations
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Ошибка при получении организаций'
+        ]);
+    }
 
     public function editView(int $id)
     {
@@ -97,7 +102,7 @@ class OrganizationsService extends Services
         $organization = $this->_repository->find($id);
         $parents = $this->_repository->parents($id);
         return view('templates.dashboard.platform.organization.organizations.update',[
-            'user' => $you,
+            'you' => $you,
             'organization' => $organization,
             'parents' => $parents
         ]);
@@ -135,7 +140,7 @@ class OrganizationsService extends Services
             $organization = $this->_repository->find($id);
             return view('templates.dashboard.platform.organization.organizations.update',[
                 'organization' => $organization,
-                'user' => $you
+                'you' => $you
             ]);
         }
         return back()->withErrors(['Ошибка при обновлении организации']);
@@ -145,7 +150,7 @@ class OrganizationsService extends Services
     {
         $you = Auth::user();
         return view('templates.dashboard.platform.organization.organizations.create',[
-            'user' => $you,
+            'you' => $you,
         ]);
     }
 
@@ -185,28 +190,148 @@ class OrganizationsService extends Services
                 }
                 return view('templates.dashboard.platform.organization.organizations.create',[
                     'organization' => $updatedOrganization,
-                    'user' => $you
+                    'you' => $you
                 ]);
             }
         }
         return back()->withErrors(['Ошибка при создании организации']);
     }
 
-    public function updatePremium(int $id)
+
+    public function updatePremium(int $id): JsonResponse
     {
         $organization = $this->_repository->find($id);
         if($organization and $organization->id)
         {
             $isPremium = $organization->is_premium;
-            if($isPremium)
+            if($isPremium==0)
             {
-                $organization->is_premium = true;
+                $organization->is_premium = 1;
             }
             else
             {
-                $organization->is_premium = false;
+                $organization->is_premium = 0;
             }
             $organization->save();
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'organization'=> $organization
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Возникла ошибка при обновлении статуса организации'
+        ]);
+    }
+
+    public function updateBasic(int $id): JsonResponse
+    {
+        $organization = $this->_repository->find($id);
+        Log::debug('organization = '.print_r($organization,true));
+        if($organization and $organization->id)
+        {
+            $isBasic = $organization->is_basic;
+            if($isBasic==0)
+            {
+                $organization->is_basic = 1;
+            }
+            else
+            {
+                $organization->is_basic = 0;
+            }
+            $organization->save();
+            Log::debug('updated organization = '.print_r($organization,true));
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'organization'=> $organization
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Возникла ошибка при обновлении статуса организации'
+        ]);
+    }
+
+    public function updateStatus(int $id): JsonResponse
+    {
+        $organization = $this->_repository->find($id);
+        if($organization and $organization->id)
+        {
+            $isBlocked = $organization->is_blocked;
+            if($isBlocked==0)
+            {
+                $organization->is_blocked = 1;
+            }
+            else
+            {
+                $organization->is_blocked = 0;
+            }
+            $organization->save();
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'organization'=> $organization
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Возникла ошибка при обновлении статуса организации'
+        ]);
+    }
+
+    public function delete(int $id): JsonResponse
+    {
+        $result = $this->_repository->delete($id);
+        if ($result)
+        {
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'message' => 'Данный элемент был успешно удален'
+            ]);
+        }
+        else
+        {
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Возникла ошибка при удалении организации из базы данных'
+            ]);
+        }
+    }
+
+    public function destroy(int $id): JsonResponse
+    {
+        $result = $this->_repository->destroy($id);
+        if ($result)
+        {
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'message' => 'Данный элемент был успешно удален'
+            ]);
+        }
+        else
+        {
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Возникла ошибка при удалении организации из базы данных'
+            ]);
+        }
+    }
+
+    public function restore(int $id): JsonResponse
+    {
+        $result = $this->_repository->restore($id);
+        if ($result)
+        {
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'message' => 'Данный элемент был успешно восстановлен'
+            ]);
+        }
+        else
+        {
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Возникла ошибка при восстановлении'
+            ]);
         }
     }
 }

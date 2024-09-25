@@ -193,7 +193,7 @@
                         <th scope="col">Наименование<br> работы - тип работы</th>
                         <th scope="col">Оценка</th>
                         <th scope="col">Самопроверка <br> по другим системам</th>
-                        <th scope="col">Проверка<br> ВКР-ВУЗ</th>
+                        <th scope="col">Проверка<br> ВКР-СМАРТ</th>
                         <th scope="col"><img src="/images/nine_dots.svg" alt="" class="pb-2"></th>
                     </tr>
                     </thead>

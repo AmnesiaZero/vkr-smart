@@ -37,6 +37,9 @@ class Organization extends Model
         'end_date' => 'date:d.m.Y',
     ];
 
+    protected $dates = ['deleted_at'];
+
+
     //Если честно,я хз,почему ключи в таком порядке,хотя должны быть наоборот. Но так работает,а иначе - нет
     public function inspectors_specialties(): BelongsToMany
     {

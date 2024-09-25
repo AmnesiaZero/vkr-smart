@@ -9,6 +9,7 @@ use App\Mail\ResetPassword;
 use App\Models\AchievementMode;
 use App\Models\AchievementTypeCategory;
 use App\Models\InviteCode;
+use App\Models\Organization;
 use App\Services\Departments\Repositories\DepartmentRepositoryInterface;
 use App\Services\InviteCodes\Repositories\InviteCodeRepositoryInterface;
 use App\Services\Organizations\Repositories\OrganizationRepositoryInterface;
@@ -28,7 +29,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use jeremykenedy\LaravelRoles\Models\Role;
 
 class UsersService extends Services
 {
@@ -203,6 +206,21 @@ class UsersService extends Services
             'message' => 'При получении пользователя произошла ошибка'
         ]);
 
+    }
+
+    public function filter(array $data)
+    {
+        if (empty($data)) {
+            return back()->withErrors(['Пустой массив данных']);
+        }
+        $you = Auth::user();
+        $organizations = Organization::all();
+        $users = $this->_repository->search($data);
+        return view('templates.dashboard.platform.users.index',[
+            'you' => $you,
+            'users' => $users,
+            'organizations' => $organizations
+        ]);
     }
 
     public function search(array $data): JsonResponse
@@ -551,7 +569,11 @@ class UsersService extends Services
         ];
         $you = Auth::user();
         $users = $this->_repository->search($data);
-        return view('templates.dashboard.platform.index',['users' => $users,'user' => $you]);
+        return view('templates.dashboard.platform.index',[
+            'users' => $users,
+            'you' => $you
+            ]
+        );
     }
 
     public function apiView()
@@ -569,6 +591,210 @@ class UsersService extends Services
             ]);
         }
         return back()->withErrors(['Ошибка при поиске привязанной организации']);
+    }
+
+    public function index(array $data)
+    {
+        $you = Auth::user();
+        $organizations = Organization::all();
+        $data['with_trashed'] = true;
+        $users = $this->_repository->get($data);
+        if($users)
+        {
+            return view('templates.dashboard.platform.users.index',[
+                'you' => $you,
+                'users' => $users,
+                'organizations' => $organizations
+            ]);
+        }
+        return back()->withErrors(['Ошибка при получении пользователей']);
+    }
+
+    public function store(array $data)
+    {
+        if (empty($data)) {
+            return back()->withErrors(['Пустой массив данных']);
+        }
+        if (!is_numeric($data['organization_id'])) {
+            return back()->withErrors(['Не указана организация']);
+        }
+        $data['secret_key'] = Str::random(10);
+        $user = $this->_repository->create($data);
+        if ($user and $user->id) {
+            $id = $user->id;
+            if(isset($data['avatar']) and is_file($data['avatar']) and FilesHelper::acceptableImage($data['avatar']))
+            {
+                $avatarFile = $data['avatar'];
+                $avatarDirectory = 'public/avatars';
+                Storage::makeDirectory($avatarDirectory);
+                $avatarFileName = $id.'.'.$avatarFile->extension();
+                $avatarPath =  $avatarFile->storeAs($avatarDirectory,$avatarFileName);
+                $updatedData['avatar_path'] = $avatarPath;
+                $updatedData['avatar_file_name'] = $avatarFile->getClientOriginalName();
+            }
+            else
+            {
+                return back()->withErrors(['Некорректный файл логотипа. Проверьте расширение файла. Допустимые расширения : jpeg,png,webp,jpg']);
+            }
+
+            $result = $this->_repository->update($id,$updatedData);
+
+            if($result)
+            {
+                if (isset($data['role'])) {
+                    $role = $this->roleRepository->find($data['role']);
+                }
+                else {
+                    $role = $this->roleRepository->find('user');
+                }
+                $user->attachRole($role);
+
+                $you = Auth::user();
+                $updatedUser = $this->_repository->find($id);
+                if(isset($data['redirect']))
+                {
+                    return redirect('/dashboard/users/index');
+                }
+                return view('templates.dashboard.platform.users.index', [
+                    'user' => $updatedUser,
+                    'you' => $you
+                ]);
+            }
+        }
+        return back()->withErrors(['Возникла ошибка при создании пользователя']);
+    }
+
+    public function editView(int $id)
+    {
+        $user = $this->_repository->find($id);
+        if($user and $user->id)
+        {
+            $you = Auth::user();
+            $organizations = Organization::all();
+            $roles = Role::all();
+            return view('templates.dashboard.platform.users.edit',[
+                'user' => $user,
+                'you'  => $you,
+                'organizations' => $organizations,
+                'roles' => $roles
+            ]);
+        }
+        return back()->withErrors(['Возникла ошибка при получении пользователей']);
+    }
+
+
+    public function addView()
+    {
+        $you = Auth::user();
+        $organizations = Organization::all();
+        $roles = Role::all();
+        return view('templates.dashboard.platform.users.create',[
+            'you' => $you,
+            'organizations' => $organizations,
+            'roles' => $roles
+        ]);
+    }
+
+    public function edit(int $id, array $data)
+    {
+        if(isset($data['avatar']))
+        {
+            if(is_file($data['avatar']) and FilesHelper::acceptableImage($data['avatar']))
+            {
+                $avatarFile = $data['avatar'];
+                $avatarDirectory = 'public/avatars';
+                Storage::makeDirectory($avatarDirectory);
+                $avatarFileName = $id.'.'.$avatarFile->extension();
+                $avatarPath = $avatarFile->storeAs($avatarDirectory,$avatarFileName);
+                $data['avatar_path'] = $avatarPath;
+                $data['avatar_file_name'] = $avatarFile->getClientOriginalName();
+            }
+            else
+            {
+                return back()->withErrors(['Некорректный файл логотипа. Проверьте расширение файла. Допустимые расширения : jpeg,png,webp,jpg']);
+            }
+        }
+        $result = $this->_repository->update($id,$data);
+        if($result)
+        {
+            $user = $this->_repository->find($id);
+            $you = Auth::user();
+            if(isset($data['redirect']))
+            {
+                return redirect('/dashboard/users/index');
+            }
+            $organization = $this->_repository->find($id);
+            return view('templates.dashboard.platform.users.edit',[
+                'organization' => $organization,
+                'you' => $you,
+                'user' => $user
+            ]);
+        }
+        return back()->withErrors(['Ошибка при обновлении организации']);
+    }
+
+    public function destroy(int $id): JsonResponse
+    {
+        $result = $this->_repository->destroy($id);
+        if ($result)
+        {
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'message' => 'Данный элемент был успешно удален'
+            ]);
+        }
+        else
+        {
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Возникла ошибка при удалении пользователя из базы данных'
+            ]);
+        }
+    }
+
+    public function restore(int $id): JsonResponse
+    {
+        $flag = $this->_repository->restore($id);
+        if($flag)
+        {
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'message' => 'Данный элемент был успешно восстановлен'
+            ]);
+        }
+        else
+        {
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Возникла ошибка при восстановлении'
+            ]);
+        }
+    }
+
+    public function updateStatus(int $id)
+    {
+        $user = $this->_repository->find($id);
+        if($user and $user->id)
+        {
+            $isActive = $user->is_active;
+            if($isActive==0)
+            {
+                $user->is_active = 1;
+            }
+            else
+            {
+                $user->is_active = 0;
+            }
+            $user->save();
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'user' => $user
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Возникла ошибка при обновлении статуса пользователя'
+        ]);
     }
 
 

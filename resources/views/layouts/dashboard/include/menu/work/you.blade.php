@@ -36,7 +36,7 @@
         <img src="/images/href_light.svg" alt="" class="pe-2">
         <p class="fs-14 lh-17 text-grey m-0" onclick="openModal('additional_files_modal');additionalFiles();return false">Открыть окно управления<br> дополнительными файлами</p>
     </div>
-    <p class="fs-14 lh-17">Проверка ВКР-ВУЗ.РФ</p>
+    <p class="fs-14 lh-17">Проверка ВКР-СМАРТ.РФ</p>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/href_light.svg" alt="" class="pe-2">
         <p class="fs-14 lh-17 text-grey m-0" onclick="updateWorkVisibility(); return false">Сделать работу недоступной сотрудникам организации</p>

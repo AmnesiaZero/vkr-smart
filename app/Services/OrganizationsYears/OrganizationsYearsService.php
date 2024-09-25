@@ -37,13 +37,18 @@ class OrganizationsYearsService extends Services
         ]);
     }
 
-    public function get(): JsonResponse
+    public function get(array $data): JsonResponse
     {
-        $user = Auth::user();
-        Log::debug('user = '.print_r($user,true));
-        $organizationId = $user->organization_id;
+        if (isset($data['organization_id']))
+        {
+            $organizationId = $data['organization_id'];
+        }
+        else
+        {
+            $user = Auth::user();
+            $organizationId = $user->organization_id;
+        }
         $years = $this->_repository->get($organizationId);
-        Log::debug('years = ' . $years);
         return $this->sendJsonResponse(true, [
             'title' => 'Года успешно получены',
             'years' => $years

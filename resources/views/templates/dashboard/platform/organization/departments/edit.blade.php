@@ -79,4 +79,13 @@
             });
         })
     </script>
+
+    <script id="year_tmpl" type="text/x-jquery-tmpl">
+        <option value="${id}">${year}</option>
+    </script>
+
+
+    <script id="faculty_tmpl" type="text/x-jquery-tmpl">
+        <option value="${id}">${name}</option>
+    </script>
 @endsection

@@ -20,7 +20,8 @@ class OrganizationsYearsController extends Controller
     public array $fillable = [
         'year',
         'comment',
-        'students_count'
+        'students_count',
+        'organization_id'
     ];
     private OrganizationsYearsService $organizationYearsService;
 
@@ -29,14 +30,20 @@ class OrganizationsYearsController extends Controller
         $this->organizationYearsService = $yearsService;
     }
 
-    public function get(): JsonResponse
+    public function get(Request $request): JsonResponse
     {
-        return $this->organizationYearsService->get();
+        $validator = Validator::make($request->all(), [
+            'organization_id' => ['integer',Rule::exists('organizations_years','id')],
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $data = $request->only($this->fillable);
+        return $this->organizationYearsService->get($data);
     }
 
     public function create(Request $request): JsonResponse
     {
-        Log::debug('Вошёл в create у organizations years');
         $data = $request->only($this->fillable);
         $validator = Validator::make($data, [
             'year' => 'required|integer',

@@ -30,7 +30,8 @@ class OrganizationsController extends Controller
         'is_premium',
         'is_testing',
         'is_blocked',
-        'redirect'
+        'redirect',
+        'with_trashed'
     ];
 
     public OrganizationsService $organizationsService;
@@ -47,9 +48,16 @@ class OrganizationsController extends Controller
         return view('templates.dashboard.settings.organizations_structure');
     }
 
-    public function view()
+    public function view(Request $request)
     {
-        return $this->organizationsService->view();
+        $validator = Validator::make($request->all(), [
+            'with_trashed' => 'bool'
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $data = $request->only($this->fillable);
+        return $this->organizationsService->view($data);
     }
 
     public function get(Request $request): JsonResponse
@@ -127,7 +135,6 @@ class OrganizationsController extends Controller
             'is_testing' => 'bool',
             'is_blocked' => 'bool'
         ]);
-//        dd($request);
         if ($validator->fails()) {
             return ValidatorHelper::redirectError($validator);
         }
@@ -139,16 +146,76 @@ class OrganizationsController extends Controller
         return $this->organizationsService->update($id,$data);
     }
 
-    public function updatePremium(Request $request)
+    public function updateBasic(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'id' => ['required','integer',Rule::exists('organizations','id')]
         ]);
         if ($validator->fails()) {
-            return ValidatorHelper::redirectError($validator);
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->organizationsService->updateBasic($id);
+    }
+
+    public function updatePremium(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required','integer',Rule::exists('organizations','id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
         }
         $id = $request->id;
         return $this->organizationsService->updatePremium($id);
+    }
+
+    public function updateStatus(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required','integer',Rule::exists('organizations','id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->organizationsService->updateStatus($id);
+    }
+
+    public function delete(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required','integer',Rule::exists('organizations','id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->organizationsService->delete($id);
+    }
+
+    public function destroy(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required','integer',Rule::exists('organizations','id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->organizationsService->destroy($id);
+    }
+
+    public function restore(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required','integer',Rule::exists('organizations','id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->organizationsService->restore($id);
     }
 
     public function addView()

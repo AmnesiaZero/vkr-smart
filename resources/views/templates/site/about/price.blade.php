@@ -19,7 +19,7 @@
                                 <li class="mb-2">Индивидуальные особенности предоставления услуг.</li>
                                 <li class="mb-2">Внимание! Для организаций СПО действует специальная стоимость на
                                     ВКР-СМАРТ, при наличии доступа к платформе <a href="https://profspo.ru/"
-                                                                                class="text-black">Профобразование</a>
+                                                                                class="text-black">PR</a>
                                 </li>
                             </ol>
                             </p>
@@ -60,7 +60,7 @@
                             <div class="bg-green p-4 br-20">
                                 <p class="fs-14 lh-17 m-0">Для подписчиков <a href="https://www.iprbookshop.ru/"
                                                                               class="text-black td-none">ЭБС IPR
-                                        BOOKS</a> и <a href="https://profspo.ru/" class="text-black td-none">Профобразование</a>
+                                        BOOKS</a> и <a href="https://profspo.ru/" class="text-black td-none">PROFобразование</a>
                                     действуют дополнительные привилегии!</p>
                             </div>
                         </div>

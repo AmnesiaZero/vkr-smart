@@ -5,7 +5,7 @@
         <div class="list-header">
             <h2 class="block-title">Новая организация</h2>
         </div>
-        <form id="organization_form" action="{{ route('organizations.create') }}"  method="POST">
+        <form id="organization_form" enctype="multipart/form-data" action="{{ route('organizations.create') }}"  method="POST">
             @csrf
             <div class="row">
                 <div class="col-8">
@@ -28,11 +28,16 @@
                         <div class="form-group">
                             <label for="logo">Логотип</label>
                             <div class="input-group">
-                                <input id="logo" type="text" name="logo" class="form-control" placeholder="Выберите изображение" aria-label="Выберите изображение" aria-describedby="button-select-image">
+                                <input id="logo" type="text" value="@if(isset($organization) and $organization->logo_file_name) {{$organization->logo_file_name}} @endif" class="form-control"
+                                       placeholder="Выберите изображение" aria-label="Выберите изображение"
+                                       aria-describedby="button-select-image" readonly>
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button" id="button-select-image">Загрузить</button>
+                                    <button class="btn btn-primary" type="button" id="button-select-image"
+                                            onclick="toggleFile('logo_load')">Загрузить
+                                    </button>
                                 </div>
                             </div>
+                            <input type="file" id="logo_load" name="logo" style="display: none">
                         </div>
                         <div class="form-group">
                             <label for="address">Адрес</label>
@@ -152,7 +157,6 @@
     <script src="{{ secure_asset('/plugins/ckfinder/ckfinder.js') }}"></script>
     <script src="{{ secure_asset('/dashboards/sleek/js/cke_init.js') }}"></script>
     <script src="/js/dashboard/platform/organization/organizations.js"></script>
-
 
 
 @endsection

@@ -61,8 +61,17 @@
 @endsection
 
 @section('scripts')
+    <script src="/js/app.js"></script>
     <script src="/js/dashboard/platform/organization/organizations.js"></script>
     <script id="basic_status_tmpl" type="text/x-jquery-tmpl">
         <a onclick="updateBasic(${id})" id="basic_status_${id}" data-item-id="${id}" class="toggle-basic-status"><i id="basic_${id}" class="far @{{if is_basic}} fa-check-square basic @{{else}} fa-square not-basic @{{/if}}"></i></a>
+    </script>
+
+    <script id="premium_status_tmpl" type="text/x-jquery-tmpl">
+	    <a onclick="updatePremium(${id})" id="premium_status_${id}" data-item-id="${id}" class="toggle-premium-status"><i id="premium_${id}" class="far @{{if is_premium}} fa-check-square premium @{{else}} fa-square not-premium @{{/if}}"></i></a>
+    </script>
+
+    <script id="status_tmpl" type="text/x-jquery-tmpl">
+	     <a onclick="updateStatus(${id})" id="status_${id}" data-item-id="${id}" class="toggle-blocked-status"><i id="stat_${id}" class="fas @{{if is_blocked}} fa-lock blocked @{{else}} fa-lock-open unblocked @{{/if}}"></i></a>
     </script>
 @endsection

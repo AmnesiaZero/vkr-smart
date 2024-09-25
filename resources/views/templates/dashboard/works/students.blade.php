@@ -129,7 +129,7 @@
                         <th scope="col">Наименование<br> работы - тип работы</th>
                         <th scope="col">Оценка</th>
                         <th scope="col">Самопроверка по другим системам</th>
-                        <th scope="col">Проверка<br> ВКР-ВУЗка</th>
+                        <th scope="col">Проверка<br> ВКР-СМАРТа</th>
                         <th scope="col"><img src="/images/nine_dots.svg" alt="" class="pb-2"></th>
                     </tr>
                     </thead>
@@ -341,7 +341,7 @@
                                         @{{/if}}
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-4">Отчет о заимствованиях по базам ВКР-ВУЗ</label>
+                                        <label class="col-sm-4">Отчет о заимствованиях по базам ВКР-СМАРТ</label>
                                         @{{if borrowings_percent}}
                                         <div class="col-sm-8" id="value_percent_person">Фактических некорректных заимствований: ${borrowings_percent}</div>
                                         @{{/if}}

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use function Symfony\Component\Translation\t;
 
 class DepartmentsController extends Controller
 {
@@ -24,7 +25,9 @@ class DepartmentsController extends Controller
         'organization_id',
         'page',
         'paginate',
-        'description'
+        'description',
+        'with_trashed',
+        'redirect'
     ];
 
     public function __construct(DepartmentsService $departmentsService)
@@ -32,9 +35,16 @@ class DepartmentsController extends Controller
         $this->departmentsService = $departmentsService;
     }
 
-    public function view()
+    public function view(Request $request)
     {
-        return $this->departmentsService->view();
+        $validator = Validator::make($request->all(), [
+            'organization_id' => ['integer',Rule::exists('organizations','id')],
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $data = $request->only($this->fillable);
+        return $this->departmentsService->view($data);
     }
 
     public function all(): JsonResponse
@@ -63,7 +73,8 @@ class DepartmentsController extends Controller
     public function get(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'faculty_id' => 'integer',
+            'faculty_id' => ['integer',Rule::exists('faculties','id')],
+            'organization_id' => ['integer',Rule::exists('organizations','id')],
             'paginate' => 'bool'
         ]);
         if ($validator->fails()) {
@@ -96,6 +107,7 @@ class DepartmentsController extends Controller
             return ValidatorHelper::redirectError($validator);
         }
         $data = $request->only($this->fillable);
+        Log::debug('data = '.print_r($data,true));
         return $this->departmentsService->store($data);
     }
 
@@ -110,6 +122,18 @@ class DepartmentsController extends Controller
         $id = $request->id;
         $data = $request->only($this->fillable);
         return $this->departmentsService->update($id, $data);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required','integer',Rule::exists('departments','id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->departmentsService->updateStatus($id);
     }
 
     public function edit(Request $request)
@@ -133,12 +157,34 @@ class DepartmentsController extends Controller
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
-        $facultyId = $request->id;
-        Log::debug('Вошёл в create у faculties');
-        $data = $request->only($this->fillable);
-        Log::debug('data = ' . print_r($data, true));
-        return $this->departmentsService->delete($facultyId);
+        $id = $request->id;
+        return $this->departmentsService->delete($id);
     }
+
+    public function destroy(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required','integer',Rule::exists('departments','id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->departmentsService->destroy($id);
+    }
+
+    public function restore(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required','integer',Rule::exists('departments','id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->departmentsService->restore($id);
+    }
+
 
     public function search(Request $request): JsonResponse
     {

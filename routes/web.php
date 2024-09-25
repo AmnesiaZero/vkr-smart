@@ -309,8 +309,9 @@ Route::group([
         Route::post('create',[OrganizationsController::class,'create'])->name('organizations.create');;
         Route::get('add',[OrganizationsController::class, 'addView'])->name('organizations.add');
 
-        Route::post('delete',[OrganizationsController::class,'delete']);
-        Route::get('delete',[OrganizationsController::class,'deleteView'])->name('organizations.delete');
+        Route::post('delete',[OrganizationsController::class,'delete'])->name('organizations.delete');
+        Route::post('destroy',[OrganizationsController::class,'destroy'])->name('organizations.destroy');
+
 
         Route::group([
             'prefix' => 'update'
@@ -318,11 +319,12 @@ Route::group([
             Route::post('/',[OrganizationsController::class,'update'])->name('organizations.update');
             Route::post('basic',[OrganizationsController::class,'updateBasic'])->name('organizations.update.basic');
             Route::post('premium',[OrganizationsController::class,'updatePremium'])->name('organizations.update.premium');
+            Route::post('status',[OrganizationsController::class,'updateStatus'])->name('organizations.update.status');
 
         });
         Route::get('edit',[OrganizationsController::class, 'editView'])->name('organizations.edit');
 
-        Route::get('restore',[OrganizationsController::class,'restore'])->name('organizations.restore');
+        Route::post('restore',[OrganizationsController::class,'restore'])->name('organizations.restore');
 
 
 
@@ -360,8 +362,16 @@ Route::group([
             Route::get('get', [DepartmentsController::class, 'get']);
             Route::post('create', [DepartmentsController::class, 'create']);
             Route::post('store',[DepartmentsController::class,'store'])->name('departments.store');
-            Route::post('update', [DepartmentsController::class, 'update']);
-            Route::post('delete', [DepartmentsController::class, 'delete']);
+            Route::group([
+                'prefix' => 'update'
+            ],function (){
+                Route::post('/', [DepartmentsController::class, 'update']);
+                Route::post('status',[DepartmentsController::class,'updateStatus']);
+
+            });
+            Route::post('delete', [DepartmentsController::class, 'delete'])->name('departments.delete');
+            Route::post('destroy',[DepartmentsController::class,'destroy'])->name('departments.destroy');
+            Route::post('restore',[DepartmentsController::class,'restore'])->name('departments.restore');
             Route::get('by-user', [DepartmentsController::class, 'getByUserId']);
             Route::get('get-info', [DepartmentsController::class, 'find']);
             Route::get('program-specialties', [DepartmentsController::class, 'getProgramSpecialties']);
@@ -396,13 +406,31 @@ Route::group([
     Route::group([
         'prefix' => 'users'
     ], function () {
+        Route::get('index',[UsersController::class,'index'])->name('users.index');
+        Route::post('filter',[UsersController::class,'filter'])->name('users.filter');
+        Route::get('add',[UsersController::class, 'addView'])->name('users.add');
+//        Route::post('delete/view',[UsersController::class,'deleteView'])->name('users.delete');
+//        Route::post('destroy/view',[UsersController::class,'destroyView'])->name('users.destroy');
+//        Route::post('restore/view',[UsersController::class,'restoreView'])->name('users.restore');
+        Route::post('destroy',[UsersController::class,'destroy'])->name('users.destroy');
         Route::get('get', [UsersController::class, 'get']);
         Route::post('create', [UsersController::class, 'create']);
-        Route::post('delete', [UsersController::class, 'delete']);
+        Route::post('store',[UsersController::class,'store'])->name('users.store');
+        Route::post('delete', [UsersController::class, 'delete'])->name('users.delete');
+        Route::post('destroy', [UsersController::class, 'destroy'])->name('users.destroy');
+        Route::post('restore',[UsersController::class,'restore'])->name('users.restore');
         Route::get('find', [UsersController::class, 'find']);
-        Route::post('update', [UsersController::class, 'update']);
+        Route::group([
+            'prefix' => 'update'
+        ],function (){
+            Route::post('/', [UsersController::class, 'update']);
+            Route::post('status',[UsersController::class, 'updateStatus']);
+        });
+        Route::get('editView',[UsersController::class, 'editView'])->name('users.edit.view');
+        Route::post('edit',[UsersController::class, 'edit'])->name('users.edit');
         Route::post('add-department', [UsersController::class, 'addDepartment']);
         Route::get('search', [UsersController::class, 'search']);
+        Route::get('filer',[UsersController::class, 'filter'])->name('users.filter');
         Route::get('you', [UsersController::class, 'you']);
         Route::post('configure-departments', [UsersController::class, 'configureDepartments']);
         Route::get('logout', [UsersController::class, 'logout']);
