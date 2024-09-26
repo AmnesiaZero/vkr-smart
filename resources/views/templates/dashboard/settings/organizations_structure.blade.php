@@ -101,7 +101,7 @@
                         <p class="m-0">Профиль обучения</p>
                         <p class="fs-12 mb-2">программы подготовки</p>
                         <form class="input-group w-100" id="update_name_form" onsubmit="updateProgramName(); return false;">
-                            <input type="text" class="form-control bg-grey-form" id="profile" name="name" value="">
+                            <input type="text" class="form-control" id="profile" name="name" value="">
                             <button type="submit" class="fs-14 text-grey btn btn-secondary">Изменить</button>
                         </form>
                     </div>
@@ -209,12 +209,12 @@
                             <form onsubmit="createProgramSpecialty();return false;" id="create_program_specialty">
                                 <div class="mb-4 mx-4 col-8">
                                     <label for="code_course" class="form-label mb-2">Код направления:</label>
-                                    <input type="text" class="form-control bg-grey-form" name="code" id="code_course"
+                                    <input type="text" class="form-control" name="code" id="code_course"
                                            value="" placeholder="Ввод...">
                                 </div>
                                 <div class="mb-3 mx-4 col-8">
                                     <label for="course" class="form-label mb-2">Направление:</label>
-                                    <input type="text" class="form-control bg-grey-form" name="name" id="course"
+                                    <input type="text" class="form-control" name="name" id="course"
                                            value="" placeholder="Ввод..."   >
                                 </div>
                                 <div class="mx-4 col-8">
