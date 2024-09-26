@@ -5,6 +5,8 @@ $(document).ready(function () {
     $('.js-example-basic-single').select2({
         placeholder: "Выберите...",
     });
+    $('.selectpicker').selectpicker();
+
 
     $('#years_list').change(function () {
         const yearId = $(this).val();
@@ -358,6 +360,11 @@ function editUserModal(id) {
                 console.log(updateModal);
                 const updatedContent = $("#update_user_tmpl").tmpl(user);
                 updateModal.replaceWith(updatedContent);
+
+                // $('#update_user .selectpicker').empty();
+                // $('#update_user .selectpicker').selectpicker('destroy');
+                $('#update_user .selectpicker').selectpicker();
+
                 const modalElement = new bootstrap.Modal(document.getElementById('update_user'));
                 modalElement.show();
             } else {
@@ -388,6 +395,9 @@ function openUpdateUserCanvas(id) {
             if (response.success) {
                 const user = response.data.user;
                 $("#edit_canvas_body").html($("#off_canvas_user_update").tmpl(user));
+
+                $('.selectpicker').selectpicker();
+
                 const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasEdit'));
                 offcanvas.show();
             } else {

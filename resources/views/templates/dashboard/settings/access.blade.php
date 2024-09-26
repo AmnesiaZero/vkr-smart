@@ -55,7 +55,7 @@
     @include('layouts.dashboard.include.modal.create.admin')
     @include('layouts.dashboard.include.modal.configure.inspectors_access')
     @include('layouts.dashboard.include.modal.configure.users_departments')
-    <div class="create-modal" id="update_user" style="display: none">
+    <div class="create-modal" id="update_user">
 
     </div>
     @include('layouts.dashboard.include.modal.add.departments')
@@ -104,7 +104,10 @@
                               <div class="d-flex mb-3">
                                   <button class="btn copy_edit br-none" type="button" onclick="openUpdateUserCanvas(${id})"></button>
                                   <button id="delete" class="btn copy_delete br-none" type="button" onclick="deleteUser(${id})"></button>
-                                  <a href="#" class="text-grey link-active-hover ps-2 fs-14" onclick="userDepartmentsModal(${id})">Настроить доступ</a>
+                                  <a href="#" class="text-grey link-active-hover ps-2 fs-14" onclick="userDepartmentsModal(${id})"
+                                    data-bs-target="#configure_user_departments" data-bs-toggle="modal">
+                                    Настроить доступ
+                                  </a>
                               </div>
                               <div class="row pb-4">
                                   <div class="col-6">
@@ -143,10 +146,16 @@
                                       </div>
                                       @{{if is_active}}
                                        <div id="lock1" class="mt-2"><img src="/images/Lock_1.svg" alt="" id="/imageslock">
-                                       <a class="text-grey link-active-hover fs-14 ps-2" id="lock_text" onclick="blockUser(${id})">заблокировать</a>
+                                       <a class="text-grey link-active-hover fs-14 ps-2 cursor-p" id="lock_text"
+                                          onclick="blockUser(${id})">
+                                            заблокировать
+                                       </a>
                                        @{{else}}
                                       <div id="lock2" class="mt-2"><img src="/images/Lock_1.svg" alt="" id="/imageslock2">
-                                      <a class="text-grey link-active-hover fs-14 ps-2" id="lock_text2" onclick="unblockUser(${id})">разблокировать</a>
+                                      <a class="text-grey link-active-hover fs-14 ps-2 cursor-p" id="lock_text2"
+                                         onclick="unblockUser(${id})">
+                                        разблокировать
+                                      </a>
                                        @{{/if}}
                                       </div>
                                       <p class="text-grey fs-14 pt-4">${date_of_birth}</p>
@@ -154,7 +163,10 @@
                                       <p class="text-grey fs-14 mb-0">
                                           @{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}
                                       </p>
-                                      <a href="#" class="text-grey link-active-hover fs-14" onclick="resetUserPassword('${email}')">отправить пароль на email</a>
+                                      <a href="#" class="text-grey link-active-hover fs-14"
+                                         onclick="resetUserPassword('${email}')">
+                                        Отправить пароль на email
+                                      </a>
                                       <div class="pas cursor-p mt-2">
                                           <span class="text-grey fs-14"><img src="/images/Show.svg" alt=""
                                                                              class="pe-2 img_pas">Пароль</span>
@@ -217,7 +229,12 @@
                      @{{/if}}
                     <p class="text-grey fs-14 mt-3 mb-2">
                     @{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}
-                    <a href="#" class="text-grey link-active-hover fs-14"  onclick="resetUserPassword('${email}')">Отправить пароль на email</a>
+                    <p>
+                        <a href="#" class="text-grey link-active-hover fs-14"
+                           onclick="resetUserPassword('${email}')">
+                        Отправить пароль на email
+                        </a>
+                    </p>
                 </div>
             </div>
 
@@ -255,15 +272,15 @@
                             <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="${date_of_birth}">
                         </div>
                         <div class="mb-3">
-                            <label for="gender" class="form-label">Пол</label>
-                            <select id="gender" name="gender" class=" form-select">
+                            <label for="gender" class="form-label w-100">Пол</label>
+                            <select id="gender" name="gender" class="selectpicker w-100">
                                 <option value="0" @{{if gender==0}} selected @{{/if}}>Муж.</option>
                                 <option value="1" @{{if gender==1}} selected @{{/if}}>Жен.</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="is_active" class="form-label">Статус</label>
-                            <select id="is_active" name="is_active" class=" form-select">
+                            <label for="is_active" class="form-label w-100">Статус</label>
+                            <select id="is_active" name="is_active" class="selectpicker w-100">
                                 <option value="1" @{{if is_active==1}} selected @{{/if}}>Активен</option>
                                 <option value="0" @{{if is_active==0}} selected @{{/if}}>Заблокирован</option>
                             </select>
@@ -289,18 +306,12 @@
       <li>
          <a href="#" onclick="accessSpecialties(${id});">${year}</a>
       </li>
-
-
-
     </script>
 
     <script id="user_access_year_tmpl" type="text/x-jquery-tmpl">
       <li>
          <a href="#" onclick="accessDepartments(${id});">${year}</a>
       </li>
-
-
-
     </script>
 
 
@@ -309,40 +320,40 @@
         <form onsubmit="updateUser(${id});return false" id="update_user_form">
             <div class="mb-3 pt-4">
                 <label for="fio">ФИО</label>
-                <input type="text" name="name" class="form-control bg-grey-form fs-14 text-grey fw-500" id="fio"
+                <input type="text" name="name" class="form-control fs-16 fw-400 mt-1 text-black" id="fio"
                        value="${name}">
             </div>
             <div class="mb-3">
                 <label for="email">Email-адрес</label>
-                <input type="text" name="email" class="form-control bg-grey-form fs-14 text-grey fw-500" id="email"
+                <input type="text" name="email" class="form-control fs-16 fw-400 mt-1 text-black" id="email"
                        value="@{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}">
             </div>
             <div class="mb-3">
                 <label for="email">Дата рождения </label>
-                <input type="date" name="date_of_birth" class="form-control bg-grey-form fs-14 text-grey fw-500"
+                <input type="date" name="date_of_birth" class="form-control fs-16 fw-400 mt-1 text-black"
                        value="${date_of_birth}">
             </div>
             <div class="mb-3">
                 <label for="email">Пол</label>
-                <select name="gender" class=" form-control">
-                                <option value="1">Муж.</option>
-                                <option value="2">Жен.</option>
+                <select name="gender" class="selectpicker form-control">
+                    <option value="1">Муж.</option>
+                    <option value="2">Жен.</option>
                  </select>
             </div>
             <div class="mb-3">
                 <label for="email">Номер телефона</label>
-                <input type="text" name="phone" class="form-control bg-grey-form fs-14 text-grey fw-500"
+                <input type="text" name="phone" class="form-control fs-16 fw-400 mt-1 text-black"
                        value="${phone}">
             </div>
             <div class="mb-3">
                 <label for="email">Логин</label>
-                <input type="text" name="login" class="form-control bg-grey-form fs-14 text-grey fw-500"
+                <input type="text" name="login" class="form-control fs-16 fw-400 mt-1 text-black"
                        value="${login}">
             </div>
 
             <div class="mb-3">
                 <label for="date_registration">Дата регистрации</label>
-                <input type="text" class="form-control bg-grey-form fs-14 text-grey fw-500" id="date_registration"
+                <input type="text" class="form-control fs-16 fw-400 mt-1" id="date_registration"
                        value="06.11.2019" readonly>
             </div>
             <button type="submit" class="btn btn-secondary w-100 text-grey fs-14 br-100 br-none mt-4 mb-5">Применить</button>

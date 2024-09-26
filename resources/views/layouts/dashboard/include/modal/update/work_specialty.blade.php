@@ -1,7 +1,7 @@
 <div class="modal fade" id="update_work_specialty_modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">g
+            <div class="modal-header">
                 <h3>Редактирование направления подготовки квалификационной работы</h3>
             </div>
             <form class="form form-horizontal" id="update_work_specialty_form" onsubmit="updateWorkSpecialty(); return false;">
@@ -10,8 +10,8 @@
                         <div class="row">
                             <label class="col-sm-3">Год выпуска</label>
                             <div class="col-sm-9">
-                                <select name="year_id" class="form-control" id="update_years_list" data-width="100%">
-                                    <option value="">Выбрать...</option>
+                                <select name="year_id" class="selectpicker form-control" id="update_years_list" data-width="100%"
+                                        title="Выбрать...">
                                     @if(isset($years) and is_iterable($years))
                                         @foreach($years as $year)
                                             <option value="{{$year->id}}">{{$year->year}}</option>
@@ -23,7 +23,8 @@
                         <div class="row">
                             <label class="col-sm-3">Подразделение</label>
                             <div class="col-sm-9">
-                                <select name="faculty_id" class="form-control" id="update_faculties_list" data-width="100%">
+                                <select name="faculty_id" class="selectpicker form-control" id="update_faculties_list"
+                                        data-width="100%" title="Выбрать...">
                                     <option value="" disabled="" selected="selected">Уточните год выпуска</option>
                                 </select>
                             </div>
@@ -31,7 +32,8 @@
                         <div class="row">
                             <label class="col-sm-3">Кафедра</label>
                             <div class="col-sm-9">
-                                <select name="department_id" class="form-control" id="update_departments_list" data-width="100%">
+                                <select name="department_id" class="selectpicker form-control" id="update_departments_list"
+                                        data-width="100%" title="Выбрать...">
                                     <option value="" disabled="" selected="selected">Уточните подразделение</option>
                                 </select>
                             </div>
@@ -39,7 +41,8 @@
                         <div class="row">
                             <label class="col-sm-3">Направление подготовки (специальность)</label>
                             <div class="col-sm-9">
-                                <select name="specialty_id" class="form-control" id="update_specialties_list" data-width="100%">
+                                <select name="specialty_id" class="selectpicker form-control" id="update_specialties_list"
+                                        data-width="100%" title="Выбрать...">
                                     <option value="" disabled="" selected="selected">Уточните кафедру</option>
                                 </select>
                             </div>
@@ -48,7 +51,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
-                        Изменить
+                        Сохранить
                     </button>
                     <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
                         Закрыть

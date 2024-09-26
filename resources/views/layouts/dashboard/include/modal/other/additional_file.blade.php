@@ -1,17 +1,17 @@
 <div class="modal fade" id="additional_files_modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Управление&nbsp;дополнительными файлами для работы</h3>
+                <h3>Управление дополнительными файлами для&nbsp;работы</h3>
             </div>
             <div class="modal-body">
                 <form enctype="multipart/form-data" id="upload_additional_file_form"  class="form-inline form-well well-form">
                     <div class="d-flex gap-4 align-items-center">
-                        <div class="col-sm-7">
+                        <div class="col-sm-9">
                             <input type="file" name="additional_file" class="form-control">
                         </div>
-                        <div class="col-sm-5">
-                            <button type="submit" class="btn btn-primary btn-block">Добавить файл</button>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-primary btn-block">Прикрепить файл</button>
                         </div>
                     </div>
                 </form><hr>

@@ -13,28 +13,31 @@
                 <div class="out-kod"></div>
                 <form action="" class="pt-4 col-xxl-4 col-xl-5 col-md-8" id="search_achievements_form"
                       onsubmit="searchAchievements();return false">
-                    <p class="text-grey mb-2 fs-14">Наименование достижения</p>
-                    <div class="input-group input-group-lg br-100 br-green-light-2 focus-form mb-3">
-                        <input type="text" name="name" value="" class="form-control search br-none fs-14 form-small-p"
-                               placeholder="Поиск" id="achievement_name">
-                        <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
-                            <img src="/images/Search.svg" alt="search">
-                        </button>
-                    </div>
-                    <p class="text-grey mb-2 fs-14">Тип документа</p>
                     <div>
-                        <div class="col-sm-8">
-                            <select name="achievement_mode_id" class="selectpicker bs-select-hidden">
-                                <option value="" id="default_achievement">Выбрать</option>
-                                @if(isset($modes) and is_iterable($modes))
-                                    @foreach($modes as $mode)
-                                        <option value="{{$mode->id}}">{{$mode->name}}</option>
-                                    @endforeach
-                                @endif
-                            </select>
+                        <p class="text-grey mb-2 fs-14">Наименование достижения</p>
+                        <div class="input-group input-group-lg br-100 br-green-light-2 focus-form mb-3">
+                            <input type="text" name="name" value="" class="form-control search br-none fs-14 form-small-p"
+                                   placeholder="Поиск" id="achievement_name">
+                            <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
+                                <img src="/images/Search.svg" alt="search">
+                            </button>
                         </div>
                     </div>
-                    <div class="mt-auto d-flex gap-3">
+                    <div>
+                        <p class="text-grey mb-2 fs-14">Тип документа</p>
+                        <div>
+                            <div class="col-sm-10">
+                                <select name="achievement_mode_id" class="selectpicker bs-select-hidden w-100" title="Выбрать...">
+                                    @if(isset($modes) and is_iterable($modes))
+                                        @foreach($modes as $mode)
+                                            <option value="{{$mode->id}}">{{$mode->name}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 d-flex gap-3">
                         <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1">Применить</button>
                         <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1"
                                 onclick="resetSearch();return false">Сбросить
@@ -50,24 +53,23 @@
                 <img src="/images/Plus.svg" class="ps-2" alt="">
             </button>
             <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25"
-                    onclick="openOverView()"
-            >
+                    onclick="openOverView()">
                 Обзор
                 <img src="/images/File_Download_green.svg" alt="" class="ps-2">
             </button>
-            <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25" onclick="openPortfolio()">Карточка<img
-                    src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
+            <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 w-25" onclick="openPortfolio()">Карточка
+                <img src="/images/File_Download_green.svg" alt="" class="ps-2"></button>
         </div>
         <div class="pt-5 px-md-0 px-3">
             <div class="big-table">
                 <table class="table table-mini table-striped fs-14">
                     <thead class="brt-green-light-2 brb-green-light-2 lh-17">
                     <tr class="text-grey">
-                        <th scope="col">Номер</th>
-                        <th scope="col">Наименование/Описание</th>
-                        <th scope="col">Тип деятельности</th>
-                        <th scope="col">Дата достижения</th>
-                        <th scope="col">Управление</th>
+                        <th class="text-center" scope="col">Номер</th>
+                        <th class="text-center" scope="col">Наименование/Описание</th>
+                        <th class="text-center" scope="col">Тип деятельности</th>
+                        <th class="text-center" scope="col">Дата достижения</th>
+                        <th class="text-center" scope="col">Управление</th>
                     </tr>
                     </thead>
                     <tbody class="lh-17 brb-green-light-2" id="achievements_list">
@@ -91,22 +93,24 @@
 
     <script id="achievement_tmpl" type="text/x-jquery-tmpl">
         <tr id="achievement_${id}">
-           <td>
+           <td class="text-center vertical-align-middle">
               ${index}
           </td>
-          <td>
+          <td class="text-center vertical-align-middle">
               ${name}
               <br>
               ${description}
           </td>
-          <td>
+          <td class="text-center vertical-align-middle">
               ${mode.name}
           </td>
-          <td>
+          <td class="text-center vertical-align-middle">
               ${record_date}
           </td>
-          <td>
-            <img src="/images/three_dots.svg" alt="" aria-haspopup="true" data-bs-toggle="dropdown" class="btn-info-box cursor-p" onclick="openInfoBox(${id})">
+          <td class="text-center vertical-align-middle">
+            <img src="/images/three_dots.svg" alt="" aria-haspopup="true" data-bs-toggle="dropdown"
+                 class="btn-info-box cursor-p dropdown-toggle" onclick="openInfoBox(${id})" type="button"
+                 aria-expanded="false">
             @include('layouts.dashboard.include.menu.achievement')
           </td>
          </tr>
@@ -115,18 +119,18 @@
              <table class="table table-condensed table-bordered">
                  <thead>
                      <tr>
-                         <th>Отзыв</th>
-                         <th>Подтверждение достижения</th>
-                         <th>Работа</th>
-                         <th>Другое</th>
+                         <th class="text-center">Отзыв</th>
+                         <th class="text-center">Подтверждение достижения</th>
+                         <th class="text-center">Работа</th>
+                         <th class="text-center">Другое</th>
                      </tr>
                  </thead>
                  <tbody>
                      <tr style="flex:row">
-                       <td id="reviews_column_${id}"> </td>
-                       <td id="confirm_achievements_column_${id}"> </td>
-                       <td id="works_column_${id}"> </td>
-                       <td id="others_column_${id}"> </td>
+                       <td id="reviews_column_${id}" class="text-center"> </td>
+                       <td id="confirm_achievements_column_${id}" class="text-center"> </td>
+                       <td id="works_column_${id}" class="text-center"> </td>
+                       <td id="others_column_${id}" class="text-center"> </td>
                      </tr>
                  </tbody>
 
@@ -138,82 +142,112 @@
 
 
     <script id="update_achievement_modal_tmpl" type="text/x-jquery-tmpl">
-        <div id="update_achievement_modal">
+        <div class="modal fade" id="update_achievement_modal" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" onclick="closeTmplModal('update_achievement_modal')">×</span></button>
-                    <h3>Изменить достижение</h3>
+                    <h3 class="modal-title">Изменить достижение</h3>
                 </div>
-                <div class="modal-body">
-                    <form id="update_achievement_form" onsubmit="updateAchievement(); return false;" class="form-inline">
-                        <div class="form-group">
-                            <label class="col-sm-4">Введите наименование достижения</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="name" value="${name}" class="form-control fullwidth" required="">
+                <form id="update_achievement_form" onsubmit="updateAchievement(); return false;" class="form-inline">
+                    <div class="modal-body">
+                            <div class="d-flex flex-column gap-3">
+                                <div class="row">
+                                    <label class="col-sm-4">Введите наименование достижения</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="name" value="${name}" class="form-control fullwidth" required="">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-sm-4">Выберите тип деятельности:</label>
+                                    <div class="col-sm-8">
+                                        <select class="selectpicker form-control w-100" name="achievement_mode_id">
+                                            <option value="3" @{{if achievement_mode_id==3}} selected @{{/if}}>Научная деятельность</option>
+                                            <option value="2" @{{if achievement_mode_id==2}} selected @{{/if}}>Производственная деятельность</option>
+                                            <option value="5" @{{if achievement_mode_id==5}} selected @{{/if}}>Социальная деятельность</option>
+                                            <option value="6" @{{if achievement_mode_id==6}} selected @{{/if}}>Спортивная деятельность</option>
+                                            <option value="4" @{{if achievement_mode_id==4}} selected @{{/if}}>Творческая деятельность</option>
+                                            <option value="1" @{{if achievement_mode_id==1}} selected @{{/if}}>Учебная деятельность</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-sm-4">Уточните уровень образования:</label>
+                                    <div class="col-sm-8">
+                                        <select class="selectpicker form-control w-100" name="educational_level">
+                                            <option value="1" @{{if educational_level==1}} selected @{{/if}}>
+                                                Дошкольное образование
+                                            </option>
+                                            <option value="2" @{{if educational_level==2}} selected @{{/if}}>
+                                                Начальное общее образование
+                                            </option>
+                                            <option value="3" @{{if educational_level==3}} selected @{{/if}}>
+                                                Основное общее образование
+                                            </option>
+                                            <option value="4" @{{if educational_level==4}} selected @{{/if}}>
+                                                Среднее общее образование
+                                            </option>
+                                            <option value="5" @{{if educational_level==5}} selected @{{/if}}>
+                                                Среднее профессиональное образование
+                                            </option>
+                                            <option value="6" @{{if educational_level==6}} selected @{{/if}}>
+                                                Высшее образование - бакалавриат
+                                            </option>
+                                            <option value="7" @{{if educational_level==7}} selected @{{/if}}>
+                                                Высшее образование - специалитет, магистратура
+                                            </option>
+                                            <option value="8" @{{if educational_level==8}} selected @{{/if}}>
+                                                Высшее образование - подготовка кадров высшей квалификации
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-sm-4">Введите описание</label>
+                                    <div class="col-sm-8">
+                                        <textarea rows="8" name="description" class="form-control fullwidth">${description}</textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-sm-4">Укажите дату достижения</label>
+                                    <div class="col-sm-8">
+                                        <input type="date" name="record_date" value="${record_date}" class="form-control datepick" required="">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-sm-4">Кому доступно достижение:</label>
+                                    <div class="col-sm-8">
+                                        <select class="selectpicker form-control w-100" name="access_level">
+                                            <option value="1" @{{if access_level==1}} selected @{{/if}}>
+                                                Всем
+                                            </option>
+                                            <option value="2" @{{if access_level==2}} selected @{{/if}}>
+                                                Только сотрудникам организации
+                                            </option>
+                                            <option value="3" @{{if access_level==3}} selected @{{/if}}>
+                                                Только мне
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-sm-4"></label>
+
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4">Выберите тип деятельности:</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" name="achievement_mode_id">
-                                    <option value="3" @{{if achievement_mode_id==3}} selected @{{/if}}>Научная деятельность</option>
-                                    <option value="2" @{{if achievement_mode_id==2}} selected @{{/if}}>Производственная деятельность</option>
-                                    <option value="5" @{{if achievement_mode_id==5}} selected @{{/if}}>Социальная деятельность</option>
-                                    <option value="6" @{{if achievement_mode_id==6}} selected @{{/if}}>Спортивная деятельность</option>
-                                    <option value="4" @{{if achievement_mode_id==4}} selected @{{/if}}>Творческая деятельность</option>
-                                    <option value="1" @{{if achievement_mode_id==1}} selected @{{/if}}>Учебная деятельность</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4">Уточните уровень образования:</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" name="educational_level">
-                                    <option value="1" @{{if educational_level==1}} selected @{{/if}}Дошкольное образование</option>
-                                    <option value="2" @{{if educational_level==2}} selected @{{/if}}Начальное общее образование</option>
-                                    <option value="3" @{{if educational_level==3}} selected @{{/if}}Основное общее образование</option>
-                                    <option value="4" @{{if educational_level==4}} selected @{{/if}}Среднее общее образование</option>
-                                    <option value="5" @{{if educational_level==5}} selected @{{/if}}Среднее профессиональное образование</option>
-                                    <option value="6" @{{if educational_level==6}} selected @{{/if}}Высшее образование - бакалавриат</option>
-                                    <option value="7" @{{if educational_level==7}} selected @{{/if}}Высшее образование - специалитет, магистратура</option>
-                                    <option value="8" @{{if educational_level==8}} selected @{{/if}}Высшее образование - подготовка кадров высшей квалификации</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4">Введите описание</label>
-                            <div class="col-sm-8">
-                                <textarea rows="8" name="description" class="form-control fullwidth">${description}</textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4">Укажите дату достижения</label>
-                            <div class="col-sm-8">
-                                <input type="date" name="record_date" value="${record_date}" class="form-control datepick" required="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4">Кому доступно достижение:</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" name="access_level">
-                                    <option value="1" @{{if access_level==1}} selected @{{/if}}Всем</option>
-                                    <option value="2" @{{if access_level==2}} selected @{{/if}}Только сотрудникам организации</option>
-                                    <option value="3" @{{if access_level==3}} selected @{{/if}}Только мне</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4"></label>
-                            <div class="col-sm-8">
-                                <button type="submit" class="btn btn-success" onclick="closeTmplModal('update_achievement_modal')">Добавить достижение</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeTmplModal('update_achievement_modal')">Закрыть окно</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-secondary fs-14 text-grey py-1"
+                                onclick="closeTmplModal('update_achievement_modal')">
+                            Сохранить
+                        </button>
+
+                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
+                                data-bs-dismiss="modal" aria-label="Close"
+                                onclick="closeTmplModal('update_achievement_modal')">
+                            Закрыть
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -11,8 +11,8 @@
                         <div class="row">
                             <label class="col-sm-4">Год выпуска</label>
                             <div class="col-sm-8">
-                                <select name="year_id" class="form-control" id="years_list" data-width="100%">
-                                    <option value="">Выбрать...</option>
+                                <select name="year_id" class="selectpicker form-control" id="years_list" data-width="100%"
+                                        title="Выбрать...">
                                     @if(isset($years) and is_iterable($years))
                                         @foreach($years as $year)
                                             <option value="{{$year->id}}">{{$year->year}}</option>
@@ -24,7 +24,8 @@
                         <div class="row">
                             <label class="col-sm-4">Подразделение</label>
                             <div class="col-sm-8">
-                                <select name="faculty_id" class="form-control" id="faculties_list" data-width="100%">
+                                <select name="faculty_id" class="form-control" id="faculties_list" data-width="100%"
+                                        title="Выбрать...">
                                     <option value="" disabled="" selected="selected">Уточните год выпуска</option>
                                 </select>
                             </div>
@@ -32,7 +33,8 @@
                         <div class="row">
                             <label class="col-sm-4">Кафедра</label>
                             <div class="col-sm-8">
-                                <select name="department_id" class="form-control" id="departments_list" data-width="100%">
+                                <select name="department_id" class="form-control" id="departments_list" data-width="100%"
+                                        title="Выбрать...">
                                     <option value="" disabled="" selected="selected">Уточните подразделение</option>
                                 </select>
                             </div>
@@ -40,7 +42,8 @@
                         <div class="row">
                             <label class="col-sm-4">Направление подготовки (специальность)</label>
                             <div class="col-sm-8">
-                                <select name="specialty_id" class="form-control" id="add_specialties_list" data-width="100%">
+                                <select name="specialty_id" class="form-control" id="add_specialties_list" data-width="100%"
+                                        title="Выбрать...">
                                     <option value="" disabled="" selected="selected">Уточните кафедру</option>
                                 </select>
                             </div>
@@ -68,8 +71,7 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" name="scientific_supervisor" placeholder="Ввод...">
                                 <span style="font-size:13px; display:block; margin:0.5rem 0; color:#999;">Или выберите из списка:</span>
-                                <select name="scientific_supervisor" class="form-control">
-                                    <option value="">Выбрать...</option>
+                                <select name="scientific_supervisor" class="selectpicker form-control" title="Выбрать...">
                                     @if(isset($scientific_supervisors) and is_iterable($scientific_supervisors))
                                         @foreach($scientific_supervisors as $scientific_supervisor)
                                             <option value="{{$scientific_supervisor->name}}">{{$scientific_supervisor->name}}</option>
@@ -83,8 +85,7 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" name="work_type" placeholder="Ввод...">
                                 <span style="font-size:13px; display:block; margin:0.5rem 0; color:#999;">Или выберите из списка:</span>
-                                <select name="work_type" class="form-control">
-                                    <option value="">Выбрать...</option>
+                                <select name="work_type" class="selectpicker form-control" title="Выбрать...">
                                     @if(isset($works_types) and is_iterable($works_types))
                                         @foreach($works_types as $works_type)
                                             <option value="{{$works_type->name}}">{{$works_type->name}}</option>

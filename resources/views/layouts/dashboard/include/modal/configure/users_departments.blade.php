@@ -1,5 +1,5 @@
-<div class="modal" id="configure_user_departments">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade" id="configure_user_departments" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Настройка доступа для проверяющих</h3>
@@ -16,7 +16,7 @@
                                 </ul>
                             </nav>
 
-                            <div class="list-group list-group-sm gap-2">
+                            <div class="list-group list-group-sm gap-2 pt-4">
                                 <p class="m-0">
                                     <input id="checking_departments" type="checkbox">
                                     <label for="checking_departments">Выбрать все</label>
@@ -28,11 +28,11 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" onclick="closeModal('configure_user_departments');"
-                                class="btn btn-success">Сохранить изменения
+                        <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
+                            Сохранить
                         </button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="closeModal('configure_user_departments')">Закрыть окно
+                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                            Закрыть
                         </button>
                     </div>
                 </div>

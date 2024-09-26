@@ -85,9 +85,10 @@
                                 <div class="row">
                                     <label class="col-sm-4">Самопроверка работы студентом</label>
                                     <div class="col-sm-8">
-                                    <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-sm"> <span id="self_check_value"> ${getSelfCheckDescription(self_check)} </span>
-                                    <span class="glyphicon glyphicon-refresh">
-                                    </span>
+                                    <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-grey">
+                                        <span id="self_check_value">
+                                            ${getSelfCheckDescription(self_check)}
+                                        </span>
                                     </a>
                                     </div>
                                 </div>
@@ -196,95 +197,98 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" name="scientific_supervisor" value="${scientific_supervisor}">
                                 <span style="font-size:13px; display:block; margin:0.5rem 0; color:#999;">Или выберите из списка:</span>
-                                <select name="scientific_supervisor" class="form-control">
-                                    <option value="">Выбрать...</option>
-    @if(isset($scientific_supervisors) and is_iterable($scientific_supervisors))
-        @foreach($scientific_supervisors as $scientific_supervisor)
-            <option value="{{$scientific_supervisor->name}}">{{$scientific_supervisor->name}}</option>
-        @endforeach
-    @endif
-    </select>
-</div>
-</div>
-<div class="row">
-<label class="col-sm-4">Тип работы</label>
-<div class="col-sm-8">
-    <input type="text" class="form-control" name="work_type" value="${work_type}">
-    <span style="font-size:13px; display:block; margin:0.5rem 0; color:#999;">Или выберите из списка:</span>
-    <select name="work_type" class="form-control">
-        <option value="">Выбрать...</option>
-    @if(isset($works_types) and is_iterable($works_types))
-        @foreach($works_types as $works_type)
-            <option value="{{$works_type->name}}">{{$works_type->name}}</option>
-        @endforeach
-    @endif
-    </select>
-</div>
-</div>
-<div class="row">
-<label class="col-sm-4">Дата защиты</label>
-<div class="col-sm-8">
-    <input type="date" class="form-control" name="protect_date" value="${protect_date}">
-</div>
-</div>
-<div class="row">
-<label class="col-sm-4">Оценка</label>
-<div class="col-sm-8">
-    <select class="selectpicker bs-select-hidden" data-width="100%" data-style="btn"
-        name="assessment">
-        <option value="0" @{{if assessment==0}} selected @{{/if}}>Без оценки</option>
-        <option value="5" @{{if assessment==5}} selected @{{/if}}>Отлично</option>
-        <option value="4" @{{if assessment==4}} selected @{{/if}}>Хорошо</option>
-        <option value="3" @{{if assessment==3}} selected @{{/if}}>Удовлетворительно</option>
-        <option value="2" @{{if assessment==2}} selected @{{/if}}>Неудовлетворительно</option>
-    </select>
-</div>
-</div>
-<div class="row">
-<label class="col-sm-4">Согласие на размещение работы</label>
-<div class="col-sm-8">
-    <div class="checkbox">
-        <label>
-            <input type="checkbox" value="1" name="agreement" checked=""> @{{if agreement==1}} Да @{{else}} Нет @{{/if}}
-        </label>
-    </div>
-</div>
-</div>
+                                <select name="scientific_supervisor" class="selectpicker form-control"
+                                        title="Выбрать...">
+                                    @if(isset($scientific_supervisors) and is_iterable($scientific_supervisors))
+                                        @foreach($scientific_supervisors as $scientific_supervisor)
+                                            <option value="{{$scientific_supervisor->name}}">{{$scientific_supervisor->name}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-4">Тип работы</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="work_type" value="${work_type}">
+                                <span style="font-size:13px; display:block; margin:0.5rem 0; color:#999;">Или выберите из списка:</span>
+                                <select name="work_type" class="selectpicker form-control" title="Выбрать...">
+                                    @if(isset($works_types) and is_iterable($works_types))
+                                        @foreach($works_types as $works_type)
+                                            <option value="{{$works_type->name}}">{{$works_type->name}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-4">Дата защиты</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" name="protect_date" value="${protect_date}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-4">Оценка</label>
+                            <div class="col-sm-8">
+                                <select class="selectpicker form-control" data-width="100%" name="assessment">
+                                    <option value="0" @{{if assessment==0}} selected @{{/if}}>Без оценки</option>
+                                    <option value="5" @{{if assessment==5}} selected @{{/if}}>Отлично</option>
+                                    <option value="4" @{{if assessment==4}} selected @{{/if}}>Хорошо</option>
+                                    <option value="3" @{{if assessment==3}} selected @{{/if}}>Удовлетворительно</option>
+                                    <option value="2" @{{if assessment==2}} selected @{{/if}}>Неудовлетворительно</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-4">Согласие на размещение работы</label>
+                            <div class="col-sm-8">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="1" name="agreement" checked=""> @{{if agreement==1}} Да @{{else}} Нет @{{/if}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
-<div class="row">
-<label class="col-sm-4">Способ проверки работы по базе ВКР-СМАРТ:</label>
-<div class="col-sm-8">
-    <div class="radio">
-    <label>
-        <input type="radio" name="verification_method" value="0" @{{if verification_method==0}} selected @{{/if}}> Проверить автоматически после
-            загрузки
-    </label>
-</div>
-<div class="radio">
-    <label>
-        <input type="radio" name="verification_method" value="1" checked="" @{{if verification_method==1}} selected @{{/if}}> Проверить работу в ручном
-            режиме
-    </label>
-</div>
-<div class="radio">
-    <label>
-        <input type="radio" name="verification_method" value="2" @{{if verification_method==2}} selected @{{/if}}> Не проверять работу после загрузки
-    </label>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="modal-footer">
-<button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
-Применить
-</button>
-<button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
-Закрыть
-</button>
-</div>
-</form>
-</div>
+                        <div class="row">
+                            <label class="col-sm-4">Способ проверки работы по базе ВКР-СМАРТ:</label>
+                            <div class="col-sm-8">
+                                <div class="radio">
+                                <label>
+                                    <input type="radio" name="verification_method" value="0" class="form-check-input green"
+                                           @{{if verification_method==0}} selected @{{/if}}>
+                                    <span class="ms-1">Проверить автоматически после загрузки</span>
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="verification_method" value="1" checked=""
+                                           class="form-check-input green"
+                                           @{{if verification_method==1}} selected @{{/if}}>
+                                    <span class="ms-1">Проверить работу в ручном режиме</span>
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="verification_method" value="2" class="form-check-input green"
+                                           @{{if verification_method==2}} selected @{{/if}}>
+                                    <span class="ms-1">Не проверять работу после загрузки</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
+                    Применить
+                </button>
+                <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                    Закрыть
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 </div>
 

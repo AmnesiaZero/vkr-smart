@@ -1,5 +1,9 @@
 @extends('layouts.dashboard.main')
 
+@section('styles')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+@endsection
+
 @section('content')
     <div class="col-xl-9 col-lg-8 col-md-7 col-12">
         <div class="row pt-4 g-3 px-md-0 px-3">
@@ -34,34 +38,41 @@
                 </div>
             </div>
             <div class="col">
-                <form class="pt-4 col-xxl-5 col-xl-5 col-md-8" onsubmit="searchUsers();return false;" id="search_users">
-                    <p class="fs-14 m-0 text-grey">Статус</p>
-                    <div class="form-check mt-2">
-                        <input class="form-check-input green" type="radio" name="is_active" id="status1" value="1"
-                               checked>
-                        <label class="form-check-label" for="status1">
-                            Активен
-                        </label>
-                    </div>
-                    <div class="form-check mt-2">
-                        <input class="form-check-input green" type="radio" name="is_active" id="status2" value="0">
-                        <label class="form-check-label" for="status2">
-                            Заблокирован
-                        </label>
-                    </div>
-                    <p class="fs-14 m-0 text-grey pt-4">Тип пользователя</p>
-                    <div class="form-check mt-2">
-                        <input class="form-check-input green" type="radio" name="role" id="user_type1" value="user"
-                               checked>
-                        <label class="form-check-label" for="user_type1">
-                            Студентам
-                        </label>
-                    </div>
-                    <div class="form-check mt-2">
-                        <input class="form-check-input green" type="radio" name="role" id="user_type2" value="teacher">
-                        <label class="form-check-label" for="user_type2">
-                            Преподавателям
-                        </label>
+                <form class="pt-4 col-xxl-6 col-xl-5 col-md-8" onsubmit="searchUsers();return false;" id="search_users">
+                    <div class="row">
+                        <div class="col-xxl-6">
+                            <p class="fs-14 m-0 text-grey">Статус</p>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input green" type="radio" name="is_active" id="status1" value="1"
+                                       checked>
+                                <label class="form-check-label" for="status1">
+                                    Активен
+                                </label>
+                            </div>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input green" type="radio" name="is_active" id="status2" value="0">
+                                <label class="form-check-label" for="status2">
+                                    Заблокирован
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-6">
+                            <p class="fs-14 m-0 text-grey">Тип пользователя</p>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input green" type="radio" name="role" id="user_type1" value="user"
+                                       checked>
+                                <label class="form-check-label" for="user_type1">
+                                    Студентам
+                                </label>
+                            </div>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input green" type="radio" name="role" id="user_type2" value="teacher">
+                                <label class="form-check-label" for="user_type2">
+                                    Преподавателям
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div class="input-group input-group-lg br-100 br-green-light-2 focus-form mt-3">
                         <input type="text" name="name" class="form-control search br-none fs-14 form-small-p"
@@ -88,7 +99,7 @@
                         Применить
                     </button>
                 </form>
-                <div class="out-kod mt-5"></div>
+                <div class="out-kod"></div>
             </div>
         </div>
         <div class="pt-5 px-md-0 px-3">
@@ -157,7 +168,7 @@
                     </div>
                     @{{else}}
                     <div class="mt-3"><img src="/images/Lock_1.svg" alt="">
-                    <a href="#" class="text-grey link-active-hover fs-14 ps-2"  onclick="unblockUser(${id})">разблокировать</a>
+                    <a href="#" class="text-grey link-active-hover fs-14 ps-2"  onclick="unblockUser(${id})">Разблокировать</a>
                     </div>
                     @{{/if}}
                     <p class="mt-2"><img src="/images/setting_grey.svg" alt=""><a href="#"
@@ -182,35 +193,37 @@
         <form onsubmit="updateUser(${id});return false" id="update_user_form">
             <p class="fs-14 m-0 pt-4">Тип пользователя</p>
             <div class="form-check mt-2">
-                <input class="form-check-input green" type="radio" name="role" value="user" id="user_type1" @{{if roles[0].slug =='user'}} checked @{{/if}}>
-                    <label class="form-check-label" for="user_type1">
-                        Студент
-                    </label>
+                <input class="form-check-input green" type="radio" name="role" value="user" id="user_type1"
+                       @{{if roles[0].slug =='user'}} checked @{{/if}}>
+                <label class="form-check-label" for="user_type1">
+                    Студент
+                </label>
             </div>
             <div class="form-check mt-2">
-                <input class="form-check-input green" type="radio" name="role" value="teacher" id="user_type2" @{{if roles[0].slug =='teacher'}} checked @{{/if}}>
-                    <label class="form-check-label" for="user_type2">
-                        Преподаватель
-                    </label>
+                <input class="form-check-input green" type="radio" name="role" value="teacher" id="user_type2"
+                       @{{if roles[0].slug =='teacher'}} checked @{{/if}}>
+                <label class="form-check-label" for="user_type2">
+                    Преподаватель
+                </label>
             </div>
             <div class="mb-3 pt-4">
                 <label for="fio">ФИО</label>
-                <input type="text" name="name" class="form-control bg-grey-form fs-14 text-grey fw-500" id="fio"
+                <input type="text" name="name" class="form-control fs-16 text-black" id="fio"
                        value="${name}">
             </div>
             <div class="mb-3">
                 <label for="group">Группа</label>
-                <input type="text" name="group" class="form-control bg-grey-form fs-14 text-grey fw-500" id="group"
+                <input type="text" name="group" class="form-control fs-16 text-black" id="group"
                        value="${group}">
             </div>
             <div class="mb-3">
                 <label for="email">Email-адрес</label>
-                <input type="text" name="email" class="form-control bg-grey-form fs-14 text-grey fw-500" id="email"
+                <input type="text" name="email" class="form-control fs-16 text-black" id="email"
                        value="@{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}">
             </div>
             <div class="mb-3">
                 <label for="date_registration">Дата регистрации</label>
-                <input type="text" class="form-control bg-grey-form fs-14 text-grey fw-500" id="date_registration"
+                <input type="text" class="form-control bg-grey-form fs-16 text-grey" id="date_registration"
                        value="06.11.2019" readonly>
             </div>
             <button type="submit" class="btn btn-secondary w-100 text-grey fs-14 br-100 br-none mt-4 mb-5">Применить</button>
