@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
@@ -561,12 +562,17 @@ class UsersService extends Services
         return view('templates.dashboard.profile',['user' => $you]);
     }
 
-    public function mainPlatformView()
+    public function mainPlatformView(array $data)
     {
-        $data = [
+        $additionalData = [
             'role' => 'admin',
-            'page' => 1
+            'paginate' => true
         ];
+        if(!isset($data['page']))
+        {
+            $data['page'] = 1;
+        }
+        $data = array_merge($data,$additionalData);
         $you = Auth::user();
         $users = $this->_repository->search($data);
         return view('templates.dashboard.platform.index',[
@@ -597,7 +603,15 @@ class UsersService extends Services
     {
         $you = Auth::user();
         $organizations = Organization::all();
-        $data['with_trashed'] = true;
+        $additionalData = [
+            'with_trashed' => true,
+            'paginate' => true,
+        ];
+        if(!isset($data['page']))
+        {
+            $data['page'] = 1;
+        }
+        $data = array_merge($data,$additionalData);
         $users = $this->_repository->get($data);
         if($users)
         {

@@ -55,7 +55,7 @@
                     </tr>
                 @endif
             </table>
-{{--            {{ $organizations->links() }}--}}
+            {{ $organizations->links() }}
         </div>
     </div>
 @endsection

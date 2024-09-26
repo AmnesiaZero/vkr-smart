@@ -46,7 +46,8 @@ class WorksController extends Controller
         'work_status',
         'status',
         'user_id',
-        'visibility'
+        'visibility',
+        'borrowings_percent'
     ];
 
     protected WorksService $worksService;

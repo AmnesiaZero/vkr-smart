@@ -69,6 +69,15 @@ class OrganizationsService extends Services
     public function view(array $data)
     {
         $you = Auth::user();
+        $additionalData = [
+            'with_trashed' => true,
+            'paginate' => true,
+        ];
+        $data = array_merge($data,$additionalData);
+        if(!isset($data['page']))
+        {
+            $data['page'] = 1;
+        }
         $organizations = $this->_repository->get($data);
         if($organizations)
         {
