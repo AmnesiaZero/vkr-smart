@@ -30,6 +30,10 @@ class EloquentOrganizationRepository implements OrganizationRepositoryInterface
         {
             $query = Organization::query();
         }
+        if(isset($data['paginate']) and $data['paginate'])
+        {
+            return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
+        }
         return $query->get();
     }
 

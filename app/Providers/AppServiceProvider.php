@@ -6,6 +6,7 @@ use App\Exports\WorksExport;
 use App\Services\Decorations\Repositories\DecorationRepositoryInterface;
 use App\Services\Decorations\Repositories\EloquentDecorationRepository;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -24,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::useBootstrapFive();
         $repositories = [
             'Organization' => 'Organizations',
             'OrganizationYear' => 'OrganizationsYears',

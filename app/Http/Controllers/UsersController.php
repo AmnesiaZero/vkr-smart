@@ -57,6 +57,12 @@ class UsersController extends Controller
 
     public function index(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'page' => 'integer'
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
         $data = $request->only($this->fillable);
         return $this->usersService->index($data);
     }
@@ -489,9 +495,17 @@ class UsersController extends Controller
         return $this->usersService->teacherDepartmentsView();
     }
 
-    public function mainPlatformView()
+    public function mainPlatformView(Request $request)
     {
-        return $this->usersService->mainPlatformView();
+        $validator = Validator::make($request->all(),[
+            'page' => 'integer'
+        ]);
+        if($validator->fails())
+        {
+            return ValidatorHelper::redirectError($validator);
+        }
+        $data = $request->only($this->fillable);
+        return $this->usersService->mainPlatformView($data);
     }
 
     public function openPortfolio(int $id)

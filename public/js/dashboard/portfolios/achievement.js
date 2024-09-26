@@ -201,6 +201,7 @@ function openUpdateAchievementModal()
 
 function updateAchievement()
 {
+    console.log('achievement id = ' + achievementId);
     let data = $("#update_achievement_form").serialize();
     const additionalData = {
       id:achievementId

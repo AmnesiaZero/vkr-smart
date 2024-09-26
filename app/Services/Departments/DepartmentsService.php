@@ -218,6 +218,15 @@ class DepartmentsService extends Services
     {
         $you = Auth::user();
         $organizations = $this->organizationRepository->get($data);
+        $additionalData = [
+            'with_trashed' => true,
+            'paginate' => true,
+        ];
+        $data = array_merge($data,$additionalData);
+        if(!isset($data['page']))
+        {
+            $data['page'] = 1;
+        }
         $departments = $this->departmentRepository->get($data);
         if($organizations and $departments)
         {

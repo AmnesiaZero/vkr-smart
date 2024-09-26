@@ -78,8 +78,8 @@
                         </thead>
                         <tbody>
                         @if(isset($users) && count($users) > 0)
-                            @foreach($users as $users)
-                                @include('templates.dashboard.platform.users.inc.item-row', ['user' => $users])
+                            @foreach($users as $user)
+                                @include('templates.dashboard.platform.users.inc.item-row', ['user' => $user])
                             @endforeach
                         @else
                             <tr>
@@ -90,6 +90,7 @@
                         @endif
                         </tbody>
                     </table>
+                    {{$users->links()}}
                 </div>
             </div>
         </div>
