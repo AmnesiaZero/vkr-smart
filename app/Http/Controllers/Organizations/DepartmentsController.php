@@ -27,7 +27,8 @@ class DepartmentsController extends Controller
         'paginate',
         'description',
         'with_trashed',
-        'redirect'
+        'redirect',
+        'page'
     ];
 
     public function __construct(DepartmentsService $departmentsService)
@@ -39,6 +40,7 @@ class DepartmentsController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'organization_id' => ['integer',Rule::exists('organizations','id')],
+             'page' => 'integer'
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::redirectError($validator);

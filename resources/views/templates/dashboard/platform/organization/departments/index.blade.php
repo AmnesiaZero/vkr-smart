@@ -64,6 +64,7 @@
                     @endif
                 </tbody>
             </table>
+            {{$departments->links()}}
         </div>
     </div>
 @endsection

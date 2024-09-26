@@ -31,7 +31,8 @@ class OrganizationsController extends Controller
         'is_testing',
         'is_blocked',
         'redirect',
-        'with_trashed'
+        'with_trashed',
+        'page'
     ];
 
     public OrganizationsService $organizationsService;
