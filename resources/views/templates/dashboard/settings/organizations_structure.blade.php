@@ -95,7 +95,7 @@
             <div class="offcanvas-header border-bottom">
                 <h5 class="offcanvas-title fw-600 fs-16 text-center pe-5">Настройки профиля обучения</h5>
             </div>
-            <div class="offcanvas-body px-0">
+            <div class="offcanvas-body px-0" style="overflow-x: hidden;">
                 <div>
                     <div class="mb-3 col-10 mx-4">
                         <p class="m-0">Профиль обучения</p>
@@ -109,12 +109,12 @@
                 <div class="mt-5">
                     <ul class="nav nav-tabs d-flex justify-content-between brb-green-light-2 px-4" id="myQuestions"
                         role="tablist">
-                        <li class="nav-item nav-item-head" role="presentation">
-                            <a class="fs-16 active ps-0 pe-0 link-offcanvas td-none" id="base-tab" data-bs-toggle="tab"
+                        <li class="nav-item nav-item-head pb-2" role="presentation">
+                            <a class="fs-16 active pb-1 px-0 link-offcanvas td-none" id="base-tab" data-bs-toggle="tab"
                                href="#base" role="tab" aria-controls="base" aria-selected="true">База направлений</a>
                         </li>
-                        <li class="nav-item nav-item-head" role="presentation">
-                            <a class="fs-16 ps-0 pe-0 link-offcanvas td-none" id="own-settings-tab" data-bs-toggle="tab"
+                        <li class="nav-item nav-item-head pb-2" role="presentation">
+                            <a class="fs-16 pb-1 px-0 link-offcanvas td-none" id="own-settings-tab" data-bs-toggle="tab"
                                href="#own-settings" role="tab" aria-controls="own-settings" aria-selected="false">Собственные
                                 настройки</a>
                         </li>
@@ -195,10 +195,14 @@
                                 </div>
                             </div>
                             <p class="fs-14 mb-2 pt-4 ps-4">Направление:</p>
-                            <div class="px-4 col-10">
-                                <select class="js-example-basic-single w-100" name="state" id="specialties_list">
+                            <div class="px-4 col-12">
+                                <form onsubmit="addSpecialty(); return false;">
+                                    <select class="js-example-basic-single w-100" name="state" id="specialties_list" required></select>
 
-                                </select>
+                                    <div class="d-flex justify-content-end mt-3">
+                                        <button type="submit" class="fs-14 text-grey btn btn-secondary">Добавить</button>
+                                    </div>
+                                </form>
                             </div>
                             @include('layouts.dashboard.include.elements.program_specialties_table')
                         </div>
@@ -210,12 +214,12 @@
                                 <div class="mb-4 mx-4 col-8">
                                     <label for="code_course" class="form-label mb-2">Код направления:</label>
                                     <input type="text" class="form-control" name="code" id="code_course"
-                                           value="" placeholder="Ввод...">
+                                           value="" placeholder="Ввод..." required>
                                 </div>
                                 <div class="mb-3 mx-4 col-8">
                                     <label for="course" class="form-label mb-2">Направление:</label>
                                     <input type="text" class="form-control" name="name" id="course"
-                                           value="" placeholder="Ввод..."   >
+                                           value="" placeholder="Ввод..." required>
                                 </div>
                                 <div class="mx-4 col-8">
                                     <button class="btn btn-secondary text-grey fs-14 br-100 w-100 br-none py-2 mt-3">

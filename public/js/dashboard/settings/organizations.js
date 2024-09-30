@@ -681,7 +681,7 @@ function updateProgramName() {
             if (response.success) {
                 const program = response.data.program;
                 $("#program_" + programId).text(program.name);
-                $.notify("Имя успешно обновлено", "success");
+                $.notify("Название успешно обновлено", "success");
             }
             else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
@@ -749,38 +749,35 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function () {
-    $('#specialties_list').change(function () {
-        const specialtyId = $(this).val();
-        const programId = localStorage.getItem('program_id');
-        const data = {
-            specialty_id: specialtyId,
-            program_id: programId
-        };
-        $.ajax({
-            url: "/dashboard/organizations/programs/specialties/create",
-            dataType: "json",
-            type: "POST",
-            data: data,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-                if (response.success) {
-                    const programSpecialty = response.data.program_specialty;
-                    $(".specialties_table").append($("#specialty_tmpl").tmpl(programSpecialty));
-                    $.notify("Профиль успешно обновлен", "success");
-                } else {
-                    $.notify(response.data.title + ":" + response.data.message, "error");
-                }
-            },
-            error: function () {
-                $.notify("Ошибка при обновлении профиля. Обратитесь к системному администратору", "error");
+function addSpecialty() {
+    const specialtyId = $('#specialties_list').val();
+    const programId = localStorage.getItem('program_id');
+    const data = {
+        specialty_id: specialtyId,
+        program_id: programId
+    };
+    $.ajax({
+        url: "/dashboard/organizations/programs/specialties/create",
+        dataType: "json",
+        type: "POST",
+        data: data,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (response) {
+            if (response.success) {
+                const programSpecialty = response.data.program_specialty;
+                $(".specialties_table").append($("#specialty_tmpl").tmpl(programSpecialty));
+                $.notify("Профиль успешно обновлен", "success");
+            } else {
+                $.notify(response.data.title + ":" + response.data.message, "error");
             }
-        });
-
+        },
+        error: function () {
+            $.notify("Ошибка при обновлении профиля. Обратитесь к системному администратору", "error");
+        }
     });
-});
+}
 
 function createProgramSpecialty() {
     let data = $("#create_program_specialty").serialize();
