@@ -118,17 +118,18 @@
                 <div class="navbar-right ">
                     <ul class="nav navbar-nav">
                         <li class="dropdown user-menu">
-                            <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                            <button href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                                 <img src="/images/no-user-image.jpg" class="user-image" alt="{{ $you->name }}"/>
                                 <span class="d-none d-lg-inline-block">{{ $you->name }}</span>
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-right">
+                            <ul class="dropdown-menu dropdown-menu-right pb-2" style="left: auto">
                                 <!-- User image -->
                                 <li class="dropdown-header">
                                     <img src="/images/no-user-image.jpg" class="img-circle" alt="{{ $you->email }}"/>
-                                    <div class="d-inline-block">
-                                        {{ $you->name }} <small class="pt-1">{{ $you->email }}</small>
-                                    </div>
+                                    <p class="mt-2" style="font-size: 14px;">
+                                        {{ $you->name }}
+                                        <small class="pt-1">{{ $you->email }}</small>
+                                    </p>
                                 </li>
                                 <li>
                                     <a href="user-profile.html">
