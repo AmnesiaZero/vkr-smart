@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.main')
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 @endsection
 
@@ -166,7 +166,7 @@
             <script type="text/javascript"
                     src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
             <script id="work_tmpl" type="text/x-jquery-tmpl">
-{{--      @{{if visibility & visibility==1}}--}}
+      @{{if visibility & visibility==1}}
      <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
     <th scope="row">
      @{{if specialty}}
@@ -178,10 +178,10 @@
     <td>${group}</td>
     <td>${protect_date}</td>
     <td>${name} - ${work_type}</td>
-    <td>${getAssessmentDescription(assessment)}</td>
-    <td>${getSelfCheckDescription(self_check)}</td>
+    <td>${getAssessmentDescription(assessment) }</td>
+    <td>${getSelfCheckDescription(self_check) }</td>
         <td>
-            @{{if report_status==0}}
+            @{{if report_status==0 }}
             <div class="mt-2">
             <span class="bg-waiting px-2 d-flex align-items-center">
             <div class="me-2 yellow-c">
@@ -190,7 +190,7 @@
             </span>
             </div>
             @{{/if}}
-            @{{if report_status==1}}
+            @{{if report_status==1 }}
             <div class="mt-2" onclick="openReport(${id})">
             <span class="bg-active px-2 d-flex align-items-center">
             <div class="me-2 green-c">
@@ -199,7 +199,7 @@
             </span>
             </div>
             @{{/if}}
-            @{{if report_status==2}}
+            @{{if report_status==2 }}
             <div>
                 <span class="bg-error p-2 d-flex align-items-center gap-2">
                     <span class="red-c"></span>
@@ -216,11 +216,11 @@
             @include('layouts.dashboard.include.menu.work.student')
                 </td>
             </tr>
-{{--            @{{/if}}--}}
-
-
-
+            @{{/if}}
             </script>
+
+
+
 
             <script id="work_info_student_tmpl" type="text/x-jquery-tmpl">
 
