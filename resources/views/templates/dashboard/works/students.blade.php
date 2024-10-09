@@ -173,6 +173,7 @@
       ${specialty.name}
       @{{else}}
       Не указано
+      @{{/if}}
     </th>
     <td>${student}</td>
     <td>${group}</td>

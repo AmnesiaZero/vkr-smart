@@ -106,6 +106,16 @@ function deleteComment(id) {
     });
 }
 
+function acceptWork()
+{
+    const workId = localStorage.getItem('work_id');
+    const data = {
+        id: workId,
+        work_status: 1
+    };
+    updateWorkCore(data, workId);
+}
+
 function declineWork() {
     const workId = localStorage.getItem('work_id');
     const data = {

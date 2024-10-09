@@ -31,6 +31,10 @@
     </div>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/File_Remove.svg" alt="" class="pe-2">
+        <p class="fs-14 lh-17 text-grey m-0" onclick="acceptWork();return false">Принять работу</p>
+    </div>
+    <div class="d-flex cursor-p mb-2">
+        <img src="/images/File_Remove.svg" alt="" class="pe-2">
         <p class="fs-14 lh-17 text-grey m-0" onclick="declineWork();return false">Отклонить работу (отправить на
             доработку)</p>
     </div>
