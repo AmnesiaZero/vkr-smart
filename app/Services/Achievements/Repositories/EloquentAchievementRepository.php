@@ -14,9 +14,9 @@ class EloquentAchievementRepository implements AchievementRepositoryInterface
         return Achievement::with('mode')->create($data);
     }
 
-    public function get(int $userId): Collection
+    public function delete(int $id): bool
     {
-        return Achievement::with('mode')->where('user_id','=',$userId)->get();
+        return Achievement::query()->find($id)->delete();
     }
 
     public function find(int $id): Model
@@ -24,28 +24,25 @@ class EloquentAchievementRepository implements AchievementRepositoryInterface
         return Achievement::query()->find($id);
     }
 
-    public function delete(int $id): bool
-    {
-        return Achievement::query()->find($id)->delete();
-    }
-
     public function search(array $data): Collection
     {
         $query = Achievement::with('mode');
 
-        if(isset($data['user_id']))
-        {
-            $query = $query->where('user_id','=',$data['user_id']);
+        if (isset($data['user_id'])) {
+            $query = $query->where('user_id', '=', $data['user_id']);
         }
-        if(isset($data['name']))
-        {
-            $query = $query->where('name','like','%'.$data['name'].'%');
+        if (isset($data['name'])) {
+            $query = $query->where('name', 'like', '%' . $data['name'] . '%');
         }
-        if(isset($data['achievement_mode_id']))
-        {
-            $query = $query->where('achievement_mode_id','=',$data['achievement_mode_id']);
+        if (isset($data['achievement_mode_id'])) {
+            $query = $query->where('achievement_mode_id', '=', $data['achievement_mode_id']);
         }
 
         return $query->get();
+    }
+
+    public function get(int $userId): Collection
+    {
+        return Achievement::with('mode')->where('user_id', '=', $userId)->get();
     }
 }

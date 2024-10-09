@@ -31,7 +31,8 @@
                     <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
                         Применить
                     </button>
-                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
+                            data-bs-dismiss="modal">
                         Закрыть
                     </button>
                 </div>

@@ -181,13 +181,15 @@
                         <div class="row">
                             <label class="col-sm-4">Научный руководитель</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="scientific_supervisor" placeholder="Ввод...">
+                                <input type="text" class="form-control" name="scientific_supervisor"
+                                       placeholder="Ввод...">
                                 <span style="font-size:13px; display:block; margin:0.5rem 0; color:#999;">Или выберите из списка:</span>
                                 <select name="scientific_supervisor" class="form-control">
                                     <option value="">Выбрать...</option>
                                     @if(isset($scientific_supervisors) and is_iterable($scientific_supervisors))
                                         @foreach($scientific_supervisors as $scientific_supervisor)
-                                            <option value="{{$scientific_supervisor->name}}">{{$scientific_supervisor->name}}</option>
+                                            <option
+                                                value="{{$scientific_supervisor->name}}">{{$scientific_supervisor->name}}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -211,7 +213,8 @@
                         <div class="row">
                             <label class="col-sm-4">Описание работы</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="description" placeholder="Ввод..." required="">
+                                <input type="text" class="form-control" name="description" placeholder="Ввод..."
+                                       required="">
                             </div>
                         </div>
                         <div class="row">
@@ -262,19 +265,22 @@
                             <div class="col-sm-8">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="verification_method" value="1"> Проверить автоматически после
+                                        <input type="radio" name="verification_method" value="1"> Проверить
+                                        автоматически после
                                         загрузки
                                     </label>
                                 </div>
                                 <div class="radio mt-2">
                                     <label>
-                                        <input type="radio" name="verification_method" value="0" checked=""> Проверить работу в ручном
+                                        <input type="radio" name="verification_method" value="0" checked=""> Проверить
+                                        работу в ручном
                                         режиме
                                     </label>
                                 </div>
                                 <div class="radio mt-2">
                                     <label>
-                                        <input type="radio" name="verification_method" value="2"> Не проверять работу после загрузки
+                                        <input type="radio" name="verification_method" value="2"> Не проверять работу
+                                        после загрузки
                                     </label>
                                 </div>
                             </div>
@@ -306,10 +312,10 @@
                             <label class="col-sm-4">Сделать документ (работу) доступным сотрудникам организации</label>
                             <div class="col-sm-8">
                                 <div class="checkbox">
-                                                                    <label>
-                                                                        <input type="checkbox" name="visibility" value="1" checked=""> Да
-                                                                    </label>
-                                                                </div>
+                                    <label>
+                                        <input type="checkbox" name="visibility" value="1" checked=""> Да
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -320,7 +326,8 @@
                     <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
                         Добавить
                     </button>
-                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
+                            data-bs-dismiss="modal">
                         Закрыть
                     </button>
                 </div>

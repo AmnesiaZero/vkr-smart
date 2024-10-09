@@ -1,19 +1,19 @@
 var mainPageUrl = '/dashboard/organizations';
 
 $(document).ready(function () {
-    $('#save-close').on('click', function() {
+    $('#save-close').on('click', function () {
         // Здесь можно добавить логику для закрытия формы или перехода на другую страницу
         $('#redirect').prop('checked', true);
 
         $('#organization_form').submit(); // Сабмит формы
     });
 
-    $('#save').on('click', function() {
+    $('#save').on('click', function () {
         // Здесь можно добавить логику для сохранения данных без закрытия
         $('#organization_form').submit(); // Сабмит формы
     });
 
-    $('#close').on('click', function() {
+    $('#close').on('click', function () {
         // Здесь можно добавить логику для отмены, например, переход на другую страницу
         window.location.href = '/dashboard/platform/organizations'; // Перенаправление на главную страницу
     });
@@ -23,26 +23,23 @@ $(document).ready(function () {
 });
 
 
-function updateBasic(id)
-{
+function updateBasic(id) {
     const data = {
-        id:id
+        id: id
     };
     $.ajax({
         url: "/dashboard/organizations/update/basic",
-        data:data,
+        data: data,
         dataType: "json",
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (response) {
-            if (response.success)
-            {
+            if (response.success) {
                 const organization = response.data.organization;
                 $("#basic_status_" + id).replaceWith($("#basic_status_tmpl").tmpl(organization));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -82,26 +79,23 @@ function updateBasic(id)
 //     }
 // }
 
-function updatePremium(id)
-{
+function updatePremium(id) {
     const data = {
-        id:id
+        id: id
     };
     $.ajax({
         url: "/dashboard/organizations/update/premium",
-        data:data,
+        data: data,
         dataType: "json",
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (response) {
-            if (response.success)
-            {
+            if (response.success) {
                 const organization = response.data.organization;
                 $("#premium_status_" + id).replaceWith($("#premium_status_tmpl").tmpl(organization));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -111,26 +105,23 @@ function updatePremium(id)
     });
 }
 
-function updateStatus(id)
-{
+function updateStatus(id) {
     const data = {
-        id:id
+        id: id
     };
     $.ajax({
         url: "/dashboard/organizations/update/status",
-        data:data,
+        data: data,
         dataType: "json",
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (response) {
-            if (response.success)
-            {
+            if (response.success) {
                 const organization = response.data.organization;
                 $("#status_" + id).replaceWith($("#status_tmpl").tmpl(organization));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -141,14 +132,9 @@ function updateStatus(id)
 }
 
 
-
-
-
-
-function openUpdateDepartmentModal(id)
-{
+function openUpdateDepartmentModal(id) {
     const data = {
-        id:id
+        id: id
     };
     $.ajax({
         url: "/dashboard/organizations/find",
@@ -159,8 +145,7 @@ function openUpdateDepartmentModal(id)
             if (response.success) {
                 const department = response.data.department;
                 $("#tmpl_container").html($("#update_department_tmpl").tmpl(department));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -170,8 +155,7 @@ function openUpdateDepartmentModal(id)
     });
 }
 
-function updateDepartment(id)
-{
+function updateDepartment(id) {
     let data = $("#department_update").serialize();
     let additionalData = {
         id: id,
@@ -189,8 +173,7 @@ function updateDepartment(id)
             if (response.success) {
                 const department = response.data.department;
                 $("#department_" + id).replaceWith($("#department_tmpl").tmpl(department));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -200,14 +183,13 @@ function updateDepartment(id)
     });
 }
 
-function departmentInfo(id)
-{
+function departmentInfo(id) {
     const data = {
-        id:id
+        id: id
     };
     $.ajax({
         url: "/dashboard/organizations/find",
-        data:data,
+        data: data,
         dataType: "json",
         type: "get",
         success: function (response) {
@@ -216,8 +198,7 @@ function departmentInfo(id)
                 $("#tmpl_container").html($("#department_info_tmpl").tmpl(department));
                 const modalElement = new bootstrap.Modal(document.getElementById('department_info'));
                 modalElement.show();
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -227,19 +208,18 @@ function departmentInfo(id)
     });
 }
 
-function searchDepartments(page=1)
-{
+function searchDepartments(page = 1) {
     let data = $("#search_departments_form").serialize();
     const organizationId = $("#organizations_list").val();  // ID вашего select
     const additionalData = {
-        page:page,
-        organization_id:organizationId
+        page: page,
+        organization_id: organizationId
     };
-    data +='&' + $.param(additionalData);
+    data += '&' + $.param(additionalData);
     data = serializeRemoveNull(data);
     $.ajax({
         url: "/dashboard/organizations/search",
-        data:data,
+        data: data,
         dataType: "json",
         type: "get",
         success: function (response) {
@@ -248,8 +228,7 @@ function searchDepartments(page=1)
                 updateOrganizationsPagination(pagination);
                 const departments = pagination.data;
                 $("#departments_list").html($("#department_tmpl").tmpl(departments));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -259,37 +238,33 @@ function searchDepartments(page=1)
     });
 }
 
-function resetSearch()
-{
-    $("#default_organization").prop('selected',true);
+function resetSearch() {
+    $("#default_organization").prop('selected', true);
     $("#name").val('');
     organizations();
 }
 
-function updateOrganizationsPagination(pagination)
-{
+function updateOrganizationsPagination(pagination) {
     const totalItems = pagination.total;
     const displayedPages = pagination.links.length - 2; //Без Previous и Next
     $("#departments_pagination").pagination({
-        items:  totalItems,
+        items: totalItems,
         itemsOnPage: pagination.per_page,
         currentPage: pagination.current_page, // Установка текущей страницы в начало после добавления новых элементов
         displayedPages: displayedPages,
         cssStyle: '',
         prevText: '<span class="page-link"> <i class="fa-solid fa-angle-left" aria-hidden="true"></i> </span>',
         nextText: '<span class="page-link"  rel="next"> <i class="fa-solid fa-angle-right" aria-hidden="true"></i> </span>',
-        onPageClick: function(pageNumber) {
+        onPageClick: function (pageNumber) {
             searchDepartments(pageNumber);
         }
     });
 }
 
-function deleteDepartment(id)
-{
-    if(confirm('Вы действительно хотите удалить данное подразделение?'))
-    {
+function deleteDepartment(id) {
+    if (confirm('Вы действительно хотите удалить данное подразделение?')) {
         const data = {
-            id:id
+            id: id
         };
         $.ajax({
             url: "/dashboard/organizations/delete",
@@ -303,8 +278,7 @@ function deleteDepartment(id)
                 if (response.success) {
                     $("#department_" + id).remove();
                     $.notify(response.data.title + ":" + response.data.message, "success");
-                }
-                else {
+                } else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                 }
             },
@@ -321,7 +295,7 @@ $('#button-select-image').on('click', function () {
     selectFileWithCKFinder('logo');
 });
 
-$(document).on('focus', '.date', function() {
+$(document).on('focus', '.date', function () {
     $(this).mask('00.00.0000', {placeholder: "__.__.____"});
 });
 // jQuery(function(){
@@ -360,10 +334,10 @@ $('#modalDepartments').on('show.bs.modal', function (event) {
         url: '/dashboard/organizations/departments',
         data: '',
         dataType: 'json',
-        success: function(result) {
+        success: function (result) {
             console.log(result);
         },
-        error: function(jqXHR, Exception) {
+        error: function (jqXHR, Exception) {
             console.log(jqXHR);
         }
     });
@@ -431,7 +405,7 @@ $('#modalAddCollections').on('shown.bs.modal', function (event) {
     searchCollections();
 });
 
-$('#modalAddBooks').on('shown.bs.modal', function(event) {
+$('#modalAddBooks').on('shown.bs.modal', function (event) {
     searchBooks();
 })
 
@@ -556,7 +530,7 @@ $(document).delegate('.delete-collection', 'click', function (e) {
     });
 });
 
-$(document).delegate('.filter-books', 'click', function() {
+$(document).delegate('.filter-books', 'click', function () {
     searchBooks();
 })
 
@@ -666,11 +640,11 @@ $(document).delegate('.delete-book', 'click', function (e) {
 });
 
 $(document).ready(function () {
-    $('#button-select-image').on('click', function() {
+    $('#button-select-image').on('click', function () {
         $('#logo_load').click();
     });
 
-    $('#logo_load').on('change', function() {
+    $('#logo_load').on('change', function () {
         var fileName = $(this).val().split('\\').pop();
         $('#logo').val(fileName);
     });

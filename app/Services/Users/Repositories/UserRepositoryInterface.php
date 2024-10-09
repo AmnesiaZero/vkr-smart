@@ -61,7 +61,7 @@ interface UserRepositoryInterface
      * @param int $id
      * @return bool
      */
-    public function restore(int $id):bool;
+    public function restore(int $id): bool;
 
     /**
      * @param int $id
@@ -76,8 +76,7 @@ interface UserRepositoryInterface
      * @param array $relations
      * @return Collection|LengthAwarePaginator
      */
-    public function search(array $data, array $relations=['roles', 'departments','works']):Collection|LengthAwarePaginator;
-
+    public function search(array $data, array $relations = ['roles', 'departments', 'works']): Collection|LengthAwarePaginator;
 
 
     /**

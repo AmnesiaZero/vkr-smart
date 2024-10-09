@@ -47,7 +47,8 @@
                                 </li>
                                 @if(isset($user) and $user->roles[0]->slug=='user')
                                     <li role="presentation" class="nav-item">
-                                        <a href="#profile-department" class="nav-link" aria-controls="profile-career" role="tab"
+                                        <a href="#profile-department" class="nav-link" aria-controls="profile-career"
+                                           role="tab"
                                            data-bs-toggle="tab"
                                            aria-expanded="true">
                                             <i class="fas fa-briefcase"></i> Карьера
@@ -160,9 +161,10 @@
 
                         </div>
                         @if(isset($user) and $user->roles[0]->slug=='user')
-                        <div role="tabpanel" class="tab-pane" id="profile-department">
-                                <div class="form form-horizontal" >
-                                    <h2>Ваше структурное подразделение:</h2><hr>
+                            <div role="tabpanel" class="tab-pane" id="profile-department">
+                                <div class="form form-horizontal">
+                                    <h2>Ваше структурное подразделение:</h2>
+                                    <hr>
                                     <div class="form-group">
                                         <label class="col-sm-4">Год выпуска</label>
                                         <div class="col-sm-8">
@@ -180,7 +182,8 @@
                                         <div class="col-sm-8">
                                             {{$user->department->name}}
                                         </div>
-                                    </div><div class="form-group">
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-4">Направление подготовки</label>
                                         <div class="col-sm-8">
                                             {{$user->specialty->code}}/{{$user->specialty->name}}
@@ -193,9 +196,9 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    </div>
-
                                 </div>
+
+                            </div>
                         @endif
                         <div role="tabpanel" class="tab-pane" id="profile-security">
                             <h2>Смена пароля:</h2>
@@ -462,6 +465,7 @@
     </div>
 
 
+
     </script>
 
     <script id="education_tmpl" type="text/x-jquery-tmpl">
@@ -499,6 +503,7 @@
                 </div>
             </div>
         </form>
+
 
     </script>
 
@@ -539,10 +544,12 @@
             </div>
         </form>
 
+
     </script>
 
     <script id="avatar_tmpl" type="text/x-jquery-tmpl">
        <img id="user_avatar" src="${avatar_path}" alt="" class="img-responsive" style="border-radius: 6px;">
+
 
     </script>
 @endsection

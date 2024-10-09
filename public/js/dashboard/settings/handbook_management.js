@@ -75,13 +75,11 @@ function addWorksType() {
     });
 }
 
-function deleteScientificSupervisor(id)
-{
+function deleteScientificSupervisor(id) {
     const data = {
-      id:id
+        id: id
     };
-    if(confirm('Вы уверены,что хотите удалить этого научного руководителя?'))
-    {
+    if (confirm('Вы уверены,что хотите удалить этого научного руководителя?')) {
         $.ajax({
             url: "/dashboard/scientific-supervisors/delete",
             dataType: "json",
@@ -94,8 +92,7 @@ function deleteScientificSupervisor(id)
                 if (response.success) {
                     $("#scientific_supervisor_" + id).remove();
                     $.notify(response.data.title + ":" + response.data.message, "success");
-                }
-                else {
+                } else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                 }
             },
@@ -106,13 +103,11 @@ function deleteScientificSupervisor(id)
     }
 }
 
-function deleteWorkType(id)
-{
+function deleteWorkType(id) {
     const data = {
-        id:id
+        id: id
     };
-    if(confirm('Вы уверены,что хотите удалить эту работу?'))
-    {
+    if (confirm('Вы уверены,что хотите удалить эту работу?')) {
         $.ajax({
             url: "/dashboard/works/types/delete",
             dataType: "json",
@@ -125,8 +120,7 @@ function deleteWorkType(id)
                 if (response.success) {
                     $("#work_type_" + id).remove();
                     $.notify(response.data.title + ":" + response.data.message, "success");
-                }
-                else {
+                } else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                 }
             },

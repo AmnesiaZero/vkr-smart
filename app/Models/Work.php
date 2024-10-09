@@ -11,11 +11,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Broadcasting\PrivateChannel;
 
 class Work extends Model
 {
-    use HasFactory,SoftDeletes,CascadeSoftDeletes,Cloneable,BroadcastsEvents;
+    use HasFactory, SoftDeletes, CascadeSoftDeletes, Cloneable, BroadcastsEvents;
 
     protected $fillable = [
         'created',
@@ -77,32 +76,30 @@ class Work extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function faculty():HasOne
+    public function faculty(): HasOne
     {
-        return $this->hasOne(Faculty::class,'id','faculty_id');
+        return $this->hasOne(Faculty::class, 'id', 'faculty_id');
     }
 
-    public function department():HasOne
+    public function department(): HasOne
     {
-        return  $this->hasOne(Department::class,'id','department_id');
+        return $this->hasOne(Department::class, 'id', 'department_id');
     }
 
-    public function year():HasOne
+    public function year(): HasOne
     {
-        return $this->hasOne(OrganizationYear::class,'id','year_id');
+        return $this->hasOne(OrganizationYear::class, 'id', 'year_id');
     }
 
-    public function comments():HasMany
+    public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class,'work_id');
+        return $this->hasMany(Comment::class, 'work_id');
     }
 
-    public function reportAssets():HasMany
+    public function reportAssets(): HasMany
     {
-       return $this->hasMany(ReportAsset::class,'work_id','id');
+        return $this->hasMany(ReportAsset::class, 'work_id', 'id');
     }
-
-
 
 
     /**
@@ -112,7 +109,7 @@ class Work extends Model
      */
     public function broadcastOn(string $event)
     {
-        return new Channel('works.'.$this->id);
+        return new Channel('works.' . $this->id);
     }
 
 }

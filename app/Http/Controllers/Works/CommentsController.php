@@ -32,45 +32,42 @@ class CommentsController extends Controller
 
     public function create(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(),[
-            'work_id' => ['required','integer',Rule::exists('works','id')],
-            'receiver_id' =>  ['required','integer',Rule::exists('users','id')],
-            'parent_id' => ['integer',Rule::exists('comments','id')],
+        $validator = Validator::make($request->all(), [
+            'work_id' => ['required', 'integer', Rule::exists('works', 'id')],
+            'receiver_id' => ['required', 'integer', Rule::exists('users', 'id')],
+            'parent_id' => ['integer', Rule::exists('comments', 'id')],
             'title' => 'required|max:250',
             'text' => 'required|max:250'
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
-        return  $this->commentsService->create($data);
+        return $this->commentsService->create($data);
 
     }
 
     public function get(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(),[
-            'work_id' => ['required','integer',Rule::exists('works','id')],
+        $validator = Validator::make($request->all(), [
+            'work_id' => ['required', 'integer', Rule::exists('works', 'id')],
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $workId = $request->work_id;
-        return  $this->commentsService->get($workId);
+        return $this->commentsService->get($workId);
     }
 
-    public function delete(Request $request):JsonResponse
+    public function delete(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(),[
-            'id' => ['required','integer',Rule::exists('works_comments','id')],
+        $validator = Validator::make($request->all(), [
+            'id' => ['required', 'integer', Rule::exists('works_comments', 'id')],
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $id = $request->id;
-        return  $this->commentsService->delete($id);
+        return $this->commentsService->delete($id);
     }
 }

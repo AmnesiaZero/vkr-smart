@@ -16,7 +16,7 @@ class EloquentAchievementRecordRepository implements AchievementRecordRepository
 
     public function get(int $achievementId): Collection
     {
-        return AchievementRecord::with('type.category')->where('achievement_id','=',$achievementId)->get();
+        return AchievementRecord::with('type.category')->where('achievement_id', '=', $achievementId)->get();
     }
 
     public function update(int $id, array $data)

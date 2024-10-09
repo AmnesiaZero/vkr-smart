@@ -42,7 +42,7 @@ class ProgramsSpecialtiesController extends Controller
     public function get(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'program_id' => ['required','integer',Rule::exists('programs','id')]
+            'program_id' => ['required', 'integer', Rule::exists('programs', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -54,7 +54,7 @@ class ProgramsSpecialtiesController extends Controller
     public function getByOrganization(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'organization_id' => ['required','integer',Rule::exists('organizations','id')]
+            'organization_id' => ['required', 'integer', Rule::exists('organizations', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);

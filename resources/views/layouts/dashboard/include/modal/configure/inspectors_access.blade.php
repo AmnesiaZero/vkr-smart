@@ -9,7 +9,8 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h5 class="mb-3">Выберите те направления подготовки, доступ к которым будет иметь проверяющий
+                            <h5 class="mb-3">Выберите те направления подготовки, доступ к которым будет иметь
+                                проверяющий
                                 организации</h5>
                             <div id="checking-access-alert"></div>
                             <div id="checkingAccessFormListYears">
@@ -37,7 +38,8 @@
                         <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
                             Сохранить
                         </button>
-                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
+                                data-bs-dismiss="modal">
                             Закрыть
                         </button>
                     </div>

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -52,9 +51,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('organizations', function (Blueprint $table) {
-            $table->dropColumn(['other_names','logo_path','address','phone','email','website','vk_url','telegram_url','region','city',
-                'students_count','graduates_count','foreign_students_count','laboratories_count','universities_count','is_blocked','sub_domen',
-                'store_size','is_basic','is_premium','is_testing','is_demo','show_catalog','is_head','member_transfer_network','info']);
+            $table->dropColumn(['other_names', 'logo_path', 'address', 'phone', 'email', 'website', 'vk_url', 'telegram_url', 'region', 'city',
+                'students_count', 'graduates_count', 'foreign_students_count', 'laboratories_count', 'universities_count', 'is_blocked', 'sub_domen',
+                'store_size', 'is_basic', 'is_premium', 'is_testing', 'is_demo', 'show_catalog', 'is_head', 'member_transfer_network', 'info']);
         });
     }
 };

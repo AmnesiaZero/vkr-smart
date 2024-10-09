@@ -14,11 +14,6 @@ class EloquentProgramSpecialtyRepository implements ProgramSpecialtyRepositoryIn
         return ProgramSpecialty::query()->create($data);
     }
 
-    public function get(int $programId): Collection
-    {
-        return ProgramSpecialty::query()->where('program_id', '=', $programId)->get();
-    }
-
     public function update(int $id, array $data): int
     {
         return ProgramSpecialty::query()->find($id)->update($data);
@@ -42,6 +37,11 @@ class EloquentProgramSpecialtyRepository implements ProgramSpecialtyRepositoryIn
 
     public function getByOrganization(int $organizationId): Collection
     {
-        return ProgramSpecialty::query()->where('organization_id','=',$organizationId)->get();
+        return ProgramSpecialty::query()->where('organization_id', '=', $organizationId)->get();
+    }
+
+    public function get(int $programId): Collection
+    {
+        return ProgramSpecialty::query()->where('program_id', '=', $programId)->get();
     }
 }

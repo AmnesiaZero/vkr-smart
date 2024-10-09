@@ -28,11 +28,10 @@ class AdditionalFilesController extends Controller
 
     public function get(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(),[
-            'work_id' =>  ['required','integer',Rule::exists('works','id')]
+        $validator = Validator::make($request->all(), [
+            'work_id' => ['required', 'integer', Rule::exists('works', 'id')]
         ]);
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $workId = $request->work_id;
@@ -41,12 +40,11 @@ class AdditionalFilesController extends Controller
 
     public function create(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(),[
-            'work_id' =>  ['required','integer',Rule::exists('works','id')],
+        $validator = Validator::make($request->all(), [
+            'work_id' => ['required', 'integer', Rule::exists('works', 'id')],
             'additional_file' => 'required|file'
         ]);
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
@@ -55,11 +53,10 @@ class AdditionalFilesController extends Controller
 
     public function download(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'id' =>  ['required','integer',Rule::exists('additional_files','id')],
+        $validator = Validator::make($request->all(), [
+            'id' => ['required', 'integer', Rule::exists('additional_files', 'id')],
         ]);
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $id = $request->id;
@@ -68,11 +65,10 @@ class AdditionalFilesController extends Controller
 
     public function delete(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(),[
-            'id' =>  ['required','integer',Rule::exists('additional_files','id')],
+        $validator = Validator::make($request->all(), [
+            'id' => ['required', 'integer', Rule::exists('additional_files', 'id')],
         ]);
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $id = $request->id;

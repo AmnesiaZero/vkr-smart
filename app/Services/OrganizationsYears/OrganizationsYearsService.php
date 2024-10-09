@@ -2,15 +2,12 @@
 
 namespace App\Services\OrganizationsYears;
 
-use App\Helpers\JsonHelper;
 use App\Services\InviteCodes\Repositories\InviteCodeRepositoryInterface;
 use App\Services\OrganizationsYears\Repositories\OrganizationYearRepositoryInterface;
 use App\Services\Services;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
 
 class OrganizationsYearsService extends Services
 {
@@ -19,8 +16,7 @@ class OrganizationsYearsService extends Services
     private InviteCodeRepositoryInterface $inviteCodeRepository;
 
 
-
-    public function __construct(OrganizationYearRepositoryInterface $organizationYearRepository,InviteCodeRepositoryInterface $inviteCodeRepository)
+    public function __construct(OrganizationYearRepositoryInterface $organizationYearRepository, InviteCodeRepositoryInterface $inviteCodeRepository)
     {
         $this->_repository = $organizationYearRepository;
         $this->inviteCodeRepository = $inviteCodeRepository;
@@ -29,7 +25,7 @@ class OrganizationsYearsService extends Services
     public function create(array $data): JsonResponse
     {
         $user = Auth::user();
-        $data = array_merge($data, ['organization_id' => $user->organization_id,'user_id' => $user->id]);
+        $data = array_merge($data, ['organization_id' => $user->organization_id, 'user_id' => $user->id]);
         $year = $this->_repository->create($data);
         return $this->sendJsonResponse(true, [
             'message' => 'Успешно создан год',
@@ -39,12 +35,9 @@ class OrganizationsYearsService extends Services
 
     public function get(array $data): JsonResponse
     {
-        if (isset($data['organization_id']))
-        {
+        if (isset($data['organization_id'])) {
             $organizationId = $data['organization_id'];
-        }
-        else
-        {
+        } else {
             $user = Auth::user();
             $organizationId = $user->organization_id;
         }

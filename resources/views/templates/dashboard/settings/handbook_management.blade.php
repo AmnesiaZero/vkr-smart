@@ -16,9 +16,9 @@
                     @foreach($works_types as $works_type)
                         <div class="badge text-black-black bg-green-light br-100 fs-14 me-1 mb-1"
                              id="work_type_{{$works_type->id}}">
-                             {{$works_type->name}}
-                             <i class="fa fa-times ms-2 cursor-p text-black fs-12"
-                                onclick="deleteWorkType({{$works_type->id}})"></i>
+                            {{$works_type->name}}
+                            <i class="fa fa-times ms-2 cursor-p text-black fs-12"
+                               onclick="deleteWorkType({{$works_type->id}})"></i>
                         </div>
                     @endforeach
                 @endif
@@ -35,9 +35,9 @@
                     @foreach($scientific_supervisors as $scientific_supervisor)
                         <div class="badge text-black-black bg-green-light br-100 fs-14 me-1 mb-1"
                              id="scientific_supervisor_{{$scientific_supervisor->id}}">
-                             {{$scientific_supervisor->name}}
-                             <i class="fa fa-times ms-2 cursor-p text-black fs-12"
-                                onclick="deleteScientificSupervisor({{$scientific_supervisor->id}})"></i>
+                            {{$scientific_supervisor->name}}
+                            <i class="fa fa-times ms-2 cursor-p text-black fs-12"
+                               onclick="deleteScientificSupervisor({{$scientific_supervisor->id}})"></i>
                         </div>
                     @endforeach
                 @endif
@@ -50,7 +50,8 @@
                     <div class="out-kod my-2"></div>
 
                     <div class="input-group">
-                        <input type="text" name="name" id="content" class="form-control" placeholder="Наименование" onkeydown="checkForEnter(event)">
+                        <input type="text" name="name" id="content" class="form-control" placeholder="Наименование"
+                               onkeydown="checkForEnter(event)">
                         <button type="submit" class="fs-14 btn text-grey btn-secondary">Добавить</button>
                     </div>
                 </form>
@@ -63,7 +64,8 @@
                     <div class="out-kod_1 my-2"></div>
 
                     <div class="input-group">
-                        <input type="text" name="name" id="content_1" class="form-control" placeholder="ФИО" onkeydown="checkForEnter_1(event)">
+                        <input type="text" name="name" id="content_1" class="form-control" placeholder="ФИО"
+                               onkeydown="checkForEnter_1(event)">
                         <button type="submit" class="fs-14 btn text-grey btn-secondary">Добавить</button>
                     </div>
                 </form>
@@ -79,9 +81,11 @@
 
     <script id="scientific_supervisor_tmpl" type="text/x-jquery-tmpl">
        <div class="badge text-black-black bg-green-light br-100 fs-12 me-1 mb-1" onclick="deleteScientificSupervisor(${id})" id="scientific_supervisor_${id}">${name}</div>
+
     </script>
 
     <script id="works_type_tmpl" type="text/x-jquery-tmpl">
        <div class="badge text-black-black bg-green-light br-100 fs-12 me-1 mb-1" onclick="deleteWorkType(${id})" id="work_type_${id}">${name}</div>
+
     </script>
 @endsection

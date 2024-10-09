@@ -12,7 +12,8 @@
         <div class="accordion-body p-0">
             <ul class="list-custom-1 m-0">
                 <li class="list-select"><a href="/dashboard/personal-cabinet"
-                                           class="select-a @if(request()->is('*/personal-cabinet')) nav-link-active @endif">Профиль</a></li>
+                                           class="select-a @if(request()->is('*/personal-cabinet')) nav-link-active @endif">Профиль</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -31,7 +32,8 @@
         <div class="accordion-body p-0">
             <ul class="list-custom-1 m-0">
                 <li class="list-select"><a href="/dashboard/settings/teacher-departments"
-                                           class="select-a @if(request()->is('*/settings/teacher-departments')) nav-link-active @endif">Настройка структурных подразделений</a></li>
+                                           class="select-a @if(request()->is('*/settings/teacher-departments')) nav-link-active @endif">Настройка
+                        структурных подразделений</a></li>
             </ul>
         </div>
     </div>
@@ -73,7 +75,8 @@
         <div class="accordion-body p-0">
             <ul class="list-custom-1 m-0">
                 <li class="list-select"><a href="/dashboard/portfolios/achievements/you"
-                                           class="select-a @if(request()->is('*/portfolios/achievements/')) nav-link-active @endif">Мои <br> достижения</a>
+                                           class="select-a @if(request()->is('*/portfolios/achievements/')) nav-link-active @endif">Мои
+                        <br> достижения</a>
                 </li>
                 <li class="list-select"><a href="/dashboard/portfolios/students"
                                            class="select-a @if(request()->is('*/portfolios/teacher/students')) nav-link-active @endif">портфолио<br>обучающихся</a>

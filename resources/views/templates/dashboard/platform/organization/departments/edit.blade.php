@@ -12,11 +12,13 @@
                     <div class="post">
                         <div class="form-group">
                             <label for="title">Название отделения</label>
-                            <input id="title" type="text" name="name" value="{{ $department->name }}" class="form-control">
+                            <input id="title" type="text" name="name" value="{{ $department->name }}"
+                                   class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="description">Дополнительная информация</label>
-                            <textarea id="description" name="description" rows="4" class="form-control">{{ $department->description }}</textarea>
+                            <textarea id="description" name="description" rows="4"
+                                      class="form-control">{{ $department->description }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -34,28 +36,28 @@
     <script src="{{ secure_asset('/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script>
     <script src="/js/dashboard/platform/organization/departments.js"></script>
     <script>
-        jQuery(function(){
+        jQuery(function () {
             jQuery('#date_timepicker_start').datetimepicker({
                 lang: 'ru',
-                format:'Y/m/d',
+                format: 'Y/m/d',
                 scrollMonth: false,
-                onShow:function( ct ){
+                onShow: function (ct) {
                     this.setOptions({
-                        maxDate:jQuery('#date_timepicker_end').val()?jQuery('#date_timepicker_end').val():false
+                        maxDate: jQuery('#date_timepicker_end').val() ? jQuery('#date_timepicker_end').val() : false
                     })
                 },
-                timepicker:false
+                timepicker: false
             });
             jQuery('#date_timepicker_end').datetimepicker({
                 lang: 'ru',
-                format:'Y/m/d',
+                format: 'Y/m/d',
                 scrollMonth: false,
-                onShow:function( ct ){
+                onShow: function (ct) {
                     this.setOptions({
-                        minDate:jQuery('#date_timepicker_start').val()?jQuery('#date_timepicker_start').val():false
+                        minDate: jQuery('#date_timepicker_start').val() ? jQuery('#date_timepicker_start').val() : false
                     })
                 },
-                timepicker:false
+                timepicker: false
             });
         });
 
@@ -70,10 +72,10 @@
                 url: '/dashboard/organizations/departments',
                 data: '',
                 dataType: 'json',
-                success: function(result) {
+                success: function (result) {
                     console.log(result);
                 },
-                error: function(jqXHR, Exception) {
+                error: function (jqXHR, Exception) {
                     console.log(jqXHR);
                 }
             });
@@ -82,10 +84,12 @@
 
     <script id="year_tmpl" type="text/x-jquery-tmpl">
         <option value="${id}">${year}</option>
+
     </script>
 
 
     <script id="faculty_tmpl" type="text/x-jquery-tmpl">
         <option value="${id}">${name}</option>
+
     </script>
 @endsection

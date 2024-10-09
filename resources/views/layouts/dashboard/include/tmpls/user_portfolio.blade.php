@@ -56,4 +56,5 @@
                 @endrole
             </div>
         </div>
-    </script>
+
+</script>

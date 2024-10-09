@@ -14,7 +14,7 @@
                             @foreach($years as $year)
                                 <li class="fancytree-lastsib">
 		    							<span
-                                                class="fancytree-node fancytree-expanded fancytree-folder fancytree-has-children fancytree-exp-e fancytree-ico-ef">
+                                            class="fancytree-node fancytree-expanded fancytree-folder fancytree-has-children fancytree-exp-e fancytree-ico-ef">
 		    								<span class="fancytree-title" id="year_{{$year->id}}">{{$year->year}}</span>
 		    							</span>
                                     <ul>
@@ -22,8 +22,8 @@
                                             @foreach($year->departments as $department)
                                                 <li class="fancytree-lastsib">
 		    											<span
-                                                                class="fancytree-node fancytree-lastsib fancytree-exp-nl fancytree-ico-c"><span
-                                                                    class="fancytree-expander"></span>
+                                                            class="fancytree-node fancytree-lastsib fancytree-exp-nl fancytree-ico-c"><span
+                                                                class="fancytree-expander"></span>
 		    											<span class="fancytree-title"
                                                               id="department_{{$department->id}}">{{$department->name}}</span>
 		    										</span>
@@ -43,14 +43,16 @@
                         <div class="col-xxl-6">
                             <p class="fs-14 m-0 text-grey">Статус</p>
                             <div class="form-check mt-2">
-                                <input class="form-check-input green" type="radio" name="is_active" id="status1" value="1"
+                                <input class="form-check-input green" type="radio" name="is_active" id="status1"
+                                       value="1"
                                        checked>
                                 <label class="form-check-label" for="status1">
                                     Активен
                                 </label>
                             </div>
                             <div class="form-check mt-2">
-                                <input class="form-check-input green" type="radio" name="is_active" id="status2" value="0">
+                                <input class="form-check-input green" type="radio" name="is_active" id="status2"
+                                       value="0">
                                 <label class="form-check-label" for="status2">
                                     Заблокирован
                                 </label>
@@ -60,14 +62,16 @@
                         <div class="col-xxl-6">
                             <p class="fs-14 m-0 text-grey">Тип пользователя</p>
                             <div class="form-check mt-2">
-                                <input class="form-check-input green" type="radio" name="role" id="user_type1" value="user"
+                                <input class="form-check-input green" type="radio" name="role" id="user_type1"
+                                       value="user"
                                        checked>
                                 <label class="form-check-label" for="user_type1">
                                     Студентам
                                 </label>
                             </div>
                             <div class="form-check mt-2">
-                                <input class="form-check-input green" type="radio" name="role" id="user_type2" value="teacher">
+                                <input class="form-check-input green" type="radio" name="role" id="user_type2"
+                                       value="teacher">
                                 <label class="form-check-label" for="user_type2">
                                     Преподавателям
                                 </label>
@@ -187,6 +191,7 @@
 
 
 
+
     </script>
     <script type="text/x-jquery-tmpl" id="off_canvas_user">
         <div class="px-4">
@@ -229,6 +234,7 @@
             <button type="submit" class="btn btn-secondary w-100 text-grey fs-14 br-100 br-none mt-4 mb-5">Применить</button>
             </form>
         </div>
+
 
 
 

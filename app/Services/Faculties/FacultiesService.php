@@ -2,7 +2,6 @@
 
 namespace App\Services\Faculties;
 
-use App\Helpers\JsonHelper;
 use App\Services\Faculties\Repositories\FacultyRepositoryInterface;
 use App\Services\Services;
 use Illuminate\Http\JsonResponse;

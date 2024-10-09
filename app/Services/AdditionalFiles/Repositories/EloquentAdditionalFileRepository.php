@@ -11,7 +11,7 @@ class EloquentAdditionalFileRepository implements AdditionalFileRepositoryInterf
 
     public function get(int $workId): Collection
     {
-        return AdditionalFile::query()->where('work_id','=',$workId)->get();
+        return AdditionalFile::query()->where('work_id', '=', $workId)->get();
     }
 
 
@@ -20,7 +20,7 @@ class EloquentAdditionalFileRepository implements AdditionalFileRepositoryInterf
         return AdditionalFile::query()->create($data);
     }
 
-    public function update(int $id,array $data)
+    public function update(int $id, array $data)
     {
         return $this->find($id)->update($data);
     }

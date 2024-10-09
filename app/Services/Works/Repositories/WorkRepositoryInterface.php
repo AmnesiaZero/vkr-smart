@@ -12,7 +12,7 @@ interface WorkRepositoryInterface
      * @param int $organizationId
      * @return Collection
      */
-    public function get(int $organizationId):Collection;
+    public function get(int $organizationId): Collection;
 
     /**
      * @param array $data
@@ -24,20 +24,19 @@ interface WorkRepositoryInterface
      * @param array $data
      * @return Model
      */
-    public function create(array $data):Model;
+    public function create(array $data): Model;
 
     /**
      * @param int $id
      * @return Model
      */
-    public function find(int $id):Model;
+    public function find(int $id): Model;
 
     /**
      * @param array $data
      * @return LengthAwarePaginator
      */
-    public function search(array $data):LengthAwarePaginator;
-
+    public function search(array $data): LengthAwarePaginator;
 
 
     /**
@@ -45,7 +44,7 @@ interface WorkRepositoryInterface
      * @param array $data
      * @return mixed
      */
-    public function update(int $id,array $data);
+    public function update(int $id, array $data);
 
     /**
      * @param int $id
@@ -57,13 +56,13 @@ interface WorkRepositoryInterface
      * @param int $id
      * @return bool
      */
-    public function delete(int $id):bool;
+    public function delete(int $id): bool;
 
     /**
      * @param int $id
      * @return bool
      */
-    public function destroy(int $id):bool;
+    public function destroy(int $id): bool;
 
     /**
      * @param int $id
@@ -75,19 +74,19 @@ interface WorkRepositoryInterface
      * @param int $reportId
      * @return mixed
      */
-    public function updateReportStatus(int $reportId,array $data);
+    public function updateReportStatus(int $reportId, array $data);
 
     /**
      * @param int $reportId
      * @return Model
      */
-    public function findByReportId(int $reportId):Model;
+    public function findByReportId(int $reportId): Model;
 
     /**
      * @param int $userId
      * @param int $pageNumber
      * @return Collection
      */
-    public function getUserWorks(int $userId, int $pageNumber):LengthAwarePaginator;
+    public function getUserWorks(int $userId, int $pageNumber): LengthAwarePaginator;
 
 }

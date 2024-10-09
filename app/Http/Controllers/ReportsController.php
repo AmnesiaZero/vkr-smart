@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidatorHelper;
-use App\Http\Controllers\Controller;
 use App\Services\Reports\ReportsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -27,18 +26,17 @@ class ReportsController extends Controller
 
     public function view()
     {
-       return $this->reportsService->pqgeView();
+        return $this->reportsService->pqgeView();
     }
 
     public function get(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->only($this->fillable),[
-            'year_id' => ['integer',Rule::exists('organizations_years','id')],
-            'faculty_id' => ['integer',Rule::exists('faculties','id')],
-            'department_id' => ['integer',Rule::exists('departments','id')]
+        $validator = Validator::make($request->only($this->fillable), [
+            'year_id' => ['integer', Rule::exists('organizations_years', 'id')],
+            'faculty_id' => ['integer', Rule::exists('faculties', 'id')],
+            'department_id' => ['integer', Rule::exists('departments', 'id')]
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);

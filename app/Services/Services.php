@@ -5,11 +5,9 @@ namespace App\Services;
 use App\Services\Decorations\DecorationsService;
 use App\Services\Decorations\Repositories\DecorationRepositoryInterface;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class Services
 {
-
 
 
     /**

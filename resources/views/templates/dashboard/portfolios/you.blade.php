@@ -132,7 +132,8 @@
          </td>
        </tr>
 
-</script>
+
+    </script>
 
 
 
@@ -221,6 +222,7 @@
 
 
 
+
     </script>
 
     <script id="record_tmpl" type="text/x-jquery-tmpl">
@@ -283,6 +285,7 @@
               </li>
           </ul>
       </div>
+
     </script>
 
     <script id="text_tmpl" type="text/x-jquery-tmpl">
@@ -304,6 +307,7 @@
      </div>
 
 
+
     </script>
 
     <script id="work_tmpl" type="text/x-jquery-tmpl">
@@ -317,6 +321,7 @@
        <td>${name}</td>
        <td>${getAssessmentDescription(assessment)}</td>
        </tr>
+
 
     </script>
 
@@ -435,6 +440,7 @@
              </div>
          </div>
      </div>
+
     </script>
 
     <script id="overview_achievement_tmpl" type="text/x-jquery-tmpl">
@@ -451,6 +457,7 @@
               ${record_date}
           </td>
          </tr>
+
     </script>
 
     <script id="overview_education_tmpl" type="text/x-jquery-tmpl">
@@ -488,6 +495,7 @@
                 </div>
             </div>
         </form>
+
     </script>
 
     <script id="overview_career_tmpl" type="text/x-jquery-tmpl">
@@ -526,6 +534,7 @@
                </div>
            </div>
        </form>
+
     </script>
 @endsection
 

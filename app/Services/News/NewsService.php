@@ -8,7 +8,6 @@ use App\Services\News\Repositories\NewsRepositoryInterface;
 use App\Services\Services;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
@@ -30,17 +29,28 @@ class NewsService extends Services
         $orderBy = 'title';
         $direction = 'asc';
         $limit = 500;
-        $publishedNews = $this->_repository->getAllPublishedWithPagination($orderBy,$direction,$limit);
-        $unpublishedNews = $this->_repository->getAllUnpublishedWithPagination($orderBy,$direction,$limit);
-        if($publishedNews and $unpublishedNews)
-        {
-            return view('templates.dashboard.platform.news.index',[
+        $publishedNews = $this->_repository->getAllPublishedWithPagination($orderBy, $direction, $limit);
+        $unpublishedNews = $this->_repository->getAllUnpublishedWithPagination($orderBy, $direction, $limit);
+        if ($publishedNews and $unpublishedNews) {
+            return view('templates.dashboard.platform.news.index', [
                 'published_news' => $publishedNews,
                 'unpublished_news' => $unpublishedNews,
                 'you' => $you
             ]);
         }
         return back()->withErrors(['Ошибка при подгрузке нововстей']);
+    }
+
+    /**
+     * Получить опубликованные ресурсы с пагинацией
+     * @param string|array $orderByColumn
+     * @param string $direction
+     * @param int $limit
+     * @return LengthAwarePaginator
+     */
+    public function getAllPublishedWithPagination($orderByColumn = 'id', string $direction = 'ASC', int $limit = 20): LengthAwarePaginator
+    {
+        return $this->_repository->getAllPublishedWithPagination($orderByColumn, $direction, $limit);
     }
 
     /**
@@ -86,18 +96,6 @@ class NewsService extends Services
     public function getAllWithPaginationWithTrashed(string $orderByColumn = 'id', string $direction = 'ASC', int $limit = 20): LengthAwarePaginator
     {
         return $this->_repository->getAllWithPaginationWithTrashed($orderByColumn, $direction, $limit);
-    }
-
-    /**
-     * Получить опубликованные ресурсы с пагинацией
-     * @param string|array $orderByColumn
-     * @param string $direction
-     * @param int $limit
-     * @return LengthAwarePaginator
-     */
-    public function getAllPublishedWithPagination($orderByColumn = 'id', string $direction = 'ASC', int $limit = 20): LengthAwarePaginator
-    {
-        return $this->_repository->getAllPublishedWithPagination($orderByColumn, $direction, $limit);
     }
 
     /**
@@ -213,17 +211,6 @@ class NewsService extends Services
     }
 
     /**
-     * Поиск ресурса по его идентификатору (ID)
-     *
-     * @param int $id
-     * @return Model
-     */
-    public function find(int $id): Model
-    {
-        return $this->_repository->find($id);
-    }
-
-    /**
      * Поиск только опубликованного ресурса по его идентификатору (ID)
      *
      * @param int $id
@@ -247,14 +234,13 @@ class NewsService extends Services
 
     /**
      * Фильтрация по новостям
-     * @param array $filter;
+     * @param array $filter ;
      * @return LengthAwarePaginator
      */
     public function filter(array $filter): LengthAwarePaginator
     {
         return $this->_repository->filter($filter);
     }
-
 
     /**
      * Создание нового ресурса в хранилище
@@ -280,49 +266,33 @@ class NewsService extends Services
 
         if ($item && $item->id) {
             $id = $item->id;
-            if (isset($data['preview_image']) and is_file($data['preview_image']) and FilesHelper::acceptableImage($data['preview_image']))
-            {
+            if (isset($data['preview_image']) and is_file($data['preview_image']) and FilesHelper::acceptableImage($data['preview_image'])) {
                 $imageFile = $data['preview_image'];
-                $directoryNumber = ceil($id/1000);
-                $previewDirectory = 'public/previews/'.$directoryNumber;
+                $directoryNumber = ceil($id / 1000);
+                $previewDirectory = 'public/previews/' . $directoryNumber;
                 Storage::makeDirectory($previewDirectory);
-                $storeName = $id.'.'.$imageFile->extension();
-                $previewPath =  $imageFile->storeAs($previewDirectory,$storeName);
+                $storeName = $id . '.' . $imageFile->extension();
+                $previewPath = $imageFile->storeAs($previewDirectory, $storeName);
                 $originalName = $imageFile->getClientOriginalName();
                 $updatedData = [
                     'preview_path' => $previewPath,
                     'preview_name' => $originalName
                 ];
-                $result = $this->_repository->update($updatedData,$id);
+                $result = $this->_repository->update($updatedData, $id);
 
-                if(is_null($result))
-                {
+                if (is_null($result)) {
                     return back()->withErrors(['Ошибка при загрузке изображения новости']);
                 }
             }
-            if(isset($date['redirect']))
-            {
+            if (isset($date['redirect'])) {
                 return redirect(route('news.index'));
             }
-            return view('templates.dashboard.platform.news.create',[
+            return view('templates.dashboard.platform.news.create', [
                 'item' => $item
             ]);
+        } else {
+            return back()->withErrors(['Ошибка при сохранении новости']);
         }
-        else {
-           return back()->withErrors(['Ошибка при сохранении новости']);
-        }
-    }
-
-    public function edit(int $id)
-    {
-        $item = $this->_repository->find($id);
-        if($item and $item->id)
-        {
-            return view('templates.dashboard.platform.news.edit',[
-                'item' => $item
-            ]);
-        }
-        return back()->withErrors(['Ошибка при получении экземпляра новости']);
     }
 
     /**
@@ -331,7 +301,7 @@ class NewsService extends Services
      * @param array $data
      * @param int $id
      */
-    public function update(int $id,array $data)
+    public function update(int $id, array $data)
     {
         if (empty($data)) {
             return back()->withErrors(['Пустой массив данных']);
@@ -339,20 +309,19 @@ class NewsService extends Services
 
         if (!empty($data['publication_date'])) {
             $date = $data['publication_date'];
-            $data['publication_date'] =  Carbon::createFromFormat('d.m.Y', $date);
+            $data['publication_date'] = Carbon::createFromFormat('d.m.Y', $date);
 
         } else {
             $data['publication_date'] = now();
         }
 
-        if (isset($data['preview_image']) and is_file($data['preview_image']) and FilesHelper::acceptableImage($data['preview_image']))
-        {
+        if (isset($data['preview_image']) and is_file($data['preview_image']) and FilesHelper::acceptableImage($data['preview_image'])) {
             $imageFile = $data['preview_image'];
-            $directoryNumber = ceil($id/1000);
-            $previewDirectory = 'public/previews/'.$directoryNumber;
+            $directoryNumber = ceil($id / 1000);
+            $previewDirectory = 'public/previews/' . $directoryNumber;
             Storage::makeDirectory($previewDirectory);
-            $storeName = $id.'.'.$imageFile->extension();
-            $previewPath =  $imageFile->storeAs($previewDirectory,$storeName);
+            $storeName = $id . '.' . $imageFile->extension();
+            $previewPath = $imageFile->storeAs($previewDirectory, $storeName);
             $data['preview_path'] = $previewPath;
             $originalName = $imageFile->getClientOriginalName();
             $data['preview_name'] = $originalName;
@@ -362,20 +331,39 @@ class NewsService extends Services
 
         if ($result) {
             $item = $this->_repository->find($id);
-            if($item and $item->id)
-            {
-                if(isset($data['redirect']))
-                {
+            if ($item and $item->id) {
+                if (isset($data['redirect'])) {
                     return redirect(route('news.index'));
                 }
-                return view('templates.dashboard.platform.news.edit',[
+                return view('templates.dashboard.platform.news.edit', [
                     'item' => $item
                 ]);
             }
-        }
-        else {
+        } else {
             return back()->withErrors(['Ошибка при обновлении новости']);
         }
+    }
+
+    /**
+     * Поиск ресурса по его идентификатору (ID)
+     *
+     * @param int $id
+     * @return Model
+     */
+    public function find(int $id): Model
+    {
+        return $this->_repository->find($id);
+    }
+
+    public function edit(int $id)
+    {
+        $item = $this->_repository->find($id);
+        if ($item and $item->id) {
+            return view('templates.dashboard.platform.news.edit', [
+                'item' => $item
+            ]);
+        }
+        return back()->withErrors(['Ошибка при получении экземпляра новости']);
     }
 
     /**
@@ -387,7 +375,7 @@ class NewsService extends Services
     public function destroy(int $id): JsonResponse
     {
         if (!$id) {
-           return back()->withErrors(['Не указан id ресурса']);
+            return back()->withErrors(['Не указан id ресурса']);
         }
 
         $unpublished = $this->_repository->unpublished($id);
@@ -403,14 +391,14 @@ class NewsService extends Services
                 "error" => false,
                 "successTitle" => "Успешно!",
                 "successMessage" => "Ресурс удален успешно",
-                "restoreLink" => route('dashboard.news.restore', ['id'=>$id]),
-                "deleteLink" => route('dashboard.news.delete', ['id'=>$id])
+                "restoreLink" => route('dashboard.news.restore', ['id' => $id]),
+                "deleteLink" => route('dashboard.news.delete', ['id' => $id])
             ]);
         } else {
             return response()->json([
                 'error' => true,
-                'errorCode'=>'#D0003',
-                'errorMessage'=>'Не удалось удалить ресурс'
+                'errorCode' => '#D0003',
+                'errorMessage' => 'Не удалось удалить ресурс'
             ]);
         }
     }
@@ -426,8 +414,8 @@ class NewsService extends Services
         if (!$id) {
             return response()->json([
                 'error' => true,
-                'errorCode'=>'#0001',
-                'errorMessage'=>'Не указан ID ресурса'
+                'errorCode' => '#0001',
+                'errorMessage' => 'Не указан ID ресурса'
             ]);
         }
 
@@ -438,16 +426,16 @@ class NewsService extends Services
                 'error' => false,
                 'successTitle' => 'Успешно!',
                 'successMessage' => 'Ресурс восстановлен успешно',
-                'updateStatusLink' => route('dashboard.news.togglePublished', ['item'=>$id]),
-                'editLink' => route('dashboard.news.edit', ['id'=>$id]),
-                'destroyLink' => route('dashboard.news.destroy', ['id'=>$id]),
+                'updateStatusLink' => route('dashboard.news.togglePublished', ['item' => $id]),
+                'editLink' => route('dashboard.news.edit', ['id' => $id]),
+                'destroyLink' => route('dashboard.news.destroy', ['id' => $id]),
                 'published' => $result
             ]);
         } else {
             return response()->json([
                 'error' => true,
-                'errorCode'=>'#0004',
-                'errorMessage'=>'Не удалось восстановить ресурс'
+                'errorCode' => '#0004',
+                'errorMessage' => 'Не удалось восстановить ресурс'
             ]);
         }
     }
@@ -463,8 +451,8 @@ class NewsService extends Services
         if (!$id) {
             return response()->json([
                 'error' => true,
-                'errorCode'=>'#0001',
-                'errorMessage'=>'Не указан ID ресурса'
+                'errorCode' => '#0001',
+                'errorMessage' => 'Не указан ID ресурса'
             ]);
         }
 
@@ -479,8 +467,8 @@ class NewsService extends Services
         } else {
             return response()->json([
                 'error' => true,
-                'errorCode'=>'#0003',
-                'errorMessage'=>'Не удалось удалить ресурс'
+                'errorCode' => '#0003',
+                'errorMessage' => 'Не удалось удалить ресурс'
             ]);
         }
     }
@@ -494,16 +482,14 @@ class NewsService extends Services
     public function update_status(int $id)
     {
         $item = $this->_repository->find($id);
-        if($item and $item->id)
-        {
+        if ($item and $item->id) {
             $published = $item->published;
             $published = ($published == 0) ? 1 : 0;
             $data = [
                 'published' => $published
             ];
-            $result = $this->_repository->update($data,$id);
-            if($result)
-            {
+            $result = $this->_repository->update($data, $id);
+            if ($result) {
                 return redirect(route('news.index'));
             }
         }

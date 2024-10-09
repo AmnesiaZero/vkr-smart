@@ -16,7 +16,8 @@
                     <div>
                         <p class="text-grey mb-2 fs-14">Наименование достижения</p>
                         <div class="input-group input-group-lg br-100 br-green-light-2 focus-form mb-3">
-                            <input type="text" name="name" value="" class="form-control search br-none fs-14 form-small-p"
+                            <input type="text" name="name" value=""
+                                   class="form-control search br-none fs-14 form-small-p"
                                    placeholder="Поиск" id="achievement_name">
                             <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                                 <img src="/images/Search.svg" alt="search">
@@ -27,7 +28,8 @@
                         <p class="text-grey mb-2 fs-14">Тип документа</p>
                         <div>
                             <div class="col-sm-10">
-                                <select name="achievement_mode_id" class="selectpicker bs-select-hidden w-100" title="Выбрать...">
+                                <select name="achievement_mode_id" class="selectpicker bs-select-hidden w-100"
+                                        title="Выбрать...">
                                     @if(isset($modes) and is_iterable($modes))
                                         @foreach($modes as $mode)
                                             <option value="{{$mode->id}}">{{$mode->name}}</option>
@@ -112,30 +114,31 @@
                  class="btn-info-box cursor-p dropdown-toggle" onclick="openInfoBox(${id})" type="button"
                  aria-expanded="false">
             @include('layouts.dashboard.include.menu.achievement')
-          </td>
-         </tr>
-         <tr>
-           <td class="nopadding" colspan="5">
-             <table class="table table-condensed table-bordered">
-                 <thead>
-                     <tr>
-                         <th class="text-center">Отзыв</th>
-                         <th class="text-center">Подтверждение достижения</th>
-                         <th class="text-center">Работа</th>
-                         <th class="text-center">Другое</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                     <tr style="flex:row">
-                       <td id="reviews_column_${id}" class="text-center"> </td>
-                       <td id="confirm_achievements_column_${id}" class="text-center"> </td>
-                       <td id="works_column_${id}" class="text-center"> </td>
-                       <td id="others_column_${id}" class="text-center"> </td>
-                     </tr>
-                 </tbody>
+        </td>
+       </tr>
+       <tr>
+         <td class="nopadding" colspan="5">
+           <table class="table table-condensed table-bordered">
+               <thead>
+                   <tr>
+                       <th class="text-center">Отзыв</th>
+                       <th class="text-center">Подтверждение достижения</th>
+                       <th class="text-center">Работа</th>
+                       <th class="text-center">Другое</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   <tr style="flex:row">
+                     <td id="reviews_column_${id}" class="text-center"> </td>
+                     <td id="confirm_achievements_column_${id}" class="text-center"> </td>
+                     <td id="works_column_${id}" class="text-center"> </td>
+                     <td id="others_column_${id}" class="text-center"> </td>
+                   </tr>
+               </tbody>
 
-           </td>
-         </tr>
+         </td>
+       </tr>
+
 
     </script>
 
@@ -251,6 +254,7 @@
             </div>
         </div>
     </div>
+
     </script>
 
     <script id="record_tmpl" type="text/x-jquery-tmpl">
@@ -313,6 +317,7 @@
               </li>
           </ul>
       </div>
+
     </script>
 
     <script id="text_tmpl" type="text/x-jquery-tmpl">
@@ -334,6 +339,7 @@
      </div>
 
 
+
     </script>
 
     <script id="work_tmpl" type="text/x-jquery-tmpl">
@@ -347,6 +353,7 @@
        <td>${name}</td>
        <td>${getAssessmentDescription(assessment)}</td>
        </tr>
+
 
     </script>
 
@@ -465,6 +472,7 @@
              </div>
          </div>
      </div>
+
     </script>
 
     <script id="overview_achievement_tmpl" type="text/x-jquery-tmpl">
@@ -481,6 +489,7 @@
               ${record_date}
           </td>
          </tr>
+
     </script>
 
     <script id="overview_education_tmpl" type="text/x-jquery-tmpl">
@@ -518,6 +527,7 @@
                 </div>
             </div>
         </form>
+
     </script>
 
     <script id="overview_career_tmpl" type="text/x-jquery-tmpl">
@@ -556,6 +566,7 @@
                </div>
            </div>
        </form>
+
     </script>
 @endsection
 

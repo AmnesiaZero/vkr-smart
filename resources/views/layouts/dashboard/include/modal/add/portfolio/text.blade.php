@@ -13,7 +13,7 @@
                             <label class="col-sm-4">Введите наименование</label>
                             <div class="col-sm-8">
                                 <input type="text" name="name" class="form-control fullwidth" required=""
-                                placeholder="Ввод...">
+                                       placeholder="Ввод...">
                             </div>
                         </div>
 
@@ -39,7 +39,8 @@
                                             <option class="boldoption" disabled="disabled">{{$category->name}}</option>
                                             @if(isset($category->achievementsTypes) and is_iterable($category->achievementsTypes))
                                                 @foreach($category->achievementsTypes as $achievementType)
-                                                    <option value="{{$achievementType->id}}">{{$achievementType->name}}</option>
+                                                    <option
+                                                        value="{{$achievementType->id}}">{{$achievementType->name}}</option>
                                                 @endforeach
                                             @endif
                                         @endforeach

@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\Organizations;
 
-use App\Helpers\JsonHelper;
 use App\Helpers\ValidatorHelper;
 use App\Http\Controllers\Controller;
 use App\Services\OrganizationsYears\OrganizationsYearsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -33,7 +30,7 @@ class OrganizationsYearsController extends Controller
     public function get(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'organization_id' => ['integer',Rule::exists('organizations_years','id')],
+            'organization_id' => ['integer', Rule::exists('organizations_years', 'id')],
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);

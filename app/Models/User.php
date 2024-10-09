@@ -11,7 +11,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -81,23 +80,24 @@ class User extends Authenticatable
         return $this->belongsToMany(Department::class, 'departments_users')->with(['faculty', 'year']);
     }
 
-    public function specialty():HasOne
+    public function specialty(): HasOne
     {
-        return $this->hasOne(ProgramSpecialty::class,'id','specialty_id');
-    }
-    public function department():HasOne
-    {
-        return $this->hasOne(Department::class,'id','department_id');
+        return $this->hasOne(ProgramSpecialty::class, 'id', 'specialty_id');
     }
 
-    public function year():HasOne
+    public function department(): HasOne
     {
-        return $this->hasOne(OrganizationYear::class,'id','year_id');
+        return $this->hasOne(Department::class, 'id', 'department_id');
     }
 
-    public function faculty():HasOne
+    public function year(): HasOne
     {
-        return $this->hasOne(Faculty::class,'id','faculty_id');
+        return $this->hasOne(OrganizationYear::class, 'id', 'year_id');
+    }
+
+    public function faculty(): HasOne
+    {
+        return $this->hasOne(Faculty::class, 'id', 'faculty_id');
     }
 
     public function organization(): HasOne
@@ -105,24 +105,24 @@ class User extends Authenticatable
         return $this->hasOne(Organization::class, 'id', 'organization_id');
     }
 
-    public function works():HasMany
+    public function works(): HasMany
     {
-        return $this->hasMany(Work::class,'user_id','id');
+        return $this->hasMany(Work::class, 'user_id', 'id');
     }
 
-    public function achievements():HasMany
+    public function achievements(): HasMany
     {
-       return $this->hasMany(Achievement::class,'user_id','id');
+        return $this->hasMany(Achievement::class, 'user_id', 'id');
     }
 
-    public function educations():HasMany
+    public function educations(): HasMany
     {
-        return $this->hasMany(Education::class,'user_id','id');
+        return $this->hasMany(Education::class, 'user_id', 'id');
     }
 
-    public function careers():HasMany
+    public function careers(): HasMany
     {
-        return $this->hasMany(Career::class,'user_id','id');
+        return $this->hasMany(Career::class, 'user_id', 'id');
     }
 
 

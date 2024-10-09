@@ -46,13 +46,12 @@ class WorksTypesController extends Controller
         return $this->worksTypesService->get($organizationId);
     }
 
-    public function delete(Request $request):JsonResponse
+    public function delete(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(),[
-            'id' => ['integer',Rule::exists('works_types','id')],
+        $validator = Validator::make($request->all(), [
+            'id' => ['integer', Rule::exists('works_types', 'id')],
         ]);
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $id = $request->id;

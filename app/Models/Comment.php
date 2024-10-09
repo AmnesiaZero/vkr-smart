@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -10,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'works_comments';
 
@@ -29,20 +28,19 @@ class Comment extends Model
     ];
 
 
-
-    public function work():HasOne
+    public function work(): HasOne
     {
-        return $this->hasOne(Work::class,'id','work_id');
+        return $this->hasOne(Work::class, 'id', 'work_id');
     }
 
-    public function sender():HasOne
+    public function sender(): HasOne
     {
-        return $this->hasOne(User::class,'id','sender_id');
+        return $this->hasOne(User::class, 'id', 'sender_id');
     }
 
-    public function receiver():HasOne
+    public function receiver(): HasOne
     {
-        return $this->hasOne(User::class,'id','receiver_id');
+        return $this->hasOne(User::class, 'id', 'receiver_id');
     }
 
 }

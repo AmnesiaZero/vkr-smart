@@ -11,7 +11,7 @@
                         <label class="col-sm-4">Год выпуска</label>
                         <div class="col-sm-8">
                             <select class="selectpicker form-control" id="add_department_years_list" required=""
-                            title="Выберите...">
+                                    title="Выберите...">
 
                             </select>
                         </div>
@@ -37,7 +37,8 @@
                         <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
                             Применить
                         </button>
-                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
+                                data-bs-dismiss="modal">
                             Закрыть
                         </button>
                     </div>

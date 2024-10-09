@@ -1,5 +1,5 @@
 /* Кнопка открытия модального окна для update_year */
-$(document).ready(function() {
+$(document).ready(function () {
     $('#update_year').on('show.bs.modal', function (event) {
         let button = $(event.relatedTarget); // Кнопка, которая вызвала модалку
         let id = button.data('id');
@@ -20,8 +20,8 @@ $(document).ready(function() {
 
 });
 
-$(document).ready(function() {
-    $('.delete-link').on('click', function(e) {
+$(document).ready(function () {
+    $('.delete-link').on('click', function (e) {
         e.preventDefault(); // Отключаем стандартное действие ссылки
 
         let url = $(this).attr('href'); // Получаем URL из ссылки
@@ -32,27 +32,24 @@ $(document).ready(function() {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response) {
-                    if(response.success)
-                    {
+                success: function (response) {
+                    if (response.success) {
                         location.reload(); // Обновляем страницу (опционально)
                         $.notify(response.data.title + ":" + response.data.message, "success");
-                    }
-                    else
-                    {
+                    } else {
                         $.notify(response.data.title + ":" + response.data.message, "error");
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     // Ошибка при удалении
-                    $.notify("Ошибка при удалении элемента","error");
+                    $.notify("Ошибка при удалении элемента", "error");
                     console.log(xhr.responseText);
                 }
             });
         }
     });
 
-    $('.restore-link').on('click', function(e) {
+    $('.restore-link').on('click', function (e) {
         e.preventDefault(); // Отключаем стандартное действие ссылки
 
         let url = $(this).attr('href'); // Получаем URL из ссылки
@@ -63,12 +60,12 @@ $(document).ready(function() {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response) {
+                success: function (response) {
                     // Успешное удаление, можно обновить страницу или удалить элемент из DOM
                     location.reload(); // Обновляем страницу (опционально)
                     $.notify(response.data.title + ":" + response.data.message, "success");
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     // Ошибка при удалении
                     $.notify(response.data.title + ":" + response.data.message, "error");
                     console.log(xhr.responseText);
@@ -79,7 +76,7 @@ $(document).ready(function() {
 });
 
 /* Кнопка открытия модального окна для update_faculty */
-$(document).ready(function() {
+$(document).ready(function () {
     $('#update_faculty').on('show.bs.modal', function (event) {
         let button = $(event.relatedTarget); // Кнопка, которая вызвала модалку
         let id = button.data('id');
@@ -95,7 +92,7 @@ $(document).ready(function() {
 });
 
 /* Кнопка открытия модального окна для update_department */
-$(document).ready(function() {
+$(document).ready(function () {
     $('#update_department').on('show.bs.modal', function (event) {
         let button = $(event.relatedTarget); // Кнопка, которая вызвала модалку
         let id = button.data('id');
@@ -121,7 +118,6 @@ function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     modal.style.display = "none";
 }
-
 
 
 function inc(element) {
@@ -152,29 +148,24 @@ function serializeRemoveNull(serStr) {
     return serStr.split("&").filter(str => !str.endsWith("=")).join("&");
 }
 
-function getArrayFromLocalStorage(fieldName)
-{
+function getArrayFromLocalStorage(fieldName) {
     const items = localStorage.getItem(fieldName);
     let itemsArray = [];
-    if(items)
-    {
+    if (items) {
         itemsArray = items.split(',');
     }
     return itemsArray;
 }
 
-function deleteElement(elementId)
-{
+function deleteElement(elementId) {
     $("#" + elementId).remove();
 }
 
-function openTmplModal(modalId,object)
-{
+function openTmplModal(modalId, object) {
     $("#tmpl_modals").html($("#" + modalId).tmpl(object));
 }
 
-function closeTmplModal(modalId)
-{
+function closeTmplModal(modalId) {
     $("#" + modalId).remove();
 }
 
@@ -201,8 +192,7 @@ const addBadge = function (clickedElement) {
             </span>`;
         }
         localStorage.setItem('selected_years', selectedYears.join(','));
-    }
-    else if (id.includes('faculty_')) {
+    } else if (id.includes('faculty_')) {
         let selectedFaculties = localStorage.getItem('selected_faculties');
         const match = id.match(/\d+/); // Находим все последовательности цифр в строке
         const number = match ? match[0] : ''; // Если найдены цифры, сохраняем их
@@ -217,8 +207,7 @@ const addBadge = function (clickedElement) {
             </span>`;
         }
         localStorage.setItem('selected_faculties', selectedFaculties.join(','));
-    }
-    else if (id.includes('department_')) {
+    } else if (id.includes('department_')) {
         let selectedDepartments = localStorage.getItem('selected_departments');
         const match = id.match(/\d+/); // Находим все последовательности цифр в строке
         const number = match ? match[0] : ''; // Если найдены цифры, сохраняем их
@@ -255,8 +244,7 @@ function deleteTreeElement(id) {
             localStorage.setItem('selected_years', selectedYears);
         }
 
-    }
-    else if (id.includes('faculty_')) {
+    } else if (id.includes('faculty_')) {
         let selectedFaculties = localStorage.getItem('selected_faculties');
         const match = id.match(/\d+/); // Находим все последовательности цифр в строке
         const number = match ? match[0] : ''; // Если найдены цифры, сохраняем их
@@ -268,8 +256,7 @@ function deleteTreeElement(id) {
             selectedFaculties = facultiesArray.join(',');
             localStorage.setItem('selected_faculties', selectedFaculties);
         }
-    }
-    else if (id.includes('department_')) {
+    } else if (id.includes('department_')) {
         let selectedDepartments = localStorage.getItem('selected_departments');
         const match = id.match(/\d+/); // Находим все последовательности цифр в строке
         const number = match ? match[0] : ''; // Если найдены цифры, сохраняем их
@@ -303,34 +290,31 @@ function updateWorksPagination(pagination) {
         cssStyle: '',
         prevText: '<span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>',
         nextText: '<span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>',
-        onPageClick: function(pageNumber) {
+        onPageClick: function (pageNumber) {
             searchWorks(pageNumber);
         }
     });
 }
 
 
-
-
-function toggleFile(htmlId)
-{
+function toggleFile(htmlId) {
     $('#' + htmlId).click(); // Открываем диалог выбора файла
 }
 
-function selectFileWithCKFinder( elementId ) {
-    CKFinder.modal( {
+function selectFileWithCKFinder(elementId) {
+    CKFinder.modal({
         chooseFiles: true,
         width: 800,
         height: 600,
-        onInit: function( finder ) {
-            finder.on( 'files:choose', function( evt ) {
+        onInit: function (finder) {
+            finder.on('files:choose', function (evt) {
                 var file = evt.data.files.first();
-                var output = document.getElementById( elementId );
+                var output = document.getElementById(elementId);
                 output.value = file.getUrl();
             });
 
-            finder.on( 'file:choose:resizedImage', function( evt ) {
-                var output = document.getElementById( elementId );
+            finder.on('file:choose:resizedImage', function (evt) {
+                var output = document.getElementById(elementId);
                 output.value = evt.data.resizedUrl;
             });
         }
@@ -342,14 +326,14 @@ function updateUserPagination(pagination) {
     const displayedPages = pagination.links.length - 2; //Без Previous и Next
     $("#users_count").text(totalItems);
     $("#users_pagination").pagination({
-        items:  totalItems,
+        items: totalItems,
         itemsOnPage: pagination.per_page,
         currentPage: pagination.current_page, // Установка текущей страницы в начало после добавления новых элементов
         displayedPages: displayedPages,
         cssStyle: '',
         prevText: '<span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>',
         nextText: '<span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>',
-        onPageClick: function(pageNumber) {
+        onPageClick: function (pageNumber) {
             searchUsers(pageNumber);
         }
     });

@@ -5,7 +5,6 @@ namespace App\Services\News\Repositories;
 use App\Models\News;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 
 class EloquentNewsRepository implements NewsRepositoryInterface
@@ -137,7 +136,7 @@ class EloquentNewsRepository implements NewsRepositoryInterface
                 break;
             default:
                 if ($page > 1) {
-                    $query->offset(($page-1) * $perPage);
+                    $query->offset(($page - 1) * $perPage);
                 }
                 $query->limit($perPage);
                 return $query->get();
@@ -201,17 +200,6 @@ class EloquentNewsRepository implements NewsRepositoryInterface
     public function get_past_news(): LengthAwarePaginator
     {
         return News::query()->withTrashed()->where('started_at', '<=', time())->orderBy('id', 'DESC')->paginate(20);
-    }
-
-    /**
-     * Поиск ресурса по его идентификатору (ID)
-     *
-     * @param int $id
-     * @return Model
-     */
-    public function find(int $id): Model
-    {
-        return News::query()->find($id);
     }
 
     /**
@@ -280,18 +268,6 @@ class EloquentNewsRepository implements NewsRepositoryInterface
     }
 
     /**
-     * Обновление ресурса в хранилище
-     *
-     * @param array $data
-     * @param int $id
-     * @return int
-     */
-    public function update(array $data, int $id): int
-	{
-		return $this->find($id)->update($data);
-	}
-
-    /**
      * Мягкое удаление ресурса
      *
      * @param int $id
@@ -319,10 +295,10 @@ class EloquentNewsRepository implements NewsRepositoryInterface
      * @param int $id
      * @return bool|int
      */
-	public function delete(int $id)
-	{
-		return News::query()->where('id', $id)->delete();
-	}
+    public function delete(int $id)
+    {
+        return News::query()->where('id', $id)->delete();
+    }
 
     /**
      * Изменение статуса публикации ресурса
@@ -331,9 +307,32 @@ class EloquentNewsRepository implements NewsRepositoryInterface
      * @param News|resource $item
      * @return bool|int
      */
-	public function updateStatus(array $data, $item)
+    public function updateStatus(array $data, $item)
     {
         return $item->update($data);
+    }
+
+    /**
+     * Обновление ресурса в хранилище
+     *
+     * @param array $data
+     * @param int $id
+     * @return int
+     */
+    public function update(array $data, int $id): int
+    {
+        return $this->find($id)->update($data);
+    }
+
+    /**
+     * Поиск ресурса по его идентификатору (ID)
+     *
+     * @param int $id
+     * @return Model
+     */
+    public function find(int $id): Model
+    {
+        return News::query()->find($id);
     }
 
     /**
@@ -344,7 +343,7 @@ class EloquentNewsRepository implements NewsRepositoryInterface
      */
     public function unpublished(int $id): bool
     {
-        return News::query()->where('id', $id)->update(['published'=>0]);
+        return News::query()->where('id', $id)->update(['published' => 0]);
     }
 
     /**

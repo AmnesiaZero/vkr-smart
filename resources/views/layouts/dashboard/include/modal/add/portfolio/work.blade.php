@@ -61,10 +61,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" onclick="closeModal('add_work_modal')">
+                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1"
+                            onclick="closeModal('add_work_modal')">
                         Добавить
                     </button>
-                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal"
+                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
+                            data-bs-dismiss="modal"
                             aria-label="Close" onclick="closeModal('add_work_modal')">
                         Закрыть
                     </button>

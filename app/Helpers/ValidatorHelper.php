@@ -19,7 +19,7 @@ class ValidatorHelper
         ]);
     }
 
-    public static function redirectError($validator):RedirectResponse
+    public static function redirectError($validator): RedirectResponse
     {
         $message = '';
         foreach ($validator->messages()->all() as $msg) {

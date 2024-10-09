@@ -30,7 +30,7 @@
 
     <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet"
           type="text/css"/>
-{{--    <link rel="stylesheet" type="text/css" href="{{'/css/dashboard.css'}}">--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{'/css/dashboard.css'}}">--}}
     <link rel="stylesheet" type="text/css" href="{{'/css/fancy_style.css'}}">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
@@ -69,15 +69,18 @@
                             <i class="mdi mdi-rhombus-split"></i>
                             <span class="nav-text">Организации</span> <span class="caret"></span>
                         </a>
-                        <ul id="organizations" class="collapse {{ (request()->segment(2) == 'organizations') ? 'show' : ''}}">
+                        <ul id="organizations"
+                            class="collapse {{ (request()->segment(2) == 'organizations') ? 'show' : ''}}">
                             <div class="sub-menu">
                                 <li class="{{ request()->routeIs('organizations.index') ? 'active' : '' }}">
-                                    <a href="{{route('organizations.index',['with_trashed' => 1])}}" class="sidenav-item-link">
+                                    <a href="{{route('organizations.index',['with_trashed' => 1])}}"
+                                       class="sidenav-item-link">
                                         <span class="nav-text">Организации</span>
                                     </a>
                                 </li>
                                 <li class="{{ request()->routeIs('departments.index') ? 'active' : '' }}">
-                                    <a href="{{route('departments.index',['with_trashed' => 1])}}" class="sidenav-item-link">
+                                    <a href="{{route('departments.index',['with_trashed' => 1])}}"
+                                       class="sidenav-item-link">
                                         <span class="nav-text">Отделения</span>
                                     </a>
                                 </li>
@@ -119,15 +122,19 @@
                     <ul class="nav navbar-nav">
                         <li class="dropdown user-menu">
                             <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                <img src="/images/no-user-image.jpg" class="user-image" alt="{{ \Illuminate\Support\Facades\Auth::user()->name }}"/>
-                                <span class="d-none d-lg-inline-block">{{ \Illuminate\Support\Facades\Auth::user()->name }}</span>
+                                <img src="/images/no-user-image.jpg" class="user-image"
+                                     alt="{{ \Illuminate\Support\Facades\Auth::user()->name }}"/>
+                                <span
+                                    class="d-none d-lg-inline-block">{{ \Illuminate\Support\Facades\Auth::user()->name }}</span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right pb-2" style="left: auto">
                                 <!-- User image -->
                                 <li class="dropdown-header">
-                                    <img src="/images/no-user-image.jpg" class="img-circle" alt="{{ \Illuminate\Support\Facades\Auth::user()->email }}"/>
+                                    <img src="/images/no-user-image.jpg" class="img-circle"
+                                         alt="{{ \Illuminate\Support\Facades\Auth::user()->email }}"/>
                                     <div class="d-inline-block">
-                                        {{ \Illuminate\Support\Facades\Auth::user()->name }} <small class="pt-1">{{ \Illuminate\Support\Facades\Auth::user()->email }}</small>
+                                        {{ \Illuminate\Support\Facades\Auth::user()->name }} <small
+                                            class="pt-1">{{ \Illuminate\Support\Facades\Auth::user()->email }}</small>
                                     </div>
                                 </li>
                                 <li>
@@ -188,7 +195,6 @@
 
 
 <script src="/js/bootstrap-select.js"></script>
-
 
 
 <script src="/js/app.js"></script>

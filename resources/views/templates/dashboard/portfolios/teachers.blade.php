@@ -14,7 +14,8 @@
             @endrole
             <div class="col">
                 <div class="out-kod"></div>
-                <form id="search_users_form" class="pt-4 col-xxl-4 col-xl-5 col-md-8" onsubmit="searchUsers();return false">
+                <form id="search_users_form" class="pt-4 col-xxl-4 col-xl-5 col-md-8"
+                      onsubmit="searchUsers();return false">
                     <p class="text-grey mb-2 fs-14">ФИО обучающегося</p>
                     <div class="input-group input-group-lg br-100 br-green-light-2 focus-form mb-3">
                         <input type="text" name="name" value="" class="form-control search br-none fs-14 form-small-p"
@@ -32,8 +33,11 @@
                         </button>
                     </div>
                     <div class="mt-auto d-flex gap-3">
-                        <button type="submit" class="btn btn-secondary br-100 br-none text-grey fs-14 py-1">Применить</button>
-                        <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1" onclick="resetSearch();return false">Сбросить</button>
+                        <button type="submit" class="btn btn-secondary br-100 br-none text-grey fs-14 py-1">Применить
+                        </button>
+                        <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1"
+                                onclick="resetSearch();return false">Сбросить
+                        </button>
                     </div>
                 </form>
             </div>

@@ -20,7 +20,8 @@
                             </div>
                             <div class="form-group mt-3">
                                 <label for="password">Пароль</label>
-                                <input id="password" type="password" name="password" placeholder="" class="form-control">
+                                <input id="password" type="password" name="password" placeholder=""
+                                       class="form-control">
                             </div>
                             <div class="form-check my-4">
                                 <input id="remember_me" type="checkbox" name="remember" value="1"

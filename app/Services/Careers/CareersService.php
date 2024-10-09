@@ -2,7 +2,6 @@
 
 namespace App\Services\Careers;
 
-use App\Helpers\JsonHelper;
 use App\Services\Careers\Repositories\CareerRepositoryInterface;
 use App\Services\Services;
 use Illuminate\Http\JsonResponse;
@@ -24,14 +23,13 @@ class CareersService extends Services
         $organizationId = $you->organization_id;
         $data['organization_id'] = $organizationId;
         $career = $this->careerRepository->create($data);
-        if($career and $career->id)
-        {
-            return self::sendJsonResponse(true,[
+        if ($career and $career->id) {
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'career' => $career
             ]);
         }
-        return self::sendJsonResponse(false,[
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'Ошибка при создании карьеры'
         ]);
@@ -40,14 +38,13 @@ class CareersService extends Services
     public function get(int $userId): JsonResponse
     {
         $careers = $this->careerRepository->get($userId);
-        if($careers and is_iterable($careers))
-        {
-            return self::sendJsonResponse(true,[
+        if ($careers and is_iterable($careers)) {
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'careers' => $careers
             ]);
         }
-        return self::sendJsonResponse(false,[
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'Ошибка при получении карьер'
         ]);
@@ -56,14 +53,13 @@ class CareersService extends Services
     public function delete(int $id): JsonResponse
     {
         $flag = $this->careerRepository->delete($id);
-        if($flag)
-        {
-            return self::sendJsonResponse(true,[
+        if ($flag) {
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Карьера успешно удалена'
             ]);
         }
-        return self::sendJsonResponse(false,[
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при удалении работы'
         ]);

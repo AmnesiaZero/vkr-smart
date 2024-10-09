@@ -51,7 +51,7 @@ class ScientificSupervisorsController extends Controller
     public function delete(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'id' =>  ['required','integer',Rule::exists('scientific_supervisors','id')]
+            'id' => ['required', 'integer', Rule::exists('scientific_supervisors', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);

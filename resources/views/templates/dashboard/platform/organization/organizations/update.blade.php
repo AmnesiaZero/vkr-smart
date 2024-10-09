@@ -5,14 +5,16 @@
         <div class="list-header">
             <h2 class="block-title">Редактирование организации: {{ $organization->name }}</h2>
         </div>
-        <form id="organization_form" enctype="multipart/form-data"  action="{{ route('organizations.update', ['id' => $organization->id] )}}"  method="POST">
+        <form id="organization_form" enctype="multipart/form-data"
+              action="{{ route('organizations.update', ['id' => $organization->id] )}}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-8">
                     <div class="post">
                         <div class="form-group">
                             <label for="title">Название организации</label>
-                            <input id="title" type="text" name="name" value="{{ $organization->name }}" class="form-control">
+                            <input id="title" type="text" name="name" value="{{ $organization->name }}"
+                                   class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="parent_id">Является связанной для организации:</label>
@@ -20,7 +22,8 @@
                                 <option value="0">--Выберите--</option>
                                 @if(isset($parents) && !empty($parents))
                                     @foreach($parents as $parent)
-                                        <option value="{{ $parent->id }}" @if($parent->id == $organization->parent_id) selected @endif>{{ $parent->name }}</option>
+                                        <option value="{{ $parent->id }}"
+                                                @if($parent->id == $organization->parent_id) selected @endif>{{ $parent->name }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -28,7 +31,9 @@
                         <div class="form-group">
                             <label for="logo">Логотип</label>
                             <div class="input-group">
-                                <input id="logo" type="text" value="@if($organization->logo_file_name) {{$organization->logo_file_name}} @endif" class="form-control"
+                                <input id="logo" type="text"
+                                       value="@if($organization->logo_file_name) {{$organization->logo_file_name}} @endif"
+                                       class="form-control"
                                        placeholder="Выберите изображение" aria-label="Выберите изображение"
                                        aria-describedby="button-select-image" readonly>
                                 <div class="input-group-append">
@@ -41,35 +46,43 @@
                         </div>
                         <div class="form-group">
                             <label for="address">Адрес</label>
-                            <input id="address" type="text" name="address" value="{{ $organization->address }}" class="form-control">
+                            <input id="address" type="text" name="address" value="{{ $organization->address }}"
+                                   class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="phone">Телефон</label>
-                            <input id="phone" type="text" name="phone" value="{{ $organization->phone }}" class="form-control">
+                            <input id="phone" type="text" name="phone" value="{{ $organization->phone }}"
+                                   class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="website">Сайт</label>
-                            <input id="website" type="text" name="website" value="{{ $organization->website }}" class="form-control">
+                            <input id="website" type="text" name="website" value="{{ $organization->website }}"
+                                   class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="email">E-mail</label>
-                            <input id="email" type="text" name="email" value="{{ $organization->email }}" class="form-control">
+                            <input id="email" type="text" name="email" value="{{ $organization->email }}"
+                                   class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="info">Дополнительная информация</label>
-                            <textarea id="info" name="info" rows="4" class="form-control editor">{{ $organization->info }}</textarea>
+                            <textarea id="info" name="info" rows="4"
+                                      class="form-control editor">{{ $organization->info }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="start_date">Дата начала доступа</label>
                             <div class="input-group">
                                 <input id="date_timepicker_start" type="date" name="start_date"
-                                       value="@if($organization->start_date) {{ \Carbon\Carbon::parse($organization->start_date)->format('d.m.Y') }} @endif" aria-describedby="date-start" class="form-control">
+                                       value="@if($organization->start_date) {{ \Carbon\Carbon::parse($organization->start_date)->format('d.m.Y') }} @endif"
+                                       aria-describedby="date-start" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="end_date">Дата окончания доступа</label>
                             <div class="input-group">
-                                <input id="date_timepicker_end" type="date" name="end_date" value="@if($organization->end_date) {{ \Carbon\Carbon::parse($organization->end_date)->format('d.m.Y') }} @endif" aria-describedby="date-end" class="form-control">
+                                <input id="date_timepicker_end" type="date" name="end_date"
+                                       value="@if($organization->end_date) {{ \Carbon\Carbon::parse($organization->end_date)->format('d.m.Y') }} @endif"
+                                       aria-describedby="date-end" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">

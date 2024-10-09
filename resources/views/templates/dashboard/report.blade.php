@@ -222,8 +222,8 @@
             </div>
 
 
-            </script>
 
+            </script>
 
 @endsection
 

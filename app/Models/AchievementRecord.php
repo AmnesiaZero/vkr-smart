@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AchievementRecord extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'achievements_records';
 
     protected $fillable = [
-       'organization_id',
-       'user_id',
+        'organization_id',
+        'user_id',
         'user_role',
         'achievement_id',
         'achievement_type_id',
@@ -26,8 +26,8 @@ class AchievementRecord extends Model
         'access_id'
     ];
 
-    public function type():HasOne
+    public function type(): HasOne
     {
-        return $this->hasOne(AchievementType::class,'id','achievement_type_id');
+        return $this->hasOne(AchievementType::class, 'id', 'achievement_type_id');
     }
 }

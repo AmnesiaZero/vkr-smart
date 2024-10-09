@@ -1,23 +1,25 @@
 .modal-window {
-  z-index: 7000;
+    z-index: 7000;
 }
+
 .modal-window .modal-dialog {
-  position: absolute;
-  width: 98%;
-  max-width: 100%;
-  top: 1%;
-  bottom: 1%;
-  left: 1%;
-  right: 1%;
-  margin: 1rem 0;
+    position: absolute;
+    width: 98%;
+    max-width: 100%;
+    top: 1%;
+    bottom: 1%;
+    left: 1%;
+    right: 1%;
+    margin: 1rem 0;
 }
+
 .modal-window .modal-dialog .modal-content {
-  height: 100%;
+    height: 100%;
 }
 
 .form-group label,
 .input-group label {
-  text-transform: none;
+    text-transform: none;
 }
 
 /*@media only screen and (max-width: 1920px) {*/
@@ -36,365 +38,459 @@
 /*}*/
 
 #content .nav-blocks {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
 }
+
 @media only screen and (max-width: 425px) {
-  #content .nav-blocks {
-    grid-template-columns: 1fr;
-    grid-gap: 15px;
-  }
+    #content .nav-blocks {
+        grid-template-columns: 1fr;
+        grid-gap: 15px;
+    }
 }
+
 #content .nav-blocks > a {
-  color: #858585;
-  text-decoration: none;
+    color: #858585;
+    text-decoration: none;
 }
+
 #content .nav-blocks .card {
-  box-shadow: 0 0 30px #e8e8e8;
+    box-shadow: 0 0 30px #e8e8e8;
 }
+
 #content .nav-blocks .card .icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #4d83fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #4d83fc;
 }
+
 #content .nav-blocks .card .icon i {
-  color: #fff;
-  font-size: 40px;
+    color: #fff;
+    font-size: 40px;
 }
+
 #content .nav-blocks .card .card-body h5 {
-  color: #000;
-  font-size: 18px;
-  margin-bottom: 3px;
+    color: #000;
+    font-size: 18px;
+    margin-bottom: 3px;
 }
+
 #content .nav-blocks .card .card-body p {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.2;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.2;
 }
+
 #content .list {
-  width: 100%;
-  padding: 15px;
-  background-color: #fff;
-  box-shadow: 0 0 30px #e8e8e8;
-  border-top: solid 4px #4871EC;
+    width: 100%;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 0 30px #e8e8e8;
+    border-top: solid 4px #4871EC;
 }
+
 #content .list .list-header {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
+
 #content .list .list-header h2 {
-  color: #000;
-  margin-bottom: 1rem;
+    color: #000;
+    margin-bottom: 1rem;
 }
+
 #content .list .list-header .add-button {
-  padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem;
 }
+
 #content .list .list-body table {
-  font-size: 1rem;
-  color: #336;
+    font-size: 1rem;
+    color: #336;
 }
+
 #content .list .list-body table thead tr.col-title th {
-  padding: 4px 0.75rem;
-  font-size: 14px;
-  background-color: #f5f5f5;
+    padding: 4px 0.75rem;
+    font-size: 14px;
+    background-color: #f5f5f5;
 }
+
 #content .list .list-body table thead tr.col-title th.id {
-  width: 50px;
-  text-align: center;
+    width: 50px;
+    text-align: center;
 }
+
 #content .list .list-body table thead tr.col-title th.photo {
-  width: 50px;
-  text-align: center;
+    width: 50px;
+    text-align: center;
 }
+
 #content .list .list-body table thead tr.col-title th.moderation {
-  width: 105px;
-  text-align: center;
+    width: 105px;
+    text-align: center;
 }
+
 #content .list .list-body table thead tr.col-title th.country {
-  width: 350px;
-  text-align: center;
+    width: 350px;
+    text-align: center;
 }
+
 #content .list .list-body table thead tr.col-title th.event-title {
-  width: 500px;
+    width: 500px;
 }
+
 #content .list .list-body table thead tr.col-title th.event-category {
-  max-width: 250px;
-  text-align: center;
+    max-width: 250px;
+    text-align: center;
 }
+
 #content .list .list-body table thead tr.col-title th.event-series {
-  max-width: 250px;
-  text-align: center;
+    max-width: 250px;
+    text-align: center;
 }
+
 #content .list .list-body table thead tr.col-title th.region {
-  width: 350px;
-  text-align: center;
+    width: 350px;
+    text-align: center;
 }
+
 #content .list .list-body table thead tr.col-title th.published_date {
-  width: 215px;
-  text-align: center;
+    width: 215px;
+    text-align: center;
 }
+
 #content .list .list-body table thead tr.col-title th.actions {
-  width: 150px;
-  text-align: center;
-  vertical-align: middle;
+    width: 150px;
+    text-align: center;
+    vertical-align: middle;
 }
+
 #content .list .list-body table tbody tr.deleted td.title {
-  text-decoration: line-through;
+    text-decoration: line-through;
 }
+
 #content .list .list-body table tbody tr.deleted td.title a:link, #content .list .list-body table tbody tr.deleted td.title a:visited {
-  color: #e46464;
+    color: #e46464;
 }
+
 #content .list .list-body table tbody td {
-  vertical-align: middle;
+    vertical-align: middle;
 }
+
 #content .list .list-body table tbody td.id {
-  width: 50px;
-  text-align: center;
+    width: 50px;
+    text-align: center;
 }
+
 #content .list .list-body table tbody td.photo {
-  text-align: center;
+    text-align: center;
 }
+
 #content .list .list-body table tbody td.photo img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
 }
+
 #content .list .list-body table tbody td.title p.subtitle {
-  font-size: 14px;
-  color: #8a8a8a;
+    font-size: 14px;
+    color: #8a8a8a;
 }
+
 #content .list .list-body table tbody td.event-category {
-  width: 350px;
-  text-align: center;
+    width: 350px;
+    text-align: center;
 }
+
 #content .list .list-body table tbody td.event-series {
-  width: 350px;
-  text-align: center;
+    width: 350px;
+    text-align: center;
 }
+
 #content .list .list-body table tbody td.country {
-  width: 350px;
-  text-align: center;
+    width: 350px;
+    text-align: center;
 }
+
 #content .list .list-body table tbody td.region {
-  width: 350px;
-  text-align: center;
+    width: 350px;
+    text-align: center;
 }
+
 #content .list .list-body table tbody td.moderation {
-  width: 105px;
-  text-align: center;
-  vertical-align: middle;
+    width: 105px;
+    text-align: center;
+    vertical-align: middle;
 }
+
 #content .list .list-body table tbody td.moderation a i.not-approved {
-  color: #ff275a;
+    color: #ff275a;
 }
+
 #content .list .list-body table tbody td.moderation a i.approved {
-  color: green;
+    color: green;
 }
+
 #content .list .list-body table tbody td.published_date {
-  width: 215px;
-  text-align: center;
+    width: 215px;
+    text-align: center;
 }
+
 #content .list .list-body table tbody td.access {
-  width: 245px;
-  text-align: center;
+    width: 245px;
+    text-align: center;
 }
+
 #content .list .list-body table tbody td.status {
-  width: 115px;
+    width: 115px;
 }
+
 #content .list .list-body table tbody td.status i.published {
-  color: #36b53e;
+    color: #36b53e;
 }
+
 #content .list .list-body table tbody td.status i.unpublished {
-  color: #e46464;
+    color: #e46464;
 }
+
 #content .list .list-body table tbody td.status i.blocked {
-  color: #e46464;
+    color: #e46464;
 }
+
 #content .list .list-body table tbody td.status i.unblocked {
-  color: #36b53e;
+    color: #36b53e;
 }
+
 #content .list .list-body table tbody td.status i.premium {
-  color: #36b53e;
+    color: #36b53e;
 }
+
 #content .list .list-body table tbody td.status i.not-premium {
-  color: #ccc;
+    color: #ccc;
 }
+
 #content .list .list-body table tbody td.status i.basic {
-  color: #36b53e;
+    color: #36b53e;
 }
+
 #content .list .list-body table tbody td.status i.not-basic {
-  color: #ccc;
+    color: #ccc;
 }
+
 #content .list .list-body table tbody td.actions {
-  width: 150px;
-  text-align: center;
-  vertical-align: middle;
+    width: 150px;
+    text-align: center;
+    vertical-align: middle;
 }
+
 #content .list .list-body table tbody td.actions a {
-  margin: 0 7px;
+    margin: 0 7px;
 }
+
 #content .list .list-body table tbody td.actions a i {
-  font-size: 18px;
+    font-size: 18px;
 }
+
 #content .list .list-body table tbody td.actions a i.unpublished {
-  color: #ff275a;
+    color: #ff275a;
 }
+
 #content .list .list-body table tbody td.actions a i.un-visible {
-  color: #ff275a;
+    color: #ff275a;
 }
+
 #content .list .list-body table tbody td.actions a.restore i, #content .list .list-body table tbody td.actions a.restore-book i {
-  color: green;
+    color: green;
 }
+
 #content .list .list-body table tbody td.actions a.delete i, #content .list .list-body table tbody td.actions a.delete-book i {
-  color: #e46464;
+    color: #e46464;
 }
+
 #content .list .list-body .table-striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(162, 153, 202, 0.08);
+    background-color: rgba(162, 153, 202, 0.08);
 }
+
 #content #formContent {
-  margin-top: 15px;
+    margin-top: 15px;
 }
+
 #content #formContent .form-group label {
-  color: #697fb0;
-  font-weight: bold;
-  font-size: 17px;
+    color: #697fb0;
+    font-weight: bold;
+    font-size: 17px;
 }
+
 #content #formContent .form-group input, #content #formContent .form-group select, #content #formContent .form-group textarea {
-  border-color: #c1c1c1;
+    border-color: #c1c1c1;
 }
+
 #content #formContent .zoom-block {
-  width: 550px;
-  margin: 25px 25px;
+    width: 550px;
+    margin: 25px 25px;
 }
+
 #content #formContent .zoom-block .zoom {
-  padding: 15px;
-  border-radius: 10px;
-  background: #f1f1f1;
+    padding: 15px;
+    border-radius: 10px;
+    background: #f1f1f1;
 }
+
 #content #formContent .zoom-block .zoom img.zoom-logo {
-  width: 100px;
+    width: 100px;
 }
+
 #content #formContent .zoom-block .zoom label {
-  font-size: 17px;
-  line-height: 110%;
+    font-size: 17px;
+    line-height: 110%;
 }
+
 #content #formContent textarea.tinymce {
-  height: 300px;
+    height: 300px;
 }
+
 #content #formContent .ck-editor__editable_inline {
-  min-height: 250px;
+    min-height: 250px;
 }
+
 #content #formContent .form-control.error {
-  border: solid 1px #ec6767;
+    border: solid 1px #ec6767;
 }
+
 #content #formContent span.error {
-  margin-left: 20px;
-  color: #ec6767;
+    margin-left: 20px;
+    color: #ec6767;
 }
+
 #content .form {
-  width: 100%;
-  padding: 15px;
-  background-color: #fff;
-  box-shadow: 0 0 30px #e8e8e8;
-  border-top: solid 4px #4871EC;
+    width: 100%;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 0 30px #e8e8e8;
+    border-top: solid 4px #4871EC;
 }
+
 #content .form .form-header {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
+
 #content .form .form-header h2 {
-  color: #000;
-  margin-bottom: 1rem;
+    color: #000;
+    margin-bottom: 1rem;
 }
+
 #content #registeredUsers .modal-dialog {
-  max-width: 1200px;
+    max-width: 1200px;
 }
+
 #content #registeredUsers h5 {
-  font-size: 1.5rem;
-  color: #333;
+    font-size: 1.5rem;
+    color: #333;
 }
+
 #content #registeredUsers table thead tr {
-  background-color: #ececec;
+    background-color: #ececec;
 }
+
 #content #registeredUsers table thead th.active {
-  width: 105px;
-  text-align: center;
+    width: 105px;
+    text-align: center;
 }
+
 #content #registeredUsers table thead th.created_at {
-  width: 185px;
-  text-align: center;
+    width: 185px;
+    text-align: center;
 }
+
 #content #registeredUsers table thead th.deleted_at {
-  text-align: center;
+    text-align: center;
 }
+
 #content #registeredUsers table thead th.action {
-  text-align: center;
+    text-align: center;
 }
+
 #content #registeredUsers table tbody tr.deleted td {
-  color: #8a8a8a;
+    color: #8a8a8a;
 }
+
 #content #registeredUsers table tbody td.active {
-  text-align: center;
+    text-align: center;
 }
+
 #content #registeredUsers table tbody td.created_at {
-  text-align: center;
+    text-align: center;
 }
+
 #content #registeredUsers table tbody td.deleted_at {
-  text-align: center;
+    text-align: center;
 }
+
 #content #registeredUsers table tbody td.action {
-  text-align: center;
+    text-align: center;
 }
 
 #editCollection .collection_resources .resource {
-  display: flex;
-  padding: 15px;
+    display: flex;
+    padding: 15px;
 }
+
 #editCollection .collection_resources .resource .cover {
-  max-width: 150px;
+    max-width: 150px;
 }
+
 #editCollection .collection_resources .resource .cover img {
-  max-width: 75px;
+    max-width: 75px;
 }
+
 #editCollection .collection_resources .resource .description {
-  padding-left: 15px;
+    padding-left: 15px;
 }
+
 #editCollection #books p.show-filter-btn:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
+
 #editCollection #books .modal-header {
-  background: #4c84ff;
-  color: #fff;
+    background: #4c84ff;
+    color: #fff;
 }
+
 #editCollection #books .modal-filter {
-  padding: 15px;
-  background: #f5f5f5;
+    padding: 15px;
+    background: #f5f5f5;
 }
+
 #editCollection #books input.reset-catalog {
-  background-color: #fff;
+    background-color: #fff;
 }
+
 #editCollection input[type=checkbox] {
-  width: 20px;
-  height: 20px;
+    width: 20px;
+    height: 20px;
 }
+
 #editCollection .table.sm.selectable tr th.book-id {
-  width: 90px;
+    width: 90px;
 }
+
 #editCollection .table.sm.selectable tr th.book-title {
-  width: 125px;
+    width: 125px;
 }
+
 #editCollection .collection_resources table .d-flex {
-  justify-content: space-between;
-  align-items: center;
+    justify-content: space-between;
+    align-items: center;
 }
+
 #editCollection .collection_resources table tr.deleted a:link, #editCollection .collection_resources table tr.deleted a:visited {
-  color: #e46464;
-  text-decoration: line-through;
+    color: #e46464;
+    text-decoration: line-through;
 }
 
 #addIPModal .error {
-  margin-bottom: 10px;
-  color: #f00;
+    margin-bottom: 10px;
+    color: #f00;
 }

@@ -3,18 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidatorHelper;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use App\Services\News\NewsService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class NewsController extends Controller
 {
-    private $_newsService;
-
     protected array $fillable = [
         'id',
         'title',
@@ -33,6 +31,7 @@ class NewsController extends Controller
         'redirect',
         'preview_image'
     ];
+    private $_newsService;
 
     public function __construct(NewsService $newsService)
     {
@@ -47,14 +46,13 @@ class NewsController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->only($this->fillable),[
+        $validator = Validator::make($request->only($this->fillable), [
             'title' => 'required|max:250',
             'preview_image' => 'file',
 //            'publication_date' => 'date',
             'published' => 'required|bool'
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::redirectError($validator);
         }
         $data = $request->only($this->fillable);
@@ -68,11 +66,10 @@ class NewsController extends Controller
 
     public function edit(Request $request)
     {
-        $validator = Validator::make($request->only($this->fillable),[
-            'id' => ['required','integer',Rule::exists('news','id')],
+        $validator = Validator::make($request->only($this->fillable), [
+            'id' => ['required', 'integer', Rule::exists('news', 'id')],
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::redirectError($validator);
         }
         $id = $request->id;
@@ -81,28 +78,26 @@ class NewsController extends Controller
 
     public function update(Request $request)
     {
-        $validator = Validator::make($request->only($this->fillable),[
-            'id' => ['required','integer',Rule::exists('news','id')],
+        $validator = Validator::make($request->only($this->fillable), [
+            'id' => ['required', 'integer', Rule::exists('news', 'id')],
             'title' => 'required|max:250',
             'publication_date' => 'date',
             'published' => 'required|bool'
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::redirectError($validator);
         }
         $id = $request->id;
         $data = $request->only($this->fillable);
-        return $this->_newsService->update($id,$data);
+        return $this->_newsService->update($id, $data);
     }
 
     public function updateStatus(Request $request)
     {
-        $validator = Validator::make($request->only($this->fillable),[
-           'id' => ['required','integer',Rule::exists('news','id')]
+        $validator = Validator::make($request->only($this->fillable), [
+            'id' => ['required', 'integer', Rule::exists('news', 'id')]
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::redirectError($validator);
         }
         $id = $request->id;
@@ -149,11 +144,10 @@ class NewsController extends Controller
 
     public function delete(Request $request)
     {
-        $validator = Validator::make($request->only($this->fillable),[
-            'id' => ['required','integer',Rule::exists('news','id')]
+        $validator = Validator::make($request->only($this->fillable), [
+            'id' => ['required', 'integer', Rule::exists('news', 'id')]
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $id = $request->id;
@@ -162,11 +156,10 @@ class NewsController extends Controller
 
     public function destroy(Request $request)
     {
-        $validator = Validator::make($request->only($this->fillable),[
-            'id' => ['required','integer',Rule::exists('news','id')]
+        $validator = Validator::make($request->only($this->fillable), [
+            'id' => ['required', 'integer', Rule::exists('news', 'id')]
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $id = $request->id;
@@ -175,11 +168,10 @@ class NewsController extends Controller
 
     public function restore(Request $request)
     {
-        $validator = Validator::make($request->only($this->fillable),[
-            'id' => ['required','integer',Rule::exists('news','id')]
+        $validator = Validator::make($request->only($this->fillable), [
+            'id' => ['required', 'integer', Rule::exists('news', 'id')]
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $id = $request->id;

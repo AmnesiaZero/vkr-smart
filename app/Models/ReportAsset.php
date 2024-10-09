@@ -12,7 +12,7 @@ class ReportAsset extends Model
     protected $table = 'report_assets';
 
     protected $fillable = [
-       'work_id',
+        'work_id',
         'name',
         'link',
         'borrowings_percent'

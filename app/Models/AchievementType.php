@@ -12,8 +12,8 @@ class AchievementType extends Model
 
     protected $table = 'achievements_types';
 
-    public function category():HasOne
+    public function category(): HasOne
     {
-        return $this->hasOne(AchievementTypeCategory::class,'id','category_id');
+        return $this->hasOne(AchievementTypeCategory::class, 'id', 'category_id');
     }
 }

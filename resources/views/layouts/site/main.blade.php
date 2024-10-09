@@ -143,7 +143,8 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn" data-bs-dismiss="modal"
-                                            aria-label="Close">Закрыть окно</button>
+                                            aria-label="Close">Закрыть окно
+                                    </button>
                                 </div>
                             </div>
                         </div>

@@ -92,8 +92,7 @@ function departments(data) {
                     departmentsList.selectpicker('destroy');
                     departmentsList.html($("#department_list_tmpl").tmpl(departments));
                     departmentsList.selectpicker('render');
-                }
-                else {
+                } else {
                     departmentsList = $("#departments_list_multiple");
                     departmentsList.empty();
                     departmentsList.selectpicker('destroy');

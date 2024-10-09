@@ -12,7 +12,8 @@
                             <p class="mb-2 fw-600 px-3">Год выпуска</p>
 
                             <div class="p-2" id="year_end">
-                                <button class="btn btn-secondary br-none text-grey w-100 fs-14 py-2" data-bs-toggle="modal"
+                                <button class="btn btn-secondary br-none text-grey w-100 fs-14 py-2"
+                                        data-bs-toggle="modal"
                                         data-bs-target="#create_year">
                                     Добавить
                                     <img src="/images/Plus.svg" alt="" class="ps-2">
@@ -36,7 +37,8 @@
                             <form method="post" id="department_form"
                                   onsubmit="createDepartment();return false;">
                                 <div class="btn-group p-2 w-100">
-                                    <input type="text" class="form-control fs-14" id="department-name" name="name" placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
+                                    <input type="text" class="form-control fs-14" id="department-name" name="name"
+                                           placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
                                     <button type="submit" class="fs-14 text-grey btn btn-secondary">Добавить</button>
                                 </div>
                             </form>
@@ -55,7 +57,8 @@
                             <form method="post" id="program_form"
                                   onsubmit="createProgram();return false;">
                                 <div class="btn-group p-2 w-100">
-                                    <input type="text" class="form-control fs-14" id="program-name" name="name" placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
+                                    <input type="text" class="form-control fs-14" id="program-name" name="name"
+                                           placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
                                     <button type="submit" class="fs-14 text-grey btn btn-secondary">Добавить</button>
                                 </div>
                             </form>
@@ -75,7 +78,8 @@
 
                             <form method="post" id="faculty_form" onsubmit="createFaculty();return false;">
                                 <div class="btn-group p-2 w-100">
-                                    <input id="faculty-name" name="name" type="text" class="form-control fs-14" placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
+                                    <input id="faculty-name" name="name" type="text" class="form-control fs-14"
+                                           placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
                                     <button type="submit" class="fs-14 btn text-grey btn-secondary">Добавить</button>
                                 </div>
                             </form>
@@ -96,7 +100,8 @@
                     <div class="mb-3 col-10 mx-4">
                         <p class="m-0">Профиль обучения</p>
                         <p class="fs-12 mb-2">программы подготовки</p>
-                        <form class="input-group w-100" id="update_name_form" onsubmit="updateProgramName(); return false;">
+                        <form class="input-group w-100" id="update_name_form"
+                              onsubmit="updateProgramName(); return false;">
                             <input type="text" class="form-control" id="profile" name="name" value="">
                             <button type="submit" class="fs-14 text-grey btn btn-secondary">Изменить</button>
                         </form>
@@ -211,7 +216,7 @@
                                 <div class="mb-3 mx-4 col-8">
                                     <label for="course" class="form-label mb-2">Направление:</label>
                                     <input type="text" class="form-control" name="name" id="course"
-                                           value="" placeholder="Ввод..."   >
+                                           value="" placeholder="Ввод...">
                                 </div>
                                 <div class="mx-4 col-8">
                                     <button class="btn btn-secondary text-grey fs-14 br-100 w-100 br-none py-2 mt-3">
@@ -250,9 +255,10 @@
                         type="button" onclick="deleteYear(${id})"></button>
                     </div>
                 </div>
+
             </script>
 
-        <script id="update_faculty_tmpl" type="text/x-jquery-tmpl">
+            <script id="update_faculty_tmpl" type="text/x-jquery-tmpl">
             <div class="modal fade" id="update_faculty">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -289,8 +295,9 @@
                 </div>
             </div>
 
-        </script>
-        <script id="update_department_tmpl" type="text/x-jquery-tmpl">
+
+            </script>
+            <script id="update_department_tmpl" type="text/x-jquery-tmpl">
         <div class="modal fade" id="update_department">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -333,9 +340,10 @@
     </div>
 </div>
 
-        </script>
 
-        <script id="update_year_tmpl" type="text/x-jquery-tmpl">
+            </script>
+
+            <script id="update_year_tmpl" type="text/x-jquery-tmpl">
             <div class="modal fade" id="update_year">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -395,7 +403,8 @@
             </div>
 
 
-        </script>
+
+            </script>
 
 
             <script id="faculty_tmpl" type="text/x-jquery-tmpl">
@@ -414,6 +423,7 @@
                         type="button" onclick="deleteFaculty(${id})"></button>
                     </div>
                 </div>
+
             </script>
 
             <script id="department_tmpl" type="text/x-jquery-tmpl">
@@ -436,6 +446,7 @@
                         type="button" onclick="deleteDepartment(${id})"></button>
                     </div>
                 </div>
+
             </script>
 
             <script id="program_tmpl" type="text/x-jquery-tmpl">
@@ -450,9 +461,11 @@
                 </div>
             </div>
 
+
             </script>
             <script id="specialty_menu_tmpl" type="text/x-jquery-tmpl">
                 <option value="${id}"> ${code} | ${name} </option>
+
 
             </script>
             <script id="specialty_tmpl" type="text/x-jquery-tmpl">
@@ -461,6 +474,7 @@
                                        <td>${name}</td>
                                        <td class="pe-4"><button id="delete" class="btn copy_delete br-none" type="button" onclick="deleteProgramSpecialty(${id})"></button></td>
                                    </tr>
+
 
             </script>
 

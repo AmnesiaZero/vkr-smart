@@ -108,6 +108,7 @@
 
     <script id="status_icon_tmpl" type="text/x-jquery-tmpl">
         <a onclick="updateStatus(${id})" id="status_${id}" data-item-id="${id}" class="toggle-blocked-status"><i id="stat_${id}" class="fas fa-lock @{{if is_active}} fa-lock-open unblocked @{{else}} fa-lock-close blocked @{{/if}} @{{if deleted_at}} disabled @{{/if}}"></i></a>
+
     </script>
 
 @endsection

@@ -6,15 +6,15 @@ $(document).ready(function () {
     const path = window.location.pathname;
     userId = path.split("/").pop(); // Получаем последний сегмент URL
 
-    $("#add_file_form").on('submit', function(e) {
+    $("#add_file_form").on('submit', function (e) {
         e.preventDefault(); // Предотвращаем стандартное поведение формы
         const formData = new FormData(this);
-        formData.append('achievement_id',achievementId);
-        formData.append('user_id',userId);
-        formData.append('record_type_id',1);
+        formData.append('achievement_id', achievementId);
+        formData.append('user_id', userId);
+        formData.append('record_type_id', 1);
         $.ajax({
             url: "/dashboard/portfolios/achievements/records/create",
-            data:formData,
+            data: formData,
             type: "POST",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -25,8 +25,7 @@ $(document).ready(function () {
                 if (response.success) {
                     const achievementRecord = response.data.achievement_record;
                     printAchievementRecord(achievementRecord);
-                }
-                else {
+                } else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                 }
             },
@@ -36,15 +35,15 @@ $(document).ready(function () {
         });
     });
 
-    $("#add_work_form").on('submit', function(e) {
+    $("#add_work_form").on('submit', function (e) {
         e.preventDefault(); // Предотвращаем стандартное поведение формы
         const formData = new FormData(this);
-        formData.append('achievement_id',achievementId);
-        formData.append('user_id',userId);
-        formData.append('record_type_id',1);
+        formData.append('achievement_id', achievementId);
+        formData.append('user_id', userId);
+        formData.append('record_type_id', 1);
         $.ajax({
             url: "/dashboard/portfolios/achievements/records/create",
-            data:formData,
+            data: formData,
             type: "POST",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -55,8 +54,7 @@ $(document).ready(function () {
                 if (response.success) {
                     const achievementRecord = response.data.achievement_record;
                     printAchievementRecord(achievementRecord);
-                }
-                else {
+                } else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                 }
             },
@@ -70,22 +68,20 @@ $(document).ready(function () {
 });
 
 
-function achievements()
-{
+function achievements() {
     const data = {
-        user_id:userId
+        user_id: userId
     };
     $.ajax({
         url: "/dashboard/portfolios/achievements/get",
-        data:data,
+        data: data,
         type: "GET",
         dataType: "json",
         success: function (response) {
             if (response.success) {
                 const achievements = response.data.achievements;
                 printAchievements(achievements);
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -95,8 +91,7 @@ function achievements()
     });
 }
 
-function printAchievements(achievements)
-{
+function printAchievements(achievements) {
     $("#achievements_list").empty();
     let index = 1;
     achievements.forEach(achievement => {
@@ -107,14 +102,13 @@ function printAchievements(achievements)
     });
 }
 
-function achievementRecords(achievementId)
-{
+function achievementRecords(achievementId) {
     const data = {
-        achievement_id:achievementId
+        achievement_id: achievementId
     };
     $.ajax({
         url: "/dashboard/portfolios/achievements/records/get",
-        data:data,
+        data: data,
         type: "GET",
         dataType: "json",
         success: function (response) {
@@ -123,8 +117,7 @@ function achievementRecords(achievementId)
                 achievementsRecords.forEach(achievementRecord => {
                     printAchievementRecord(achievementRecord);
                 });
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -134,16 +127,15 @@ function achievementRecords(achievementId)
     });
 }
 
-function addAchievement()
-{
-   let data = $("#add_achievement_form").serialize();
-   const additionalData = {
-       user_id:userId
-   };
-   data += '&' + $.param(additionalData);
+function addAchievement() {
+    let data = $("#add_achievement_form").serialize();
+    const additionalData = {
+        user_id: userId
+    };
+    data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/portfolios/achievements/create",
-        data:data,
+        data: data,
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -156,15 +148,13 @@ function addAchievement()
                 const lastRow = $("#achievements_list tr").last();
                 let index = lastRow.find('td').first().text();
                 index++;
-                if (typeof index=='undefined')
-                {
+                if (typeof index == 'undefined') {
                     index = 1;
                 }
                 console.log('index = ' + index);
                 achievement.index = index;
                 achievementsList.append($("#achievement_tmpl").tmpl(achievement));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -174,14 +164,13 @@ function addAchievement()
     });
 }
 
-function openUpdateAchievementModal()
-{
+function openUpdateAchievementModal() {
     const data = {
-        id:achievementId
+        id: achievementId
     };
     $.ajax({
         url: "/dashboard/portfolios/achievements/find",
-        data:data,
+        data: data,
         type: "GET",
         dataType: "json",
         success: function (response) {
@@ -193,8 +182,7 @@ function openUpdateAchievementModal()
 
                 const modal = new bootstrap.Modal(document.getElementById('update_achievement_modal'));
                 modal.show();
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -204,17 +192,16 @@ function openUpdateAchievementModal()
     });
 }
 
-function updateAchievement()
-{
+function updateAchievement() {
     console.log('achievement id = ' + achievementId);
     let data = $("#update_achievement_form").serialize();
     const additionalData = {
-      id:achievementId
+        id: achievementId
     };
     data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/portfolios/achievements/update",
-        data:data,
+        data: data,
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -225,8 +212,7 @@ function updateAchievement()
                 const achievement = response.data.achievement;
                 $("#achievement_" + achievementId).replaceWith($("#achievement_tmpl").tmpl(achievement));
                 $.notify(response.data.title + ":" + response.data.message, "success");
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -236,53 +222,47 @@ function updateAchievement()
     });
 }
 
-function openInfoBox(id)
-{
+function openInfoBox(id) {
     // $("#info_box").fadeToggle(100);
     achievementId = id;
 }
 
-function deleteAchievement()
-{
-   if(confirm('Вы уверены,что хотите удалить достижение'))
-   {
-      const data = {
-           id:achievementId
-       };
-       $.ajax({
-           url: "/dashboard/portfolios/achievements/delete",
-           data:data,
-           type: "POST",
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           dataType: "json",
-           success: function (response) {
-               if (response.success) {
-                   $("#achievement_" + achievementId).remove();
-                   $.notify(response.data.title + ":" + response.data.message, "success");
-               }
-               else {
-                   $.notify(response.data.title + ":" + response.data.message, "error");
-               }
-           },
-           error: function () {
-               $.notify("Произошла ошибка при редактировании пользователя", "error");
-           }
-       });
-   }
+function deleteAchievement() {
+    if (confirm('Вы уверены,что хотите удалить достижение')) {
+        const data = {
+            id: achievementId
+        };
+        $.ajax({
+            url: "/dashboard/portfolios/achievements/delete",
+            data: data,
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    $("#achievement_" + achievementId).remove();
+                    $.notify(response.data.title + ":" + response.data.message, "success");
+                } else {
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                }
+            },
+            error: function () {
+                $.notify("Произошла ошибка при редактировании пользователя", "error");
+            }
+        });
+    }
 }
 
-function addRecord(recordTypeId)
-{
+function addRecord(recordTypeId) {
     let formId = '';
     const additionalData = {
-        achievement_id:achievementId,
-        user_id:userId,
-        record_type_id:recordTypeId
+        achievement_id: achievementId,
+        user_id: userId,
+        record_type_id: recordTypeId
     };
-    switch (recordTypeId)
-    {
+    switch (recordTypeId) {
         case 2:
             formId = $("#add_link_form");
             break;
@@ -294,7 +274,7 @@ function addRecord(recordTypeId)
     data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/portfolios/achievements/records/create",
-        data:data,
+        data: data,
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -304,8 +284,7 @@ function addRecord(recordTypeId)
             if (response.success) {
                 const achievementRecord = response.data.achievement_record;
                 printAchievementRecord(achievementRecord);
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -316,14 +295,12 @@ function addRecord(recordTypeId)
 }
 
 
-function printAchievementRecord(achievementRecord)
-{
+function printAchievementRecord(achievementRecord) {
     const categoryId = achievementRecord.type.category_id;
     const achievementId = achievementRecord.achievement_id;
     let column = false;
     console.log('category id = ' + categoryId);
-    switch (categoryId)
-    {
+    switch (categoryId) {
         case 1:
             column = $("#confirm_achievements_column_" + achievementId);
             break;
@@ -337,32 +314,29 @@ function printAchievementRecord(achievementRecord)
             column = $("#others_column_" + achievementId);
             break;
     }
-    if(!column)
-    {
+    if (!column) {
         $.notify('У записи указана неправильная категория', "error");
         return;
     }
     column.append($("#record_tmpl").tmpl(achievementRecord));
 }
 
-function searchAchievements()
-{
+function searchAchievements() {
     let data = $("#search_achievements_form").serialize();
     const additionalData = {
-       user_id:userId
+        user_id: userId
     };
-    data+= '&' + $.param(additionalData);
+    data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/portfolios/achievements/search",
-        data:data,
+        data: data,
         type: "GET",
         dataType: "json",
         success: function (response) {
             if (response.success) {
                 const achievements = response.data.achievements;
                 printAchievements(achievements);
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -373,23 +347,20 @@ function searchAchievements()
 }
 
 
-
-function openTextRecord(recordId)
-{
+function openTextRecord(recordId) {
     const data = {
-        id:recordId
+        id: recordId
     };
     $.ajax({
         url: "/dashboard/portfolios/achievements/records/find",
-        data:data,
+        data: data,
         type: "GET",
         dataType: "json",
         success: function (response) {
             if (response.success) {
                 const record = response.data.achievement_record;
                 $("#tmpl_container").html($("#text_tmpl").tmpl(record));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -400,28 +371,24 @@ function openTextRecord(recordId)
 }
 
 
-function resetSearch()
-{
-    $("#default_achievement").prop('selected',true);
+function resetSearch() {
+    $("#default_achievement").prop('selected', true);
     $("#achievement_name").val('');
     achievements();
 }
 
-function openPortfolio()
-{
+function openPortfolio() {
     window.location.href = '/dashboard/portfolios/' + userId;
 }
 
-function deleteAchievementRecord(id)
-{
-    if(confirm('Вы уверены,что хотите удалить достижение'))
-    {
+function deleteAchievementRecord(id) {
+    if (confirm('Вы уверены,что хотите удалить достижение')) {
         const data = {
-            id:id
+            id: id
         };
         $.ajax({
             url: "/dashboard/portfolios/achievements/records/delete",
-            data:data,
+            data: data,
             type: "POST",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -431,8 +398,7 @@ function deleteAchievementRecord(id)
                 if (response.success) {
                     $("#achievement_record_" + id).remove();
                     $.notify(response.data.title + ":" + response.data.message, "success");
-                }
-                else {
+                } else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                 }
             },
@@ -443,14 +409,12 @@ function deleteAchievementRecord(id)
     }
 }
 
-function openAddWorksModal()
-{
+function openAddWorksModal() {
     openModal('add_work_modal');
     works();
 }
 
-function getAssessmentDescription(assessment)
-{
+function getAssessmentDescription(assessment) {
     switch (assessment) {
         case 0:
             return 'Без оценки';
@@ -468,21 +432,19 @@ function getAssessmentDescription(assessment)
 }
 
 
-function works(page=1)
-{
+function works(page = 1) {
     const data = {
-        page:page,
-        user_type:2,
-        user_id:userId
+        page: page,
+        user_type: 2,
+        user_id: userId
     };
     $.ajax({
         url: "/dashboard/works/search",
         type: 'GET',
-        data:data,
+        data: data,
         dataType: "json",
-        success: function(response) {
-            if (response.success)
-            {
+        success: function (response) {
+            if (response.success) {
                 const pagination = response.data.works;
                 const links = pagination.links;
                 //Обрезаем из массива линков Previos и Next
@@ -496,21 +458,18 @@ function works(page=1)
                 const perPage = pagination.per_page;
                 const totalItems = pagination.total;
                 const totalPages = pagination.links.length;
-                updateWorksPagination(currentPage,totalItems,totalPages,perPage);
-            }
-            else
-            {
+                updateWorksPagination(currentPage, totalItems, totalPages, perPage);
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function() {
+        error: function () {
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
 }
 
-function openOverView()
-{
+function openOverView() {
     const data = {
         id: userId
     };
@@ -542,8 +501,7 @@ function openOverView()
 
                 const modalElement = new bootstrap.Modal(document.getElementById('overview_modal'));
                 modalElement.show();
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },

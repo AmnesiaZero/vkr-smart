@@ -6,7 +6,8 @@
         <div id="ajax-content">
             <div class="row mt-4">
                 <div class="col-sm-6" id="code_registration">
-                    <form class="form-horizontal d-flex flex-column gap-2" id="registration_form" onsubmit="registration(); return false;">
+                    <form class="form-horizontal d-flex flex-column gap-2" id="registration_form"
+                          onsubmit="registration(); return false;">
                         <div class="row">
                             <div class="col-auto">
                                 <label class="form-label">
@@ -44,7 +45,7 @@
                             </label>
                             <div class="col-sm-8">
                                 <select class="selectpicker form-control" id="years_list" name="year_id"
-                                title="Выбрать...">
+                                        title="Выбрать...">
                                 </select>
                             </div>
                         </div>
@@ -67,7 +68,7 @@
                             <div class="col-sm-8">
                                 @if($code->type==1)
                                     <select class="selectpicker form-control" id="departments_list" name="department_id"
-                                    title="Выбрать...">
+                                            title="Выбрать...">
                                     </select>
                                 @else
                                     <select name="departments_ids[]" id="departments_list_multiple"
@@ -211,32 +212,36 @@
 
 @endsection
 
-            @section('scripts')
+@section('scripts')
 
-                <script id="year_tmpl" type="text/x-jquery-tmpl">
+    <script id="year_tmpl" type="text/x-jquery-tmpl">
                     <option value="${id}" onclick="faculties(${id})">${year}</option>
 
 
 
-                </script>
 
-                <script id="faculty_tmpl" type="text/x-jquery-tmpl">
+    </script>
+
+    <script id="faculty_tmpl" type="text/x-jquery-tmpl">
                     <option value="${id}">${name}</option>
 
 
 
-                </script>
-                <script id="program_specialty_tmpl" type="text/x-jquery-tmpl">
+
+    </script>
+    <script id="program_specialty_tmpl" type="text/x-jquery-tmpl">
                 <option value="${id}">${code}|${name}</option>
 
-                </script>
 
-                <script id="department_list_tmpl" type="text/x-jquery-tmpl">
+    </script>
+
+    <script id="department_list_tmpl" type="text/x-jquery-tmpl">
                     <option value="${id}">${name}</option>
 
-                </script>
 
-                <script id="success_registration_tmpl" type="text/x-jquery-tmpl">
+    </script>
+
+    <script id="success_registration_tmpl" type="text/x-jquery-tmpl">
                     <div class="alert alert-success">
                     <p>Вы успешно прошли регистрацию в комплексе систем по размещению и проверке работ на заимствования.</p>
                     <p>Ваши учетные данные для авторизации на платформе:</p>
@@ -247,8 +252,9 @@
                    <p><a href="/login" class="btn btn-lg btn-success">Авторизоваться по логину и паролю</a></p>
                    </div>
 
-                </script>
 
-                <script src="/js/site/code-register.js"></script>
+    </script>
+
+    <script src="/js/site/code-register.js"></script>
 @endsection
 

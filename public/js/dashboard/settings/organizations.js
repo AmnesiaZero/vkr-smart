@@ -87,25 +87,21 @@ function createYear() {
     });
 }
 
-function openUpdateYearModal(id)
-{
+function openUpdateYearModal(id) {
     const data = {
-        id:id
+        id: id
     };
     $.ajax({
         url: "/dashboard/organizations/years/find",
         dataType: "json",
         data: data,
         success: function (response) {
-            if(response.success)
-            {
+            if (response.success) {
                 const year = response.data.year;
                 $("#tmpl_container").html($("#update_year_tmpl").tmpl(year));
                 const modalElement = new bootstrap.Modal(document.getElementById('update_year'));
                 modalElement.show();
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -273,25 +269,21 @@ function createFaculty() {
     });
 }
 
-function openUpdateFacultyModal(id)
-{
+function openUpdateFacultyModal(id) {
     const data = {
-        id:id
+        id: id
     };
     $.ajax({
         url: "/dashboard/organizations/faculties/find",
         dataType: "json",
         data: data,
         success: function (response) {
-            if(response.success)
-            {
+            if (response.success) {
                 const faculty = response.data.faculty;
                 $("#tmpl_container").html($("#update_faculty_tmpl").tmpl(faculty));
                 const modalElement = new bootstrap.Modal(document.getElementById('update_faculty'));
                 modalElement.show();
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -432,25 +424,21 @@ function createDepartment() {
     });
 }
 
-function openUpdateDepartmentModal(id)
-{
+function openUpdateDepartmentModal(id) {
     const data = {
-        id:id
+        id: id
     };
     $.ajax({
         url: "/dashboard/organizations/departments/find",
         dataType: "json",
         data: data,
         success: function (response) {
-            if(response.success)
-            {
+            if (response.success) {
                 const department = response.data.department;
                 $("#tmpl_container").html($("#update_year_tmpl").tmpl(year));
                 const modalElement = new bootstrap.Modal(document.getElementById('update_year'));
                 modalElement.show();
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -715,8 +703,9 @@ function specialties() {
                 const specialties = response.data.specialties;
                 $("#specialties_list").append($("#specialty_menu_tmpl").tmpl(specialties));
                 $("#specialties_list").prepend('<option value="" selected>Выберите...</option>');
-            } else {!
-                $.notify(response.data.title + ":" + response.data.message, "error");
+            } else {
+                !
+                    $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
         error: function () {
@@ -768,8 +757,7 @@ function updateProgramName() {
                 const program = response.data.program;
                 $("#program_" + programId).text(program.name);
                 $.notify("Имя успешно обновлено", "success");
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },

@@ -29,7 +29,8 @@
                         <div class="col-sm-6 justify-content-center">
                             <label class="col-sm-12">Пароль</label>
                             <div class="col-sm-12">
-                                <input type="password" class="form-control" name="password" required="" placeholder="Ввод...">
+                                <input type="password" class="form-control" name="password" required=""
+                                       placeholder="Ввод...">
                             </div>
                         </div>
                         <div class="col-sm-6 justify-content-center">
@@ -66,7 +67,8 @@
                         <div class="col-sm-6 justify-content-center">
                             <label class="col-sm-12">Год выпуска</label>
                             <div class="col-sm-12">
-                                <select class=" form-control" name="year_id" id="years_list" required="" title="Выбрать...">
+                                <select class=" form-control" name="year_id" id="years_list" required=""
+                                        title="Выбрать...">
 
                                 </select>
                             </div>
@@ -95,7 +97,8 @@
                         <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
                             Применить
                         </button>
-                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
+                                data-bs-dismiss="modal">
                             Закрыть
                         </button>
                     </div>

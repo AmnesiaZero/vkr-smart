@@ -41,25 +41,29 @@
                     <div class="profile-usermenu">
                         <ul class="nav d-flex flex-column" role="tablist">
                             <li role="presentation" class="nav-item">
-                                <a href="#profile-base" class="nav-link text-grey  active" aria-controls="profile-base" role="tab" data-bs-toggle="tab"
+                                <a href="#profile-base" class="nav-link text-grey  active" aria-controls="profile-base"
+                                   role="tab" data-bs-toggle="tab"
                                    aria-expanded="false">
                                     <i class="fas fa-home"></i> Основная информация
                                 </a>
                             </li>
                             <li role="presentation" class="nav-item">
-                                <a href="#profile-achivements" class="nav-link text-grey " aria-controls="profile-achivements" role="tab"
+                                <a href="#profile-achivements" class="nav-link text-grey "
+                                   aria-controls="profile-achivements" role="tab"
                                    data-bs-toggle="tab" aria-expanded="false">
                                     <i class="fas fa-th"></i> Достижения
                                 </a>
                             </li>
                             <li role="presentation" class="nav-item">
-                                <a href="#profile-main" class="nav-link text-grey " aria-controls="profile-main" role="tab" data-bs-toggle="tab"
+                                <a href="#profile-main" class="nav-link text-grey " aria-controls="profile-main"
+                                   role="tab" data-bs-toggle="tab"
                                    aria-expanded="false">
                                     <i class="fas fa-graduation-cap"></i> Образование
                                 </a>
                             </li>
                             <li role="presentation" class="nav-item">
-                                <a href="#profile-career" class="nav-link text-grey " aria-controls="profile-career" role="tab" data-bs-toggle="tab"
+                                <a href="#profile-career" class="nav-link text-grey " aria-controls="profile-career"
+                                   role="tab" data-bs-toggle="tab"
                                    aria-expanded="true">
                                     <i class="fas fa-briefcase"></i> Карьера
                                 </a>
@@ -67,7 +71,8 @@
                         </ul>
                     </div>
                     <hr class="hr-sm">
-                    <a onclick="window.print(); return false;" class="btn btn-block btn-primary btn-print text-grey br-none" id="print-it-out-btn">
+                    <a onclick="window.print(); return false;"
+                       class="btn btn-block btn-primary btn-print text-grey br-none" id="print-it-out-btn">
                         <i class="fas fa-print" style="padding-right: 4px"></i> Распечатать
                     </a>
                 </div>
@@ -79,7 +84,8 @@
                             <h2 class="text-grey">Основная информация:</h2>
                             <div class="form-group">
                                 <div class="row">
-                                    <label class="col-sm-4 col-xs-4 fw-bold fs-14 text-grey">Фамилия, имя, отчество</label>
+                                    <label class="col-sm-4 col-xs-4 fw-bold fs-14 text-grey">Фамилия, имя,
+                                        отчество</label>
                                     <div class="col-sm-8 col-xs-8 fs-14 fw-500">
                                         @if(isset($user->name))
                                             {{$user->name}}
@@ -89,11 +95,12 @@
                             </div>
                             <div class="form-group">
                                 <div class="row">
-                                    <label class="col-sm-4 col-xs-4 fw-bold fs-14 text-grey">Адрес электронной почты</label>
+                                    <label class="col-sm-4 col-xs-4 fw-bold fs-14 text-grey">Адрес электронной
+                                        почты</label>
                                     <div class="col-sm-8 col-xs-8 fs-14 fw-500">
                                         @if(isset($user->email))
                                             @if($user->email_visibility==1)
-                                            {{$user->email}}
+                                                {{$user->email}}
                                             @else
                                                 *******@*******
                                                 <br>
@@ -115,7 +122,8 @@
                             </div>
                             <div class="form-group">
                                 <div class="row">
-                                    <label class="col-sm-4 col-xs-4 fw-bold fs-14 text-grey">Факультет (подразделение)</label>
+                                    <label class="col-sm-4 col-xs-4 fw-bold fs-14 text-grey">Факультет
+                                        (подразделение)</label>
                                     <div class="col-sm-8 col-xs-8 fs-14 fw-500">
                                         @if(isset($user->faculty->name))
                                             {{$user->faculty->name}}
@@ -135,7 +143,8 @@
                             </div>
                             <div class="form-group">
                                 <div class="row">
-                                    <label class="col-sm-4 col-xs-4 fw-bold fs-14 text-grey">Позиция в организации</label>
+                                    <label class="col-sm-4 col-xs-4 fw-bold fs-14 text-grey">Позиция в
+                                        организации</label>
                                     <div class="col-sm-8 col-xs-8 fs-14 fw-500">
                                         @if(isset($user->roles[0]->name))
                                             {{$user->roles[0]->name}}
@@ -187,7 +196,8 @@
                                 <div class="row">
                                     <label class="col-sm-4 text-grey fw-bold">Год начала обучения</label>
                                     <div class="col-sm-8">
-                                        <select class="selectpicker form-control bs-select-hidden" data-live-search="true"
+                                        <select class="selectpicker form-control bs-select-hidden"
+                                                data-live-search="true"
                                                 name="start_year">
                                             @include('layouts.dashboard.include.elements.years_list')
                                         </select>
@@ -198,7 +208,8 @@
                                 <div class="row">
                                     <label class="col-sm-4 text-grey fw-bold">Год окончания обучения</label>
                                     <div class="col-sm-8">
-                                        <select class="selectpicker form-control bs-select-hidden" data-live-search="true"
+                                        <select class="selectpicker form-control bs-select-hidden"
+                                                data-live-search="true"
                                                 name="end_year">
                                             @include('layouts.dashboard.include.elements.years_list')
                                         </select>
@@ -209,7 +220,8 @@
                                 <div class="row">
                                     <label class="col-sm-4 text-grey fw-bold">Год выпуска</label>
                                     <div class="col-sm-8">
-                                        <select class="selectpicker form-control bs-select-hidden" data-live-search="true"
+                                        <select class="selectpicker form-control bs-select-hidden"
+                                                data-live-search="true"
                                                 name="graduation_year">
                                             @include('layouts.dashboard.include.elements.years_list')
                                         </select>
@@ -220,7 +232,8 @@
                                 <div class="row">
                                     <label class="col-sm-4 text-grey fw-bold">Форма обучения</label>
                                     <div class="col-sm-8">
-                                        <select class="selectpicker form-control bs-select-hidden" name="education_form">
+                                        <select class="selectpicker form-control bs-select-hidden"
+                                                name="education_form">
                                             <option value="0">Очная</option>
                                             <option value="1">Заочная</option>
                                             <option value="2">Дистанционное образование</option>
@@ -241,7 +254,8 @@
 
                         </div>
                         @role('admin')
-                        <form class="form form-horizontal form-well" id="add_career_form" onsubmit="addCareer(); return false;"
+                        <form class="form form-horizontal form-well" id="add_career_form"
+                              onsubmit="addCareer(); return false;"
                               method="post">
                             <div class="form-group">
                                 <div class="row">
@@ -304,7 +318,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">Закрыть
-                        окно</button>
+                        окно
+                    </button>
                 </div>
             </div>
         </div>
@@ -322,7 +337,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">Закрыть
-                        окно</button>
+                        окно
+                    </button>
                 </div>
             </div>
         </div>
@@ -332,17 +348,14 @@
         <input type="hidden" name="action" value="getFile">
     </form>
 
-
-
 @endsection
 
 
 @section('scripts')
     <script src="{{'/js/dashboard/portfolios/card.js'}}"></script>
     <script>
-         function getAvatar()
-         {
-            return  "{{ asset('images/my-image.png',true) }}";
+        function getAvatar() {
+            return "{{ asset('images/my-image.png',true) }}";
         }
     </script>
     <script id="achievement_tmpl" type="text/x-jquery-tmpl">
@@ -360,6 +373,7 @@
             <td>${type.name}</td>
             <td>${record_date}</td>
         </tr>
+
     </script>
 
     <script id="education_tmpl" type="text/x-jquery-tmpl">
@@ -397,6 +411,7 @@
                 </div>
             </div>
         </form>
+
     </script>
 
     <script id="career_tmpl" type="text/x-jquery-tmpl">
@@ -435,5 +450,6 @@
                 </div>
             </div>
         </form>
+
     </script>
 @endsection

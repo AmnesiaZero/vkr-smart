@@ -9,7 +9,7 @@ $(document).ready(function () {
             url: "/dashboard/users/you",
             dataType: "json",
             type: "get",
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     userId = response.data.you.id;
                     deferred.resolve(); // Сообщаем, что функция завершена
@@ -18,7 +18,7 @@ $(document).ready(function () {
                     deferred.reject(); // Сообщаем об ошибке
                 }
             },
-            error: function() {
+            error: function () {
                 $.notify("Произошла ошибка при выборе года", "error");
                 deferred.reject(); // Сообщаем об ошибке
             }
@@ -28,16 +28,16 @@ $(document).ready(function () {
     }
 
 
-    $.when(getUser()).done(function() {
+    $.when(getUser()).done(function () {
         educations();
         careers();
     });
 
-    $('#change_avatar_button').on('click', function() {
+    $('#change_avatar_button').on('click', function () {
         $('#avatar_input').click(); // Открываем диалог выбора файла
     });
 
-    $('#avatar_input').on('change', function() {
+    $('#avatar_input').on('change', function () {
         const file = this.files[0];
         if (file) {
             const formData = new FormData();
@@ -55,7 +55,7 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.success) {
                         let avatarPath = response.data.user.avatar_path;
-                        $("#user_avatar").attr('src','/' + avatarPath);
+                        $("#user_avatar").attr('src', '/' + avatarPath);
                     } else {
                         $.notify(response.data.title + ":" + response.data.message, "error");
                     }
@@ -69,17 +69,12 @@ $(document).ready(function () {
 });
 
 
-
-
-
-
-function updatePersonalInfo()
-{
+function updatePersonalInfo() {
     let data = $("#personal_form").serialize();
     const additionalData = {
         id: userId
     };
-    data+= '&' + $.param(additionalData);
+    data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/users/update",
         dataType: "json",
@@ -102,13 +97,12 @@ function updatePersonalInfo()
     });
 }
 
-function resetPassword()
-{
+function resetPassword() {
     let data = $("#reset_password_form").serialize();
     const additionalData = {
         id: userId
     };
-    data+= '&' + $.param(additionalData);
+    data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/users/update",
         dataType: "json",
@@ -119,7 +113,7 @@ function resetPassword()
         },
         success: function (response) {
             if (response.success) {
-                $.notify("Пароль был успешно изменен","success");
+                $.notify("Пароль был успешно изменен", "success");
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -146,6 +140,7 @@ function getResourses(id) {
         }
     });
 }
+
 function getResource(id) {
     $.ajax({
         url: "/achivements-actions",
@@ -173,22 +168,20 @@ function getResource(id) {
     });
 }
 
-function educations()
-{
+function educations() {
     const data = {
-        user_id:userId
+        user_id: userId
     };
     $.ajax({
         url: "/dashboard/portfolios/educations/get",
-        data:data,
+        data: data,
         type: "GET",
         dataType: "json",
         success: function (response) {
             if (response.success) {
                 const educations = response.data.educations;
                 $("#educations_list").html($("#education_tmpl").tmpl(educations));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -198,16 +191,15 @@ function educations()
     });
 }
 
-function addEducation()
-{
+function addEducation() {
     let data = $("#add_education_form").serialize();
     const additionalData = {
-        user_id:userId
+        user_id: userId
     };
     data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/portfolios/educations/create",
-        data:data,
+        data: data,
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -217,8 +209,7 @@ function addEducation()
             if (response.success) {
                 const education = response.data.education;
                 $("#educations_list").append($("#education_tmpl").tmpl(education));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -228,14 +219,13 @@ function addEducation()
     });
 }
 
-function deleteEducation(educationId)
-{
+function deleteEducation(educationId) {
     const data = {
-        id:educationId
+        id: educationId
     };
     $.ajax({
         url: "/dashboard/portfolios/educations/delete",
-        data:data,
+        data: data,
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -245,8 +235,7 @@ function deleteEducation(educationId)
             if (response.success) {
                 $("#education_" + educationId).remove();
                 $.notify(response.data.title + ":" + response.data.message, "success");
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -256,10 +245,8 @@ function deleteEducation(educationId)
     });
 }
 
-function getEducationForm(educationFormId)
-{
-    switch (educationFormId)
-    {
+function getEducationForm(educationFormId) {
+    switch (educationFormId) {
         case 0:
         case '0':
             return 'Очная';
@@ -268,26 +255,24 @@ function getEducationForm(educationFormId)
             return 'Заочная'
         case 2:
         case '2':
-            return  'Дистанционная';
+            return 'Дистанционная';
     }
 }
 
-function careers()
-{
+function careers() {
     const data = {
-        user_id:userId
+        user_id: userId
     };
     $.ajax({
         url: "/dashboard/portfolios/careers/get",
-        data:data,
+        data: data,
         type: "GET",
         dataType: "json",
         success: function (response) {
             if (response.success) {
                 const careers = response.data.careers;
                 $("#careers_list").html($("#career_tmpl").tmpl(careers));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -297,16 +282,15 @@ function careers()
     });
 }
 
-function addCareer()
-{
+function addCareer() {
     let data = $("#add_career_form").serialize();
     const additionalData = {
-        user_id:userId
+        user_id: userId
     };
     data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/portfolios/careers/create",
-        data:data,
+        data: data,
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -316,8 +300,7 @@ function addCareer()
             if (response.success) {
                 const career = response.data.career;
                 $("#careers_list").append($("#career_tmpl").tmpl(career));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -327,14 +310,13 @@ function addCareer()
     });
 }
 
-function deleteCareer(careerId)
-{
+function deleteCareer(careerId) {
     const data = {
-        id:careerId
+        id: careerId
     };
     $.ajax({
         url: "/dashboard/portfolios/careers/delete",
-        data:data,
+        data: data,
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -344,8 +326,7 @@ function deleteCareer(careerId)
             if (response.success) {
                 $("#career_" + careerId).remove();
                 $.notify(response.data.title + ":" + response.data.message, "success");
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },

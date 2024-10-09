@@ -15,7 +15,8 @@
                                 <p class="fs-15 fw-bold m-0">Год:</p>
                             </div>
                             <div class="col-sm-8">
-                                <input type="text" name="year" class="form-control box-shadow-none fs-15 p-0 px-2 py-1 br-2 edited" value="">
+                                <input type="text" name="year"
+                                       class="form-control box-shadow-none fs-15 p-0 px-2 py-1 br-2 edited" value="">
                             </div>
                         </div>
 
@@ -47,7 +48,8 @@
                     <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
                         Применить
                     </button>
-                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
+                            data-bs-dismiss="modal">
                         Закрыть
                     </button>
                 </div>

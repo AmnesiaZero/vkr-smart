@@ -3,7 +3,8 @@
 @section('styles')
     <link rel="stylesheet" href="{{ secure_asset('/plugins/bootstrap-select/v1.14.0/css/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('/plugins/select2/css/select2.min.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
 @endsection
 
 @section('content')
@@ -45,7 +46,8 @@
                         </div>
                         <div class="form-group">
                             <label for="password_confirmation">Подтвердите пароль</label>
-                            <input id="password_confirmation" type="password" name="password_confirmation" class="form-control">
+                            <input id="password_confirmation" type="password" name="password_confirmation"
+                                   class="form-control">
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -63,7 +65,9 @@
                         <div class="form-group">
                             <label for="avatar">Аватар</label>
                             <div class="input-group">
-                                <input id="avatar" type="text" value="@if(isset($user) and $user->avatar_file_name) {{$user->avatar_file_name}} @endif" class="form-control"
+                                <input id="avatar" type="text"
+                                       value="@if(isset($user) and $user->avatar_file_name) {{$user->avatar_file_name}} @endif"
+                                       class="form-control"
                                        placeholder="Выберите изображение" aria-label="Выберите изображение"
                                        aria-describedby="button-select-image" readonly>
                                 <div class="input-group-append">
@@ -98,12 +102,12 @@
 @section('scripts')
     <script src="/js/dashboard/platform/users.js"></script>
     <script src="{{ secure_asset('/plugins/ckfinder/ckfinder.js') }}"></script>
-    <script>CKFinder.config( { connectorPath: '/ckfinder/connector' } );</script>
+    <script>CKFinder.config({connectorPath: '/ckfinder/connector'});</script>
     <script src="{{ secure_asset('/dashboards/sleek/js/cke_init.js') }}"></script>
     <script src="{{ secure_asset('/plugins/bootstrap-select/v1.14.0/js/bootstrap-select.min.js') }}"></script>
     <script src="{{ secure_asset('/plugins/select2/js/select2.min.js') }}"></script>
     <script>
-        $('#button-select-image').on('click', function() {
+        $('#button-select-image').on('click', function () {
             selectFileWithCKFinder('avatar');
         });
 

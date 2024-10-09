@@ -9,21 +9,16 @@ var departmentsIds = [];
 var specialtiesIds = [];
 
 
-
-
-
 $(document).ready(function () {
     $('.selectpicker').selectpicker();
 
     const siteUrl = window.location.href;
-    if(siteUrl.includes('employees'))
-    {
+    if (siteUrl.includes('employees')) {
         userType = 2;
-    }
-    else
-    {
+    } else {
         userType = 1;
     }
+
     function getUser() {
         var deferred = $.Deferred();
 
@@ -31,30 +26,27 @@ $(document).ready(function () {
             url: "/dashboard/users/you",
             dataType: "json",
             type: "get",
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     user = response.data.you;
                     console.log(user);
                     userId = response.data.you.id;
                     role = user.roles[0].slug;
                     const departments = user.departments;
-                    if(departments)
-                    {
+                    if (departments) {
                         departmentsIds.push(...departments.map(department => department.id));
                     }
                     const specialties = user.organization.inspectors_specialties;
-                    if(specialties)
-                    {
+                    if (specialties) {
                         specialtiesIds.push(...specialties.map(specialty => specialty.id));
                     }
                     deferred.resolve(); // Сообщаем, что функция завершена
-                }
-                else {
+                } else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                     deferred.reject(); // Сообщаем об ошибке
                 }
             },
-            error: function() {
+            error: function () {
                 $.notify("Произошла ошибка при выборе года", "error");
                 deferred.reject(); // Сообщаем об ошибке
             }
@@ -64,7 +56,7 @@ $(document).ready(function () {
     }
 
 
-    $.when(getUser()).done(function() {
+    $.when(getUser()).done(function () {
         works();
     });
     localStorage.setItem('selected_years', '');
@@ -83,7 +75,7 @@ $(document).ready(function () {
             year_id: yearId
         };
         console.log('изменение');
-        faculties(data,'faculties_list');
+        faculties(data, 'faculties_list');
     });
 
     $('#faculties_list').change(function () {
@@ -91,7 +83,7 @@ $(document).ready(function () {
         const data = {
             faculty_id: facultyId
         };
-        departments(data,'departments_list');
+        departments(data, 'departments_list');
     });
 
     $('#departments_list').change(function () {
@@ -99,7 +91,7 @@ $(document).ready(function () {
         const data = {
             department_id: departmentId
         };
-        specialties(data,'add_specialties_list');
+        specialties(data, 'add_specialties_list');
     });
 
     $('#update_years_list').change(function () {
@@ -108,7 +100,7 @@ $(document).ready(function () {
             year_id: yearId
         };
         console.log('изменение');
-        faculties(data,'update_faculties_list');
+        faculties(data, 'update_faculties_list');
     });
 
     $('#update_faculties_list').change(function () {
@@ -116,7 +108,7 @@ $(document).ready(function () {
         const data = {
             faculty_id: facultyId
         };
-        departments(data,'update_departments_list');
+        departments(data, 'update_departments_list');
     });
 
     $('#update_departments_list').change(function () {
@@ -124,7 +116,7 @@ $(document).ready(function () {
         const data = {
             department_id: departmentId
         };
-        specialties(data,'update_specialties_list');
+        specialties(data, 'update_specialties_list');
     });
 
     $('#import_years_list').change(function () {
@@ -133,7 +125,7 @@ $(document).ready(function () {
             year_id: yearId
         };
         console.log('изменение');
-        faculties(data,'import_faculties_list');
+        faculties(data, 'import_faculties_list');
     });
 
     $('#import_faculties_list').change(function () {
@@ -141,7 +133,7 @@ $(document).ready(function () {
         const data = {
             faculty_id: facultyId
         };
-        departments(data,'import_departments_list');
+        departments(data, 'import_departments_list');
     });
 
     $('#import_departments_list').change(function () {
@@ -149,19 +141,19 @@ $(document).ready(function () {
         const data = {
             department_id: departmentId
         };
-        specialties(data,'import_specialties_list');
+        specialties(data, 'import_specialties_list');
     });
 
 
-    $('#upload_button').on('click', function() {
+    $('#upload_button').on('click', function () {
         $('#file_input').click(); // Открываем диалог выбора файла
     });
 
-    $('#upload_certificate_button').on('click', function() {
+    $('#upload_certificate_button').on('click', function () {
         $('#certificate_input').click(); // Открываем диалог выбора файла
     });
 
-    $('#file_input').on('change', function() {
+    $('#file_input').on('change', function () {
         const file = this.files[0];
         if (file) {
             const workId = localStorage.getItem('work_id');
@@ -191,7 +183,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#certificate_input').on('change', function() {
+    $('#certificate_input').on('change', function () {
         const file = this.files[0];
         if (file) {
             const workId = localStorage.getItem('work_id');
@@ -221,13 +213,13 @@ $(document).ready(function () {
         }
     });
 
-    $("#upload_additional_file_form").on('submit', function(e) {
+    $("#upload_additional_file_form").on('submit', function (e) {
         e.preventDefault(); // Предотвращаем стандартное поведение формы
 
         // Создаем объект FormData и добавляем в него данные формы
         const formData = new FormData(this);
         const workId = localStorage.getItem('work_id');
-        formData.append('work_id',workId);
+        formData.append('work_id', workId);
 
         $.ajax({
             url: '/dashboard/works/additional-files/create',
@@ -238,26 +230,22 @@ $(document).ready(function () {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(response) {
-                if (response.success)
-                {
+            success: function (response) {
+                if (response.success) {
                     const additionalFile = response.data.additional_file;
                     $("#additional_files").append($("#additional_file_tmpl").tmpl(additionalFile));
-                }
-                else
-                {
+                } else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                 }
             },
-            error: function() {
+            error: function () {
                 $.notify("Ошибка при добавлении работы. Обратитесь к системному администратору", "error");
             }
         });
     });
 
 
-
-    $(function() {
+    $(function () {
         let start = moment();
         let end = moment().add(29, 'days');
         $('input[name="daterange"]').daterangepicker({
@@ -299,7 +287,7 @@ $(document).ready(function () {
                 "firstDay": 1
             },
             opens: 'left'
-        }, function(start, end, label) {
+        }, function (start, end, label) {
             // Обновляем значение поля при выборе диапазона
             $('input[name="daterange"]').val(start.format('DD.MM.YYYY') + ' - ' + end.format('DD.MM.YYYY'));
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
@@ -321,10 +309,7 @@ $(document).ready(function () {
 });
 
 
-
-
-
-function faculties(data,htmlId) {
+function faculties(data, htmlId) {
     console.log('faculties');
     $.ajax({
         url: "/dashboard/organizations/faculties/get",
@@ -351,7 +336,7 @@ function faculties(data,htmlId) {
     });
 }
 
-function departments(data,htmlId) {
+function departments(data, htmlId) {
     $.ajax({
         url: "/dashboard/organizations/departments/get",
         dataType: "json",
@@ -377,7 +362,7 @@ function departments(data,htmlId) {
 }
 
 
-function specialties(data,htmlId) {
+function specialties(data, htmlId) {
     $.ajax({
         url: "/dashboard/organizations/departments/program-specialties",
         dataType: "json",
@@ -456,12 +441,12 @@ $(document).ready(function () {
     })
 })
 
-$("#addWorkForm").on('submit', function(e) {
+$("#addWorkForm").on('submit', function (e) {
     e.preventDefault(); // Предотвращаем стандартное поведение формы
 
     // Создаем объект FormData и добавляем в него данные формы
     const formData = new FormData(this);
-    formData.append('user_type',userType);
+    formData.append('user_type', userType);
 
     $.ajax({
         url: '/dashboard/works/create',
@@ -472,26 +457,23 @@ $("#addWorkForm").on('submit', function(e) {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success: function(response) {
-            if (response.success)
-            {
+        success: function (response) {
+            if (response.success) {
                 const work = response.data.work;
                 $("#works_table").append($("#work_tmpl").tmpl(work));
                 updateWorksCount();
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function() {
+        error: function () {
             $.notify("Ошибка при добавлении работы. Обратитесь к системному администратору", "error");
 
         }
     });
 });
 
-$("#import_work_form").on('submit', function(e) {
+$("#import_work_form").on('submit', function (e) {
     e.preventDefault(); // Предотвращаем стандартное поведение формы
 
     // Создаем объект FormData и добавляем в него данные формы
@@ -506,18 +488,15 @@ $("#import_work_form").on('submit', function(e) {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success: function(response) {
-            if (response.success)
-            {
+        success: function (response) {
+            if (response.success) {
                 $.notify(response.data.title + ":" + response.data.message, "success");
                 works();
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function() {
+        error: function () {
             $.notify("Ошибка при добавлении работы. Обратитесь к системному администратору", "error");
 
         }
@@ -525,8 +504,7 @@ $("#import_work_form").on('submit', function(e) {
 });
 
 
-function addWork(formData)
-{
+function addWork(formData) {
     $.ajax({
         url: '/dashboard/works/create',
         type: 'POST',
@@ -536,27 +514,23 @@ function addWork(formData)
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success: function(response) {
-            if (response.success)
-            {
+        success: function (response) {
+            if (response.success) {
                 const work = response.data.work;
                 $("#works_table").append($("#work_tmpl").tmpl(work));
                 updateWorksCount();
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function() {
+        error: function () {
             $.notify("Ошибка при добавлении работы. Обратитесь к системному администратору", "error");
 
         }
     });
 }
 
-function getAssessmentDescription(assessment)
-{
+function getAssessmentDescription(assessment) {
     switch (assessment) {
         case 0:
             return 'Без оценки';
@@ -573,8 +547,7 @@ function getAssessmentDescription(assessment)
     }
 }
 
-function getAgreementDescription(agreement)
-{
+function getAgreementDescription(agreement) {
     switch (agreement) {
         case 1:
             return 'Согласен на размещение работы';
@@ -585,8 +558,7 @@ function getAgreementDescription(agreement)
     }
 }
 
-function getSelfCheckDescription(selfCheck)
-{
+function getSelfCheckDescription(selfCheck) {
     switch (selfCheck) {
         case 0:
             return 'Не пройдена';
@@ -597,34 +569,29 @@ function getSelfCheckDescription(selfCheck)
     }
 }
 
-function works(page= 1)
-{
+function works(page = 1) {
     let data = {
-        page:page,
-        user_type:userType
+        page: page,
+        user_type: userType
     };
     let additionalData = '';
-    if(role==='employee' || role==='teacher')
-    {
+    if (role === 'employee' || role === 'teacher') {
         additionalData = {
-            selected_departments:departmentsIds
+            selected_departments: departmentsIds
+        };
+    } else if (role === 'inspector') {
+        additionalData = {
+            selected_specialties: specialtiesIds
         };
     }
-    else if(role==='inspector')
-    {
-        additionalData = {
-            selected_specialties:specialtiesIds
-        };
-    }
-    data = $.extend(data,additionalData);
+    data = $.extend(data, additionalData);
     $.ajax({
         url: "/dashboard/works/get",
         type: 'GET',
-        data:data,
+        data: data,
         dataType: "json",
-        success: function(response) {
-            if (response.success)
-            {
+        success: function (response) {
+            if (response.success) {
                 const pagination = response.data.works;
                 const works = pagination.data;
                 const worksTable = $("#works_table");
@@ -632,7 +599,7 @@ function works(page= 1)
                 updateWorksPagination(pagination);
                 console.log('Echo');
                 console.log(window.Echo);
-                works.forEach(work =>{
+                works.forEach(work => {
                     const workId = work.id;
                     window.Echo.channel(`works.${workId}`)
                         .listen('.WorkUpdated', (e) => {
@@ -643,99 +610,84 @@ function works(page= 1)
                             console.error('Error:', error);
                         });
                 });
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function() {
+        error: function () {
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
 }
 
-function reloadWork(workId)
-{
+function reloadWork(workId) {
     const data = {
-        id:workId
+        id: workId
     };
     $.ajax({
         url: "/dashboard/works/find",
         type: 'GET',
-        data:data,
+        data: data,
         dataType: "json",
-        success: function(response) {
-            if (response.success)
-            {
+        success: function (response) {
+            if (response.success) {
                 const work = response.data.work;
                 $("#work_" + workId).replaceWith($("#work_tmpl").tmpl(work));
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function() {
+        error: function () {
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
 }
 
-function openReport(workId)
-{
+function openReport(workId) {
     const data = {
-        id:workId
+        id: workId
     };
     $.ajax({
         url: "/dashboard/works/find",
         type: 'GET',
-        data:data,
+        data: data,
         dataType: "json",
-        success: function(response) {
-            if (response.success)
-            {
+        success: function (response) {
+            if (response.success) {
                 const work = response.data.work;
                 $("#report_container").html($("#report_tmpl").tmpl(work));
                 const modalElement = new bootstrap.Modal(document.getElementById('report_modal'));
                 modalElement.show();
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function() {
+        error: function () {
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
 }
 
-function searchWorks(page=1) {
+function searchWorks(page = 1) {
     let data = $("#search_form").serialize();
     data = serializeRemoveNull(data);
     let additionalData = '';
-    if(role==='admin')
-    {
+    if (role === 'admin') {
         const selectedYears = getArrayFromLocalStorage('selected_years');
         const selectedFaculties = getArrayFromLocalStorage('selected_faculties');
         const selectedDepartments = getArrayFromLocalStorage('selected_departments');
         additionalData = {
             selected_years: selectedYears,
             selected_faculties: selectedFaculties,
-            selected_departments:selectedDepartments
+            selected_departments: selectedDepartments
         };
-    }
-    else if(role==='teacher' || role==='employee')
-    {
+    } else if (role === 'teacher' || role === 'employee') {
         additionalData = {
-            selected_departments:departmentsIds
+            selected_departments: departmentsIds
         };
-    }
-    else if(role==='inspector')
-    {
+    } else if (role === 'inspector') {
         additionalData = {
-            selected_specialties:specialtiesIds
+            selected_specialties: specialtiesIds
         };
     }
     additionalData['user_type'] = userType;
@@ -746,16 +698,15 @@ function searchWorks(page=1) {
         type: 'GET',
         data: data,
         dataType: "json",
-        success: function(response) {
-            if (response.success)
-            {
+        success: function (response) {
+            if (response.success) {
                 const pagination = response.data.works;
                 const works = pagination.data;
                 console.log(works);
                 const worksTable = $("#works_table");
                 worksTable.html($("#work_tmpl").tmpl(works));
                 updateWorksPagination(pagination);
-                works.forEach(work =>{
+                works.forEach(work => {
                     const workId = work.id;
                     window.Echo.channel(`works.${workId}`)
                         .listen('.WorkUpdated', (e) => {
@@ -766,25 +717,22 @@ function searchWorks(page=1) {
                             console.error('Error:', error);
                         });
                 });
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function() {
+        error: function () {
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
 }
 
-function resetSearch()
-{
+function resetSearch() {
     localStorage.setItem('selected_years', '');
     localStorage.setItem('selected_faculties', '');
     localStorage.setItem('selected_departments', '');
     $(".out-kod").empty();
-    $("#default_specialty").prop('selected',true);
+    $("#default_specialty").prop('selected', true);
     $("#student_input").val('');
     $("#work_name_input").val('');
     $("#group_input").val('');
@@ -792,68 +740,57 @@ function resetSearch()
     works();
 }
 
-function openInfoBox(id)
-{
-    if(id)
-    {
+function openInfoBox(id) {
+    if (id) {
         const deleted = $("#work_" + id).attr('class');
-        if(deleted)
-        {
+        if (deleted) {
             console.log('true');
             $("#added_menu").html($("#deleted_menu_tmpl").tmpl());
-        }
-        else
-        {
+        } else {
             console.log('false');
             $("#added_menu").html($("#undeleted_menu_tmpl").tmpl());
         }
         const data = {
-            id:id
+            id: id
         };
 
         $.ajax({
             url: "/dashboard/works/find",
             type: 'GET',
-            data:data,
+            data: data,
             dataType: "json",
-            success: function(response) {
-                if (response.success)
-                {
+            success: function (response) {
+                if (response.success) {
                     const work = response.data.work;
                     const userId = work.user_id;
-                    localStorage.setItem('work_id',id);
-                    localStorage.setItem('user_id',userId);
-                }
-                else
-                {
+                    localStorage.setItem('work_id', id);
+                    localStorage.setItem('user_id', userId);
+                } else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                 }
             },
-            error: function() {
+            error: function () {
                 $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
             }
         });
     }
 }
 
-function checkDeleted()
-{
-    return  localStorage.getItem('deleted');
+function checkDeleted() {
+    return localStorage.getItem('deleted');
 }
 
-function updateWorkSpecialty()
-{
+function updateWorkSpecialty() {
     let data = $("#update_work_specialty_form").serialize();
     const workId = localStorage.getItem('work_id');
     const additionalData = {
         id: workId,
     };
     data += '&' + $.param(additionalData);
-    updateWorkCore(data,workId);
+    updateWorkCore(data, workId);
 }
 
-function workInfo()
-{
+function workInfo() {
     const workId = localStorage.getItem('work_id');
     const data = {
         id: workId,
@@ -861,58 +798,51 @@ function workInfo()
     $.ajax({
         url: "/dashboard/works/find",
         type: 'GET',
-        data:data,
+        data: data,
         dataType: "json",
-        success: function(response) {
-            if (response.success)
-            {
+        success: function (response) {
+            if (response.success) {
                 const work = response.data.work;
                 $("#about_work").html($("#work_info_tmpl").tmpl(work));
                 const modalElement = new bootstrap.Modal(document.getElementById('work_info_modal'));
                 modalElement.show();
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function() {
+        error: function () {
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
 }
 
-function updateWork()
-{
+function updateWork() {
     let data = $("#update_work_form").serialize();
     const workId = localStorage.getItem('work_id');
     const additionalData = {
         id: workId,
     };
     data += '&' + $.param(additionalData);
-    updateWorkCore(data,workId);
+    updateWorkCore(data, workId);
 }
 
-function downloadWork()
-{
+function downloadWork() {
     const workId = localStorage.getItem('work_id');
     window.location.href = '/dashboard/works/download?id=' + workId;
 }
 
-function openUpdateWorkModal()
-{
+function openUpdateWorkModal() {
     const workId = localStorage.getItem('work_id');
     const data = {
-        id:workId
+        id: workId
     };
     $.ajax({
         url: "/dashboard/works/find",
         type: 'GET',
-        data:data,
+        data: data,
         dataType: "json",
-        success: function(response) {
-            if (response.success)
-            {
+        success: function (response) {
+            if (response.success) {
                 const work = response.data.work;
                 $("#tmpl_modals").html($("#update_work_tmpl").tmpl(work));
 
@@ -920,28 +850,24 @@ function openUpdateWorkModal()
 
                 const modalElement = new bootstrap.Modal(document.getElementById('update_work_modal'));
                 modalElement.show();
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function() {
+        error: function () {
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
 
 }
 
-function downloadCertificate()
-{
+function downloadCertificate() {
     const workId = localStorage.getItem('work_id');
     window.location.href = '/dashboard/works/certificates/download?id=' + workId;
 
 }
 
-function copyWork()
-{
+function copyWork() {
     const workId = localStorage.getItem('work_id');
     const data = {
         id: workId,
@@ -949,33 +875,28 @@ function copyWork()
     $.ajax({
         url: "/dashboard/works/copy",
         type: 'POST',
-        data:data,
+        data: data,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         dataType: "json",
-        success: function(response) {
-            if (response.success)
-            {
+        success: function (response) {
+            if (response.success) {
                 //обновялем список работ
                 works();
                 $.notify(response.data.title + ":" + response.data.message, "success");
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function() {
+        error: function () {
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
 }
 
-function deleteWork()
-{
-    if (confirm('Вы уверены,что хотите поместить работу на удаление?'))
-    {
+function deleteWork() {
+    if (confirm('Вы уверены,что хотите поместить работу на удаление?')) {
         const workId = localStorage.getItem('work_id');
         const data = {
             id: workId,
@@ -983,33 +904,28 @@ function deleteWork()
         $.ajax({
             url: "/dashboard/works/delete",
             type: 'POST',
-            data:data,
+            data: data,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             dataType: "json",
-            success: function(response) {
-                if (response.success)
-                {
+            success: function (response) {
+                if (response.success) {
                     works();
                     $.notify(response.data.title + ":" + response.data.message, "success");
-                }
-                else
-                {
+                } else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                 }
             },
-            error: function() {
+            error: function () {
                 $.notify("Ошибка при удалении работы. Обратитесь к системному администратору", "error");
             }
         });
     }
 }
 
-function destroyWork()
-{
-    if (confirm('Вы уверены,что хотите стереть запись и удалить прикрепленные файлы?'))
-    {
+function destroyWork() {
+    if (confirm('Вы уверены,что хотите стереть запись и удалить прикрепленные файлы?')) {
         const workId = localStorage.getItem('work_id');
         const data = {
             id: workId,
@@ -1017,98 +933,86 @@ function destroyWork()
         $.ajax({
             url: "/dashboard/works/destroy",
             type: 'POST',
-            data:data,
+            data: data,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             dataType: "json",
-            success: function(response) {
-                if (response.success)
-                {
+            success: function (response) {
+                if (response.success) {
                     works();
                     $.notify(response.data.title + ":" + response.data.message, "success");
-                }
-                else
-                {
+                } else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                 }
             },
-            error: function() {
+            error: function () {
                 $.notify("Ошибка при удалении работы. Обратитесь к системному администратору", "error");
             }
         });
     }
 }
 
-function updateSelfCheckStatus()
-{
+function updateSelfCheckStatus() {
     const workId = localStorage.getItem('work_id');
     const data = {
-        id:workId
+        id: workId
     };
     $.ajax({
         url: "/dashboard/works/update/self-check",
         type: 'POST',
-        data:data,
+        data: data,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         dataType: "json",
-        success: function(response) {
-            if (response.success)
-            {
+        success: function (response) {
+            if (response.success) {
                 const selfCheckStatus = getSelfCheckDescription(response.data.self_check);
                 $("#self_check_value").text(selfCheckStatus);
                 $.notify(response.data.title + ":" + response.data.message, "success");
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function() {
+        error: function () {
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
 
 }
 
-function restore()
-{
+function restore() {
     const workId = localStorage.getItem('work_id');
     const data = {
-        id:workId
+        id: workId
     };
     $.ajax({
         url: "/dashboard/works/restore",
         type: 'POST',
-        data:data,
+        data: data,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         dataType: "json",
-        success: function(response) {
-            if (response.success)
-            {
+        success: function (response) {
+            if (response.success) {
                 works();
                 $.notify(response.data.title + ":" + response.data.message, "success");
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function() {
+        error: function () {
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
 }
 
-function additionalFiles()
-{
+function additionalFiles() {
     const workId = localStorage.getItem('work_id');
     const data = {
-        work_id:workId
+        work_id: workId
     };
     $.ajax({
         url: "/dashboard/works/additional-files/get",
@@ -1116,13 +1020,10 @@ function additionalFiles()
         data: data,
         dataType: "json",
         success: function (response) {
-            if (response.success)
-            {
+            if (response.success) {
                 const additionalFiles = response.data.additional_files;
                 $("#additional_files").html($("#additional_file_tmpl").tmpl(additionalFiles));
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -1132,10 +1033,9 @@ function additionalFiles()
     });
 }
 
-function deleteAdditionalFile(additionalFileId)
-{
+function deleteAdditionalFile(additionalFileId) {
     const data = {
-        id:additionalFileId
+        id: additionalFileId
     };
     $.ajax({
         url: "/dashboard/works/additional-files/delete",
@@ -1146,13 +1046,10 @@ function deleteAdditionalFile(additionalFileId)
         },
         dataType: "json",
         success: function (response) {
-            if (response.success)
-            {
+            if (response.success) {
                 $("#additional_file_" + additionalFileId).remove();
                 $.notify(response.data.title + ":" + response.data.message, "success");
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -1162,8 +1059,7 @@ function deleteAdditionalFile(additionalFileId)
     });
 }
 
-function exportWorks()
-{
+function exportWorks() {
     let data = $("#search_form").serialize();
     data = serializeRemoveNull(data);
     const selectedYears = getArrayFromLocalStorage('selected_years');
@@ -1176,40 +1072,33 @@ function exportWorks()
     window.location.href = '/dashboard/works/export?' + data;
 }
 
-function updateWorkCore(data,workId)
-{
+function updateWorkCore(data, workId) {
     $.ajax({
         url: "/dashboard/works/update",
         type: 'POST',
-        data:data,
+        data: data,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         dataType: "json",
-        success: function(response) {
-            if (response.success)
-            {
+        success: function (response) {
+            if (response.success) {
                 // const work = response.data.work;
                 // $("#work_" + workId).replaceWith($("#work_tmpl").tmpl(work));
                 $.notify(response.data.title + ":" + response.data.message, "success");
 
-            }
-            else
-            {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function() {
+        error: function () {
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
 }
 
 
-
-
-function updateWorksCount()
-{
+function updateWorksCount() {
     const worksCountString = $("#works_count").text();
     let worksCount = parseInt(worksCountString, 10);
     if (!isNaN(worksCount)) {

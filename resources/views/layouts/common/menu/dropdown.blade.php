@@ -6,7 +6,8 @@
                                     </span>
     </a>
 
-    <a href="#" class="btn dropdown-toggle pt-0" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
+    <a href="#" class="btn dropdown-toggle pt-0" type="button" id="dropdownMenu" data-bs-toggle="dropdown"
+       aria-expanded="false">
         <span class="caret"></span>
     </a>
 

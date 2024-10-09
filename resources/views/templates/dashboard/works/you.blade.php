@@ -188,6 +188,7 @@
 
 
 
+
             </script>
 
             <script id="department_tmpl" type="text/x-jquery-tmpl">
@@ -196,10 +197,12 @@
 
 
 
+
             </script>
 
             <script id="specialty_tmpl" type="text/x-jquery-tmpl">
      <option value="${id}">${name}</option>
+
 
             </script>
 
@@ -244,8 +247,9 @@
         <td>
             <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p" onclick="openInfoBox(${id})">
         @include('layouts.dashboard.include.menu.work.you')
-        </td>
-    </tr>
+                </td>
+            </tr>
+
 
 
 
@@ -369,6 +373,7 @@
         </div>
 
 
+
             </script>
 
             <script id="deleted_menu_tmpl" type="text/x-jquery-tmpl">
@@ -380,6 +385,7 @@
         <img src="/images/Trash_Full.svg" alt="" class="pe-2">
         <p class="fs-14 lh-17 text-grey m-0" onclick="destroyWork()">Безвозвратно удалить работу<br> обучающего и все файлы</p>
     </div>
+
 
 
             </script>
@@ -394,6 +400,7 @@
     </div>
 
 
+
             </script>
 
             <script id="self_check_tmpl" type="text/x-jquery-tmpl">
@@ -401,6 +408,7 @@
           ${getSelfCheckDescription(self_check)}
           <span class="glyphicon glyphicon-refresh"></span>
        </a>
+
             </script>
 
             <script id="additional_file_tmpl" type="text/x-jquery-tmpl">
@@ -411,6 +419,7 @@
                 <a onclick="deleteAdditionalFile(${id}); return false;" href="#" class="btn btn-sm btn-danger btn-block">Удалить</a>
             </td>
         </tr>
+
 
             </script>
 
@@ -452,6 +461,7 @@
                     @foreach($scientific_supervisors as $scientific_supervisor)
                         <option value="{{$scientific_supervisor->name}}">{{$scientific_supervisor->name}}</option>
 
+
                     @endforeach
                 @endif
                 </select>
@@ -467,6 +477,7 @@
 @if(isset($works_types) and is_iterable($works_types))
                     @foreach($works_types as $works_type)
                         <option value="{{$works_type->name}}">{{$works_type->name}}</option>
+
 
                     @endforeach
                 @endif
@@ -535,6 +546,7 @@
 </div>
 
 
+
             </script>
 
 
@@ -590,6 +602,7 @@
         </div>
     </div>
 </div>
+
 
             </script>
 

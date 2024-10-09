@@ -39,7 +39,8 @@
                                             <option class="boldoption" disabled="disabled">{{$category->name}}</option>
                                             @if(isset($category->achievementsTypes) and is_iterable($category->achievementsTypes))
                                                 @foreach($category->achievementsTypes as $achievementType)
-                                                    <option value="{{$achievementType->id}}">{{$achievementType->name}}</option>
+                                                    <option
+                                                        value="{{$achievementType->id}}">{{$achievementType->name}}</option>
                                                 @endforeach
                                             @endif
                                         @endforeach
@@ -52,7 +53,7 @@
                             <label class="col-sm-4">Введите ссылку:</label>
                             <div class="col-sm-8">
                                 <input type="text" name="content" class="form-control fullwidth" required=""
-                                        placeholder="Ввод...">
+                                       placeholder="Ввод...">
                             </div>
                         </div>
 
@@ -69,10 +70,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" onclick="closeModal('add_link_modal')">
+                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1"
+                            onclick="closeModal('add_link_modal')">
                         Добавить
                     </button>
-                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal"
+                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
+                            data-bs-dismiss="modal"
                             aria-label="Close" onclick="closeModal('add_link_modal')">
                         Закрыть
                     </button>

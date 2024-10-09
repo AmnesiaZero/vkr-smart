@@ -57,7 +57,7 @@ interface ProgramSpecialtyRepositoryInterface
      * @param int $organizationId
      * @return Collection
      */
-    public function getByOrganization(int $organizationId):Collection;
+    public function getByOrganization(int $organizationId): Collection;
 
 
 }

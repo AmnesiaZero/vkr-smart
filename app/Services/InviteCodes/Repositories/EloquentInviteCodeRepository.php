@@ -39,6 +39,6 @@ class EloquentInviteCodeRepository implements InviteCodeRepositoryInterface
 
     public function delete(int $organizationId, int $type): bool
     {
-        return InviteCode::query()->where('organization_id','=',$organizationId)->where('type','=',$type)->delete();
+        return InviteCode::query()->where('organization_id', '=', $organizationId)->where('type', '=', $type)->delete();
     }
 }

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AddPlatformAdminRole extends Seeder
@@ -19,7 +18,7 @@ class AddPlatformAdminRole extends Seeder
             'description' => '',
             'level' => 5,
         ];
-         config('roles.models.role')::create([
+        config('roles.models.role')::create([
             'name' => $role['name'],
             'slug' => $role['slug'],
             'description' => $role['description'],
