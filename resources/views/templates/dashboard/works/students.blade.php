@@ -148,6 +148,10 @@
                 </ul>
             </nav>
         </div>
+
+
+
+
         @include('layouts.dashboard.include.modal.add.works.admin')
         @include('layouts.dashboard.include.modal.update.work_specialty')
         @include('layouts.dashboard.include.modal.other.additional_file')
@@ -162,7 +166,7 @@
             <script type="text/javascript"
                     src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
             <script id="work_tmpl" type="text/x-jquery-tmpl">
-      @{{if visibility & visibility==1}}
+{{--      @{{if visibility & visibility==1}}--}}
      <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
     <th scope="row">
      @{{if specialty}}
@@ -212,7 +216,7 @@
             @include('layouts.dashboard.include.menu.work.student')
                 </td>
             </tr>
-            @{{/if}}
+{{--            @{{/if}}--}}
 
 
 
