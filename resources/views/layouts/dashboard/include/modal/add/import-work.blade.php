@@ -10,8 +10,8 @@
                         <div class="row">
                             <label class="col-sm-4">Год выпуска</label>
                             <div class="col-sm-8">
-                                <select name="year_id" class="form-control" id="import_years_list" data-width="100%">
-                                    <option value="">Выбрать...</option>
+                                <select name="year_id" class="selectpicker form-control w-100" id="import_years_list" data-width="100%"
+                                title="Выбрать...">
                                     @if(isset($years) and is_iterable($years))
                                         @foreach($years as $year)
                                             <option value="{{$year->id}}">{{$year->year}}</option>
@@ -23,7 +23,8 @@
                         <div class="row">
                             <label class="col-sm-4">Подразделение</label>
                             <div class="col-sm-8">
-                                <select name="faculty_id" class="form-control" id="import_faculties_list" data-width="100%">
+                                <select name="faculty_id" class="selectpicker form-control w-100" id="import_faculties_list" data-width="100%"
+                                title="Выбрать...">
                                     <option value="" disabled="" selected="selected">Уточните год выпуска</option>
                                 </select>
                             </div>
@@ -31,7 +32,8 @@
                         <div class="row">
                             <label class="col-sm-4">Кафедра</label>
                             <div class="col-sm-8">
-                                <select name="department_id" class="form-control" id="import_departments_list" data-width="100%">
+                                <select name="department_id" class="selectpicker w-100 form-control" id="import_departments_list" data-width="100%"
+                                title="Выбрать...">
                                     <option value="" disabled="" selected="selected">Уточните подразделение</option>
                                 </select>
                             </div>
@@ -39,7 +41,8 @@
                         <div class="row">
                             <label class="col-sm-4">Направление подготовки (специальность)</label>
                             <div class="col-sm-8">
-                                <select name="specialty_id" class="form-control" id="import_specialties_list" data-width="100%">
+                                <select name="specialty_id" class="selectpicker w-100 form-control" id="import_specialties_list" data-width="100%"
+                                title="Выбрать...">
                                     <option value="" disabled="" selected="selected">Уточните кафедру</option>
                                 </select>
                             </div>

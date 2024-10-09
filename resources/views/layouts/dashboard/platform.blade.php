@@ -122,7 +122,7 @@
                                 <img src="/images/no-user-image.jpg" class="user-image" alt="{{ \Illuminate\Support\Facades\Auth::user()->name }}"/>
                                 <span class="d-none d-lg-inline-block">{{ \Illuminate\Support\Facades\Auth::user()->name }}</span>
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-right">
+                            <ul class="dropdown-menu dropdown-menu-right pb-2" style="left: auto">
                                 <!-- User image -->
                                 <li class="dropdown-header">
                                     <img src="/images/no-user-image.jpg" class="img-circle" alt="{{ \Illuminate\Support\Facades\Auth::user()->email }}"/>

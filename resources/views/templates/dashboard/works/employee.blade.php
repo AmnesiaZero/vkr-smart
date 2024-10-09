@@ -256,11 +256,10 @@
             @{{/if}}
             @{{if report_status==1}}
             <div class="mt-2" onclick="openReport(${id})">
-            <span class="bg-active px-2 d-flex align-items-center">
-            <div class="me-2 green-c">
-            </div>
-              Отчет
-            </span>
+                <span class="bg-active p-2 d-flex align-items-center cursor-p">
+                    <div class="me-2 green-c"></div>
+                    Отчет
+                </span>
             </div>
             @{{/if}}
             @{{if report_status==2}}

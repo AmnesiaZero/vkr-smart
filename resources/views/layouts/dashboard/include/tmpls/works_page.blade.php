@@ -297,17 +297,16 @@
 
 <script id="report_tmpl" type="text/x-jquery-tmpl">
  <div class="modal fade"  id="report_modal">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" onclick="closeTmplModal('add_achievement_modal')">×</span></button>
-                <h3>Полный отчет по работе</h3>
-
+                <h3 class="modal-title">Полный отчет по работе</h3>
             </div>
             <div class="modal-body">
                 <div id="report_modal">
                     <span> Полный отчет по работе </span>
-                    <div class="col-sm-8">
+
+                    <div class="col-sm-8 mt-2">
                         <ol style="padding-left:15px;">
                             <li>Результаты проверки по базам данных ВКР-СМАРТ:
                                 <ul>
@@ -316,7 +315,7 @@
                             </li>
                         </ol>
                     </div>
-                    <table class="table table-mini table-bordered table-condensed ng-scope">
+                    <table class="table table-mini table-bordered table-condensed ng-scope mt-4">
                         <thead>
                         <tr>
                             <th>Источник</th>
@@ -325,23 +324,31 @@
                             <th>Доля в отчете</th>
                         </tr>
                         </thead>
-                        <table>
-                            <tbody id="report_assets_list">
+                        <tbody id="report_assets_list">
                             @{{each report_assets}}
                             <tr>
-                                <td><a  class="ng-binding">${name}</a></td>
-                                <td><a target="_blank" href="${link}" class="ng-binding"></a></td>
-                                <td>Интернет</td>
-                                <td class="ng-binding">${borrowings_percent}%</td>
+                                <td>
+                                    <a  class="ng-binding fs-14">${name}</a>
+                                </td>
+                                <td>
+                                    <a target="_blank" href="${link}" class="ng-binding"></a>
+                                </td>
+                                <td>
+                                    Интернет
+                                </td>
+                                <td class="ng-binding">
+                                    ${borrowings_percent}%
+                                </td>
                             </tr>
                             @{{/each}}
-                            </tbody>
-                        </table>
-
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-bs-dismiss="modal" aria-label="Close">Закрыть окно</button>
+                <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal" aria-label="Close">
+                    Закрыть окно
+                </button>
             </div>
         </div>
     </div>
