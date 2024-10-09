@@ -26,7 +26,7 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: '1c0d73f2452a1f8c84a4',
     cluster: 'eu',
-    encrypted: false,
+    encrypted: true,
     disableStats: true,
     forceTLS: false,
     wsHost: window.location.hostname,
