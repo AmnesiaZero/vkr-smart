@@ -36,18 +36,16 @@
                                 <img src="/images/Users_Group-l.svg">
                                 Пользователей всего
                                 <span class="fs-24 text-grey fw-600">
-                                    ${users.length}
+                                    ${roles_users[0]}
                                 </span>
                             </div>
-
-
                             @{{each roles}}
-                            @{{if findRole(roles_users,this[0]) }}
+
+                            @{{if findRole(roles_users,this[0])}}
                             <div class="d-flex justify-content-between">
                                 <p class="text-grey fs-14 mb-2">${this[1]}</p>
                                 <p class="text-grey fs-14 mb-2">
-
-                                    ${roles_users[getRoleIndex()].users.length}
+                                    ${roles_users[getRoleIndex()].users_count}
                                 </p>
                             </div>
                             @{{else}}
@@ -56,22 +54,14 @@
                                 <p class="text-grey fs-14 mb-2"> 0
                                 </p>
                             </div>
-
                             @{{/if}}
                             @{{/each}}
-
-
-
-
-
-
-
                         </div>
                         <div class="br-green-light-2 p-3 br-20 mt-4">
                             <div class="text-grey fs-16 fw-600 d-flex align-items-center gap-3 mb-3">
                                 <img src="/images/User_Card_ID-l.svg">
                                 Портфолио всего
-                                <span class="fs-24 text-grey fw-600">${users.length}</span>
+                                <span class="fs-24 text-grey fw-600">${roles_users[0]}</span>
                             </div>
                             @{{if findRole(roles_achievements,'user')}}
                             <div class="d-flex justify-content-between brt-green-light-2 mt-3">
@@ -143,23 +133,13 @@
                             <div class="text-grey fs-16 fw-600 d-flex align-items-center gap-3 mb-3">
                                 <img src="/images/File_Document.svg">
                                 Загруженных работ всего
-                                <span class="fs-24 text-grey fw-600">${works.length}</span>
+                                <span class="fs-24 text-grey fw-600">${roles_works[0]}</span>
                             </div>
-
-{{--                            @{{each roles_works}}--}}
-{{--                            <div class="d-flex justify-content-between">--}}
-{{--                                <p class="text-grey fs-14 mb-2">${getRoleName(role_id)}:</p>--}}
-{{--                                <p class="text-grey fs-14 mb-2">--}}
-{{--                                    ${works.length}--}}
-{{--                                </p>--}}
-{{--                            </div>--}}
-{{--                            @{{/each}}--}}
-
                             @{{if findRole(roles_works,'admin')}}
                             <div class="d-flex justify-content-between">
                                 <p class="text-grey fs-14 mb-2">Администраторы:</p>
                                 <p class="text-grey fs-14 mb-2">
-                                    ${roles_works[getRoleIndex()].works.length}
+                                    ${roles_works[getRoleIndex()].works_count}
                                 </p>
                             </div>
                             @{{else}}
@@ -175,7 +155,7 @@
                             <div class="d-flex justify-content-between">
                                 <p class="text-grey fs-14 mb-2">Преподаватели:</p>
                                 <p class="text-grey fs-14 mb-2">
-                                    ${roles_works[getRoleIndex()].works.length}
+                                    ${roles_works[getRoleIndex()].works_count}
                                 </p>
                             </div>
                             @{{else}}
@@ -190,7 +170,7 @@
                             <div class="d-flex justify-content-between">
                                 <p class="text-grey fs-14 mb-2">Сотрудники организации:</p>
                                 <p class="text-grey fs-14 mb-2">
-                                    ${roles_works[getRoleIndex()].works.length}
+                                    ${roles_works[getRoleIndex()].works_count}
                                 </p>
                             </div>
                             @{{else}}

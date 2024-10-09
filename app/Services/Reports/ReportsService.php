@@ -51,18 +51,12 @@ class ReportsService extends Services
     {
         $you = Auth::user();
         $organizationId = $you->organization_id;
-        $data['organization_id'] = $organizationId;
-        $relations = ['works','achievements'];
-        $users = User::with($relations);
-
-        $query = Role::query()->whereNotIn('slug',['default']);
-        $roles = $query->get();
 
         // Запрос на получение пользователей, связанных с ролями, удовлетворяющих условиям фильтрации
-        $usersQuery = User::with('achievements.records')
+        $usersQuery = User::query()
             ->leftJoin('role_user', 'users.id', '=', 'role_user.user_id')
             ->leftJoin('roles', 'role_user.role_id', '=', 'roles.id')
-            ->whereIn('roles.slug', ['teacher', 'admin', 'employee', 'user'])
+            ->whereIn('roles.slug', ['teacher', 'admin', 'employee', 'user','inspector'])
             ->where('users.organization_id', '=', $organizationId)
             ->select(
                 'roles.id as role_id',
@@ -73,45 +67,49 @@ class ReportsService extends Services
                 'users.year_id',
                 'users.faculty_id',
                 'users.department_id',
-                'roles.slug as slug'
+                'roles.slug as slug',
+                DB::raw('COUNT(DISTINCT users.id) as users_count'),
+            )->groupBy(
+                'roles.id',
+                'roles.name',
+                'users.id',
+                'users.name',
+                'users.organization_id',
+                'users.year_id',
+                'users.faculty_id',
+                'users.department_id',
+                'roles.slug',
             );
 
-        // Применение фильтров
         if (isset($data['year_id'])) {
-            $usersQuery =   $usersQuery->where('users.year_id', $data['year_id']);
-            $users =  $users->where('users.year_id', $data['year_id']);
+            $usersQuery->where('users.year_id','=', $data['year_id']);
         }
         if (isset($data['faculty_id'])) {
-            $usersQuery =  $usersQuery->where('users.faculty_id','=', $data['faculty_id']);
-            $users = $users->where('users.faculty_id','=', $data['faculty_id']);
+            $usersQuery->where('users.faculty_id','=', $data['faculty_id']);
         }
         if (isset($data['department_id'])) {
-            $usersQuery =  $usersQuery->where('users.department_id','=', $data['department_id']);
-            $users = $users->where('users.department_id','=', $data['department_id']);
+            $usersQuery->where('users.department_id','=', $data['department_id']);
         }
-        $users = $users->get();
 
         $results = $usersQuery->get();
 
         // Группировка пользователей по ролям
         $rolesUsers = [];
+
+        $rolesUsers['all_users'] = 0;
+
         foreach ($results as $result) {
             if (!isset($rolesUsers[$result->role_id])) {
                 $rolesUsers[$result->role_id] = [
                     'role_id' => $result->role_id,
                     'role_name' => $result->role_name,
                     'slug' => $result->slug,
-                    'users' => []
+                    'users_count' => 0
                 ];
             }
-            $rolesUsers[$result->role_id]['users'][] = [
-                'user_id' => $result->user_id,
-                'user_name' => $result->user_name,
-                'organization_id' => $result->organization_id,
-                'year_id' => $result->year_id,
-                'faculty_id' => $result->faculty_id,
-                'department_id' => $result->department_id,
-            ];
+            $rolesUsers[$result->role_id]['users_count'] += $result->users_count;
+
+            $rolesUsers['all_users'] += $result->users_count;
         }
         $rolesUsers = array_values($rolesUsers);
 
@@ -155,26 +153,20 @@ class ReportsService extends Services
 
         $results = $worksQuery->get();
         $rolesWorks = [];
+
+        $rolesWorks['all_works'] = 0;
         foreach ($results as $result) {
             if (!isset($rolesWorks[$result->role_id])) {
                 $rolesWorks[$result->role_id] = [
                     'role_id' => $result->role_id,
                     'role_name' => $result->role_name,
                     'slug' => $result->slug,
+                    'works_count' => 0,
                     'work_wait' => 0,
                     'work_approved' => 0,
-                    'work_denied' => 0,
-                    'works' => []
+                    'work_denied' => 0
                 ];
             }
-            $rolesWorks[$result->role_id]['works'][] = [
-                'work_id' => $result->work_id,
-                'organization_id' => $result->organization_id,
-                'year_id' => $result->year_id,
-                'faculty_id' => $result->faculty_id,
-                'department_id' => $result->department_id,
-                'work_status' => $result->work_status,
-            ];
             $array = [
                 0 => 'work_wait',
                 1 => 'work_approved',
@@ -187,6 +179,10 @@ class ReportsService extends Services
                     $rolesWorks[$result->role_id][$value] += $result->works_count;
                 }
             }
+            $rolesWorks[$result->role_id]['works_count'] += $result->works_count;
+            $rolesWorks['all_works'] += $result->works_count;;
+
+
         }
 
 
@@ -227,7 +223,7 @@ class ReportsService extends Services
                 'users.department_id'
             );
         if (isset($data['year_id'])) {
-                $query->where('year_id','=',$data['year_id']);
+            $query->where('year_id','=',$data['year_id']);
         }
         if (isset($data['faculty_id'])) {
             $query->where('faculty_id','=',$data['faculty_id']);
@@ -242,6 +238,7 @@ class ReportsService extends Services
 
         // Группировка пользователей по ролям
         $rolesAchievements = [];
+
         foreach ($results as $result) {
             if (!isset($rolesAchievements[$result->role_id])) {
                 $rolesAchievements[$result->role_id] = [
@@ -261,42 +258,27 @@ class ReportsService extends Services
 
         $rolesAchievements = array_values($rolesAchievements);
 
-
-
-        $worksQuery = Work::query();
-
-        if(isset($data['organization_id']))
-        {
-            $worksQuery = $worksQuery->where('organization_id','=',$organizationId);
-        }
-        if(isset($data['year_id']))
-        {
-            $worksQuery = $worksQuery->where('year_id','=',$data['year_id']);
-        }
-        if(isset($data['faculty_id']))
-        {
-            $worksQuery = $worksQuery->where('faculty_id','=',$data['faculty_id']);
-        }
-        if(isset($data['department_id']))
-        {
-            $worksQuery = $worksQuery->where('department_id','=',$data['department_id']);
-        }
-        $works = $worksQuery->get();
-        if($users and is_iterable($users) and $roles and is_iterable($roles))
-        {
-            return self::sendJsonResponse(true,[
-                'title' => 'Успешно получена статистика',
-                'users' => $users,
-                'roles_users' => $rolesUsers,
-                'roles_works' => $rolesWorks,
-                'roles_achievements' => $rolesAchievements,
-                'works' => $works
-            ]);
-        }
-        return self::sendJsonResponse(false,[
-            'title' => 'Ошибка',
-            'message' => 'При получении статистики произошла ошибка'
+        return self::sendJsonResponse(true,[
+            'title' => 'Успешно получена статистика',
+            'roles_users' => $rolesUsers,
+            'roles_works' => $rolesWorks,
+            'roles_achievements' => $rolesAchievements,
         ]);
+
+
+//        if($rolesUsers and $rolesWorks and $rolesAchievements)
+//        {
+//            return self::sendJsonResponse(true,[
+//                'title' => 'Успешно получена статистика',
+//                'roles_users' => $rolesUsers,
+//                'roles_works' => $rolesWorks,
+//                'roles_achievements' => $rolesAchievements,
+//            ]);
+//        }
+//        return self::sendJsonResponse(false,[
+//            'title' => 'Ошибка',
+//            'message' => 'При получении статистики произошла ошибка'
+//        ]);
     }
 
 }
