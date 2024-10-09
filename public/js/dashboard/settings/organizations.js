@@ -87,6 +87,35 @@ function createYear() {
     });
 }
 
+function openUpdateYearModal(id)
+{
+    const data = {
+        id:id
+    };
+    $.ajax({
+        url: "/dashboard/organizations/years/find",
+        dataType: "json",
+        data: data,
+        success: function (response) {
+            if(response.success)
+            {
+                const year = response.data.year;
+                $("#tmpl_container").html($("#update_year_tmpl").tmpl(year));
+                const modalElement = new bootstrap.Modal(document.getElementById('update_year'));
+                modalElement.show();
+            }
+            else
+            {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function (response) {
+            $.notify("Возникла ошибка при редактировании года", "error");
+        }
+    });
+}
+
+
 function updateYear(yearId) {
     console.log('Вошёл в yearUpdate');
     let data = $("#year_update_" + yearId).serialize();
@@ -244,6 +273,34 @@ function createFaculty() {
     });
 }
 
+function openUpdateFacultyModal(id)
+{
+    const data = {
+        id:id
+    };
+    $.ajax({
+        url: "/dashboard/organizations/faculties/find",
+        dataType: "json",
+        data: data,
+        success: function (response) {
+            if(response.success)
+            {
+                const faculty = response.data.faculty;
+                $("#tmpl_container").html($("#update_faculty_tmpl").tmpl(faculty));
+                const modalElement = new bootstrap.Modal(document.getElementById('update_faculty'));
+                modalElement.show();
+            }
+            else
+            {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function (response) {
+            $.notify("Возникла ошибка при редактировании года", "error");
+        }
+    });
+}
+
 function updateFaculty(facultyId) {
     console.log('Вошёл в updateFaculty');
     let data = $("#faculty_update_" + facultyId).serialize();
@@ -374,6 +431,35 @@ function createDepartment() {
         }
     });
 }
+
+function openUpdateDepartmentModal(id)
+{
+    const data = {
+        id:id
+    };
+    $.ajax({
+        url: "/dashboard/organizations/departments/find",
+        dataType: "json",
+        data: data,
+        success: function (response) {
+            if(response.success)
+            {
+                const department = response.data.department;
+                $("#tmpl_container").html($("#update_year_tmpl").tmpl(year));
+                const modalElement = new bootstrap.Modal(document.getElementById('update_year'));
+                modalElement.show();
+            }
+            else
+            {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function (response) {
+            $.notify("Возникла ошибка при редактировании года", "error");
+        }
+    });
+}
+
 
 /* updateFacultyDepartment(facultyDepartmentId) - функция обновления данных конкретной кафедры
 * args: facultyDepartmentId - id кафедры, которую мы обновляем */

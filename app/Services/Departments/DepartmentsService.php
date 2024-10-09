@@ -231,7 +231,7 @@ class DepartmentsService extends Services
         if($organizations and $departments)
         {
             return view('templates.dashboard.platform.organization.departments.index',[
-                'you' => $you,
+
                 'organizations' => $organizations,
                 'departments' => $departments
             ]);
@@ -290,7 +290,7 @@ class DepartmentsService extends Services
         $you = Auth::user();
         $organizations = Organization::all();
         return view('templates.dashboard.platform.organization.departments.create',[
-            'you' => $you,
+
             'organizations' => $organizations
         ]);
     }

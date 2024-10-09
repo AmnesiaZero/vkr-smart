@@ -218,7 +218,7 @@ class UsersService extends Services
         $organizations = Organization::all();
         $users = $this->_repository->search($data);
         return view('templates.dashboard.platform.users.index',[
-            'you' => $you,
+
             'users' => $users,
             'organizations' => $organizations
         ]);
@@ -591,7 +591,7 @@ class UsersService extends Services
         if($organization and $organization->id)
         {
             return view('templates.dashboard.settings.api', [
-                'you' => $you,
+
                 'api_key' => $apiKey,
                 'organization' => $organization
             ]);
@@ -616,7 +616,7 @@ class UsersService extends Services
         if($users)
         {
             return view('templates.dashboard.platform.users.index',[
-                'you' => $you,
+
                 'users' => $users,
                 'organizations' => $organizations
             ]);
@@ -703,7 +703,7 @@ class UsersService extends Services
         $organizations = Organization::all();
         $roles = Role::all();
         return view('templates.dashboard.platform.users.create',[
-            'you' => $you,
+
             'organizations' => $organizations,
             'roles' => $roles
         ]);
@@ -740,7 +740,7 @@ class UsersService extends Services
             $organization = $this->_repository->find($id);
             return view('templates.dashboard.platform.users.edit',[
                 'organization' => $organization,
-                'you' => $you,
+
                 'user' => $user
             ]);
         }

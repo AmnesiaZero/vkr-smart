@@ -140,6 +140,8 @@
                         <button type="button" data-toggle="modal" data-target="#modalDepartments" class="btn btn-info" style="width: 48%;"><i class="fas fa-network-wired"></i> Отделения</button>
                         <button type="button" class="btn btn-info" style="width: 48%;"><i class="fas fa-users"></i> Группы</button>
                     </div>
+                    <input type="checkbox" name="redirect" id="redirect" style="display: none">
+
                 </div>
             </div>
         </form>

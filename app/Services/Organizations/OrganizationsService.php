@@ -82,7 +82,7 @@ class OrganizationsService extends Services
         if($organizations)
         {
             return view('templates.dashboard.platform.organization.organizations.index',[
-                'you' => $you,
+
                 'organizations' => $organizations
             ]);
         }
@@ -111,7 +111,7 @@ class OrganizationsService extends Services
         $organization = $this->_repository->find($id);
         $parents = $this->_repository->parents($id);
         return view('templates.dashboard.platform.organization.organizations.update',[
-            'you' => $you,
+
             'organization' => $organization,
             'parents' => $parents
         ]);
@@ -159,7 +159,7 @@ class OrganizationsService extends Services
     {
         $you = Auth::user();
         return view('templates.dashboard.platform.organization.organizations.create',[
-            'you' => $you,
+
         ]);
     }
 

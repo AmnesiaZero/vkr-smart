@@ -25,7 +25,6 @@
                 </div>
             </div>
             @include('layouts.dashboard.include.modal.create.year')
-            @include('layouts.dashboard.include.modal.update.year')
 
             <div class="col-xxl-4 col-xl-6 col-12">
                 <div class="br-green-light-2 br-15 py-3" style="display: none"
@@ -47,8 +46,6 @@
                     </div>
                 </div>
             </div>
-            @include('layouts.dashboard.include.modal.update.department')
-
             <div class="col-xxl-4 col-xl-6 col-12">
                 <div class="br-green-light-2 br-15 py-3" style="display: none" id="programs_container">
                     <div class="row">
@@ -88,7 +85,6 @@
                     </div>
                 </div>
             </div>
-            @include('layouts.dashboard.include.modal.update.faculty')
         </div>
 
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEdit">
@@ -229,6 +225,8 @@
                 </div>
             </div>
         </div>
+        <div id="tmpl_container"></div>
+
         @endsection
         @section('scripts')
             <script id="year_tmpl" type="text/x-jquery-tmpl">
@@ -239,13 +237,9 @@
 
                     <div class="col-auto ps-0 text-end">
                         <button id="edit_year_issue" class="btn copy_edit br-none"
-                                data-bs-toggle="modal" data-bs-target="#update_year"
-                                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Редактировать"
+                                 onclick="openUpdateYearModal(${id})"
+                               title="Редактировать"
                                 type="button"
-                                data-id="${id}"
-                                data-year="${year}"
-                                data-students_count="${students_count}"
-                                data-comment="${comment}">
                         </button>
 
                         <button id="copy" class="btn copy_btn br-none" type="button"
@@ -258,6 +252,151 @@
                 </div>
             </script>
 
+        <script id="update_faculty_tmpl" type="text/x-jquery-tmpl">
+            <div class="modal fade" id="update_faculty">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">
+                                Редактирование подразделения
+                            </h4>
+                        </div>
+                        <form onsubmit="updateFaculty(${id});return false;" id="faculty_update_${id}">
+                            <div class="modal-body">
+                                <div class="d-flex flex-column gap-3">
+                                    <div class="row g-0">
+                                        <div class="col-sm-3">
+                                            <p class="fs-15 fw-bold m-0">Название:</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input id="edited1" type="text" name="name"
+                                                   class="form-control box-shadow-none fs-15 p-0 px-2 py-1 br-2 edited w-100"
+                                                   value="${name}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
+                                    Применить
+                                </button>
+                                <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                                    Закрыть
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </script>
+        <script id="update_department_tmpl" type="text/x-jquery-tmpl">
+        <div class="modal fade" id="update_department">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Редактирование кафедры</h4>
+            </div>
+            <form onsubmit="updateDepartment(${id});return false;" id="department_update_${id}">
+                <div class="modal-body">
+                    <div class="row g-0">
+                        <div class="col-sm-3">
+                            <p class="fs-15 fw-bold m-0">Название:</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <input id="edited1" type="text" name="name"
+                                   class="form-control box-shadow-none fs-15 p-0 px-2 py-1 br-2 edited w-100"
+                                   value="${name}">
+                        </div>
+                    </div>
+                    <div class="row g-0">
+                        <div class="col-sm-3">
+                            <p class="fs-15 fw-bold m-0">Дополнительная информация:</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <input id="edited1" type="text" name="description"
+                                   class="form-control box-shadow-none fs-15 p-0 px-2 py-1 br-2 edited w-100"
+                                   value="${description}">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
+                        Применить
+                    </button>
+                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                        Закрыть
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+        </script>
+
+        <script id="update_year_tmpl" type="text/x-jquery-tmpl">
+            <div class="modal fade" id="update_year">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-title">
+                                <h4>Редактирование года выпуска</h4>
+                            </div>
+                        </div>
+
+                        <form id="year_update_${id}" onsubmit="updateYear(${id});return false;">
+                            <div class="modal-body">
+                                <div class="d-flex flex-column gap-3">
+                                    <div class="row g-0">
+                                        <div class="col-sm-4">
+                                            <p class="fs-15 fw-bold m-0">Год:</p>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="year" class="form-control box-shadow-none fs-15 p-0 px-2 py-1 br-2 edited" value="${year}">
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-0">
+                                        <div class="col-sm-4">
+                                            <p class="fs-15 fw-bold m-0">Количество обучающихся:</p>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input id="edited2" type="text" name="students_count"
+                                                   class="form-control box-shadow-none fs-15 p-0 px-2 py-1 br-2 edited"
+                                                   value="${students_count}">
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-0">
+                                        <div class="col-sm-4">
+                                            <p class="fs-15 fw-bold m-0">Комментарий:</p>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input id="edited1" type="text" name="comment"
+                                                   class="form-control box-shadow-none fs-15 p-0 px-2 py-1 br-2 edited w-100"
+                                                   value="${comment}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
+                                    Применить
+                                </button>
+                                <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
+                                    Закрыть
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </script>
+
 
             <script id="faculty_tmpl" type="text/x-jquery-tmpl">
                 <div class="row align-items-center py-2 mx-0 border-top" id="faculty_row_${id}">
@@ -266,11 +405,8 @@
                     </div>
                     <div class="col text-end">
                         <button id="edit" class="btn copy_edit br-none"
-                                data-bs-toggle="modal" data-bs-target="#update_faculty"
-                                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Редактировать"
-                                type="button"
-                                data-id="${id}"
-                                data-name="${name}">
+                                title="Редактировать"
+                                type="button">
                         </button>
 
                         <button id="delete" class="btn copy_delete br-none"

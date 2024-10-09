@@ -55,7 +55,7 @@
                         </a>
                     </li>
                     <li class="{{ request()->routeIs('dashboard.news.index') ? 'active' : '' }}">
-                        <a href="" class="sidenav-item-link">
+                        <a href="{{route('news.index')}}" class="sidenav-item-link">
                             <i class="mdi mdi-library-books"></i>
                             <span class="nav-text">Новости</span>
                         </a>
@@ -119,15 +119,15 @@
                     <ul class="nav navbar-nav">
                         <li class="dropdown user-menu">
                             <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                <img src="/images/no-user-image.jpg" class="user-image" alt="{{ $you->name }}"/>
-                                <span class="d-none d-lg-inline-block">{{ $you->name }}</span>
+                                <img src="/images/no-user-image.jpg" class="user-image" alt="{{ \Illuminate\Support\Facades\Auth::user()->name }}"/>
+                                <span class="d-none d-lg-inline-block">{{ \Illuminate\Support\Facades\Auth::user()->name }}</span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <!-- User image -->
                                 <li class="dropdown-header">
-                                    <img src="/images/no-user-image.jpg" class="img-circle" alt="{{ $you->email }}"/>
+                                    <img src="/images/no-user-image.jpg" class="img-circle" alt="{{ \Illuminate\Support\Facades\Auth::user()->email }}"/>
                                     <div class="d-inline-block">
-                                        {{ $you->name }} <small class="pt-1">{{ $you->email }}</small>
+                                        {{ \Illuminate\Support\Facades\Auth::user()->name }} <small class="pt-1">{{ \Illuminate\Support\Facades\Auth::user()->email }}</small>
                                     </div>
                                 </li>
                                 <li>

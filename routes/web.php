@@ -23,6 +23,7 @@ use App\Http\Controllers\Works\WorksController;
 use App\Http\Controllers\Works\WorksTypesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -401,6 +402,25 @@ Route::group([
         ], function () {
             Route::get('all', [SpecialtiesController::class, 'all']);
         });
+    });
+
+
+    Route::group([
+        'prefix' => 'news'
+    ],function (){
+        Route::get('/',[NewsController::class,'index'])->name('news.index');
+
+        Route::get('create',[NewsController::class,'create'])->name('news.create');
+        Route::post('store',[NewsController::class,'store'])->name('news.store');
+
+        Route::get('edit',[NewsController::class,'edit'])->name('news.edit');
+        Route::post('update',[NewsController::class,'update'])->name('news.update');
+        Route::get('updateStatus',[NewsController::class,'updateStatus'])->name('news.updateStatus');
+
+        Route::post('delete',[NewsController::class,'delete'])->name('news.delete');
+        Route::post('destroy',[NewsController::class,'destroy'])->name('news.destroy');
+        Route::post('restore',[NewsController::class,'restore'])->name('news.restore');
+
     });
 
     Route::group([

@@ -46,7 +46,8 @@ class AppServiceProvider extends ServiceProvider
             'AchievementRecord' => 'AchievementsRecords',
             'ReportAsset' => 'ReportsAssets',
             'Education' => 'Educations',
-            'Career' => 'Careers'
+            'Career' => 'Careers',
+            'News' => 'News'
         ];
 
         foreach ($repositories as $k => $v) {
