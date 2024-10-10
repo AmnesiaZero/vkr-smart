@@ -79,9 +79,12 @@
 }
 
 .profile-usermenu ul li a {
-  color: #93a3b5;
-  font-size: 14px;
-  font-weight: 400;
+    color: #93a3b5;
+    font-size: 16px;
+    font-weight: 700;
+    display: block;
+    position: relative;
+    padding: 10px 15px;
 }
 
 .profile-usermenu ul li a i {
@@ -120,17 +123,11 @@
 }
 
 /* resume */
-.btn-resume-add{
-	display:block;
-	text-align:center;
-	padding:15px;
-	background:#EEE;
-}
 form.row-life {
     margin-bottom: 15px;
     border: 1px #EEE solid;
     box-shadow: 0px 2px 2px -1px #CCC;
-    padding: 15px 30px 0 30px;
+    padding: 15px 30px;
     border-radius:0px;
 	position:relative;
 }
@@ -150,7 +147,7 @@ form.row-life label {
 	text-align:right;
 	color:#555;
 	font-size:15px;
-	font-weight:200;
+	font-weight: 700;
 }
 form.row-life .form-group {
     font-size: 15px;
@@ -165,16 +162,10 @@ form.form-well {
 }
 
 .btn-avatar {
-	background:#FFF;
 	box-shadow:0px 0px 2px 0px #CCC;
 	margin-top:10px;
 }
 
-.profile-usermenu ul li a {
-    display: block;
-    position: relative;
-    padding: 10px 15px;
-}
 .profile-usermenu ul li a:hover {
     text-decoration: none;
     color: rgba(0, 0, 0, 0.5);

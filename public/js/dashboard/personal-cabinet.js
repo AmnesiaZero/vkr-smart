@@ -39,10 +39,12 @@ $(document).ready(function () {
 
     $('#avatar_input').on('change', function() {
         const file = this.files[0];
+
         if (file) {
             const formData = new FormData();
             formData.append('id', userId);
             formData.append('avatar', file);
+
             $.ajax({
                 url: '/dashboard/users/update', // URL к вашему серверному скрипту
                 type: 'POST',
