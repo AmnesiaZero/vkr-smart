@@ -99,7 +99,7 @@
                                     Применить
                                 </button>
                                 <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 me-3"
-                                        onclick="resetSearch();return false;">Сбросить
+                                        onclick="resetStudentSearch();return false;">Сбросить
                                 </button>
                                 <button class="btn bg-green br-100 text-grey fs-14 py-1" onclick="exportWorks();return false;">
                                     Выгрузить
@@ -115,7 +115,7 @@
 
         </div>
         <p class="fs-16 pt-3">
-            <span class="text-grey">Работ: <span id="works_count"></span></span>
+            <span class="text-grey">Работ: <span id="works_count" class="text-grey"></span></span>
         </p>
         <div class="px-md-0 px-3 position-relative">
             <div class="big-table blue-scroll">

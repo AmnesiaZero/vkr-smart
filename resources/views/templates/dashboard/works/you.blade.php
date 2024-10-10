@@ -134,7 +134,7 @@
         </div>
 
         <p class="fs-14 pt-3">
-            <span class="text-grey">Работ: <span id="works_count"></span></span>
+            <span class="text-grey">Работ: <span id="works_count" class="text-grey"></span></span>
         </p>
         <div class="pt-3 px-md-0 px-3 position-relative">
             <div class="big-table">

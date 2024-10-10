@@ -143,11 +143,12 @@
                     <div class="row pt-4 d-flex align-items-end">
                         <div class="col">
                             <div class="mt-auto">
-                                <button type="submit"
-                                        class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 me-3">Применить
+                                <button type="submit" class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 me-3">
+                                    Применить
                                 </button>
                                 <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 me-3"
-                                        onclick="resetSearch();return false">Сбросить
+                                        onclick="resetEmployeeSearch();return false">
+                                    Сбросить
                                 </button>
                                 @role('admin|inspector')
                                 <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 me-3" onclick="exportWorks();return false;">
@@ -179,7 +180,7 @@
         </div>
 
         <p class="fs-16 pt-3">
-            <span class="text-grey">Работ: <span id="works_count"></span></span>
+            <span class="text-grey">Работ: <span id="works_count" class="text-grey"></span></span>
         </p>
         <div class="pt-3 px-md-0 px-3 position-relative">
             <div class="big-table">

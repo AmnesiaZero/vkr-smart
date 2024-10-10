@@ -315,8 +315,8 @@
                        value="${name}" required>
             </div>
             <div class="mb-3">
-                <label for="email">Email-адрес</label>
-                <input type="text" name="email" class="form-control fs-16 fw-400 mt-1 text-black" id="email"
+                <label for="email">Email</label>
+                <input type="email" name="email" class="form-control fs-16 fw-400 mt-1 text-black" id="email"
                        value="@{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}" required>
             </div>
             <div class="mb-3">
