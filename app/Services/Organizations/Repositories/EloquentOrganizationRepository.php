@@ -20,35 +20,30 @@ class EloquentOrganizationRepository implements OrganizationRepositoryInterface
         return Organization::query()->find($id);
     }
 
-    public function get(array $data=[]): Collection|LengthAwarePaginator
-    {
-        if(isset($data['with_trashed']))
-        {
-            $query = Organization::withTrashed();
-        }
-        else
-        {
-            $query = Organization::query();
-        }
-        if(isset($data['paginate']) and $data['paginate'])
-        {
-            return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
-        }
-        return $query->get();
-    }
-
-
-    public function update(int $id,array $data)
+    public function update(int $id, array $data)
     {
         return $this->find($id)->update($data);
     }
 
     public function parents(int $organizationId): Collection
     {
-        return Organization::query()->where('id','!=',$organizationId)->get();
+        return Organization::query()->where('id', '!=', $organizationId)->get();
     }
 
-    public function create(array $data):Model
+    public function get(array $data = []): Collection|LengthAwarePaginator
+    {
+        if (isset($data['with_trashed'])) {
+            $query = Organization::withTrashed();
+        } else {
+            $query = Organization::query();
+        }
+        if (isset($data['paginate']) and $data['paginate']) {
+            return $query->paginate(config('pagination.per_page'), '*', 'page', $data['page']);
+        }
+        return $query->get();
+    }
+
+    public function create(array $data): Model
     {
         return Organization::query()->create($data);
     }
@@ -66,6 +61,6 @@ class EloquentOrganizationRepository implements OrganizationRepositoryInterface
 
     public function restore(int $id): bool
     {
-        return Organization::withTrashed()->where('id','=',$id)->first()->restore();
+        return Organization::withTrashed()->where('id', '=', $id)->first()->restore();
     }
 }

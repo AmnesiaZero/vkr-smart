@@ -8,7 +8,7 @@
         <div class="row">
             <form class="row"
                   @if(isset($organization->jwt_key))
-                  onsubmit="generateApiKey();return false"
+                      onsubmit="generateApiKey();return false"
                   @endif
                   id="generate_key_form">
                 <div class="col-xxl-5 col-xl-6 col-lg-7 mb-lg-0 mb-md-5 mb-0 p-5 col-12">
@@ -89,5 +89,6 @@
             Ваш JWT-ключ: <br>
             <span id="token" class="fs-24 fw-bold text-green cursor-p">${token}</span>
         </span>
+
     </script>
 @endsection

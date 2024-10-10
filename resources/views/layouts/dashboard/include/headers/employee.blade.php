@@ -1,7 +1,7 @@
 <div class="text-grey fw-600 d-flex py-2">
     <img src="/images/File_Document.svg" alt="" class="pe-3">
     <a href="/dashboard/profile"
-        class="text-grey text-grey-hover fw-600 td-none @if(request()->is('*/personal-cabinet')) nav-link-active @endif">
+       class="text-grey text-grey-hover fw-600 td-none @if(request()->is('*/personal-cabinet')) nav-link-active @endif">
         Персональная&nbsp;информация
     </a>
 </div>

@@ -41,10 +41,12 @@ body {
 .w-sidebar {
     width: 330px;
 }
+
 .w-sidebar-logo {
     flex-basis: 330px;
     flex-shrink: 0;
 }
+
 .w-content {
     width: calc(100% - 330px) !important;
 }
@@ -53,10 +55,12 @@ body {
     .w-sidebar {
         width: 100%;
     }
+
     .w-sidebar-logo {
         flex-basis: 100%;
         flex-shrink: 0;
     }
+
     .w-content {
         width: 100% !important;
     }

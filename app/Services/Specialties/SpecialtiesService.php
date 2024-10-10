@@ -2,7 +2,6 @@
 
 namespace App\Services\Specialties;
 
-use App\Helpers\JsonHelper;
 use App\Models\Faculty;
 use App\Services\Services;
 use App\Services\Specialties\Repositories\SpecialtyRepositoryInterface;

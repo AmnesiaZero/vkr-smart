@@ -4,7 +4,6 @@ namespace App\Services\Departments\Repositories;
 
 
 use App\Models\Department;
-use App\Models\Organization;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -24,25 +23,19 @@ class EloquentDepartmentRepository implements DepartmentRepositoryInterface
 
     public function get(array $data): Collection|LengthAwarePaginator
     {
-        if(isset($data['with_trashed']))
-        {
+        if (isset($data['with_trashed'])) {
             $query = Department::withTrashed();
-        }
-        else
-        {
+        } else {
             $query = Department::query();
         }
-        if(isset($data['organization_id']))
-        {
+        if (isset($data['organization_id'])) {
             $query = $query->where('organization_id', '=', $data['organization_id']);
         }
-        if(isset($data['faculty_id']))
-        {
+        if (isset($data['faculty_id'])) {
             $query = $query->where('faculty_id', '=', $data['faculty_id']);
         }
-        if(isset($data['paginate']) and $data['paginate'])
-        {
-            return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
+        if (isset($data['paginate']) and $data['paginate']) {
+            return $query->paginate(config('pagination.per_page'), '*', 'page', $data['page']);
         }
         return $query->get();
     }
@@ -57,19 +50,19 @@ class EloquentDepartmentRepository implements DepartmentRepositoryInterface
         return $this->find($id)->delete();
     }
 
+    public function find(int $id): Model
+    {
+        return Department::query()->find($id);
+    }
+
     public function destroy(int $id): bool
     {
-        return Department::withTrashed()->where('id','=',$id)->forceDelete();
+        return Department::withTrashed()->where('id', '=', $id)->forceDelete();
     }
 
     public function restore(int $id): bool
     {
-        return Department::withTrashed()->where('id','=',$id)->first()->restore();
-    }
-
-    public function find(int $id): Model
-    {
-        return Department::query()->find($id);
+        return Department::withTrashed()->where('id', '=', $id)->first()->restore();
     }
 
     public function exist(int $id): bool
@@ -89,14 +82,12 @@ class EloquentDepartmentRepository implements DepartmentRepositoryInterface
     public function search(array $data): LengthAwarePaginator
     {
         $query = Department::query();
-        if(isset($data['name']))
-        {
-            $query = $query->where('name','like','%'.$data['name'].'%');
+        if (isset($data['name'])) {
+            $query = $query->where('name', 'like', '%' . $data['name'] . '%');
         }
-        if(isset($data['organization_id']))
-        {
-            $query = $query->where('organization_id','=',$data['organization_id']);
+        if (isset($data['organization_id'])) {
+            $query = $query->where('organization_id', '=', $data['organization_id']);
         }
-        return $query->paginate(config('pagination.per_page'),'*','page',$data['page']);
+        return $query->paginate(config('pagination.per_page'), '*', 'page', $data['page']);
     }
 }

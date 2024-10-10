@@ -2,7 +2,6 @@
 
 namespace App\Services\WorksTypes;
 
-use App\Helpers\JsonHelper;
 use App\Services\Services;
 use App\Services\WorksTypes\Repositories\WorksTypeRepositoryInterface;
 use Illuminate\Http\JsonResponse;
@@ -47,17 +46,16 @@ class WorksTypesService extends Services
         ]);
     }
 
-    public function delete(int $id):JsonResponse
+    public function delete(int $id): JsonResponse
     {
         $flag = $this->worksTypeRepository->delete($id);
-        if($flag)
-        {
-            return self::sendJsonResponse(true,[
+        if ($flag) {
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Тип работы успешно удален'
             ]);
         }
-        return self::sendJsonResponse(false,[
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'Тип работы успешно удален'
         ]);

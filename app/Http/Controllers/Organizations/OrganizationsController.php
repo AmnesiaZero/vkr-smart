@@ -14,10 +14,11 @@ use Illuminate\Validation\Rule;
 class OrganizationsController extends Controller
 {
 
+    public OrganizationsService $organizationsService;
     protected array $fillable = [
         'id',
         'name',
-        'parent_id' ,
+        'parent_id',
         'logo',
         'address',
         'phone',
@@ -34,9 +35,6 @@ class OrganizationsController extends Controller
         'with_trashed',
         'page'
     ];
-
-    public OrganizationsService $organizationsService;
-
 
     public function __construct(OrganizationsService $organizationsService)
     {
@@ -72,14 +70,14 @@ class OrganizationsController extends Controller
         }
         $paginate = $request->paginate;
         $page = $request->page;
-        return $this->organizationsService->get($paginate,$page);
+        return $this->organizationsService->get($paginate, $page);
 
     }
 
     public function editView(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id' => ['required','integer',Rule::exists('organizations','id')]
+            'id' => ['required', 'integer', Rule::exists('organizations', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::redirectError($validator);
@@ -111,7 +109,7 @@ class OrganizationsController extends Controller
             return ValidatorHelper::redirectError($validator);
         }
         $data = $request->only($this->fillable);
-        $data =array_filter($data, function ($value) {
+        $data = array_filter($data, function ($value) {
             return !is_null($value);
         });
         return $this->organizationsService->create($data);
@@ -120,7 +118,7 @@ class OrganizationsController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id' => ['required','integer',Rule::exists('organizations','id')],
+            'id' => ['required', 'integer', Rule::exists('organizations', 'id')],
             'name' => 'max:250',
 //            'parent_id' => ['integer',Rule::exists('organizations','id')],
 //            'logo' => 'file',
@@ -141,16 +139,16 @@ class OrganizationsController extends Controller
         }
         $id = $request->id;
         $data = $request->only($this->fillable);
-        $data =array_filter($data, function ($value) {
+        $data = array_filter($data, function ($value) {
             return !is_null($value);
         });
-        return $this->organizationsService->update($id,$data);
+        return $this->organizationsService->update($id, $data);
     }
 
     public function updateBasic(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'id' => ['required','integer',Rule::exists('organizations','id')]
+            'id' => ['required', 'integer', Rule::exists('organizations', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -162,7 +160,7 @@ class OrganizationsController extends Controller
     public function updatePremium(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'id' => ['required','integer',Rule::exists('organizations','id')]
+            'id' => ['required', 'integer', Rule::exists('organizations', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -174,7 +172,7 @@ class OrganizationsController extends Controller
     public function updateStatus(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'id' => ['required','integer',Rule::exists('organizations','id')]
+            'id' => ['required', 'integer', Rule::exists('organizations', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -186,7 +184,7 @@ class OrganizationsController extends Controller
     public function delete(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'id' => ['required','integer',Rule::exists('organizations','id')]
+            'id' => ['required', 'integer', Rule::exists('organizations', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -198,7 +196,7 @@ class OrganizationsController extends Controller
     public function destroy(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'id' => ['required','integer',Rule::exists('organizations','id')]
+            'id' => ['required', 'integer', Rule::exists('organizations', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -210,7 +208,7 @@ class OrganizationsController extends Controller
     public function restore(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'id' => ['required','integer',Rule::exists('organizations','id')]
+            'id' => ['required', 'integer', Rule::exists('organizations', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);

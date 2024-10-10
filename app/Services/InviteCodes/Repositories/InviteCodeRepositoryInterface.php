@@ -46,5 +46,5 @@ interface InviteCodeRepositoryInterface
      * @param int $type
      * @return bool
      */
-    public function delete(int $organizationId, int $type):bool;
+    public function delete(int $organizationId, int $type): bool;
 }

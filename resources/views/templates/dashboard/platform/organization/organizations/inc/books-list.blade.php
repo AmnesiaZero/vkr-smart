@@ -2,7 +2,7 @@
     <thead class="thead-dark">
     <tr>
         <th scope="col" style="width: 50px">
-            <input type="checkbox" name="books" class="select-all" />
+            <input type="checkbox" name="books" class="select-all"/>
         </th>
         <th scope="col">Название книги</th>
         <th scope="col" class="book-title text-center" style="width: 125px">Действия</th>
@@ -14,7 +14,8 @@
             <tr>
                 <td>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" name="books[]" value="{{ $book->id }}" class="custom-control-input books" id="book_{{ $book->id }}">
+                        <input type="checkbox" name="books[]" value="{{ $book->id }}" class="custom-control-input books"
+                               id="book_{{ $book->id }}">
                         <label class="custom-control-label" for="book_{{ $book->id }}"></label>
                     </div>
                 </td>

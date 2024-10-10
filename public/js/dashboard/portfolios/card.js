@@ -1,7 +1,7 @@
 var userId;
 
 var achievementId;
-$(document).ready(function() {
+$(document).ready(function () {
     console.log(123);
     let select = $('select[name="date_start"], select[name="date_end"], select[name="date_issue"]');
     let currentYear = new Date().getFullYear();
@@ -38,6 +38,7 @@ function getResourses(id) {
         }
     });
 }
+
 function getResource(id) {
     $.ajax({
         url: "/achivements-actions",
@@ -65,22 +66,20 @@ function getResource(id) {
     });
 }
 
-function educations()
-{
+function educations() {
     const data = {
-        user_id:userId
+        user_id: userId
     };
     $.ajax({
         url: "/dashboard/portfolios/educations/get",
-        data:data,
+        data: data,
         type: "GET",
         dataType: "json",
         success: function (response) {
             if (response.success) {
                 const educations = response.data.educations;
                 $("#educations_list").html($("#education_tmpl").tmpl(educations));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -90,16 +89,15 @@ function educations()
     });
 }
 
-function addEducation()
-{
+function addEducation() {
     let data = $("#add_education_form").serialize();
     const additionalData = {
-        user_id:userId
+        user_id: userId
     };
     data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/portfolios/educations/create",
-        data:data,
+        data: data,
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -109,8 +107,7 @@ function addEducation()
             if (response.success) {
                 const education = response.data.education;
                 $("#educations_list").append($("#education_tmpl").tmpl(education));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -120,14 +117,13 @@ function addEducation()
     });
 }
 
-function deleteEducation(educationId)
-{
+function deleteEducation(educationId) {
     const data = {
-        id:educationId
+        id: educationId
     };
     $.ajax({
         url: "/dashboard/portfolios/educations/delete",
-        data:data,
+        data: data,
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -137,8 +133,7 @@ function deleteEducation(educationId)
             if (response.success) {
                 $("#education_" + educationId).remove();
                 $.notify(response.data.title + ":" + response.data.message, "success");
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -148,10 +143,8 @@ function deleteEducation(educationId)
     });
 }
 
-function getEducationForm(educationFormId)
-{
-    switch (educationFormId)
-    {
+function getEducationForm(educationFormId) {
+    switch (educationFormId) {
         case 0:
         case '0':
             return 'Очная';
@@ -160,26 +153,24 @@ function getEducationForm(educationFormId)
             return 'Заочная'
         case 2:
         case '2':
-            return  'Дистанционная';
+            return 'Дистанционная';
     }
 }
 
-function careers()
-{
+function careers() {
     const data = {
-        user_id:userId
+        user_id: userId
     };
     $.ajax({
         url: "/dashboard/portfolios/careers/get",
-        data:data,
+        data: data,
         type: "GET",
         dataType: "json",
         success: function (response) {
             if (response.success) {
                 const careers = response.data.careers;
                 $("#careers_list").html($("#career_tmpl").tmpl(careers));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -189,16 +180,15 @@ function careers()
     });
 }
 
-function addCareer()
-{
+function addCareer() {
     let data = $("#add_career_form").serialize();
     const additionalData = {
-        user_id:userId
+        user_id: userId
     };
     data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/portfolios/careers/create",
-        data:data,
+        data: data,
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -208,8 +198,7 @@ function addCareer()
             if (response.success) {
                 const career = response.data.career;
                 $("#careers_list").append($("#career_tmpl").tmpl(career));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -219,14 +208,13 @@ function addCareer()
     });
 }
 
-function deleteCareer(careerId)
-{
+function deleteCareer(careerId) {
     const data = {
-        id:careerId
+        id: careerId
     };
     $.ajax({
         url: "/dashboard/portfolios/careers/delete",
-        data:data,
+        data: data,
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -236,8 +224,7 @@ function deleteCareer(careerId)
             if (response.success) {
                 $("#career_" + careerId).remove();
                 $.notify(response.data.title + ":" + response.data.message, "success");
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },

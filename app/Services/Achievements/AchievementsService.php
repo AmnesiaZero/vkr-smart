@@ -2,16 +2,12 @@
 
 namespace App\Services\Achievements;
 
-use App\Helpers\JsonHelper;
 use App\Models\AchievementMode;
-use App\Models\AchievementType;
 use App\Models\AchievementTypeCategory;
-use App\Models\RecordType;
 use App\Services\Achievements\Repositories\AchievementRepositoryInterface;
 use App\Services\Services;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class AchievementsService extends Services
 {
@@ -27,17 +23,7 @@ class AchievementsService extends Services
     {
         $modes = AchievementMode::all();
         $categories = AchievementTypeCategory::with('achievementsTypes')->get();
-        return view('templates.dashboard.portfolios.you',[
-            'categories' => $categories,
-            'modes' => $modes
-        ]);
-    }
-
-    public function view()
-    {
-        $modes = AchievementMode::all();
-        $categories = AchievementTypeCategory::with('achievementsTypes')->get();
-        return view('templates.dashboard.portfolios.achievements',[
+        return view('templates.dashboard.portfolios.you', [
             'categories' => $categories,
             'modes' => $modes
         ]);
@@ -46,16 +32,25 @@ class AchievementsService extends Services
     public function get(int $userId): JsonResponse
     {
         $achievements = $this->achievementRepository->get($userId);
-        if($achievements and is_iterable($achievements))
-        {
-            return self::sendJsonResponse(true,[
+        if ($achievements and is_iterable($achievements)) {
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'achievements' => $achievements
             ]);
         }
-        return self::sendJsonResponse(false,[
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'Ошибка при получении достижений'
+        ]);
+    }
+
+    public function view()
+    {
+        $modes = AchievementMode::all();
+        $categories = AchievementTypeCategory::with('achievementsTypes')->get();
+        return view('templates.dashboard.portfolios.achievements', [
+            'categories' => $categories,
+            'modes' => $modes
         ]);
     }
 
@@ -63,20 +58,18 @@ class AchievementsService extends Services
     {
         $you = Auth::user();
         $organizationId = $you->organization_id;
-        if(isset($organizationId) and is_numeric($organizationId))
-        {
+        if (isset($organizationId) and is_numeric($organizationId)) {
             $data['organization_id'] = $organizationId;
         }
         $achievement = $this->achievementRepository->create($data);
-        if($achievement and $achievement->id)
-        {
-            $achievement =  $achievement->load('mode');
-            return self::sendJsonResponse(true,[
+        if ($achievement and $achievement->id) {
+            $achievement = $achievement->load('mode');
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'achievement' => $achievement
             ]);
         }
-        return self::sendJsonResponse(false,[
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'Ошибка при создании достижения'
         ]);
@@ -86,14 +79,13 @@ class AchievementsService extends Services
     public function find(int $id): JsonResponse
     {
         $achievement = $this->achievementRepository->find($id);
-        if($achievement and $achievement->id)
-        {
-            return self::sendJsonResponse(true,[
+        if ($achievement and $achievement->id) {
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'achievement' => $achievement
             ]);
         }
-        return self::sendJsonResponse(false,[
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при поиске достижения'
         ]);
@@ -102,14 +94,13 @@ class AchievementsService extends Services
     public function delete(int $id): JsonResponse
     {
         $flag = $this->achievementRepository->delete($id);
-        if($flag)
-        {
-            return self::sendJsonResponse(true,[
+        if ($flag) {
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Достижение было успешно удалено'
             ]);
         }
-        return self::sendJsonResponse(false,[
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при поиске достижения'
         ]);
@@ -118,14 +109,13 @@ class AchievementsService extends Services
     public function search(array $data): JsonResponse
     {
         $achievements = $this->achievementRepository->search($data);
-        if($achievements and is_iterable($achievements))
-        {
-            return self::sendJsonResponse(true,[
+        if ($achievements and is_iterable($achievements)) {
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'achievements' => $achievements
             ]);
         }
-        return self::sendJsonResponse(false,[
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'Ошибка при поиске достижений'
         ]);

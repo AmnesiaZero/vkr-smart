@@ -2,7 +2,7 @@
     <div class="d-flex cursor-p mb-2">
         <img src="/images/Edit_Pencil.svg" alt="" class="pe-2">
         <p class="fs-14 lh-17 text-grey m-0" onclick="openUpdateAchievementModal()"
-           >
+        >
             Изменить запись
         </p>
     </div>
@@ -14,7 +14,7 @@
         <img src="/images/download.svg" alt="" class="pe-2">
         <input type="file" id="file_input" style="display: none">
         <p class="fs-14 lh-17 text-grey m-0" onclick="openModal('add_file_modal')" data-bs-target="#add_file_modal"
-            data-bs-toggle="modal">
+           data-bs-toggle="modal">
             Добавить файл
         </p>
     </div>
@@ -22,7 +22,7 @@
         <img src="/images/download.svg" alt="" class="pe-2">
         <input type="file" id="file_input" style="display: none">
         <p class="fs-14 lh-17 text-grey m-0" onclick="openModal('add_link_modal')" data-bs-target="#add_link_modal"
-            data-bs-toggle="modal">
+           data-bs-toggle="modal">
             Добавить ссылку
         </p>
     </div>

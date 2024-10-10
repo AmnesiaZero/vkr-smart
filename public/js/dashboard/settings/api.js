@@ -23,8 +23,8 @@ function generateApiKey() {
     });
 }
 
-$(document).ready(function(){
-    $('#token').click(function(){
+$(document).ready(function () {
+    $('#token').click(function () {
         const $temp = $('<textarea>');
         $('body').append($temp);
         $temp.val($(this).text()).select();

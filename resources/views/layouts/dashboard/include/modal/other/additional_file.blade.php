@@ -5,7 +5,8 @@
                 <h3>Управление дополнительными файлами для&nbsp;работы</h3>
             </div>
             <div class="modal-body">
-                <form enctype="multipart/form-data" id="upload_additional_file_form"  class="form-inline form-well well-form">
+                <form enctype="multipart/form-data" id="upload_additional_file_form"
+                      class="form-inline form-well well-form">
                     <div class="d-flex gap-4 align-items-center">
                         <div class="col-sm-9">
                             <input type="file" name="additional_file" class="form-control">
@@ -14,7 +15,8 @@
                             <button type="submit" class="btn btn-primary btn-block">Прикрепить файл</button>
                         </div>
                     </div>
-                </form><hr>
+                </form>
+                <hr>
                 <h3 class="bc-post-title-sm">Прикрепленные файлы</h3>
                 <table class="table table-striped table-condensed table-bordered table-mini">
                     <thead>

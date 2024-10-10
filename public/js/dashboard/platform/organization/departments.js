@@ -2,19 +2,19 @@ var mainPageUrl = '/dashboard/organizations/departments';
 
 $(document).ready(function () {
 
-    $('#save-close').on('click', function() {
+    $('#save-close').on('click', function () {
         // Здесь можно добавить логику для закрытия формы или перехода на другую страницу
         $('#redirect').prop('checked', true);
 
         $('#departments_form').submit(); // Сабмит формы
     });
 
-    $('#save').on('click', function() {
+    $('#save').on('click', function () {
         // Здесь можно добавить логику для сохранения данных без закрытия
         $('#departments_form').submit(); // Сабмит формы
     });
 
-    $('#close').on('click', function() {
+    $('#close').on('click', function () {
         // Здесь можно добавить логику для отмены, например, переход на другую страницу
         window.location.href = '/dashboard/platform/organizations/departments'; // Перенаправление на главную страницу
     });
@@ -76,8 +76,7 @@ function faculties(data) {
                 const facultiesList = $("#faculties_list");
                 facultiesList.html($("#faculty_tmpl").tmpl(faculties));
                 facultiesList.prepend('<option value="" selected>Выберите.......</option>');
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -88,26 +87,23 @@ function faculties(data) {
 }
 
 
-function updateStatus(id)
-{
+function updateStatus(id) {
     const data = {
-        id:id
+        id: id
     };
     $.ajax({
         url: "/dashboard/organizations/departments/update/status",
-        data:data,
+        data: data,
         dataType: "json",
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (response) {
-            if (response.success)
-            {
+            if (response.success) {
                 const department = response.data.department;
                 $("#status_" + id).replaceWith($("#status_tmpl").tmpl(department));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },

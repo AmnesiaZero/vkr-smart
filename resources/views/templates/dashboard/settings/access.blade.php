@@ -97,6 +97,7 @@
 
 
 
+
     </script>
 
     <script id="user_tmpl" type="text/x-jquery-tmpl">
@@ -175,19 +176,23 @@
 
 
 
+
     </script>
     <script id="year_tmpl" type="text/x-jquery-tmpl">
         <option value="${id}" onclick="faculties(${id})">${year}</option>
+
 
     </script>
 
     <script id="faculty_tmpl" type="text/x-jquery-tmpl">
         <option value="${id}">${name}</option>
 
+
     </script>
 
     <script id="department_list_tmpl" type="text/x-jquery-tmpl">
         <option value="${id}">${name}</option>
+
 
     </script>
 
@@ -228,6 +233,7 @@
                     </p>
                 </div>
             </div>
+
 
 
     </script>
@@ -292,17 +298,20 @@
 
 
 
+
     </script>
     <script id="inspectors_access_year_tmpl" type="text/x-jquery-tmpl">
       <li>
          <a href="#" onclick="accessSpecialties(${id});">${year}</a>
       </li>
+
     </script>
 
     <script id="user_access_year_tmpl" type="text/x-jquery-tmpl">
       <li>
          <a href="#" onclick="accessDepartments(${id});">${year}</a>
       </li>
+
     </script>
 
 
@@ -350,6 +359,7 @@
             <button type="submit" class="btn btn-secondary w-100 text-grey fs-14 br-100 br-none mt-4 mb-5">Применить</button>
             </form>
         </div>
+
 
 
     </script>

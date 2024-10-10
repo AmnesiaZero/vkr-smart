@@ -1,70 +1,82 @@
 body.auth {
-  height: 100vh;
-  background-image: url("/images/auth/background.jpeg");
-  background-position: 50% 50%;
-  background-size: cover;
+    height: 100vh;
+    background-image: url("/images/auth/background.jpeg");
+    background-position: 50% 50%;
+    background-size: cover;
 }
+
 body.auth .overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  background: rgba(134, 153, 206, 0.85);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background: rgba(134, 153, 206, 0.85);
 }
+
 body.auth .container .row {
-  height: 100vh;
+    height: 100vh;
 }
+
 body.auth div.form {
-  position: relative;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 5px #6b6b6b;
-  background-color: #fff;
-  /* active state */
+    position: relative;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #6b6b6b;
+    background-color: #fff;
+    /* active state */
 }
+
 body.auth div.form input.bar {
-  display: block;
-  border: none;
-  border-bottom: solid 1px #ccc;
+    display: block;
+    border: none;
+    border-bottom: solid 1px #ccc;
 }
+
 body.auth div.form input.bar:focus {
-  outline: none;
-  box-shadow: none;
+    outline: none;
+    box-shadow: none;
 }
+
 body.auth div.form input[type=checkbox] {
-  width: 18px;
-  height: 18px;
-  margin: 0 10px 0 10px;
+    width: 18px;
+    height: 18px;
+    margin: 0 10px 0 10px;
 }
+
 body.auth div.form .bar {
-  position: relative;
-  display: block;
+    position: relative;
+    display: block;
 }
+
 body.auth div.form .bar:before, body.auth div.form .bar:after {
-  content: "";
-  height: 2px;
-  width: 0;
-  bottom: 0;
-  position: absolute;
-  background: #5264AE;
-  transition: 0.2s ease all;
-  -moz-transition: 0.2s ease all;
-  -webkit-transition: 0.2s ease all;
+    content: "";
+    height: 2px;
+    width: 0;
+    bottom: 0;
+    position: absolute;
+    background: #5264AE;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
 }
+
 body.auth div.form .bar:before {
-  left: 50%;
+    left: 50%;
 }
+
 body.auth div.form .bar:after {
-  right: 50%;
+    right: 50%;
 }
+
 body.auth div.form input:focus ~ .bar:before,
 body.auth div.form input:focus ~ .bar:after {
-  width: 50%;
+    width: 50%;
 }
+
 body.auth div.form a.create-account {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .auth .logo {
-  width: 265px;
+    width: 265px;
 }

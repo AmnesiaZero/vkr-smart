@@ -38,7 +38,8 @@
                                             <option class="boldoption" disabled="disabled">{{$category->name}}</option>
                                             @if(isset($category->achievementsTypes) and is_iterable($category->achievementsTypes))
                                                 @foreach($category->achievementsTypes as $achievementType)
-                                                    <option value="{{$achievementType->id}}">{{$achievementType->name}}</option>
+                                                    <option
+                                                        value="{{$achievementType->id}}">{{$achievementType->name}}</option>
                                                 @endforeach
                                             @endif
                                         @endforeach
@@ -66,10 +67,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" onclick="closeModal('add_file_modal')">
+                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1"
+                            onclick="closeModal('add_file_modal')">
                         Добавить
                     </button>
-                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal"
+                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
+                            data-bs-dismiss="modal"
                             aria-label="Close" onclick="closeModal('add_file_modal')">
                         Закрыть
                     </button>

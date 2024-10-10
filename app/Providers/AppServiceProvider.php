@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\Exports\WorksExport;
 use App\Services\Decorations\Repositories\DecorationRepositoryInterface;
 use App\Services\Decorations\Repositories\EloquentDecorationRepository;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Excel\Facades\Excel;
@@ -46,7 +44,8 @@ class AppServiceProvider extends ServiceProvider
             'AchievementRecord' => 'AchievementsRecords',
             'ReportAsset' => 'ReportsAssets',
             'Education' => 'Educations',
-            'Career' => 'Careers'
+            'Career' => 'Careers',
+            'News' => 'News'
         ];
 
         foreach ($repositories as $k => $v) {

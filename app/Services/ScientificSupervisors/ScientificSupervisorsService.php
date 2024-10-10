@@ -2,7 +2,6 @@
 
 namespace App\Services\ScientificSupervisors;
 
-use App\Helpers\JsonHelper;
 use App\Services\ScientificSupervisors\Repositories\ScientificSupervisorRepositoryInterface;
 use App\Services\Services;
 use Illuminate\Http\JsonResponse;
@@ -50,14 +49,13 @@ class ScientificSupervisorsService extends Services
     public function delete(int $id): JsonResponse
     {
         $flag = $this->scientificSupervisorRepository->delete($id);
-        if($flag)
-        {
-            return self::sendJsonResponse(true,[
+        if ($flag) {
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Научный руководитель был успешно удален'
             ]);
         }
-        return self::sendJsonResponse(false,[
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'Произошла ошибка при удалении научного руководитял'
         ]);

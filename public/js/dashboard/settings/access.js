@@ -382,7 +382,7 @@ function deleteUser(id) {
 
 function editUserModal(id) {
     console.log('Вошёл в editUserModal');
-    const data = { id: id };
+    const data = {id: id};
 
     $.ajax({
         url: "/dashboard/users/find",

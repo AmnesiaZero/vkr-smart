@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\AchievementMode;
 use App\Models\RecordType;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class RecordTypeSeeder extends Seeder
@@ -19,8 +17,7 @@ class RecordTypeSeeder extends Seeder
             ['name' => 'Ссылка на веб-страницу, документ или видео'],
             ['name' => 'Текст'],
         ];
-        foreach ($types as $type)
-        {
+        foreach ($types as $type) {
             RecordType::factory()->create($type);
         }
     }

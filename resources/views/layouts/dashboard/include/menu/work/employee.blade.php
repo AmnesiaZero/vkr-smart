@@ -4,7 +4,7 @@
     <div class="d-flex align-items-center cursor-p mb-2">
         <img src="/images/Edit_Pencil.svg" alt="" class="pe-3">
         <p class="fs-14 lh-17 text-grey m-0"
-            data-bs-target="#update_work_specialty_modal" data-bs-toggle="modal">
+           data-bs-target="#update_work_specialty_modal" data-bs-toggle="modal">
             Изменить направление подготовки
         </p>
     </div>
@@ -41,7 +41,8 @@
     <div class="d-flex align-items-center cursor-p mb-2">
         <img src="/images/download.svg" alt="" class="pe-3">
         <input type="file" id="certificate_input" style="display: none">
-        <p class="fs-14 lh-17 text-grey m-0" id="upload_certificate_button">Загрузить или заменить справку<br> о самопроверке по другим
+        <p class="fs-14 lh-17 text-grey m-0" id="upload_certificate_button">Загрузить или заменить справку<br> о
+            самопроверке по другим
             системам</p>
     </div>
     @endrole

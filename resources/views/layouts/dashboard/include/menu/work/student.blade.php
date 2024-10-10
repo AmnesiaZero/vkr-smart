@@ -12,6 +12,7 @@
         <p class="fs-14 lh-17 text-grey m-0" onclick="workInfoStudent('comments')">Оставить комментарий</p>
     </div>
     @endrole
+
     @role('admin')
     <div class="d-flex cursor-p mb-2">
         <img src="/images/Edit_Pencil.svg" alt="" class="pe-2">
@@ -30,11 +31,17 @@
     </div>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/File_Remove.svg" alt="" class="pe-2">
-        <p class="fs-14 lh-17 text-grey m-0" onclick="declineWork();return false">Отклонить работу (отправить на доработку)</p>
+        <p class="fs-14 lh-17 text-grey m-0" onclick="acceptWork();return false">Принять работу</p>
+    </div>
+    <div class="d-flex cursor-p mb-2">
+        <img src="/images/File_Remove.svg" alt="" class="pe-2">
+        <p class="fs-14 lh-17 text-grey m-0" onclick="declineWork();return false">Отклонить работу (отправить на
+            доработку)</p>
     </div>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/clock_grey.svg" alt="" class="pe-2">
-        <p class="fs-14 lh-17 text-grey m-0" onclick="putWorkOnWait();return false">Перевести статус работы в режим ожидания</p>
+        <p class="fs-14 lh-17 text-grey m-0" onclick="putWorkOnWait();return false">Перевести статус работы в режим
+            ожидания</p>
     </div>
     <p class="fs-14 lh-17">Самопроверка</p>
     <div class="d-flex cursor-p mb-2">
@@ -47,11 +54,14 @@
         <p class="fs-14 lh-17 text-grey m-0">Файл согласия не загружен</p>
     </div>
     @endrole
+
     @role('admin|inspector')
     <p class="fs-14 lh-17">Дополнительные файлы</p>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/href_light.svg" alt="" class="pe-2">
-        <p class="fs-14 lh-17 text-grey m-0" onclick="openModal('additional_files_modal');additionalFiles();return false">Открыть окно управления<br> дополнительными файлами</p>
+        <p class="fs-14 lh-17 text-grey m-0"
+           onclick="openModal('additional_files_modal');additionalFiles();return false">Открыть окно управления<br>
+            дополнительными файлами</p>
     </div>
     @endrole
 </div>

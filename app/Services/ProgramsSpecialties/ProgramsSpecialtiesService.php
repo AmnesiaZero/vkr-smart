@@ -2,8 +2,6 @@
 
 namespace App\Services\ProgramsSpecialties;
 
-use App\Helpers\JsonHelper;
-use App\Http\Controllers\Controller;
 use App\Models\Program;
 use App\Services\ProgramsSpecialties\Repositories\ProgramSpecialtyRepositoryInterface;
 use App\Services\Services;
@@ -104,14 +102,13 @@ class ProgramsSpecialtiesService extends Services
     public function getByOrganizationId(int $organizationId): JsonResponse
     {
         $programSpecialties = $this->_repository->getByOrganization($organizationId);
-        if(!isEmpty($programSpecialties))
-        {
-            return self::sendJsonResponse(true,[
-               'title' => 'Успешно',
-               'program_specialties' => $programSpecialties
+        if (!isEmpty($programSpecialties)) {
+            return self::sendJsonResponse(true, [
+                'title' => 'Успешно',
+                'program_specialties' => $programSpecialties
             ]);
         }
-        return self::sendJsonResponse(false,[
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'Ошибка при получении специальностей'
         ]);

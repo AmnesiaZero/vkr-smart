@@ -2,7 +2,7 @@
     <thead class="thead-dark">
     <tr>
         <th scope="col" style="width: 50px">
-            <input type="checkbox" name="books" class="select-all" />
+            <input type="checkbox" name="books" class="select-all"/>
         </th>
         <th scope="col">Название коллекции</th>
         <th scope="col" class="text-center" style="width: 220px;">Дата начала подписки</th>
@@ -16,7 +16,8 @@
             <tr>
                 <td>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" name="collections[]" value="{{ $collection->id }}" class="custom-control-input collections" id="collection_{{ $collection->id }}">
+                        <input type="checkbox" name="collections[]" value="{{ $collection->id }}"
+                               class="custom-control-input collections" id="collection_{{ $collection->id }}">
                         <label class="custom-control-label" for="collection_{{ $collection->id }}"></label>
                     </div>
                 </td>
@@ -26,10 +27,10 @@
                     </h5>
                 </td>
                 <td class="text-center">
-                    <input type="text" name="subscription_start_date" class="form-control form-control-sm date" />
+                    <input type="text" name="subscription_start_date" class="form-control form-control-sm date"/>
                 </td>
                 <td>
-                    <input type="text" name="subscription_end_date" class="form-control form-control-sm date" />
+                    <input type="text" name="subscription_end_date" class="form-control form-control-sm date"/>
                 </td>
                 <td class="text-center">
                     <button class="btn btn-sm btn-success add-collection" data-collection-id="{{ $collection->id }}">

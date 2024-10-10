@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\AchievementMode;
 use App\Models\AchievementTypeCategory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AchievementTypeCategorySeeder extends Seeder
@@ -20,8 +18,7 @@ class AchievementTypeCategorySeeder extends Seeder
             ['name' => 'Работа'],
             ['name' => 'Другое (ссылки, видеозаписи)'],
         ];
-        foreach ($categories as $category)
-        {
+        foreach ($categories as $category) {
             AchievementTypeCategory::factory()->create($category);
         }
     }

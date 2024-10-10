@@ -16,7 +16,7 @@ $('.btn-info-box').click(function () {
 });
 
 // Открытие и закрытие ветвей
-$(".fancytree-node").click(function() {
+$(".fancytree-node").click(function () {
     $(this).next("ul").toggle();
 });
 
@@ -28,29 +28,26 @@ const addElement = function (clickedElement) {
         const match = fullId.match(/\d+/); // Находим все последовательности цифр в строке
         const id = match ? match[0] : ''; // Если найдены цифры, сохраняем их
         data = {
-            year_id:id
+            year_id: id
         };
-    }
-    else if (fullId.includes('faculty_')) {
+    } else if (fullId.includes('faculty_')) {
         const match = fullId.match(/\d+/); // Находим все последовательности цифр в строке
         const id = match ? match[0] : ''; // Если найдены цифры, сохраняем их
         data = {
-            faculty_id:id
+            faculty_id: id
         };
-    }
-    else if (fullId.includes('department_')) {
+    } else if (fullId.includes('department_')) {
         const match = fullId.match(/\d+/); // Находим все последовательности цифр в строке
         const id = match ? match[0] : ''; // Если найдены цифры, сохраняем их
         data = {
-            department_id:id
+            department_id: id
         };
     }
     getReport(data);
 
 }
 
-function getReport(data={})
-{
+function getReport(data = {}) {
     $.ajax({
         url: "/dashboard/reports/get",
         data: data,
@@ -58,21 +55,20 @@ function getReport(data={})
         dataType: "json",
         success: function (response) {
             const roles = {
-              'admin' : 'Администраторы',
-                'teacher' : 'Преподаватели',
-                'employee' : 'Сотрудники',
-                'user' : 'Студенты',
-                'inspector' : 'Проверяющие'
+                'admin': 'Администраторы',
+                'teacher': 'Преподаватели',
+                'employee': 'Сотрудники',
+                'user': 'Студенты',
+                'inspector': 'Проверяющие'
             };
             const report = response.data;
-            report.roles = $.map(roles, function(value, key) {
+            report.roles = $.map(roles, function (value, key) {
                 return [[key, value]];
             });
             console.log(report);
             if (response.success) {
                 $("#report_container").html($("#report_tmpl").tmpl(report));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -82,34 +78,29 @@ function getReport(data={})
     });
 }
 
-function findRole(roles,slug)
-{
+function findRole(roles, slug) {
     let index = roles.findIndex(role => role.slug === slug);
 
     if (index !== -1) {
         roleIndex = index;
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
 
 
-function worksStatusCount(works,workStatus)
-{
+function worksStatusCount(works, workStatus) {
     let count = 0;
     works.forEach(work => {
-        if(work.work_status===workStatus)
-        {
+        if (work.work_status === workStatus) {
             count++;
         }
     });
     return count;
 }
 
-function getRoleIndex()
-{
+function getRoleIndex() {
     return roleIndex;
 }
 

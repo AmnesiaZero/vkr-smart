@@ -25,13 +25,13 @@
                         <div class="form-group">
                             <label for="years_list">Выберите год выпуска:</label>
                             <select id="years_list" name="year_id" class="form-control">
-                                <option> Выберите организацию </option>
+                                <option> Выберите организацию</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="faculties_list">Выберите факультет:</label>
                             <select id="faculties_list" name="faculty_id" class="form-control">
-                                <option> Выберите год выпуска </option>
+                                <option> Выберите год выпуска</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -59,38 +59,40 @@
     <script src="/js/dashboard/platform/organization/departments.js"></script>
     <script src="{{ secure_asset('/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script>
     <script>
-        jQuery(function(){
+        jQuery(function () {
             jQuery('#date_timepicker_start').datetimepicker({
                 lang: 'ru',
-                format:'Y/m/d',
+                format: 'Y/m/d',
                 scrollMonth: false,
-                onShow:function( ct ){
+                onShow: function (ct) {
                     this.setOptions({
-                        maxDate:jQuery('#date_timepicker_end').val()?jQuery('#date_timepicker_end').val():false
+                        maxDate: jQuery('#date_timepicker_end').val() ? jQuery('#date_timepicker_end').val() : false
                     })
                 },
-                timepicker:false
+                timepicker: false
             });
             jQuery('#date_timepicker_end').datetimepicker({
                 lang: 'ru',
-                format:'Y/m/d',
+                format: 'Y/m/d',
                 scrollMonth: false,
-                onShow:function( ct ){
+                onShow: function (ct) {
                     this.setOptions({
-                        minDate:jQuery('#date_timepicker_start').val()?jQuery('#date_timepicker_start').val():false
+                        minDate: jQuery('#date_timepicker_start').val() ? jQuery('#date_timepicker_start').val() : false
                     })
                 },
-                timepicker:false
+                timepicker: false
             });
         });
     </script>
 
     <script id="year_tmpl" type="text/x-jquery-tmpl">
         <option value="${id}">${year}</option>
+
     </script>
 
 
     <script id="faculty_tmpl" type="text/x-jquery-tmpl">
         <option value="${id}">${name}</option>
+
     </script>
 @endsection

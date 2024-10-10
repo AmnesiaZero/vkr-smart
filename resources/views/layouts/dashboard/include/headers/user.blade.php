@@ -12,7 +12,8 @@
         <div class="accordion-body p-0">
             <ul class="list-custom-1 m-0">
                 <li class="list-select"><a href="/dashboard/personal-cabinet"
-                                           class="select-a @if(request()->is('*/personal-cabinet')) nav-link-active @endif">Профиль</a></li>
+                                           class="select-a @if(request()->is('*/personal-cabinet')) nav-link-active @endif">Профиль</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -51,7 +52,8 @@
         <div class="accordion-body p-0">
             <ul class="list-custom-1 m-0">
                 <li class="list-select"><a href="/dashboard/portfolios/achievements/you"
-                                           class="select-a @if(request()->is('*/portfolios/achievements/')) nav-link-active @endif">Мои <br> достижения</a>
+                                           class="select-a @if(request()->is('*/portfolios/achievements/')) nav-link-active @endif">Мои
+                        <br> достижения</a>
                 </li>
             </ul>
         </div>

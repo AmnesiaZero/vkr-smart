@@ -14,18 +14,18 @@ class EloquentCommentRepository implements CommentRepositoryInterface
         return Comment::query()->create($data);
     }
 
-    public function find(int $id): Model
-    {
-        return Comment::with(['work','sender','receiver'])->find($id);
-    }
-
     public function get(int $workId): Collection
     {
-        return Comment::with(['work','sender','receiver'])->where('work_id','=',$workId)->get();
+        return Comment::with(['work', 'sender', 'receiver'])->where('work_id', '=', $workId)->get();
     }
 
     public function delete(int $id): bool
     {
         return $this->find($id)->delete();
+    }
+
+    public function find(int $id): Model
+    {
+        return Comment::with(['work', 'sender', 'receiver'])->find($id);
     }
 }

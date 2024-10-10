@@ -58,7 +58,6 @@ interface DepartmentRepositoryInterface
     public function restore(int $id): bool;
 
 
-
     /**
      * @param int $id
      * @return Model
@@ -81,7 +80,7 @@ interface DepartmentRepositoryInterface
      * @param array $data
      * @return LengthAwarePaginator
      */
-    public function search(array $data):LengthAwarePaginator;
+    public function search(array $data): LengthAwarePaginator;
 
 
 }

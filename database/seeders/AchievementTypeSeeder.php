@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\AchievementType;
-use App\Models\AchievementTypeCategory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AchievementTypeSeeder extends Seeder
@@ -104,8 +102,7 @@ class AchievementTypeSeeder extends Seeder
             ],
 
         ];
-        foreach ($categories as $category)
-        {
+        foreach ($categories as $category) {
             AchievementType::factory()->create($category);
         }
     }

@@ -15,8 +15,8 @@ function users() {
     const roles = ['user']; //по дефолту выбрана роль студента
     const data = {
         roles: roles,
-        page:1,
-        paginate:1
+        page: 1,
+        paginate: 1
     };
     $.ajax({
         url: "/dashboard/users/get",
@@ -37,7 +37,7 @@ function users() {
 }
 
 
-function searchUsers(page= 1) {
+function searchUsers(page = 1) {
     let data = $("#search_users").serialize();
     data = serializeRemoveNull(data);
     const selectedYears = getArrayFromLocalStorage('selected_years');
@@ -46,8 +46,8 @@ function searchUsers(page= 1) {
     const additionalData = {
         selected_years: selectedYears,
         selected_departments: selectedDepartments,
-        page:page,
-        paginate:1
+        page: page,
+        paginate: 1
     };
 
     data += '&' + $.param(additionalData);
@@ -73,8 +73,7 @@ function searchUsers(page= 1) {
 }
 
 
-function openWorks(id)
-{
+function openWorks(id) {
     const data = {
         id: id
     };

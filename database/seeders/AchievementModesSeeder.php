@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\AchievementMode;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AchievementModesSeeder extends Seeder
@@ -21,8 +20,7 @@ class AchievementModesSeeder extends Seeder
             ['name' => 'Социальная деятельность'],
             ['name' => 'Спортивная деятельность']
         ];
-        foreach ($achievementModes as $achievementMode)
-        {
+        foreach ($achievementModes as $achievementMode) {
             AchievementMode::factory()->create($achievementMode);
         }
     }

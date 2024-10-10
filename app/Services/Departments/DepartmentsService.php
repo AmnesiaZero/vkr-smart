@@ -2,7 +2,6 @@
 
 namespace App\Services\Departments;
 
-use App\Helpers\JsonHelper;
 use App\Models\Department;
 use App\Models\Organization;
 use App\Services\Departments\Repositories\DepartmentRepositoryInterface;
@@ -35,7 +34,7 @@ class DepartmentsService extends Services
         FacultyRepositoryInterface          $facultyRepository,
         UserRepositoryInterface             $userRepository,
         OrganizationYearRepositoryInterface $yearRepository,
-        OrganizationRepositoryInterface $organizationRepository
+        OrganizationRepositoryInterface     $organizationRepository
     )
     {
         $this->departmentRepository = $departmentRepository;
@@ -45,57 +44,30 @@ class DepartmentsService extends Services
         $this->organizationRepository = $organizationRepository;
     }
 
-    public function create(array $data): JsonResponse
-    {
-        $user = Auth::user();
-        $data['user_id'] = $user->id;
-        if(!isset($data['organization_id']))
-        {
-            $data['organization_id'] = $user->organization_id;
-        }
-        if (!isset($data['faculty_id'])) {
-            return self::sendJsonResponse(false, [
-                'title' => 'Ошибка',
-                'message' => 'При создании кафедры не указан id факультета'
-            ]);
-        }
-        $yearId = $this->facultyRepository->getYearId($data['faculty_id']);
-        $data = array_merge($data, ['year_id' => $yearId]);
-        if (empty($data)) {
-            return self::sendJsonResponse(false, [
-                'title' => 'Ошибка',
-                'message' => 'Пустой массив данных'
-            ]);
-        }
-        $department = $this->departmentRepository->create($data);
-        Log::debug('department = ' . $department);
-        if ($department and $department->id) {
-            return self::sendJsonResponse(true, [
-                'title' => 'Успешно',
-                'message' => 'Кафедра успешно создана',
-                'department' => $department
-            ]);
-        }
-        return self::sendJsonResponse(false, [
-            'title' => 'Ошибка',
-            'message' => 'При сохранении данных произошла  ошибка'
-        ], 403);
-    }
-
-
-    public function get(array $data): JsonResponse
-    {
-        $departments = $this->departmentRepository->get($data);
-        Log::debug('departments = ' . $departments);
-        return self::sendJsonResponse(true, [
-            'title' => 'Успешно получены кафедры',
-            'departments' => $departments
-        ]);
-    }
-
     public function getByYearId(int $yearId): Collection
     {
         return $this->departmentRepository->getByYearId($yearId);
+    }
+
+    public function edit(int $id, array $data)
+    {
+        if (empty($data)) {
+            return back()->withErrors(['Пустой массив данных']);
+        }
+
+        $result = $this->departmentRepository->update($id, $data);
+        if ($result) {
+            $you = Auth::user();
+            if (isset($data['redirect'])) {
+                return redirect('/dashboard/platform/organizations/departments');
+            }
+            $department = $this->departmentRepository->find($id);
+            return view('templates.dashboard.platform.organization.departments.edit', [
+                'department' => $department,
+                'you' => $you
+            ]);
+        }
+        return back()->withErrors(['Ошибка при обновлении подразделения']);
     }
 
     public function update(int $id, array $data): JsonResponse
@@ -116,8 +88,7 @@ class DepartmentsService extends Services
                 'message' => 'Информация успешно сохранена',
                 'department' => $department
             ]);
-        }
-        else {
+        } else {
             return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'При сохранении данных произошла ошибка',
@@ -126,40 +97,16 @@ class DepartmentsService extends Services
         }
     }
 
-    public function edit(int $id, array $data)
-    {
-        if (empty($data)) {
-            return back()->withErrors(['Пустой массив данных']);
-        }
-
-        $result = $this->departmentRepository->update($id,$data);
-        if($result)
-        {
-            $you = Auth::user();
-            if(isset($data['redirect']))
-            {
-                return redirect('/dashboard/platform/organizations/departments');
-            }
-            $department = $this->departmentRepository->find($id);
-            return view('templates.dashboard.platform.organization.departments.edit',[
-                'department' => $department,
-                'you' => $you
-            ]);
-        }
-        return back()->withErrors(['Ошибка при обновлении подразделения']);
-    }
-
     public function find(int $id): JsonResponse
     {
         $department = $this->departmentRepository->find($id);
-        if($department and $department->id)
-        {
+        if ($department and $department->id) {
             return self::sendJsonResponse(true, [
                 'title' => 'Успех',
                 'department' => $department
             ]);
         }
-        return self::sendJsonResponse(false,[
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'Данного подразделения не существует'
         ]);
@@ -222,16 +169,14 @@ class DepartmentsService extends Services
             'with_trashed' => true,
             'paginate' => true,
         ];
-        $data = array_merge($data,$additionalData);
-        if(!isset($data['page']))
-        {
+        $data = array_merge($data, $additionalData);
+        if (!isset($data['page'])) {
             $data['page'] = 1;
         }
         $departments = $this->departmentRepository->get($data);
-        if($organizations and $departments)
-        {
-            return view('templates.dashboard.platform.organization.departments.index',[
-                'you' => $you,
+        if ($organizations and $departments) {
+            return view('templates.dashboard.platform.organization.departments.index', [
+
                 'organizations' => $organizations,
                 'departments' => $departments
             ]);
@@ -239,19 +184,13 @@ class DepartmentsService extends Services
         return back()->withErrors(['Возникла ошибка при получении организаций и департаментов']);
     }
 
-    public function all(): JsonResponse
+    public function get(array $data): JsonResponse
     {
-        $departments = Department::all();
-        if($departments and is_iterable($departments))
-        {
-            return self::sendJsonResponse(true,[
-                'title' => 'Успешно',
-                'departments' => $departments
-            ]);
-        }
-        return self::sendJsonResponse(false,[
-            'title' => 'Ошибка',
-            'message' => 'Ошибка при получении подразделений'
+        $departments = $this->departmentRepository->get($data);
+        Log::debug('departments = ' . $departments);
+        return self::sendJsonResponse(true, [
+            'title' => 'Успешно получены кафедры',
+            'departments' => $departments
         ]);
     }
 
@@ -259,9 +198,8 @@ class DepartmentsService extends Services
     {
         $department = $this->departmentRepository->find($id);
         $you = Auth::user();
-        if($department and $department->id)
-        {
-            return view('templates.dashboard.platform.organization.departments.edit',[
+        if ($department and $department->id) {
+            return view('templates.dashboard.platform.organization.departments.edit', [
                 'department' => $department,
                 'you' => $you
             ]);
@@ -272,14 +210,13 @@ class DepartmentsService extends Services
     public function search(array $data): JsonResponse
     {
         $departments = $this->departmentRepository->search($data);
-        if($departments and is_iterable($departments))
-        {
-            return self::sendJsonResponse(true,[
+        if ($departments and is_iterable($departments)) {
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'departments' => $departments
             ]);
         }
-        return self::sendJsonResponse(false,[
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при поиске подразделений'
         ]);
@@ -289,9 +226,24 @@ class DepartmentsService extends Services
     {
         $you = Auth::user();
         $organizations = Organization::all();
-        return view('templates.dashboard.platform.organization.departments.create',[
-            'you' => $you,
+        return view('templates.dashboard.platform.organization.departments.create', [
+
             'organizations' => $organizations
+        ]);
+    }
+
+    public function all(): JsonResponse
+    {
+        $departments = Department::all();
+        if ($departments and is_iterable($departments)) {
+            return self::sendJsonResponse(true, [
+                'title' => 'Успешно',
+                'departments' => $departments
+            ]);
+        }
+        return self::sendJsonResponse(false, [
+            'title' => 'Ошибка',
+            'message' => 'Ошибка при получении подразделений'
         ]);
     }
 
@@ -305,11 +257,10 @@ class DepartmentsService extends Services
         $department = $this->departmentRepository->create($data);
         if ($department and $department->id) {
 
-            if(isset($data['redirect']))
-            {
+            if (isset($data['redirect'])) {
                 return redirect('/dashboard/platform/organizations/departments');
             }
-            return view('templates.dashboard.platform.organization.departments.create',[
+            return view('templates.dashboard.platform.organization.departments.create', [
                 'department' => $department,
                 'you' => $you
             ]);
@@ -317,27 +268,59 @@ class DepartmentsService extends Services
         return back()->withErrors(['Ошибка при создании департамента']);
     }
 
+    public function create(array $data): JsonResponse
+    {
+        $user = Auth::user();
+        $data['user_id'] = $user->id;
+        if (!isset($data['organization_id'])) {
+            $data['organization_id'] = $user->organization_id;
+        }
+        if (!isset($data['faculty_id'])) {
+            return self::sendJsonResponse(false, [
+                'title' => 'Ошибка',
+                'message' => 'При создании кафедры не указан id факультета'
+            ]);
+        }
+        $yearId = $this->facultyRepository->getYearId($data['faculty_id']);
+        $data = array_merge($data, ['year_id' => $yearId]);
+        if (empty($data)) {
+            return self::sendJsonResponse(false, [
+                'title' => 'Ошибка',
+                'message' => 'Пустой массив данных'
+            ]);
+        }
+        $department = $this->departmentRepository->create($data);
+        Log::debug('department = ' . $department);
+        if ($department and $department->id) {
+            return self::sendJsonResponse(true, [
+                'title' => 'Успешно',
+                'message' => 'Кафедра успешно создана',
+                'department' => $department
+            ]);
+        }
+        return self::sendJsonResponse(false, [
+            'title' => 'Ошибка',
+            'message' => 'При сохранении данных произошла  ошибка'
+        ], 403);
+    }
+
     public function updateStatus(int $id): JsonResponse
     {
         $department = $this->departmentRepository->find($id);
-        if($department and $department->id)
-        {
+        if ($department and $department->id) {
             $isBlocked = $department->is_blocked;
-            if($isBlocked==0)
-            {
+            if ($isBlocked == 0) {
                 $department->is_blocked = 1;
-            }
-            else
-            {
+            } else {
                 $department->is_blocked = 0;
             }
             $department->save();
-            return self::sendJsonResponse(true,[
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
-                'department'=> $department
+                'department' => $department
             ]);
         }
-        return self::sendJsonResponse(false,[
+        return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
             'message' => 'Возникла ошибка при обновлении статуса подразделения'
         ]);
@@ -347,16 +330,13 @@ class DepartmentsService extends Services
     public function destroy(int $id): JsonResponse
     {
         $result = $this->departmentRepository->destroy($id);
-        if ($result)
-        {
-            return self::sendJsonResponse(true,[
+        if ($result) {
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Данный элемент был успешно удален'
             ]);
-        }
-        else
-        {
-            return self::sendJsonResponse(false,[
+        } else {
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Возникла ошибка при удалении департамента из базы данных'
             ]);
@@ -366,16 +346,13 @@ class DepartmentsService extends Services
     public function restore(int $id): JsonResponse
     {
         $result = $this->departmentRepository->restore($id);
-        if ($result)
-        {
-            return self::sendJsonResponse(true,[
+        if ($result) {
+            return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Данный элемент был успешно восстановлен'
             ]);
-        }
-        else
-        {
-            return self::sendJsonResponse(false,[
+        } else {
+            return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
                 'message' => 'Возникла ошибка при восстановлении'
             ]);

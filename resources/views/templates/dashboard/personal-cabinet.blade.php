@@ -1,14 +1,14 @@
 @extends('layouts.dashboard.main')
 @section('styles')
-{{--    <link rel="stylesheet" href="{{ asset('/css/profile.css',true) }}">--}}
-{{--    <link rel="stylesheet" href="{{ asset('/css/achievements.css',true) }}">--}}
-{{--    <link rel="stylesheet" href="{{ asset('/css/profile-card.css',true) }}">--}}
-{{--    <link rel="stylesheet" href="{{asset('/css/bootstrap-select.css',true)}}">--}}
+    <link rel="stylesheet" href="{{ asset('/css/profile.css',true) }}">
+    <link rel="stylesheet" href="{{ asset('/css/achievements.css',true) }}">
+    <link rel="stylesheet" href="{{ asset('/css/profile-card.css',true) }}">
+    <link rel="stylesheet" href="{{asset('/css/bootstrap-select.css',true)}}">
 
-    <link rel="stylesheet" href="{{'/css/profile.css'}}">
-    <link rel="stylesheet" href="{{'/css/achievements.css'}}">
-    <link rel="stylesheet" href="{{'/css/profile-card.css'}}">
-    <link rel="stylesheet" href="{{'/css/bootstrap-select.css'}}">
+{{--    <link rel="stylesheet" href="{{'/css/profile.css'}}">--}}
+{{--    <link rel="stylesheet" href="{{'/css/achievements.css'}}">--}}
+{{--    <link rel="stylesheet" href="{{'/css/profile-card.css'}}">--}}
+{{--    <link rel="stylesheet" href="{{'/css/bootstrap-select.css'}}">--}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 

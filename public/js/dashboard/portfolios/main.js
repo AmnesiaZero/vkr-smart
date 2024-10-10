@@ -1,14 +1,11 @@
 const path = window.location.pathname;
-const string  = path.split("/").pop();
+const string = path.split("/").pop();
 
 var usersRole;
 
-if(string=='teachers')
-{
+if (string == 'teachers') {
     usersRole = 'teacher';
-}
-else
-{
+} else {
     usersRole = 'user';
 }
 
@@ -28,6 +25,7 @@ $(document).ready(function () {
     $(".clicked").on('click', function () {
         deleteTreeElement($(this));
     });
+
     function getUser() {
         var deferred = $.Deferred();
 
@@ -35,7 +33,7 @@ $(document).ready(function () {
             url: "/dashboard/users/you",
             dataType: "json",
             type: "get",
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     user = response.data.you;
                     console.log(user);
@@ -50,7 +48,7 @@ $(document).ready(function () {
                     deferred.reject(); // Сообщаем об ошибке
                 }
             },
-            error: function() {
+            error: function () {
                 $.notify("Произошла ошибка при выборе года", "error");
                 deferred.reject(); // Сообщаем об ошибке
             }
@@ -60,28 +58,26 @@ $(document).ready(function () {
     }
 
 
-    $.when(getUser()).done(function() {
+    $.when(getUser()).done(function () {
         users();
     });
 });
 
-function users(page=1)
-{
+function users(page = 1) {
     let data = {
-        roles:[usersRole],
-        page:page,
-        paginate:1
+        roles: [usersRole],
+        page: page,
+        paginate: 1
     };
-    if(role==='teacher' || role==='employee')
-    {
+    if (role === 'teacher' || role === 'employee') {
         const additionalData = {
-            selected_departments:departmentsIds
+            selected_departments: departmentsIds
         };
-        data = $.extend(data,additionalData);
+        data = $.extend(data, additionalData);
     }
     $.ajax({
         url: "/dashboard/users/get",
-        data:data,
+        data: data,
         type: "GET",
         dataType: "json",
         success: function (response) {
@@ -128,25 +124,22 @@ function openWorks(id) {
     });
 }
 
-function searchUsers(page=1) {
+function searchUsers(page = 1) {
     let data = $("#search_users_form").serialize();
     data = serializeRemoveNull(data);
     let additionalData = '';
-    if(role==='admin')
-    {
+    if (role === 'admin') {
         const selectedYears = getArrayFromLocalStorage('selected_years');
         const selectedDepartments = getArrayFromLocalStorage('selected_departments');
         const selectedFaculties = getArrayFromLocalStorage('selected_faculties');
         additionalData = {
             selected_years: selectedYears,
             selected_departments: selectedDepartments,
-            selected_faculties:selectedFaculties
+            selected_faculties: selectedFaculties
         };
-    }
-    else
-    {
+    } else {
         additionalData = {
-            selected_departments:departmentsIds
+            selected_departments: departmentsIds
         };
     }
     additionalData['role'] = usersRole;
@@ -163,8 +156,7 @@ function searchUsers(page=1) {
                 const users = pagination.data;
                 updateUserPagination(pagination);
                 $("#users_list").html($("#user_tmpl").tmpl(users));
-            }
-            else {
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -174,8 +166,7 @@ function searchUsers(page=1) {
     });
 }
 
-function resetSearch()
-{
+function resetSearch() {
     localStorage.setItem('selected_years', '');
     localStorage.setItem('selected_faculties', '');
     localStorage.setItem('selected_departments', '');
@@ -187,9 +178,7 @@ function resetSearch()
 }
 
 
-
-function updateWorksCount()
-{
+function updateWorksCount() {
     const worksCountString = $("#works_count").text();
     let worksCount = parseInt(worksCountString, 10);
     if (!isNaN(worksCount)) {

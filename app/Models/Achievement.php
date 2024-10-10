@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Achievement extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'achievements';
 
@@ -24,20 +24,19 @@ class Achievement extends Model
         'access_level',
         'educational_level'
     ];
-
-    public function mode():HasOne
-    {
-        return $this->hasOne(AchievementMode::class,'id','achievement_mode_id');
-    }
-
-    public function records():HasMany
-    {
-        return $this->hasMany(AchievementRecord::class,'achievement_id','id');
-    }
-
     protected $casts = [
         'created_at' => 'datetime:Y-m-d',
     ];
+
+    public function mode(): HasOne
+    {
+        return $this->hasOne(AchievementMode::class, 'id', 'achievement_mode_id');
+    }
+
+    public function records(): HasMany
+    {
+        return $this->hasMany(AchievementRecord::class, 'achievement_id', 'id');
+    }
 
 
 }

@@ -15,7 +15,7 @@ class EloquentCareerRepository implements CareerRepositoryInterface
 
     public function get(int $userId): Collection
     {
-        return Career::query()->where('user_id','=',$userId)->get();
+        return Career::query()->where('user_id', '=', $userId)->get();
     }
 
     public function delete(int $id): bool

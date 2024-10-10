@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -73,7 +72,6 @@ class UsersController extends Controller
     }
 
 
-
     public function login(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
@@ -82,33 +80,23 @@ class UsersController extends Controller
         ]);
         $remember = $request->has('remember');
 
-        if (Auth::attempt($credentials,$remember)) {
+        if (Auth::attempt($credentials, $remember)) {
             $user = Auth::user();
             //Надо будет изменить
-            if ($user->is_active == 0)
-            {
+            if ($user->is_active == 0) {
                 return back()->withErrors(['Вы заблокированы']);
             }
             $request->session()->regenerate();
 
-            if($user->hasRole('admin'))
-            {
+            if ($user->hasRole('admin')) {
                 return redirect('/dashboard/settings/organizations-structure');
-            }
-            else if ($user->hasRole('employee'))
-            {
+            } else if ($user->hasRole('employee')) {
                 return redirect('/dashboard/profile');
-            }
-            else if($user->hasRole('inspector'))
-            {
+            } else if ($user->hasRole('inspector')) {
                 return redirect('/dashboard/works/employees');
-            }
-            else if($user->hasRole('platformadmin'))
-            {
+            } else if ($user->hasRole('platformadmin')) {
                 return redirect('/dashboard/platform');
-            }
-            else
-            {
+            } else {
                 return redirect('/dashboard/personal-cabinet');
             }
         }
@@ -158,9 +146,24 @@ class UsersController extends Controller
     {
         $inviteCodeId = Cookie::get('invite_code_id');
 
-        Log::debug('organization id in view = '.$inviteCodeId);
+        Log::debug('organization id in view = ' . $inviteCodeId);
 
         return $this->usersService->registerByCodeView($inviteCodeId);
+    }
+
+    public function get(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'roles.*' => ['required', Rule::exists('roles', 'slug')],
+            'page' => 'integer',
+            'selected_departments.*' => ['integer', Rule::exists('departments', 'id')],
+            'paginate' => 'bool'
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $data = $request->only($this->fillable);
+        return $this->usersService->get($data);
     }
 
     public function registerByCode(Request $request): JsonResponse
@@ -170,9 +173,9 @@ class UsersController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|max:255',
             'gender' => 'required|integer',
-            'departments_ids.*' => ['integer',Rule::exists('departments','id')],
-            'department_id' => ['integer',Rule::exists('departments','id')],
-            'specialty_id' => ['integer',Rule::exists('programs_specialties','id')]
+            'departments_ids.*' => ['integer', Rule::exists('departments', 'id')],
+            'department_id' => ['integer', Rule::exists('departments', 'id')],
+            'specialty_id' => ['integer', Rule::exists('programs_specialties', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -191,14 +194,10 @@ class UsersController extends Controller
         return $this->usersService->profileView();
     }
 
-
-
-
     public function you(): JsonResponse
     {
         return $this->usersService->you();
     }
-
 
     public function newPassword(Request $request)
     {
@@ -210,22 +209,6 @@ class UsersController extends Controller
         return $this->usersService->newPassword($password, $token);
     }
 
-
-    public function get(Request $request):JsonResponse
-    {
-        $validator = Validator::make($request->all(), [
-            'roles.*' => ['required', Rule::exists('roles', 'slug')],
-            'page' => 'integer',
-            'selected_departments.*' => ['integer',Rule::exists('departments','id')],
-            'paginate' => 'bool'
-        ]);
-        if ($validator->fails()) {
-            return ValidatorHelper::error($validator);
-        }
-        $data = $request->only($this->fillable);
-        return $this->usersService->get($data);
-    }
-
     public function create(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -234,8 +217,8 @@ class UsersController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|max:255',
             'gender' => 'required|integer',
-            'faculty_id' => ['integer',Rule::exists('faculties','id')],
-            'year_id' => ['integer',Rule::exists('organizations_years','id')],
+            'faculty_id' => ['integer', Rule::exists('faculties', 'id')],
+            'year_id' => ['integer', Rule::exists('organizations_years', 'id')],
             'is_active' => 'required|integer',
         ]);
         if ($validator->fails()) {
@@ -323,7 +306,7 @@ class UsersController extends Controller
             'password' => 'max:255',
             'gender' => 'integer',
             'is_active' => 'integer',
-            'departments_ids.*' => ['integer',Rule::exists('departments','id')],
+            'departments_ids.*' => ['integer', Rule::exists('departments', 'id')],
             'role' => [Rule::exists('roles', 'slug')],
             'avatar' => 'file'
         ]);
@@ -357,7 +340,7 @@ class UsersController extends Controller
             'password' => 'max:255',
             'gender' => 'integer',
             'is_active' => 'integer',
-            'departments_ids.*' => ['integer',Rule::exists('departments','id')],
+            'departments_ids.*' => ['integer', Rule::exists('departments', 'id')],
             'role' => [Rule::exists('roles', 'slug')],
         ]);
         if ($validator->fails()) {
@@ -365,7 +348,7 @@ class UsersController extends Controller
         }
         $id = $request->id;
         $data = $request->only($this->fillable);
-        $data =array_filter($data, function ($value) {
+        $data = array_filter($data, function ($value) {
             return !is_null($value);
         });
         return $this->usersService->edit($id, $data);
@@ -374,7 +357,7 @@ class UsersController extends Controller
     public function editView(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id' => ['required','integer',Rule::exists('users','id')]
+            'id' => ['required', 'integer', Rule::exists('users', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::redirectError($validator);
@@ -497,11 +480,10 @@ class UsersController extends Controller
 
     public function mainPlatformView(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'page' => 'integer'
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::redirectError($validator);
         }
         $data = $request->only($this->fillable);
@@ -511,17 +493,15 @@ class UsersController extends Controller
     public function openPortfolio(int $id)
     {
         Log::debug('Вошёл в openPortfolio');
-        $validator = Validator::make(['id' => $id],[
-            'id' => ['integer',Rule::exists('users','id')]
+        $validator = Validator::make(['id' => $id], [
+            'id' => ['integer', Rule::exists('users', 'id')]
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return ValidatorHelper::redirectError($validator);
         }
         return $this->usersService->openPortfolio($id);
 
     }
-
 
 
 }

@@ -51,7 +51,8 @@
         <div class="row px-0 px-sm-4 mx-sm-0 mx-4 pb-5">
             <div class="col-xxl-5 col-xl-6 col-lg-8 col-md-12 col-12 mb-3">
                 <div class="br-green-light-2 br-15 p-3">
-                    <div class="d-flex inline-flex justify-content-between mb-3 align-items-center" id="students_list_head">
+                    <div class="d-flex inline-flex justify-content-between mb-3 align-items-center"
+                         id="students_list_head">
                         <p class="m-0 fw-600">Для студентов</p>
                         <a href="#" onclick="downloadStudentsCodes()"
                            class="badge bg-green br-100 text-grey fs-14 cursor-p px-3 py-2 text-decoration-none">
@@ -70,10 +71,12 @@
             </div>
             <div class="col-xxl-5 col-xl-6 col-lg-8 col-md-12 col-12 mb-3">
                 <div class="br-green-light-2 br-15 p-3">
-                    <div class="d-flex inline-flex justify-content-between mb-3 align-items-center" id="teachers_list_head">
+                    <div class="d-flex inline-flex justify-content-between mb-3 align-items-center"
+                         id="teachers_list_head">
                         <p class="m-0 fw-600">Для преподавателей</p>
                         <a href="#" onclick="downloadTeachersCodes()"
-                           class="badge bg-green br-100 text-grey fs-14 cursor-p px-3 py-2 text-decoration-none">Выгрузить <img
+                           class="badge bg-green br-100 text-grey fs-14 cursor-p px-3 py-2 text-decoration-none">Выгрузить
+                            <img
                                 src="/images/File_Download.svg" alt="" class="ps-1">
                         </a>
                     </div>
@@ -104,6 +107,7 @@
         <p class="text-grey fs-12 mb-0">Осталось: ${days_until} дней</p>
         <p class="text-grey fs-12 mb-2">Время истечения срока действия ${expires_at}</p>
     </div>
+
     </script>
 
     <script id="empty_tmpl" type="text/x-jquery-tmpl">
@@ -111,6 +115,7 @@
             <p>Пока здесь пусто</p>
             <p class="m-0">Сгенерируйте код доступа</p>
         </div>
+
     </script>
 
 
@@ -129,6 +134,7 @@
                                     <span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>
                                 </a>
                             </li>
+
 
 
     </script>

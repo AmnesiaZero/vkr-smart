@@ -19,7 +19,7 @@
                                 <li class="mb-2">Индивидуальные особенности предоставления услуг.</li>
                                 <li class="mb-2">Внимание! Для организаций СПО действует специальная стоимость на
                                     ВКР-СМАРТ, при наличии доступа к платформе <a href="https://profspo.ru/"
-                                                                                class="text-black">PR</a>
+                                                                                  class="text-black">PR</a>
                                 </li>
                             </ol>
                             </p>
@@ -50,7 +50,8 @@
                             <div class="bg-green p-4 br-20 mb-3">
                                 <div class="d-flex">
                                     <img src="/images/lamp.png" alt="" style="width:30px; height: 30px;">
-                                    <p class="fs-14 text-black-black lh-17 ps-3">Стоимость ВКР- СМАРТ.РФ фиксированная</p>
+                                    <p class="fs-14 text-black-black lh-17 ps-3">Стоимость ВКР- СМАРТ.РФ
+                                        фиксированная</p>
                                 </div>
                                 <p class="fs-14 lh-17 m-0">и включает в себя весь комплекс необходимых модулей и функций
                                     программы. Пользователям доступны все новые разработки и обновления баз! У нас нет

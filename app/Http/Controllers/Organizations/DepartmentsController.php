@@ -7,11 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Services\Departments\DepartmentsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use function Symfony\Component\Translation\t;
 
 class DepartmentsController extends Controller
 {
@@ -39,8 +37,8 @@ class DepartmentsController extends Controller
     public function view(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'organization_id' => ['integer',Rule::exists('organizations','id')],
-             'page' => 'integer'
+            'organization_id' => ['integer', Rule::exists('organizations', 'id')],
+            'page' => 'integer'
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::redirectError($validator);
@@ -57,7 +55,7 @@ class DepartmentsController extends Controller
     public function editView(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id' => ['required','integer',Rule::exists('departments','id')]
+            'id' => ['required', 'integer', Rule::exists('departments', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::redirectError($validator);
@@ -75,8 +73,8 @@ class DepartmentsController extends Controller
     public function get(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'faculty_id' => ['integer',Rule::exists('faculties','id')],
-            'organization_id' => ['integer',Rule::exists('organizations','id')],
+            'faculty_id' => ['integer', Rule::exists('faculties', 'id')],
+            'organization_id' => ['integer', Rule::exists('organizations', 'id')],
             'paginate' => 'bool'
         ]);
         if ($validator->fails()) {
@@ -90,7 +88,7 @@ class DepartmentsController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'organization_id' => ['integer',Rule::exists('organizations','id')]
+            'organization_id' => ['integer', Rule::exists('organizations', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -103,13 +101,13 @@ class DepartmentsController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'organization_id' => ['integer',Rule::exists('organizations','id')],
+            'organization_id' => ['integer', Rule::exists('organizations', 'id')],
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::redirectError($validator);
         }
         $data = $request->only($this->fillable);
-        Log::debug('data = '.print_r($data,true));
+        Log::debug('data = ' . print_r($data, true));
         return $this->departmentsService->store($data);
     }
 
@@ -129,7 +127,7 @@ class DepartmentsController extends Controller
     public function updateStatus(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id' => ['required','integer',Rule::exists('departments','id')]
+            'id' => ['required', 'integer', Rule::exists('departments', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -166,7 +164,7 @@ class DepartmentsController extends Controller
     public function destroy(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id' => ['required','integer',Rule::exists('departments','id')]
+            'id' => ['required', 'integer', Rule::exists('departments', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -178,7 +176,7 @@ class DepartmentsController extends Controller
     public function restore(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id' => ['required','integer',Rule::exists('departments','id')]
+            'id' => ['required', 'integer', Rule::exists('departments', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -193,7 +191,7 @@ class DepartmentsController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'max:250',
             'page' => 'required|integer',
-            'organization_id' => ['integer',Rule::exists('organizations','id')]
+            'organization_id' => ['integer', Rule::exists('organizations', 'id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);

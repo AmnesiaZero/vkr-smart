@@ -1,11 +1,10 @@
 var userId;
 
 $(document).ready(function () {
-   getUser();
+    getUser();
 });
 
-function saveDepartments()
-{
+function saveDepartments() {
     let data = $("#access_departments_form").serialize();
     let additionalData = {
         id: userId,
@@ -21,7 +20,7 @@ function saveDepartments()
         },
         success: function (response) {
             if (response.success) {
-                $.notify("Кафедры успешно изменены","success");
+                $.notify("Кафедры успешно изменены", "success");
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -33,20 +32,19 @@ function saveDepartments()
     });
 }
 
-function getUser()
-{
+function getUser() {
     $.ajax({
         url: "/dashboard/users/you",
         dataType: "json",
         type: "get",
-        success: function(response) {
+        success: function (response) {
             if (response.success) {
                 userId = response.data.you.id;
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function() {
+        error: function () {
             $.notify("Произошла ошибка при выборе года", "error");
         }
     });

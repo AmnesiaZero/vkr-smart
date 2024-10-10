@@ -11,12 +11,12 @@ class Organization extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table  = 'organizations';
+    protected $table = 'organizations';
 
     protected $fillable = [
         'id',
         'name',
-        'parent_id' ,
+        'parent_id',
         'logo_path',
         'logo_file_name',
         'address',
@@ -43,7 +43,7 @@ class Organization extends Model
     //Если честно,я хз,почему ключи в таком порядке,хотя должны быть наоборот. Но так работает,а иначе - нет
     public function inspectors_specialties(): BelongsToMany
     {
-        return $this->belongsToMany(ProgramSpecialty::class, 'inspectors_access','organization_id','specialty_id');
+        return $this->belongsToMany(ProgramSpecialty::class, 'inspectors_access', 'organization_id', 'specialty_id');
     }
 
 

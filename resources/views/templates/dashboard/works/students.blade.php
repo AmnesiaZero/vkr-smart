@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.main')
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 @endsection
 
@@ -101,7 +101,8 @@
                                 <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 me-3"
                                         onclick="resetStudentSearch();return false;">Сбросить
                                 </button>
-                                <button class="btn bg-green br-100 text-grey fs-14 py-1" onclick="exportWorks();return false;">
+                                <button class="btn bg-green br-100 text-grey fs-14 py-1"
+                                        onclick="exportWorks();return false;">
                                     Выгрузить
                                     <img src="/images/File_Download_green.svg" alt="" class="ps-2">
                                 </button>
@@ -212,9 +213,10 @@
                     </td>
                 </tr>
             @{{/if}}
+            </script>
 
 
-</script>
+
 
             <script id="work_info_student_tmpl" type="text/x-jquery-tmpl">
 
@@ -385,6 +387,7 @@
                     </div>
                 </div>
             </div>
+
             </script>
 
 
@@ -419,6 +422,7 @@
 					</div>
 				</div>
 				</div>
+
 
 
 
