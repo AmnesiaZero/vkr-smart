@@ -34,8 +34,7 @@
                                                         class="btn btn-minus btn-minus-white"></button>
                                                 <input id="amount" type="text" name="amount" step="1"
                                                        class="text-center form-control text-blue
-                                                              form-control-minute-custom ps-0 fs-16 fw-600"
-                                                       readonly="" value="0">
+                                                              form-control-minute-custom ps-0 fs-16 fw-600" value="0">
                                                 <button type="button" onclick="inc('amount')"
                                                         class="btn btn-plus btn-plus-white"></button>
                                     </span>

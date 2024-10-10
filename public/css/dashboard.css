@@ -6,6 +6,10 @@
     font-size: 50px !important;
 }
 
+.offcanvas-end {
+    width: 600px;
+}
+
 .vertical-align-middle {
     vertical-align: middle;
 }

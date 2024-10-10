@@ -11,7 +11,7 @@
                             <label class="col-sm-4">Год выпуска</label>
                             <div class="col-sm-8">
                                 <select name="year_id" class="selectpicker form-control w-100" id="import_years_list" data-width="100%"
-                                title="Выбрать...">
+                                title="Выбрать..." required>
                                     @if(isset($years) and is_iterable($years))
                                         @foreach($years as $year)
                                             <option value="{{$year->id}}">{{$year->year}}</option>
@@ -24,7 +24,7 @@
                             <label class="col-sm-4">Подразделение</label>
                             <div class="col-sm-8">
                                 <select name="faculty_id" class="selectpicker form-control w-100" id="import_faculties_list" data-width="100%"
-                                title="Выбрать...">
+                                title="Выбрать..." required>
                                     <option value="" disabled="" selected="selected">Уточните год выпуска</option>
                                 </select>
                             </div>
@@ -33,7 +33,7 @@
                             <label class="col-sm-4">Кафедра</label>
                             <div class="col-sm-8">
                                 <select name="department_id" class="selectpicker w-100 form-control" id="import_departments_list" data-width="100%"
-                                title="Выбрать...">
+                                title="Выбрать..." required>
                                     <option value="" disabled="" selected="selected">Уточните подразделение</option>
                                 </select>
                             </div>
@@ -42,7 +42,7 @@
                             <label class="col-sm-4">Направление подготовки (специальность)</label>
                             <div class="col-sm-8">
                                 <select name="specialty_id" class="selectpicker w-100 form-control" id="import_specialties_list" data-width="100%"
-                                title="Выбрать...">
+                                title="Выбрать..." required>
                                     <option value="" disabled="" selected="selected">Уточните кафедру</option>
                                 </select>
                             </div>
@@ -50,7 +50,7 @@
                         <div class="row">
                             <label class="col-sm-4">Файл c информацией об обучающихся</label>
                             <div class="col-sm-8">
-                                <input type="file" class="form-control" name="import_file" placeholder="">
+                                <input type="file" class="form-control" name="import_file" placeholder="" required>
                             </div>
                         </div>
                         <div class="row">
@@ -84,7 +84,7 @@
 					<div id="works-import-alert"></div>
 				</div>
 				<div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
+                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1">
                         Добавить
                     </button>
                     <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">

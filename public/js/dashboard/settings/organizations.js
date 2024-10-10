@@ -710,13 +710,6 @@ $(document).ready(function () {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function (response) {
-                if (response.success) {
-                    $.notify("Профиль успешно обновлен", "success");
-                } else {
-                    $.notify(response.data.title + ":" + response.data.message, "error");
-                }
-            },
             error: function () {
                 $.notify("Ошибка при обновлении профиля. Обратитесь к системному администратору", "error");
             }

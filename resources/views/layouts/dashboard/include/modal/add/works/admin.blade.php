@@ -25,7 +25,7 @@
                             <label class="col-sm-4">Подразделение</label>
                             <div class="col-sm-8">
                                 <select name="faculty_id" class="form-control" id="faculties_list" data-width="100%"
-                                        title="Выбрать...">
+                                        title="Выбрать..." required>
                                     <option value="" disabled="" selected="selected">Уточните год выпуска</option>
                                 </select>
                             </div>
@@ -51,27 +51,35 @@
                         <div class="row">
                             <label class="col-sm-4">ФИО обучающегося</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="student" placeholder="Ввод..." required="">
+                                <input type="text" class="form-control" name="student" placeholder="Ввод..." required>
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-sm-4">Группа обучающегося</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="group" placeholder="Ввод...">
+                                <input type="text" class="form-control" name="group" placeholder="Ввод..." required>
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-sm-4">Наименование работы</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="name" placeholder="Ввод..." required="">
+                                <input type="text" class="form-control" name="name" placeholder="Ввод..." required>
                             </div>
                         </div>
+
+
+
+
+
+
                         <div class="row">
                             <label class="col-sm-4">Научный руководитель</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="scientific_supervisor" placeholder="Ввод...">
+                                <!-- Поле для ввода -->
+                                <input type="text" class="form-control" name="scientific_supervisor" id="scientific_supervisor_input" placeholder="Ввод..." required>
                                 <span style="font-size:13px; display:block; margin:0.5rem 0; color:#999;">Или выберите из списка:</span>
-                                <select name="scientific_supervisor" class="selectpicker form-control" title="Выбрать...">
+                                <!-- Выпадающий список -->
+                                <select name="scientific_supervisor" id="scientific_supervisor_select" class="selectpicker form-control" title="Выбрать...">
                                     @if(isset($scientific_supervisors) and is_iterable($scientific_supervisors))
                                         @foreach($scientific_supervisors as $scientific_supervisor)
                                             <option value="{{$scientific_supervisor->name}}">{{$scientific_supervisor->name}}</option>
@@ -83,9 +91,11 @@
                         <div class="row">
                             <label class="col-sm-4">Тип работы</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="work_type" placeholder="Ввод...">
+                                <!-- Поле для ввода -->
+                                <input type="text" class="form-control" name="work_type" id="work_type_input-1" placeholder="Ввод..." required>
                                 <span style="font-size:13px; display:block; margin:0.5rem 0; color:#999;">Или выберите из списка:</span>
-                                <select name="work_type" class="selectpicker form-control" title="Выбрать...">
+                                <!-- Выпадающий список -->
+                                <select name="work_type" id="work_type_select-1" class="selectpicker form-control" title="Выбрать...">
                                     @if(isset($works_types) and is_iterable($works_types))
                                         @foreach($works_types as $works_type)
                                             <option value="{{$works_type->name}}">{{$works_type->name}}</option>
@@ -94,6 +104,10 @@
                                 </select>
                             </div>
                         </div>
+
+
+
+
                         <div class="row">
                             <label class="col-sm-4">Дата защиты</label>
                             <div class="col-sm-8">
@@ -118,7 +132,7 @@
                             <div class="col-sm-8">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" value="1" name="agreement" checked="" required=""> Да
+                                        <input type="checkbox" value="1" name="agreement" checked="" required> Да
                                     </label>
                                 </div>
                             </div>
@@ -126,7 +140,7 @@
                         <div class="row">
                             <label class="col-sm-4">Файл работы</label>
                             <div class="col-sm-8">
-                                <input type="file" class="form-control" name="work_file">
+                                <input type="file" class="form-control" name="work_file" required>
                             </div>
                         </div>
                         <div class="row">
@@ -179,7 +193,7 @@
                     <div id="works-add-alert"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
+                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1">
                         Добавить
                     </button>
                     <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">

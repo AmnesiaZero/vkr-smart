@@ -290,23 +290,31 @@ function updateWorksPagination(pagination) {
     console.log('pagination');
     console.log(pagination);
 
-    const displayedPages = pagination.links.length - 2; //Без Previous и Next
-    const totalItems = pagination.total;
-
+    const totalItems = pagination.total; // Общее количество элементов
+    const itemsPerPage = pagination.per_page; // Элементов на странице
+    const displayedPages = pagination.links.length - 2; // Без Previous и Next
     $("#works_count").text(totalItems);
 
-    $("#works_pagination").pagination({
-        items: totalItems,
-        itemsOnPage: pagination.per_page,
-        currentPage: pagination.current_page, // Установка текущей страницы в начало после добавления новых элементов
-        displayedPages: displayedPages,
-        cssStyle: '',
-        prevText: '<span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>',
-        nextText: '<span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>',
-        onPageClick: function(pageNumber) {
-            searchWorks(pageNumber);
-        }
-    });
+    // Проверяем, если только одна страница
+    if (totalItems <= itemsPerPage) {
+        // Скрываем пагинацию, если элементов меньше или равно количеству на странице
+        $("#works_pagination").hide();
+    } else {
+        // Инициализируем пагинацию
+        $("#works_pagination").pagination({
+            items: totalItems,
+            itemsOnPage: itemsPerPage,
+            currentPage: pagination.current_page, // Установка текущей страницы
+            displayedPages: displayedPages,
+            cssStyle: '',
+            prevText: '<span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>',
+            nextText: '<span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>',
+            onPageClick: function(pageNumber) {
+                searchWorks(pageNumber);
+            }
+        });
+        $("#works_pagination").show(); // Показываем пагинацию
+    }
 }
 
 
@@ -339,19 +347,28 @@ function selectFileWithCKFinder( elementId ) {
 
 function updateUserPagination(pagination) {
     const totalItems = pagination.total;
-    const displayedPages = pagination.links.length - 2; //Без Previous и Next
+    const displayedPages = pagination.links.length - 2; // Без Previous и Next
     $("#users_count").text(totalItems);
-    $("#users_pagination").pagination({
-        items:  totalItems,
-        itemsOnPage: pagination.per_page,
-        currentPage: pagination.current_page, // Установка текущей страницы в начало после добавления новых элементов
-        displayedPages: displayedPages,
-        cssStyle: '',
-        prevText: '<span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>',
-        nextText: '<span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>',
-        onPageClick: function(pageNumber) {
-            searchUsers(pageNumber);
-        }
-    });
+
+    // Проверяем, если только одна страница
+    if (pagination.total <= pagination.per_page) {
+        // Скрываем пагинацию, если элементов меньше или равно количеству на странице
+        $("#users_pagination").hide();
+    } else {
+        // Инициализируем пагинацию, если страниц больше одной
+        $("#users_pagination").pagination({
+            items: totalItems,
+            itemsOnPage: pagination.per_page,
+            currentPage: pagination.current_page, // Установка текущей страницы
+            displayedPages: displayedPages,
+            cssStyle: '',
+            prevText: '<span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>',
+            nextText: '<span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>',
+            onPageClick: function(pageNumber) {
+                searchUsers(pageNumber);
+            }
+        });
+        $("#users_pagination").show(); // Показываем пагинацию
+    }
 }
 

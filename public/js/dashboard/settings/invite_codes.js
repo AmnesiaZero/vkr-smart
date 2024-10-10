@@ -159,18 +159,23 @@ function teachersCodes(pageNumber= 1)
 
 
 function updateTeachersPagination(currentPage,totalItems,totalPages,itemsPerPage) {
-     $("#teachers_codes_pagination").pagination({
-        items: totalItems,
-        itemsOnPage: itemsPerPage,
-        currentPage: currentPage, // Установка текущей страницы в начало после добавления новых элементов
-        displayedPages: totalPages,
-        cssStyle: '',
-        prevText: '<span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>',
-        nextText: '<span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>',
-        onPageClick: function(pageNumber, event) {
-            teachersCodes(pageNumber);
-        }
-    });
+    if (totalPages > 1) {
+        $("#teachers_codes_pagination").pagination({
+            items: totalItems,
+            itemsOnPage: itemsPerPage,
+            currentPage: currentPage, // Установка текущей страницы в начало после добавления новых элементов
+            displayedPages: totalPages,
+            cssStyle: '',
+            prevText: '<span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>',
+            nextText: '<span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>',
+            onPageClick: function(pageNumber, event) {
+                teachersCodes(pageNumber);
+            }
+        });
+    } else {
+        // Скрыть пагинацию, если страниц всего одна
+        $("#teachers_codes_pagination").hide();
+    }
 }
 
 function loadStudentsCodes()

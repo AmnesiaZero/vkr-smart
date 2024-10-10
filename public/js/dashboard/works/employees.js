@@ -459,9 +459,16 @@ $(document).ready(function () {
 $("#addWorkForm").on('submit', function(e) {
     e.preventDefault(); // Предотвращаем стандартное поведение формы
 
+    // Проверка валидации формы
+    if (!this.checkValidity()) {
+        // Если форма не валидна, показываем ошибки
+        this.reportValidity();
+        return; // Останавливаем выполнение, если форма не валидна
+    }
+
     // Создаем объект FormData и добавляем в него данные формы
     const formData = new FormData(this);
-    formData.append('user_type',userType);
+    formData.append('user_type', userType);
 
     $.ajax({
         url: '/dashboard/works/create',
@@ -473,20 +480,19 @@ $("#addWorkForm").on('submit', function(e) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(response) {
-            if (response.success)
-            {
+            if (response.success) {
                 const work = response.data.work;
                 $("#works_table").append($("#work_tmpl").tmpl(work));
                 updateWorksCount();
-            }
-            else
-            {
+
+                // Закрытие модального окна после успешного выполнения
+                $('#add_work_modal').modal('hide');
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
         error: function() {
             $.notify("Ошибка при добавлении работы. Обратитесь к системному администратору", "error");
-
         }
     });
 });
@@ -494,32 +500,38 @@ $("#addWorkForm").on('submit', function(e) {
 $("#import_work_form").on('submit', function(e) {
     e.preventDefault(); // Предотвращаем стандартное поведение формы
 
-    // Создаем объект FormData и добавляем в него данные формы
-    const formData = new FormData(this);
+    let form = $(this);
 
+    // Проверка валидации формы
+    if (form[0].checkValidity() === false) {
+        // Показываем ошибки валидации
+        form[0].reportValidity();
+        return; // Останавливаем выполнение, если форма не валидна
+    }
+
+    // Сериализуем данные формы
+    let data = form.serialize();
+
+    // Отправка данных через AJAX
     $.ajax({
         url: '/dashboard/works/import',
         type: 'POST',
-        data: formData,
-        processData: false, // Не обрабатываем файлы (не превращаем в строку)
-        contentType: false, // Не устанавливаем заголовок Content-Type
+        data: data,
+        dataType: 'json',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(response) {
-            if (response.success)
-            {
+            if (response.success) {
                 $.notify(response.data.title + ":" + response.data.message, "success");
-                works();
-            }
-            else
-            {
+                works(); // Обновляем список работ
+                $('#import_work_modal').modal('hide'); // Закрываем модальное окно
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
         error: function() {
             $.notify("Ошибка при добавлении работы. Обратитесь к системному администратору", "error");
-
         }
     });
 });
@@ -1217,3 +1229,40 @@ function updateWorksCount()
         $('#works_count').text(worksCount);
     }
 }
+
+
+$(document).ready(function() {
+
+    // Тип работы: блокировка/разблокировка полей
+    $('#work_type_input-1').on('input', function() {
+        if ($(this).val()) {
+            $('#work_type_select-1').prop('disabled', true).val('').selectpicker('refresh');
+        } else {
+            $('#work_type_select-1').prop('disabled', false).selectpicker('refresh');
+        }
+    });
+
+    $('#work_type_select-1').on('change', function() {
+        if ($(this).val()) {
+            $('#work_type_input-1').prop('disabled', true).val('');
+        } else {
+            $('#work_type_input-1').prop('disabled', false);
+        }
+    });
+    // Научный руководитель: блокировка/разблокировка полей
+    $('#scientific_supervisor_input').on('input', function() {
+        if ($(this).val()) {
+            $('#scientific_supervisor_select').prop('disabled', true).val('').selectpicker('refresh');
+        } else {
+            $('#scientific_supervisor_select').prop('disabled', false).selectpicker('refresh');
+        }
+    });
+
+    $('#scientific_supervisor_select').on('change', function() {
+        if ($(this).val()) {
+            $('#scientific_supervisor_input').prop('disabled', true).val('');
+        } else {
+            $('#scientific_supervisor_input').prop('disabled', false);
+        }
+    });
+});

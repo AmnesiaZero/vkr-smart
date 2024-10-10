@@ -107,7 +107,7 @@
                     </div>
                 </div>
                 <div class="mt-5">
-                    <ul class="nav nav-tabs d-flex justify-content-between brb-green-light-2 px-4" id="myQuestions"
+                    <ul class="nav nav-tabs d-flex gap-3 brb-green-light-2 px-4" id="myQuestions"
                         role="tablist">
                         <li class="nav-item nav-item-head pb-2" role="presentation">
                             <a class="fs-16 active pb-1 px-0 link-offcanvas td-none" id="base-tab" data-bs-toggle="tab"

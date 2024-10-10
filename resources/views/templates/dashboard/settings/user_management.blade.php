@@ -195,31 +195,31 @@
             <div class="form-check mt-2">
                 <input class="form-check-input green" type="radio" name="role" value="user" id="user_type1"
                        @{{if roles[0].slug =='user'}} checked @{{/if}}>
-                <label class="form-check-label" for="user_type1">
+                <label class="form-check-label">
                     Студент
                 </label>
             </div>
             <div class="form-check mt-2">
                 <input class="form-check-input green" type="radio" name="role" value="teacher" id="user_type2"
                        @{{if roles[0].slug =='teacher'}} checked @{{/if}}>
-                <label class="form-check-label" for="user_type2">
+                <label class="form-check-label">
                     Преподаватель
                 </label>
             </div>
             <div class="mb-3 pt-4">
                 <label for="fio">ФИО</label>
                 <input type="text" name="name" class="form-control fs-16 text-black" id="fio"
-                       value="${name}">
+                       value="${name}" required>
             </div>
             <div class="mb-3">
                 <label for="group">Группа</label>
                 <input type="text" name="group" class="form-control fs-16 text-black" id="group"
-                       value="${group}">
+                       value="${group}" required>
             </div>
             <div class="mb-3">
                 <label for="email">Email-адрес</label>
-                <input type="text" name="email" class="form-control fs-16 text-black" id="email"
-                       value="@{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}">
+                <input type="email" name="email" class="form-control fs-16 text-black" id="email"
+                       value="@{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}" required>
             </div>
             <div class="mb-3">
                 <label for="date_registration">Дата регистрации</label>
