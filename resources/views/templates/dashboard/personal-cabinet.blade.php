@@ -15,7 +15,7 @@
                     <div class="profile-sidebar">
                         <div class="profile-userpic d-flex align-items-center justify-content-center"
                              id="avatar_container">
-                            <img id="user_avatar" src="{{asset($user->avatar_path,true)}}" alt=""
+                            <img id="user_avatar" src="{{asset($user->avatar_path)}}" alt=""
                                  class="img-fluid img-responsive" style="border-radius: 6px;">
                         </div>
                         <a href="#" id="change_avatar_button" class="btn btn-avatar btn-block">
@@ -548,8 +548,6 @@
     </script>
 
     <script id="avatar_tmpl" type="text/x-jquery-tmpl">
-       <img id="user_avatar" src="${avatar_path}" alt="" class="img-responsive" style="border-radius: 6px;">
-
-
+       <img id="user_avatar" src="/${avatar_path}" alt="" class="img-responsive" style="border-radius: 6px;">
     </script>
 @endsection

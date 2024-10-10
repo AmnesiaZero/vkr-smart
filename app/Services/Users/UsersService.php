@@ -144,7 +144,8 @@ class UsersService extends Services
                 {
                     Storage::delete($directoryPath.'/'.$id.'.'.$acceptableImageExtension);
                 }
-                $avatarPath = $avatar->storeAs($directoryPath, $avatarFileName);
+                $avatarPath = $avatar->storeAs($directoryPath,$avatarFileName);
+                $avatarPath = 'storage/avatars/'.$directory.'/'.$avatarFileName;
                 $data['avatar_path'] = $avatarPath;
             } else {
                 return self::sendJsonResponse(false, [

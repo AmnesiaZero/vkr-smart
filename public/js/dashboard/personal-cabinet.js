@@ -54,8 +54,8 @@ $(document).ready(function () {
                 processData: false, // Обязательно установить false для передачи данных как FormData
                 success: function (response) {
                     if (response.success) {
-                        let avatarPath = response.data.user.avatar_path;
-                        $("#user_avatar").attr('src', '/' + avatarPath);
+                        const user = response.data.user;
+                        $("#avatar_container").html($("#avatar_tmpl").tmpl(user));
                     } else {
                         $.notify(response.data.title + ":" + response.data.message, "error");
                     }
