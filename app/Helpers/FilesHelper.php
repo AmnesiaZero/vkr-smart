@@ -28,4 +28,9 @@ class FilesHelper
         $acceptableExtension = ['jpeg', 'jpg', 'png', 'webp'];
         return in_array($extension, $acceptableExtension);
     }
+
+    public static function getAcceptableImageExtensions()
+    {
+        return ['jpeg', 'jpg', 'png', 'webp'];
+    }
 }

@@ -134,11 +134,18 @@ class UsersService extends Services
         }
         if (isset($data['avatar'])) {
             if (FilesHelper::acceptableImage($data['avatar'])) {
+                $directory = ceil($id/1000);
                 $avatar = $data['avatar'];
                 $extension = $avatar->extension();
                 $avatarFileName = $id . '.' . $extension;
-                $avatar->storeAs('public/avatars', $avatarFileName);
-                $data['avatar_path'] = 'storage/avatars/' . $avatarFileName;
+                $directoryPath = 'public/avatars/'.$directory;
+                $acceptableImageExtensions = FilesHelper::getAcceptableImageExtensions();
+                foreach ($acceptableImageExtensions as $acceptableImageExtension)
+                {
+                    Storage::delete($directoryPath.'/'.$id.'.'.$acceptableImageExtension);
+                }
+                $avatarPath = $avatar->storeAs($directoryPath, $avatarFileName);
+                $data['avatar_path'] = $avatarPath;
             } else {
                 return self::sendJsonResponse(false, [
                     'title' => 'Ошибка',
@@ -567,7 +574,8 @@ class UsersService extends Services
             return view('templates.dashboard.settings.api', [
 
                 'api_key' => $apiKey,
-                'organization' => $organization
+                'organization' => $organization,
+                'you' => $you
             ]);
         }
         return back()->withErrors(['Ошибка при поиске привязанной организации']);
