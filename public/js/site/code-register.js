@@ -156,7 +156,8 @@ function registration() {
         },
         success: function (response) {
             if (response.success) {
-                $("#code_registration").empty();
+                $("#welcome-message").empty()
+                $("#code_registration").empty()
                 const user = response.data.user;
                 console.log('user = ' + user);
                 $("#success_registration").html($("#success_registration_tmpl").tmpl(user));

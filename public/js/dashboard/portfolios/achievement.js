@@ -134,44 +134,50 @@ function achievementRecords(achievementId)
     });
 }
 
-function addAchievement()
-{
-   let data = $("#add_achievement_form").serialize();
-   const additionalData = {
-       user_id:userId
-   };
-   data += '&' + $.param(additionalData);
-    $.ajax({
-        url: "/dashboard/portfolios/achievements/create",
-        data:data,
-        type: "POST",
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        dataType: "json",
-        success: function (response) {
-            if (response.success) {
-                const achievement = response.data.achievement;
-                const achievementsList = $("#achievements_list");
-                const lastRow = $("#achievements_list tr").last();
-                let index = lastRow.find('td').first().text();
-                index++;
-                if (typeof index=='undefined')
-                {
-                    index = 1;
+function addAchievement() {
+    // Валидация обязательных полей
+    if ($("#add_achievement_form")[0].checkValidity()) {
+        let data = $("#add_achievement_form").serialize();
+        const additionalData = {
+            user_id: userId
+        };
+        data += '&' + $.param(additionalData);
+        $.ajax({
+            url: "/dashboard/portfolios/achievements/create",
+            data: data,
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    const achievement = response.data.achievement;
+                    const achievementsList = $("#achievements_list");
+                    const lastRow = $("#achievements_list tr").last();
+                    let index = lastRow.find('td').first().text();
+                    index++;
+                    if (typeof index == 'undefined' || index === '') {
+                        index = 1;
+                    }
+                    console.log('index = ' + index);
+                    achievement.index = index;
+                    achievementsList.append($("#achievement_tmpl").tmpl(achievement));
+
+                    // Закрытие модального окна
+                    $('#add_achievement_modal').modal('hide'); // Закрываем модальное окно
+                } else {
+                    $.notify(response.data.title + ": " + response.data.message, "error");
                 }
-                console.log('index = ' + index);
-                achievement.index = index;
-                achievementsList.append($("#achievement_tmpl").tmpl(achievement));
+            },
+            error: function () {
+                $.notify("Произошла ошибка при редактировании пользователя", "error");
             }
-            else {
-                $.notify(response.data.title + ":" + response.data.message, "error");
-            }
-        },
-        error: function () {
-            $.notify("Произошла ошибка при редактировании пользователя", "error");
-        }
-    });
+        });
+    } else {
+        // Если форма невалидна, покажите сообщение
+        $.notify("Пожалуйста, заполните все обязательные поля.", "error");
+    }
 }
 
 function openUpdateAchievementModal()
@@ -204,17 +210,30 @@ function openUpdateAchievementModal()
     });
 }
 
-function updateAchievement()
-{
+function updateAchievement() {
+    // Проверяем заполнены ли все обязательные поля
+    const name = $('input[name="name"]').val();
+    const achievementModeId = $('select[name="achievement_mode_id"]').val();
+    const educationalLevel = $('select[name="educational_level"]').val();
+    const description = $('textarea[name="description"]').val();
+    const recordDate = $('input[name="record_date"]').val();
+    const accessLevel = $('select[name="access_level"]').val();
+
+    if (!name || !achievementModeId || !educationalLevel || !description || !recordDate || !accessLevel) {
+        $.notify("Пожалуйста, заполните все обязательные поля.", "error");
+        return; // Прерываем выполнение функции, если есть незаполненные поля
+    }
+
     console.log('achievement id = ' + achievementId);
     let data = $("#update_achievement_form").serialize();
     const additionalData = {
-      id:achievementId
+        id: achievementId
     };
     data += '&' + $.param(additionalData);
+
     $.ajax({
         url: "/dashboard/portfolios/achievements/update",
-        data:data,
+        data: data,
         type: "POST",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -225,8 +244,8 @@ function updateAchievement()
                 const achievement = response.data.achievement;
                 $("#achievement_" + achievementId).replaceWith($("#achievement_tmpl").tmpl(achievement));
                 $.notify(response.data.title + ":" + response.data.message, "success");
-            }
-            else {
+                closeTmplModal('update_achievement_modal'); // Закрыть модальное окно после успешного обновления
+            } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
@@ -235,6 +254,7 @@ function updateAchievement()
         }
     });
 }
+
 
 function openInfoBox(id)
 {
@@ -403,6 +423,13 @@ function openTextRecord(recordId)
 function resetSearch()
 {
     $("#default_achievement").prop('selected',true);
+    $("#achievement_name").val('');
+    achievements();
+}
+
+function resetAchievementSearch()
+{
+    $("#achievement_mode_id").selectpicker('val', '');
     $("#achievement_name").val('');
     achievements();
 }

@@ -40,7 +40,7 @@
         </div>
         @include('layouts.dashboard.include.elements.works_menu')
         <div class="pt-5 px-md-0 px-3">
-            <p class="text-grey fs-16">Пользователей: <span class="text-black" id="users_count"></span></p>
+            <p class="text-grey fs-16">Пользователей: <span class="text-grey" id="users_count"></span></p>
             <div class="row g-3" id="users_list">
 
             </div>

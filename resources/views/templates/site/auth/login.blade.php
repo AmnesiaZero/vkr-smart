@@ -16,11 +16,12 @@
                             @csrf
                             <div class="form-group">
                                 <label for="name">Имя пользователя</label>
-                                <input id="name" type="text" name="login" placeholder="" class="form-control">
+                                <input id="name" type="text" name="login" placeholder="" class="form-control" required>
                             </div>
                             <div class="form-group mt-3">
                                 <label for="password">Пароль</label>
-                                <input id="password" type="password" name="password" placeholder="" class="form-control">
+                                <input id="password" type="password" name="password" placeholder="" class="form-control"
+                                       required>
                             </div>
                             <div class="form-check my-4">
                                 <input id="remember_me" type="checkbox" name="remember" value="1"
@@ -44,7 +45,7 @@
                             @csrf
                             <div class="form-group">
                                 <label for="code">Код приглашения</label>
-                                <input id="code" type="text" name="code" placeholder="" class="form-control">
+                                <input id="code" type="text" name="code" placeholder="" class="form-control" required>
                             </div>
                             <button type="submit" class="btn br-100 btn-primary w-100 mt-4">Продолжить</button>
                         </form>

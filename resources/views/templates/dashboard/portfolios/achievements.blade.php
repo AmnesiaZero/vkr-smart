@@ -27,7 +27,7 @@
                         <p class="text-grey mb-2 fs-14">Тип документа</p>
                         <div>
                             <div class="col-sm-10">
-                                <select name="achievement_mode_id" class="selectpicker bs-select-hidden w-100" title="Выбрать...">
+                                <select id="achievement_mode_id" name="achievement_mode_id" class="selectpicker w-100" title="Выбрать...">
                                     @if(isset($modes) and is_iterable($modes))
                                         @foreach($modes as $mode)
                                             <option value="{{$mode->id}}">{{$mode->name}}</option>
@@ -40,14 +40,14 @@
                     <div class="mt-3 d-flex gap-3">
                         <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1">Применить</button>
                         <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1"
-                                onclick="resetSearch();return false">Сбросить
+                                onclick="resetAchievementSearch();return false">Сбросить
                         </button>
                     </div>
                 </form>
             </div>
         </div>
         <div class="d-flex gap-3 mt-5">
-            <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 w-75"
+            <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 w-25"
                     data-bs-target="#add_achievement_modal" data-bs-toggle="modal">
                 Добавить
                 <img src="/images/Plus.svg" class="ps-2" alt="">
@@ -115,8 +115,8 @@
           </td>
          </tr>
          <tr>
-           <td class="nopadding" colspan="5">
-             <table class="table table-condensed table-bordered">
+           <td class="p-0" colspan="5">
+             <table class="table table-condensed table-bordered mb-0">
                  <thead>
                      <tr>
                          <th class="text-center">Отзыв</th>
@@ -142,7 +142,7 @@
 
 
     <script id="update_achievement_modal_tmpl" type="text/x-jquery-tmpl">
-        <div class="modal fade" id="update_achievement_modal" aria-hidden="true" tabindex="-1">
+    <div class="modal fade" id="update_achievement_modal" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -154,7 +154,7 @@
                                 <div class="row">
                                     <label class="col-sm-4">Введите наименование достижения</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="name" value="${name}" class="form-control fullwidth" required="">
+                                        <input type="text" name="name" value="${name}" class="form-control fullwidth" required>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -204,13 +204,15 @@
                                 <div class="row">
                                     <label class="col-sm-4">Введите описание</label>
                                     <div class="col-sm-8">
-                                        <textarea rows="8" name="description" class="form-control fullwidth">${description}</textarea>
+                                        <textarea rows="8" name="description" class="form-control fullwidth" required>
+                                            ${description}
+                                        </textarea>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <label class="col-sm-4">Укажите дату достижения</label>
                                     <div class="col-sm-8">
-                                        <input type="date" name="record_date" value="${record_date}" class="form-control datepick" required="">
+                                        <input type="date" name="record_date" value="${record_date}" class="form-control datepick" required>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -236,8 +238,7 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-secondary fs-14 text-grey py-1"
-                                onclick="closeTmplModal('update_achievement_modal')">
+                        <button type="submit" class="btn btn-secondary fs-14 text-grey py-1">
                             Сохранить
                         </button>
 
@@ -415,7 +416,7 @@
                          </div>
                          <div class="row mt-4">
                              <div class="col-sm-12">
-                                 <ul class="nav nav-tabs non-printable" role="tablist">
+                                 <ul class="nav nav-tabs non-printable" role="tablist" style="border-bottom: 2px #D9F1F3 solid">
                                      <li role="presentation" class="nav-item">
                                          <a href="#achievements-tab" class="nav-link active" aria-controls="profile-base" role="tab" data-bs-toggle="tab"
                                             aria-expanded="false">

@@ -75,7 +75,8 @@
                             <label class="col-sm-12">Факультет</label>
                             <div class="col-sm-12">
                                 <select class="selectpicker form-control" name="faculty_id" id="faculties_list"
-                                        data-title="Выбрать...">
+                                        data-title="Выбрать..." required>
+                                    <option value="" selected>Уточните год</option>
                                 </select>
                             </div>
                         </div>
@@ -83,9 +84,9 @@
                             <label class="col-sm-12">Кафедры</label>
                             <div class="col-sm-12">
                                 <select name="departments_ids[]" id="departments_menu_list"
-                                        class="selectpicker form-control bs-select-hidden"
-                                        data-title="Выбрать несколько..."
-                                        data-width="100%" multiple>
+                                        class="selectpicker form-control bs-select-hidden" data-title="Выбрать несколько..."
+                                        data-width="100%" multiple required>
+                                    <option value="" selected>Уточните факультет</option>
                                 </select>
                             </div>
                         </div>
