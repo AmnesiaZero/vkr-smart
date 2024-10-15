@@ -275,7 +275,8 @@
                                     <div class="row">
                                         <label class="col-sm-4 fs-16">Наименование организации</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="name" required="">
+                                            <input type="text" class="form-control" name="name" required=""
+                                                   placeholder="Ввод...">
                                         </div>
                                     </div>
 
@@ -353,7 +354,8 @@
                                         <div class="row">
                                             <label class="col-sm-4 fs-16">Место работы</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="name" required="">
+                                                <input type="text" class="form-control" name="name" required=""
+                                                       placeholder="Ввод...">
                                             </div>
                                         </div>
                                     </div>
@@ -383,7 +385,8 @@
                                         <div class="row">
                                             <label class="col-sm-4 fs-16">Должность</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="post" required="">
+                                                <input type="text" class="form-control" name="post" required=""
+                                                       placeholder="Ввод...">
                                             </div>
                                         </div>
                                     </div>

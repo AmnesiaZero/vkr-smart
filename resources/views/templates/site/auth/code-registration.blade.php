@@ -197,7 +197,7 @@
                             ранее или авторизованы автоматически в Вашем вузе, нажмите кнопку "Авторизация", вы будете
                             перемещены на
                             форму входа.</p>
-                        <div class="text-center">
+                        <div class="text-end">
                             <a href="/login" class="btn btn-primary btn-block">Авторизоваться</a>
                         </div>
                     </blockquote>
