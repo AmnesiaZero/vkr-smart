@@ -46,7 +46,10 @@ class UsersController extends Controller
         'selected_departments',
         'avatar',
         'page',
-        'paginate'
+        'paginate',
+        'email_visibility',
+        'name_visibility',
+        'portfolio_card_access'
     ];
 
     public function __construct(UsersService $usersService)
