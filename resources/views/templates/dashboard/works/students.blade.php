@@ -220,169 +220,194 @@
 
             <script id="work_info_student_tmpl" type="text/x-jquery-tmpl">
 
-            <div id="work_info_student" class="modal" style="display: block;">
+            <div id="work_info_student" class="modal fade" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <h3>Информация о работе</h3>
+                            <h3 class="modal-title">Информация о работе</h3>
                         </div>
                         <div class="modal-body">
-                            <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation" class="active"><a href="#main-information" aria-controls="main-information" role="tab" data-toggle="tab">Основная информация</a></li>
-                                <li role="presentation"><a href="#comments" aria-controls="comments" role="tab" data-toggle="tab">Комментарии</a></li>
+                            <ul class="nav nav-tabs mb-3" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link py-2 active" id="main-information-tab" href="#main-information" aria-controls="main-information" role="tab" data-bs-toggle="tab">
+                                        Основная информация
+                                    </a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link py-2" id="comments-tab" href="#comments" aria-controls="comments" role="tab" data-bs-toggle="tab">
+                                        Комментарии
+                                    </a>
+                                </li>
                             </ul>
                             <div class="tab-content">
-                                <h3 class="bc-post-title bc-post-title-sm">Информация о работе</h3>
-                                <form class="form form-horizontal" id="infoWorkForm" onsubmit="workInfo(); return false;">
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Год выпуска</label>
-                                        <div class="col-sm-8" id="value_year_id">
-                                            @{{if year}}
-                                            ${year.year}
-                                            @{{else}}
-                                            Не указан
-                                            @{{/if}}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Факультет</label>
-                                        <div class="col-sm-8" id="faculty_id">
-                                            @{{if faculty}}
-                                            ${faculty.name}
-                                            @{{else}}
-                                            Не указан
-                                            @{{/if}}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Кафедра</label>
-                                        <div class="col-sm-8" id="value_department_id">
-                                            @{{if department}}
-                                            ${department.name}
-                                            @{{else}}
-                                            Не указан
-                                            @{{/if}}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Образовательная программа (специальность)</label>
-                                        <div class="col-sm-8">
-                                            @{{if specialty}}
-                                            ${specialty.name}
-                                            @{{else}}
-                                            Не указан
-                                            @{{/if}}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Кто загрузил работу</label>
-                                        <div class="col-sm-8">
-                                            @{{if user}}
-                                            ${user.name}
-                                            @{{else}}
-                                            Не указан
-                                            @{{/if}}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">ФИО обучающегося</label>
-                                        <div class="col-sm-8" >${student}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Группа обучающегося</label>
-                                        <div class="col-sm-8">${group}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Наименование работы</label>
-                                        <div class="col-sm-8" id="value_name">${name}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Тип работы</label>
-                                        <div class="col-sm-8" id="value_worktype">${work_type}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Научный руководитель</label>
-                                        <div class="col-sm-8" id="value_scientific_adviser">${scientific_supervisor}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Дата защиты</label>
-                                        <div class="col-sm-8" id="value_protectdate">${protect_date}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Дата загрузки работы</label>
-                                        <div class="col-sm-8" id="value_createdon">${created_at}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Оценка</label>
-                                        <div class="col-sm-8" id="value_assessment">${getAssessmentDescription(assessment)}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Согласие на размещение работы</label>
-                                        <div class="col-sm-8" id="value_agreement">${getAgreementDescription(agreement)}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Файл работы</label>
-                                        <div class="col-sm-8" id="value_workfile"><a onclick="downloadWork(); return false;" href="#"><span class="glyphicon glyphicon-save-file"></span> Скачать файл работы</a></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Самопроверка работы студентом</label>
-                                        <div class="col-sm-8">
-                                            <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-warning btn-sm"> <span id="self_check_value"> ${getSelfCheckDescription(self_check)} </span>
-                                                <span class="glyphicon glyphicon-refresh">
-                                </span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Справка о самопроверке работы обучающимся по системе заимствований</label>
-                                        @{{if certificate}}
-                                        <a class="col-sm-8" onclick="downloadCertificate()">Скачать файл самопроверки </a>
-                                        @{{else}}
-                                        <div class="col-sm-8" id="value_certificate">Файл справки не загружен</div>
-                                        @{{/if}}
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Отчет о заимствованиях по базам ВКР-СМАРТ</label>
-                                        @{{if borrowings_percent}}
-                                        <div class="col-sm-8" id="value_percent_person">Фактических некорректных заимствований: ${borrowings_percent}</div>
-                                        @{{/if}}
-                                    </div>
-                                    <div id="works-add-alert"></div>
-                                </form>
-                            </div>
+                                <div role="tabpanel" class="tab-pane active" id="main-information" aria-labelledby="main-information-tab">
 
+                                    <form class="form form-horizontal" id="infoWorkForm" onsubmit="workInfo(); return false;">
+                                        <div class="d-flex flex-column gap-3">
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Год выпуска</label>
+                                                <div class="col-sm-8" id="value_year_id">
+                                                    @{{if year}}
+                                                        ${year.year}
+                                                    @{{else}}
+                                                        Не указан
+                                                    @{{/if}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Факультет</label>
+                                                <div class="col-sm-8" id="faculty_id">
+                                                    @{{if faculty}}
+                                                        ${faculty.name}
+                                                    @{{else}}
+                                                        Не указан
+                                                    @{{/if}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Кафедра</label>
+                                                <div class="col-sm-8" id="value_department_id">
+                                                    @{{if department}}
+                                                        ${department.name}
+                                                    @{{else}}
+                                                        Не указан
+                                                    @{{/if}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Образовательная программа (специальность)</label>
+                                                <div class="col-sm-8">
+                                                    @{{if specialty}}
+                                                        ${specialty.name}
+                                                    @{{else}}
+                                                        Не указан
+                                                    @{{/if}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Кто загрузил работу</label>
+                                                <div class="col-sm-8">
+                                                    @{{if user}}
+                                                        ${user.name}
+                                                    @{{else}}
+                                                        Не указан
+                                                    @{{/if}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">
+                                                    ФИО обучающегося
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    ${student}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Группа обучающегося</label>
+                                                <div class="col-sm-8">${group}</div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Наименование работы</label>
+                                                <div class="col-sm-8" id="value_name">${name}</div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Тип работы</label>
+                                                <div class="col-sm-8" id="value_worktype">${work_type}</div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Научный руководитель</label>
+                                                <div class="col-sm-8" id="value_scientific_adviser">${scientific_supervisor}</div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Дата защиты</label>
+                                                <div class="col-sm-8" id="value_protectdate">${protect_date}</div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Дата загрузки работы</label>
+                                                <div class="col-sm-8" id="value_createdon">${created_at}</div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Оценка</label>
+                                                <div class="col-sm-8" id="value_assessment">${getAssessmentDescription(assessment)}</div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Согласие на размещение работы</label>
+                                                <div class="col-sm-8" id="value_agreement">${getAgreementDescription(agreement)}</div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Файл работы</label>
+                                                <div class="col-sm-8" id="value_workfile"><a onclick="downloadWork(); return false;" href="#"><span class="glyphicon glyphicon-save-file"></span> Скачать файл работы</a></div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Самопроверка работы студентом</label>
+                                                <div class="col-sm-8">
+                                                    <a href="#" onclick="updateSelfCheckStatus()" class="btn btn-grey">
+                                                        <span id="self_check_value">${getSelfCheckDescription(self_check)}</span>
+                                                        <span class="glyphicon glyphicon-refresh"></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Справка о самопроверке работы обучающимся по системе заимствований</label>
+                                                @{{if certificate}}
+                                                <a class="col-sm-8" onclick="downloadCertificate()">Скачать файл самопроверки </a>
+                                                @{{else}}
+                                                <div class="col-sm-8" id="value_certificate">Файл справки не загружен</div>
+                                                @{{/if}}
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Отчет о заимствованиях по базам ВКР-СМАРТ</label>
+                                                @{{if borrowings_percent}}
+                                                <div class="col-sm-8" id="value_percent_person">Фактических некорректных заимствований: ${borrowings_percent}</div>
+                                                @{{/if}}
+                                            </div>
+                                        </div>
 
-                            <div role="tabpanel" class="tab-pane" id="comments">
-                                <form class="form form-horizontal" id="add_comment_form" onsubmit="addComment(); return false;">
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Заголовок</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="title" placeholder="Укажите заголовок комментария" required="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4">Текст комментария</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="text">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4"></label>
-                                        <div class="col-sm-8">
-                                            <button type="submit" class="btn btn-success">Добавить</button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <hr>
-                                <h3>Комментарии к работе:</h3>
-                                <div class="row work-comment-pagination pagination pagination-sm" id="comments_list"></div>
+                                        <div id="works-add-alert"></div>
+                                    </form>
+                                </div>
 
-                                <div class="work-comment-pagination pagination pagination-sm"></div>
+                                <div role="tabpanel" class="tab-pane" id="comments" aria-labelledby="comments-tab">
+                                    <form class="form form-horizontal" id="add_comment_form" onsubmit="addComment(); return false;">
+                                        <div class="d-flex flex-column gap-3">
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Заголовок</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="title"
+                                                           placeholder="Ввод..." required>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold">Текст комментария</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="text"
+                                                           placeholder="Ввод..." required>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-4 fs-16 fw-bold"></label>
+                                                <div class="col-sm-8">
+                                                    <button type="submit" class="btn btn-primary px-5">Добавить</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <hr>
+
+                                    <h3>Комментарии к работе:</h3>
+
+                                    <div class="row work-comment-pagination pagination pagination-sm overflow-auto"
+                                         id="comments_list" style="max-height: 500px;"></div>
+
+                                    <div class="work-comment-pagination pagination pagination-sm"></div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeTmplModal('work_info_student')">Закрыть окно</button>
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal" aria-label="Close" onclick="closeTmplModal('work_info_student')">
+                                Закрыть окно
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -407,15 +432,14 @@
 								<span class="sender_name">${sender.name}</span>
 							</div>
 							<div class="col-sm-2">
-								<a href="#" onclick="deleteComment(${id}); return false;">Удалить</a>
+								<a href="#" onclick="deleteComment(${id}); return false;" class="text-decoration-none">Удалить</a>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="comment_content">
-									<h5 class="comment_title">${title}</h5>
+									<h5 class="comment_title mt-3">${title}</h5>
 									<p>${text}</p>
-
 								</div>
 							</div>
 						</div>

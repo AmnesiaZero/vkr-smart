@@ -3,7 +3,8 @@
     <p class="fs-14 lh-17">Операции над работой</p>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/info.svg" alt="" class="pe-2">
-        <p class="fs-14 lh-17 text-grey m-0" onclick="workInfoStudent('main-information')">
+        <p class="fs-14 lh-17 text-grey m-0" onclick="workInfoStudent('main-information')"
+           data-bs-target="work_info_student" data-bs-toggle="modal">
             Просмотр информации о работе
         </p>
     </div>
