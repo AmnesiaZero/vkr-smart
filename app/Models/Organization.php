@@ -29,7 +29,8 @@ class Organization extends Model
         'is_head',
         'is_premium',
         'is_testing',
-        'is_blocked'
+        'is_blocked',
+        'secret_key'
     ];
 
     protected $casts = [

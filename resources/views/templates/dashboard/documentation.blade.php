@@ -11,7 +11,7 @@
                             <img src="/images/File_Document.svg" alt="">
                         </div>
                         <div class="col">
-                            <p class="fw-700 mb-2"><a href="#" class="td-none text-black-hover">Согласие студента на
+                            <p class="fw-700 mb-2"><a href="/docs/instruction.pdf" class="td-none text-black-hover">Согласие студента на
                                     размещение
                                     ВКР</a></p>
                             <p class="fs-14 text-grey lh-17">Является рекомендуемым документом для учебного заведения

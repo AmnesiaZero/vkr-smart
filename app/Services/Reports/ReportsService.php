@@ -152,6 +152,7 @@ class ReportsService extends Services
 
         $rolesWorks['all_works'] = 0;
         foreach ($results as $result) {
+            Log::debug('result = '.print_r($result,true));
             if (!isset($rolesWorks[$result->role_id])) {
                 $rolesWorks[$result->role_id] = [
                     'role_id' => $result->role_id,

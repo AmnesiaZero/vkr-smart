@@ -111,4 +111,20 @@ class FacultiesService extends Services
     {
         return $this->_repository->getYearId($id);
     }
+
+    public function find(int $id): JsonResponse
+    {
+        $faculty = $this->_repository->find($id);
+        if($faculty and $faculty->id)
+        {
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'faculty' => $faculty
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Ошибка при поиске факультета'
+        ]);
+    }
 }

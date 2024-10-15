@@ -28,9 +28,10 @@ window.Echo = new Echo({
     cluster: 'eu',
     encrypted: true,
     disableStats: true,
-    forceTLS: false,
+    forceTLS: true,
     wsHost: window.location.hostname,
-    wsPort: 6001
+    wsPort: 6001,
+    wssPort: 443, // Порт для WSS (опционально)
 });
 
 

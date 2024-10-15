@@ -5,6 +5,7 @@ namespace App\Services\Works\Repositories;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use PhpParser\Node\Expr\AssignOp\Mod;
 
 interface WorkRepositoryInterface
 {
@@ -76,6 +77,9 @@ interface WorkRepositoryInterface
      */
     public function updateReportStatus(int $reportId, array $data);
 
+
+
+
     /**
      * @param int $reportId
      * @return Model
@@ -88,5 +92,12 @@ interface WorkRepositoryInterface
      * @return Collection
      */
     public function getUserWorks(int $userId, int $pageNumber): LengthAwarePaginator;
+
+    /**
+     * Проверяет, существует ли работа с данным id
+     * @param int $workId
+     * @return bool
+     */
+    public function exist(int $workId):bool;
 
 }
