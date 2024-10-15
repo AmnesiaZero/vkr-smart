@@ -1,8 +1,7 @@
 function openReport() {
     const data = $("#check_form").serialize();
-    console.log(data);
     $.ajax({
-        url: "/dashboard/works/find",
+        url: "/dashboard/works/check-code",
         type: 'GET',
         data: data,
         dataType: "json",

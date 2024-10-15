@@ -175,6 +175,7 @@ Route::group([
         Route::get('get', [WorksController::class, 'get']);
         Route::get('get-user-works', [WorksController::class, 'getUserWorks']);
         Route::get('search', [WorksController::class, 'search']);
+        Route::get('check-code',[WorksController::class,'checkCode'])->withoutMiddleware(['web', 'auth']);
         Route::group([
             'prefix' => 'update'
         ], function () {
@@ -183,7 +184,7 @@ Route::group([
             Route::post('/', [WorksController::class, 'update']);
         });
         Route::post('update', [WorksController::class, 'update']);
-        Route::get('find', [WorksController::class, 'find'])->withoutMiddleware(['web', 'auth']);
+        Route::get('find', [WorksController::class, 'find']);
         Route::get('download', [WorksController::class, 'download']);
         Route::post('upload', [WorksController::class, 'upload']);
         Route::post('copy', [WorksController::class, 'copy']);
