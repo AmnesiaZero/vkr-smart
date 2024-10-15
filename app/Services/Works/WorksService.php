@@ -435,7 +435,7 @@ class WorksService extends Services
         Log::debug('unique = ' . $unique);
         $work = $this->workRepository->findByReportId($documentId);
         $workId = $work->id;
-        $checkCode = $workId.'-'.random_bytes(6);
+        $checkCode = random_bytes(6);
         $data = [
             'report_status' => 1,
             'unique_percent' => $unique,
