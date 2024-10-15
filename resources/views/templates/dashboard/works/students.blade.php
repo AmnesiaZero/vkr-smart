@@ -221,7 +221,7 @@
             <script id="work_info_student_tmpl" type="text/x-jquery-tmpl">
 
             <div id="work_info_student" class="modal fade" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h3 class="modal-title">Информация о работе</h3>
@@ -395,7 +395,7 @@
 
                                     <hr>
 
-                                    <h3>Комментарии к работе:</h3>
+                                    <h3 class="mb-3">Комментарии к работе:</h3>
 
                                     <div class="row work-comment-pagination pagination pagination-sm overflow-auto"
                                          id="comments_list" style="max-height: 500px;"></div>
@@ -420,38 +420,33 @@
 
 
 
-            <script id="comment_tmpl" type="text/x-jquery-tmpl">
-                <div id="comment_${id}" class="mb-3" style="border-bottom: 1px solid #ccc">
-                <div class="row row-comment">
-					<div class="col-sm-12">
-						<div class="row">
-							<div class="col-sm-2">
-								<span class="comment_date">${created_at}</span>
-							</div>
-							<div class="col-sm-8">
-								<span class="sender_name">${sender.name}</span>
-							</div>
-							<div class="col-sm-2">
-								<a href="#" onclick="deleteComment(${id}); return false;" class="text-decoration-none">Удалить</a>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="comment_content">
-									<h5 class="comment_title mt-3">${title}</h5>
-									<p>${text}</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				</div>
-
-
-
-
-
-            </script>
+    <script id="comment_tmpl" type="text/x-jquery-tmpl">
+        <div id="comment_${id}" class="mb-3" style="border-bottom: 1px solid #ccc">
+            <div class="row row-comment">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <span class="comment_date">${created_at}</span>
+                        </div>
+                        <div class="col-sm-8">
+                            <span class="sender_name">${sender.name}</span>
+                        </div>
+                        <div class="col-sm-2">
+                            <a href="#" onclick="deleteComment(${id}); return false;" class="text-decoration-none">Удалить</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="comment_content">
+                                <h5 class="comment_title mt-3">${title}</h5>
+                                <p>${text}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
     @include('layouts.dashboard.include.tmpls.works_page')
 @endsection
 

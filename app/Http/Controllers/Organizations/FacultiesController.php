@@ -36,13 +36,25 @@ class FacultiesController extends Controller
     public function get(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'year_id' => ['required', 'integer']
+            'year_id' => ['required', 'integer',Rule::exists('organizations_years','id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
         $yearId = $request->year_id;
         return $this->facultiesService->get($yearId);
+    }
+
+    public function find(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required', 'integer',Rule::exists('faculties','id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->facultiesService->find($id);
     }
 
     public function create(Request $request): JsonResponse

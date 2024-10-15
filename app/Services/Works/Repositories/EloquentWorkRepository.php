@@ -131,6 +131,8 @@ class EloquentWorkRepository implements WorkRepositoryInterface
         return Work::query()->where('report_id', '=', $reportId)->first()->update($data);
     }
 
+
+
     public function update(int $id, array $data)
     {
         return $this->find($id)->update($data);
@@ -146,4 +148,8 @@ class EloquentWorkRepository implements WorkRepositoryInterface
         return Work::withTrashed()->with(['faculty', 'specialty'])->where('user_id', '=', $userId)->paginate(config('pagination.per_page'), '*', 'page', $pageNumber);
     }
 
+    public function exist(int $workId): bool
+    {
+        return Work::query()->find($workId)->exists();
+    }
 }

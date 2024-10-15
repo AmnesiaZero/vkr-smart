@@ -54,7 +54,9 @@ class Work extends Model
         'verification_method',
         'user_type',
         'work_status',
-        'visibility'
+        'visibility',
+        'check_code',
+        'unique_percent'
     ];
 
     protected $casts = [

@@ -6,6 +6,7 @@ use App\Helpers\FilesHelper;
 use App\Services\Organizations\Repositories\OrganizationRepositoryInterface;
 use App\Services\Services;
 use App\Services\Specialties\Repositories\SpecialtyRepositoryInterface;
+use Firebase\JWT\JWT;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,47 @@ class OrganizationsService extends Services
     {
         $this->_repository = $organizationRepository;
         $this->specialtyRepository = $specialtyRepository;
+    }
+
+    public function generateApiKey(int $id, string $apiKey): JsonResponse
+    {
+        if (config('jwt.api_key') != $apiKey) {
+            return self::sendJsonResponse(false, [
+                'title' => 'Ошибка',
+                'message' => 'Ошибка - некорректный API ключ'
+            ]);
+        }
+        $organization = $this->_repository->find($id);
+        if (isset($organization->secret_key))
+        {
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Ключ уже создан'
+            ]);
+        }
+        $payload = [
+            'client_id' => $id,
+            'expires_at' => time() + config('jwt.ex')
+        ];
+        $secretKey = JWT::encode($payload, $apiKey, config('jwt.alg'));
+        if($secretKey)
+        {
+            $data = [
+               'secret_key' => $secretKey
+            ];
+            $result = $this->_repository->update($id,$data);
+            if($result)
+            {
+                return self::sendJsonResponse(true, [
+                    'title' => 'Успешно',
+                    'secret_key' => $secretKey
+                ]);
+            }
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Возникла ошибка при формировании секретного ключа'
+        ]);
     }
 
     public function configureInspectorsAccess(int $id, array $specialtiesIds): JsonResponse

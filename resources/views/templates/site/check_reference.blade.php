@@ -7,10 +7,9 @@
                     <h3>Введите код проверки</h3>
                     <div class="row">
                         <div class="col-sm-3">
-                            <form class="form" id="checkForm" onsubmit="getReference(); return false;">
+                            <form class="form" id="check_form" onsubmit="openReport(); return false;">
                                 <div class="form-group">
-
-                                    <input id="code" value="" type="text" class="form-control"
+                                    <input id="check_code" type="text" class="form-control" name="check_code"
                                            style="font-size:18px;height:50px;" placeholder="Введите проверочный код"
                                            required="">
                                 </div>
@@ -22,32 +21,19 @@
                         </div>
                         <div class="col-sm-9">
                             <div id="alerts"></div>
-                            {{--                        <iframe id="bseFullReportIframe" style="width:100%;height:100%;min-height:600px;border:0;" width="100%" height="100%" src="./ВКР-СМАРТ.РФ _ Проверка справки_files/saved_resource.html"></iframe>--}}
                         </div>
                         <div>
-                            {{--                        <script async="" src="./ВКР-СМАРТ.РФ _ Проверка справки_files/tag.js.загружено"></script><script type="text/javascript">--}}
-                            {{--                            function getReference(id){--}}
-                            {{--                                $("#alerts").html("");--}}
-                            {{--                                $.ajax({--}}
-                            {{--                                    url : "/reference-actions",--}}
-                            {{--                                    data : "action=checkReference&code="+$("#code").val(),--}}
-                            {{--                                    dataType : "json",--}}
-                            {{--                                    type : "post",--}}
-                            {{--                                    success : function(response){--}}
-                            {{--                                        if(response.success){--}}
-                            {{--                                            $("#bseFullReportIframe").attr("src",response.address);--}}
-                            {{--                                        }else{--}}
-                            {{--                                            $("#alerts").html('<div class="alert alert-danger">'+response.message+'</div>');--}}
-                            {{--                                            $("#bseFullReportIframe").attr("src",'');--}}
-                            {{--                                        }--}}
-                            {{--                                    }--}}
-                            {{--                                });--}}
-                            {{--                            }--}}
-                            {{--                        </script>--}}
                         </div>
                     </div>
+                    <div id="report_container"></div>
                 </div>
             </div>
         </div>
     </main>
+@endsection
+
+@section('scripts')
+    <script src="/js/site/check_reference.js"></script>
+
+    @include('layouts.dashboard.include.tmpls.works_page')
 @endsection

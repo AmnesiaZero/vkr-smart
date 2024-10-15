@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <form class="row"
-                  @if(isset($organization->jwt_key))
+                  @if(!isset($organization->secret_key))
                       onsubmit="generateApiKey();return false"
                   @endif
                   id="generate_key_form">
@@ -20,7 +20,7 @@
                     <p class="fs-14 text-grey lh-17">Сформировать ключи и получить ID клиента:</p>
                     <div class="mb-3">
                         <label for="id" class="form-label">ID клиента</label>
-                        <input type="text" name="id" class="form-control bg-grey-form" id="id" value="{{$you->id}}"
+                        <input type="text" name="id" class="form-control bg-grey-form" id="id" value="{{$organization->id}}"
                                readonly>
                     </div>
                     <div class="mb-3">
@@ -31,13 +31,13 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">SECRET KEY</label>
                         <div class="password">
-                            <input type="password" id="password-input" class="form-control bg-grey-form"
+                            <input type="text" id="secret_key" class="form-control bg-grey-form"
                                    name="secret_key"
-                                   value="{{$you->secret_key}}" readonly>
+                                   value="{{$organization->secret_key}}" readonly>
                             <a href="#" class="password-control" onclick="return show_hide_password(this);"></a>
                         </div>
                     </div>
-                    @if(isset($organization->jwt_key))
+                    @if(isset($organization->secret_key))
                         Ранее вы уже выполнили запрос на их получение..
                     @else
                         <button class="btn btn-secondary w-100 mt-3 text-grey">
@@ -81,14 +81,6 @@
 @endsection
 
 @section('scripts')
-    <script src="/js/app.js"></script>
     <script src="/js/dashboard/settings/api.js"></script>
 
-    <script type="text/x-jquery-tmpl" id="jwt_tmpl">
-        <span class="fs-20">
-            Ваш JWT-ключ: <br>
-            <span id="token" class="fs-24 fw-bold text-green cursor-p">${token}</span>
-        </span>
-
-    </script>
 @endsection

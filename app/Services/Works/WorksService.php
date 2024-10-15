@@ -433,11 +433,15 @@ class WorksService extends Services
         $report->get($documentId);
         $unique = $report->getUnique();
         Log::debug('unique = ' . $unique);
+        $work = $this->workRepository->findByReportId($documentId);
+        $workId = $work->id;
+        $checkCode = rand(10000,99999);
         $data = [
             'report_status' => 1,
-            'unique_percent' => $unique
+            'unique_percent' => $unique,
+            'check_code' => $checkCode
         ];
-        $result = $this->workRepository->updateReportStatus($documentId, $data);
+        $result = $this->workRepository->update($workId,$data);
         if ($result) {
             $work = $this->workRepository->findByReportId($documentId);
             if ($work and $work->id) {
@@ -463,8 +467,32 @@ class WorksService extends Services
             'title' => 'Успешно',
             'message' => 'Ошибка при добавлении репорта'
         ]);
+    }
 
-
+    public function checkCode(string $checkCode): JsonResponse
+    {
+        $result = explode('-',$checkCode);
+        Log::debug('result = '.print_r($result,true));
+        $workId = $result[0];
+        $code = $result[1];
+        if($this->workRepository->exist($workId))
+        {
+            $work = $this->workRepository->find($workId);
+            if($work and $work->id)
+            {
+                if($code==$work->check_code)
+                {
+                    return self::sendJsonResponse(true,[
+                        'title' => 'Успешно',
+                        'work' => $work
+                    ]);
+                }
+            }
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Такая работа не найдена или код некорректен'
+        ]);
     }
 
     public function create(array $data): JsonResponse

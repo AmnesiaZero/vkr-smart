@@ -137,7 +137,7 @@
 </script>
 <script id="undeleted_menu_tmpl" type="text/x-jquery-tmpl">
         <div class="d-flex cursor-p mb-2">
-        <img src="/images/copy.svg" alt="" class="pe-2">
+        <img src="/images/Copy.svg" alt="" class="pe-2">
         <p class="fs-14 lh-17 text-grey m-0" onclick="copyWork()">Сделать копию записи без создания файлов</p>
     </div>
     <div class="d-flex cursor-p mb-2">
@@ -315,11 +315,17 @@
                 <div id="report_modal">
                     <span> Полный отчет по работе </span>
 
+                    <a ng-if="report.status_report !== '1'" ng-click="showFull()" class="btn btn-success ng-scope"><span class="glyphicon glyphicon-print"></span> Распечатать отчет</a>
+                    <a ng-if="report.status_report !== '1'" href="#/reference/530250/1/cd9640cd3f886e13072731fc90e66715" class="btn btn-warning ng-scope"><span class="glyphicon glyphicon-download"></span> Справка ВКР</a>
+
                     <div class="col-sm-8 mt-2">
                         <ol style="padding-left:15px;">
                             <li>Результаты проверки по базам данных ВКР-СМАРТ:
                                 <ul>
                                     <li>Оригинальность текста документа: <strong id="borrowings_percent" class="ng-binding">${unique_percent}%</strong></li>
+                                </ul>
+                                <ul>
+                                    <li>Код справки: <strong id="check_code" class="ng-binding">${id}-${check_code}</strong></li>
                                 </ul>
                             </li>
                         </ol>
@@ -337,10 +343,10 @@
                             @{{each report_assets}}
                             <tr>
                                 <td>
-                                    <a  class="ng-binding fs-14">${name}</a>
+                                    <a target="_blank" class="ng-binding fs-14" href="${link}">${name}</a>
                                 </td>
                                 <td>
-                                    <a target="_blank" href="${link}" class="ng-binding"></a>
+                                    <a target="_blank" href="${link}" class="ng-binding">${link}</a>
                                 </td>
                                 <td>
                                     Интернет

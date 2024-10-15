@@ -104,6 +104,7 @@ class WorksController extends Controller
         return $this->worksService->getUserWorks($userId, $pageNumber);
     }
 
+
     public function create(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -370,6 +371,19 @@ class WorksController extends Controller
         }
         $documentId = $request->id;
         return $this->worksService->getReport($documentId);
+    }
+
+    public function checkCode(Request $request):JsonResponse
+    {
+        $validator = Validator::make($request->all(),[
+            'check_code' => 'required'
+        ]);
+        if($validator->fails())
+        {
+            return ValidatorHelper::error($validator);
+        }
+        $checkCode = $request->check_code;
+        return $this->worksService->checkCode($checkCode);
     }
 
 

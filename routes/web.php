@@ -175,6 +175,7 @@ Route::group([
         Route::get('get', [WorksController::class, 'get']);
         Route::get('get-user-works', [WorksController::class, 'getUserWorks']);
         Route::get('search', [WorksController::class, 'search']);
+        Route::get('check-code',[WorksController::class,'checkCode'])->withoutMiddleware(['web', 'auth']);
         Route::group([
             'prefix' => 'update'
         ], function () {
@@ -328,6 +329,13 @@ Route::group([
         Route::post('restore', [OrganizationsController::class, 'restore'])->name('organizations.restore');
 
 
+        Route::group([
+            'prefix' => 'jwt'
+        ], function () {
+            Route::post('generate', [OrganizationsController::class, 'generateApiKey']);
+        });
+
+
         Route::get('find', [OrganizationsController::class, 'find']);
         Route::post('inspectors-access', [OrganizationsController::class, 'configureInspectorsAccess']);
 
@@ -345,6 +353,7 @@ Route::group([
             'prefix' => 'faculties'
         ], function () {
             Route::get('get', [FacultiesController::class, 'get']);
+            Route::get('find',[FacultiesController::class,'find']);
             Route::post('create', [FacultiesController::class, 'create']);
             Route::post('update', [FacultiesController::class, 'update']);
             Route::post('delete', [FacultiesController::class, 'delete']);
@@ -453,11 +462,6 @@ Route::group([
         Route::get('you', [UsersController::class, 'you']);
         Route::post('configure-departments', [UsersController::class, 'configureDepartments']);
         Route::get('logout', [UsersController::class, 'logout']);
-        Route::group([
-            'prefix' => 'jwt'
-        ], function () {
-            Route::post('generate', [UsersController::class, 'generateApiKey']);
-        });
 
     });
 
