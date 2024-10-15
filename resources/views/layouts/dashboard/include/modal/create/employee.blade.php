@@ -11,26 +11,25 @@
                         <div class="col-sm-6 justify-content-center">
                             <label class="col-sm-12">ФИО</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" name="name" required="" placeholder="Ввод...">
+                                <input type="text" class="form-control" name="name" required placeholder="Ввод...">
                             </div>
                         </div>
                         <div class="col-sm-6 justify-content-center">
                             <label class="col-sm-12">Email</label>
                             <div class="col-sm-12">
-                                <input type="email" class="form-control" name="email" required="" placeholder="Ввод...">
+                                <input type="email" class="form-control" name="email" required placeholder="Ввод...">
                             </div>
                         </div>
                         <div class="col-sm-6 justify-content-center">
                             <label class="col-sm-12">Логин</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" name="login" required="" placeholder="Ввод...">
+                                <input type="text" class="form-control" name="login" required placeholder="Ввод...">
                             </div>
                         </div>
                         <div class="col-sm-6 justify-content-center">
                             <label class="col-sm-12">Пароль</label>
                             <div class="col-sm-12">
-                                <input type="password" class="form-control" name="password" required=""
-                                       placeholder="Ввод...">
+                                <input type="password" class="form-control" name="password" required placeholder="Ввод...">
                             </div>
                         </div>
                         <div class="col-sm-6 justify-content-center">
@@ -67,8 +66,7 @@
                         <div class="col-sm-6 justify-content-center">
                             <label class="col-sm-12">Год выпуска</label>
                             <div class="col-sm-12">
-                                <select class=" form-control" name="year_id" id="years_list" required=""
-                                        title="Выбрать...">
+                                <select class=" form-control" name="year_id" id="years_list" required title="Выбрать...">
 
                                 </select>
                             </div>
@@ -77,7 +75,8 @@
                             <label class="col-sm-12">Факультет</label>
                             <div class="col-sm-12">
                                 <select class="selectpicker form-control" name="faculty_id" id="faculties_list"
-                                        data-title="Выбрать...">
+                                        data-title="Выбрать..." required>
+                                    <option value="" selected>Уточните год</option>
                                 </select>
                             </div>
                         </div>
@@ -85,20 +84,19 @@
                             <label class="col-sm-12">Кафедры</label>
                             <div class="col-sm-12">
                                 <select name="departments_ids[]" id="departments_menu_list"
-                                        class="selectpicker form-control bs-select-hidden"
-                                        data-title="Выбрать несколько..."
-                                        data-width="100%" multiple>
+                                        class="selectpicker form-control bs-select-hidden" data-title="Выбрать несколько..."
+                                        data-width="100%" multiple required>
+                                    <option value="" selected>Уточните факультет</option>
                                 </select>
                             </div>
                         </div>
                     </div>
 
                     <div class="modal-footer br-none pe-0">
-                        <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
+                        <button type="submit" class="btn btn-secondary fs-14 text-grey py-1">
                             Применить
                         </button>
-                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
-                                data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
                             Закрыть
                         </button>
                     </div>

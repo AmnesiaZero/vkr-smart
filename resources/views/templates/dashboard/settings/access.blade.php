@@ -34,7 +34,7 @@
                 <div class="br-green-light-2 br-15 p-4 text-center bg-green cursor-p"
                      data-bs-toggle="modal" data-bs-target="#create_admin">
                     <img src="/images/Plus.svg">
-                    <p class="text-grey m-0 pt-3">Добавить администратора</p>
+                    <p class="text-grey m-0 pt-3">Добавить <br> администратора</p>
                 </div>
                 <div class="br-green-light-2 br-15 p-4 text-center bg-green cursor-p mt-3"
                      data-bs-toggle="modal" data-bs-target="#create_employee">
@@ -168,16 +168,7 @@
                                          onclick="resetUserPassword('${email}')">
                                         Отправить пароль на email
                                       </a>
-                                      <div class="pas cursor-p mt-2">
-                                          <span class="text-grey fs-14"><img src="/images/Show.svg" alt=""
-                                                                             class="pe-2 img_pas">Пароль</span>
-                                          <div class="input-group mb-3 mt-2 copy_box" style="width: max-content;">
-                                              <input type="text" class="form-control form-copy"
-                                                     value="${password}" size="8" aria-describedby="button-addon2" readonly>
-                                              <button id="copy" class="btn copy_btn" type="button"
-                                                      id="button-addon2"></button>
-                                          </div>
-                                      </div>
+
                                   </div>
                               </div>
                           </div>
@@ -259,15 +250,15 @@
                     <form id="update_user_form" onsubmit="updateUser(${id});return false;">
                         <div class="mb-3">
                             <label for="name" class="form-label">ФИО</label>
-                            <input type="text" class="form-control" id="name" name="name" value="${name}" placeholder="Ввод...">
+                            <input type="text" class="form-control" required id="name" name="name" value="${name}" placeholder="Ввод...">
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="@{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}"
+                            <input placeholder="Ввод..." type="email" class="form-control" id="email" name="email" required value="@{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}"
                         </div>
                         <div class="mb-3">
                             <label for="login" class="form-label">Логин</label>
-                            <input type="text" class="form-control" id="login" name="login" value="${login}" placeholder="Ввод...">
+                            <input type="text" class="form-control" required id="login" name="login" value="${login}" placeholder="Ввод...">
                         </div>
                         <div class="mb-3">
                             <label for="phone" class="form-label">Номер телефона</label>
@@ -292,7 +283,7 @@
                             </select>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
+                            <button type="submit" class="btn btn-secondary fs-14 text-grey py-1">
                                 Применить
                             </button>
                             <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
@@ -330,12 +321,12 @@
             <div class="mb-3 pt-4">
                 <label for="fio">ФИО</label>
                 <input type="text" name="name" class="form-control fs-16 fw-400 mt-1 text-black" id="fio"
-                       value="${name}">
+                       value="${name}" required>
             </div>
             <div class="mb-3">
-                <label for="email">Email-адрес</label>
-                <input type="text" name="email" class="form-control fs-16 fw-400 mt-1 text-black" id="email"
-                       value="@{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}">
+                <label for="email">Email</label>
+                <input type="email" name="email" class="form-control fs-16 fw-400 mt-1 text-black" id="email"
+                       value="@{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}" required>
             </div>
             <div class="mb-3">
                 <label for="email">Дата рождения </label>
@@ -352,12 +343,12 @@
             <div class="mb-3">
                 <label for="email">Номер телефона</label>
                 <input type="text" name="phone" class="form-control fs-16 fw-400 mt-1 text-black"
-                       value="${phone}">
+                       value="${phone}" placeholder="+7-999-999-99-99">
             </div>
             <div class="mb-3">
                 <label for="email">Логин</label>
                 <input type="text" name="login" class="form-control fs-16 fw-400 mt-1 text-black"
-                       value="${login}">
+                       value="${login}" required>
             </div>
 
             <div class="mb-3">

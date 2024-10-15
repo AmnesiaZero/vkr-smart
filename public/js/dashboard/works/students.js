@@ -178,3 +178,31 @@ $(function () {
         console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
     });
 });
+
+
+function resetStudentSearch() {
+    // Очищаем сохраненные данные в localStorage, если необходимо
+    localStorage.setItem('selected_years', '');
+    localStorage.setItem('selected_faculties', '');
+    localStorage.setItem('selected_departments', '');
+
+    // Очищаем содержимое элемента с классом 'out-kod', если он есть
+    $(".out-kod").empty();
+
+    // Сброс текстовых полей
+    $("input[name='student']").val('');  // ФИО обучающегося
+    $("input[name='work_type']").val(''); // Тип работы
+    $("input[name='name']").val('');      // Название работы
+    $('input[name="daterange"]').val(''); // Период загрузки работ
+
+    // Сброс выпадающих списков (select)
+    $("select[name='state']").val('0').trigger('change'); // Сброс статуса работы на "Ожидает одобрения"
+    $("select[name='specialty_id']").val(null).trigger('change'); // Сброс УГНП
+    $("select[name='delete_type']").val('2').trigger('change');   // Отображать все работы
+
+    // Применяем сброс для всех элементов формы
+    $('#search_form')[0].reset();
+
+    // Обновляем результаты (вызываем нужную функцию)
+    works(); // Эта функция должна обновлять данные после сброса
+}

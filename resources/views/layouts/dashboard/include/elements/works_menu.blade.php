@@ -10,11 +10,11 @@
                 <table class="table table-bordered table-mini">
                     <thead>
                     <tr>
-                        <th>Наименование работы (тип работы)</th>
-                        <th>Дата защиты</th>
-                        <th>Оценка</th>
-                        <th>Самопроверка</th>
-                        <th>Проверка ВКР-СМАРТ.РФ</th>
+                        <th class="align-middle">Наименование работы (тип работы)</th>
+                        <th class="align-middle">Дата защиты</th>
+                        <th class="align-middle">Оценка</th>
+                        <th class="align-middle">Самопроверка</th>
+                        <th class="align-middle">Проверка ВКР-СМАРТ.РФ</th>
                     </tr>
                     </thead>
                     <tbody id="works_list">

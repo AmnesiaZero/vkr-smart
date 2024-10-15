@@ -243,13 +243,31 @@ function userDepartments(userId) {
 }
 
 function createEmployee() {
-    let data = $("#create_employee_form").serialize();
+    let form = $("#create_employee_form");
+
+    // Проверка валидации формы
+    if (form[0].checkValidity() === false) {
+        // Показываем ошибки валидации
+        form[0].reportValidity();
+        return; // Останавливаем выполнение, если форма не валидна
+    }
+
+    // Сериализуем данные формы
+    let data = form.serialize();
+
+    // Добавляем дополнительные данные
     const additionalData = {
         role: 'employee',
     };
     data += '&' + $.param(additionalData);
+
+    // Вызов функции для отправки данных
     createUser(data);
+
+    // Закрытие модального окна после успешной отправки данных
+    $('#create_employee').modal('hide');
 }
+
 
 
 function getDepartmentInfo(id) {
@@ -276,12 +294,30 @@ function getDepartmentInfo(id) {
 
 
 function createAdmin() {
-    let data = $("#create_admin_form").serialize();
+    // Получаем форму
+    let form = $("#create_admin_form");
+
+    // Проверяем, прошла ли форма валидацию
+    if (form[0].checkValidity() === false) {
+        // Показать ошибки валидации, если они есть
+        form[0].reportValidity();
+        return; // Останавливаем выполнение функции, если валидация не пройдена
+    }
+
+    // Если валидация пройдена, сериализуем данные
+    let data = form.serialize();
+
+    // Добавляем дополнительные данные
     const additionalData = {
         role: 'admin',
     };
     data += '&' + $.param(additionalData);
+
+    // Вызываем функцию для создания пользователя
     createUser(data);
+
+    // Программно закрываем модалку
+    $('#create_admin').modal('hide');
 }
 
 function createUser(data) {
@@ -304,7 +340,7 @@ function createUser(data) {
                 // Вставляем созданный HTML
                 $("#users_list").append(html);
 
-
+                $.notify("Пользователь успешно создан", "success");
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -361,8 +397,6 @@ function editUserModal(id) {
                 const updatedContent = $("#update_user_tmpl").tmpl(user);
                 updateModal.replaceWith(updatedContent);
 
-                // $('#update_user .selectpicker').empty();
-                // $('#update_user .selectpicker').selectpicker('destroy');
                 $('#update_user .selectpicker').selectpicker();
 
                 const modalElement = new bootstrap.Modal(document.getElementById('update_user'));
@@ -448,12 +482,26 @@ function openAddDepartmentModal(userId) {
 
 
 function addDepartment() {
-    let data = $("#add_department_form").serialize();
+    let form = $("#add_department_form");
+
+    // Проверка валидации формы
+    if (form[0].checkValidity() === false) {
+        // Показываем ошибки валидации
+        form[0].reportValidity();
+        return; // Останавливаем выполнение, если форма не валидна
+    }
+
+    // Сериализуем данные формы
+    let data = form.serialize();
     const userId = localStorage.getItem('user_id');
+
+    // Добавляем дополнительные данные
     const additionalData = {
         user_id: userId
-    }
+    };
     data += '&' + $.param(additionalData);
+
+    // Отправка данных через AJAX
     $.ajax({
         url: "/dashboard/users/add-department",
         data: data,
@@ -468,10 +516,12 @@ function addDepartment() {
                 const userHtml = $("#user_" + userId);
                 const updatedContent = $("#user_tmpl").tmpl(user);
                 userHtml.replaceWith(updatedContent);
+
+                // Закрытие модального окна после успешного выполнения
+                $('#add_department').modal('hide');
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
-
         },
         error: function () {
             $.notify("Произошла ошибка при редактировании пользователя", "error");

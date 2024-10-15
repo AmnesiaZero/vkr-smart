@@ -8,30 +8,28 @@
                 <form method="post" id="create_admin_form" class="d-flex flex-column gap-2"
                       onsubmit="createAdmin();return false;">
 
-                    <div class="d-flex flex-column gap-3">
-                        <div class="row justify-items-center">
+                    <div class="d-flex flex-column gap-3"><div class="row justify-items-center">
                             <label class="col-sm-4">ФИО</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="name" required="" placeholder="Ввод...">
+                                <input type="text" class="form-control" name="name" required placeholder="Ввод...">
                             </div>
                         </div>
                         <div class="row justify-items-center">
                             <label class="col-sm-4">Email</label>
                             <div class="col-sm-8">
-                                <input type="email" class="form-control" name="email" required="" placeholder="Ввод...">
+                                <input type="email" class="form-control" name="email" required placeholder="Ввод...">
                             </div>
                         </div>
                         <div class="row justify-items-center">
                             <label class="col-sm-4">Логин</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="login" required="" placeholder="Ввод...">
+                                <input type="text" class="form-control" name="login" required placeholder="Ввод...">
                             </div>
                         </div>
                         <div class="row justify-items-center">
                             <label class="col-sm-4">Пароль</label>
                             <div class="col-sm-8">
-                                <input type="password" class="form-control" name="password" required=""
-                                       placeholder="Ввод...">
+                                <input type="password" class="form-control" name="password" required placeholder="Ввод...">
                             </div>
                         </div>
                         <div class="row justify-items-center">
@@ -67,11 +65,10 @@
                     </div>
 
                     <div class="modal-footer br-none pe-0">
-                        <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
+                        <button type="submit" class="btn btn-secondary fs-14 text-grey py-1">
                             Применить
                         </button>
-                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
-                                data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1" data-bs-dismiss="modal">
                             Закрыть
                         </button>
                     </div>

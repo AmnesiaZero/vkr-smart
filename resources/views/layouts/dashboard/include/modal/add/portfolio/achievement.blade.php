@@ -10,8 +10,7 @@
                         <div class="row align-items-start">
                             <label class="col-sm-4 fs-16 fw-500">Введите наименование достижения</label>
                             <div class="col-sm-8">
-                                <input type="text" name="name" class="form-control fullwidth" required=""
-                                       placeholder="Ввод...">
+                                <input type="text" name="name" class="form-control fullwidth" required="" placeholder="Ввод...">
                             </div>
                         </div>
                         <div class="row align-items-start">
@@ -35,13 +34,11 @@
                                     <option value="2">Начальное общее образование</option>
                                     <option value="3">Основное общее образование</option>
                                     <option value="4">Среднее общее образование</option>
-                                    <option value="" class="boldoption" disabled="">Профессиональное образование
-                                    </option>
+                                    <option value="" class="boldoption" disabled="">Профессиональное образование</option>
                                     <option value="5">Среднее профессиональное образование</option>
                                     <option value="6">Высшее образование - бакалавриат</option>
                                     <option value="7">Высшее образование - специалитет, магистратура</option>
-                                    <option value="8">Высшее образование - подготовка кадров высшей квалификации
-                                    </option>
+                                    <option value="8">Высшее образование - подготовка кадров высшей квалификации</option>
                                 </select>
                             </div>
                         </div>
@@ -49,7 +46,7 @@
                             <label class="col-sm-4 fs-16 fw-500">Введите описание</label>
                             <div class="col-sm-8">
                                 <textarea row align-items-centers="8" name="description" class="form-control fullwidth"
-                                          placeholder="Ввод..."></textarea>
+                                          placeholder="Ввод..." required></textarea>
                             </div>
                         </div>
                         <div class="row align-items-start">
@@ -71,7 +68,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1" data-bs-dismiss="modal">
+                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1">
                         Добавить достижение
                     </button>
                     <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"

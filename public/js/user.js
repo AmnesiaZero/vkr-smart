@@ -1,10 +1,23 @@
 function updateUser(id) {
-    let data = $("#update_user_form").serialize();
-    let additionalData = {
-        id: id,
-    };
+    // Проверяем, прошла ли форма валидацию
+    let form = $("#update_user_form");
+
+    if (form[0].checkValidity() === false) {
+        form[0].reportValidity(); // Показать сообщение браузера о валидации
+        return; // Останавливаем выполнение, если валидация не пройдена
+    }
+
+    // Если валидация успешна, сериализуем данные
+    let data = form.serialize();
+    let additionalData = { id: id };
     data += '&' + $.param(additionalData);
+
+    // Выполняем основное действие
     updateUserCore(id, data);
+
+    // Программно закрываем модалку
+    $('#update_user').modal('hide');
+    console.log(123)
 }
 
 function blockUser(id) {
@@ -39,6 +52,7 @@ function updateUserCore(id, data) {
                 const userHtml = $("#user_" + id);
                 const updatedContent = $("#user_tmpl").tmpl(user);
                 userHtml.replaceWith(updatedContent);
+                $.notify("Пользователь успешно изменен", "success");
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }

@@ -6,8 +6,7 @@
         <div id="ajax-content">
             <div class="row mt-4">
                 <div class="col-sm-6" id="code_registration">
-                    <form class="form-horizontal d-flex flex-column gap-2" id="registration_form"
-                          onsubmit="registration(); return false;">
+                    <form class="form-horizontal d-flex flex-column gap-2" id="registration_form" onsubmit="registration(); return false;">
                         <div class="row">
                             <div class="col-auto">
                                 <label class="form-label">
@@ -45,7 +44,7 @@
                             </label>
                             <div class="col-sm-8">
                                 <select class="selectpicker form-control" id="years_list" name="year_id"
-                                        title="Выбрать...">
+                                        title="Выбрать..." required>
                                 </select>
                             </div>
                         </div>
@@ -56,7 +55,7 @@
                             </label>
                             <div class="col-sm-8">
                                 <select class="selectpicker form-control" id="faculties_list" name="faculty_id"
-                                        title="Выбрать...">
+                                        title="Выбрать..." required>
                                 </select>
                             </div>
                         </div>
@@ -68,7 +67,7 @@
                             <div class="col-sm-8">
                                 @if($code->type==1)
                                     <select class="selectpicker form-control" id="departments_list" name="department_id"
-                                            title="Выбрать...">
+                                    title="Выбрать..." required>
                                     </select>
                                 @else
                                     <select name="departments_ids[]" id="departments_list_multiple"
@@ -89,7 +88,7 @@
                                 </label>
                                 <div class="col-sm-8">
                                     <select class="selectpicker form-control" name="specialty_id"
-                                            id="programs_specialties_list" title="Выбрать...">
+                                            id="programs_specialties_list" title="Выбрать..." required>
                                     </select>
                                 </div>
                             </div>
@@ -100,7 +99,7 @@
                                 </label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" name="group"
-                                           placeholder="Уточните группу, в которой вы обучаетесь..." required="">
+                                           placeholder="Уточните группу, в которой вы обучаетесь..." required>
                                 </div>
                             </div>
                         @endif
@@ -108,7 +107,7 @@
                         <div class="row">
                             <label class="form-label col-sm-4"><span class="fs-16">Укажите ваше ФИО:</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="name" placeholder="ФИО" required="">
+                                <input type="text" class="form-control" name="name" placeholder="ФИО" required>
                             </div>
                         </div>
 
@@ -133,7 +132,7 @@
                                 <span class="fs-16">Пол</span>
                             </label>
                             <div class="col-sm-8">
-                                <select name="gender" class="selectpicker form-control">
+                                <select name="gender" class="selectpicker form-control" required>
                                     <option value="1">Муж.</option>
                                     <option value="2">Жен.</option>
                                 </select>
@@ -145,9 +144,9 @@
                                 <span class="fs-16">Укажите ваш email-адрес:</span>
                             </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="email"
-                                       placeholder="Необходимо для формирования логина..."
-                                       required="">
+                                <input type="email" class="form-control" name="email"
+                                       placeholder="Ввод..."
+                                       required>
                             </div>
                         </div>
 
@@ -158,7 +157,7 @@
                             <div class="col-sm-8">
                                 <input type="password" id="password" class="form-control" name="password"
                                        placeholder="Не менее 8 символов..."
-                                       required="" aria-autocomplete="list">
+                                       required aria-autocomplete="list">
                             </div>
                         </div>
 
@@ -169,7 +168,7 @@
                             <div class="col-sm-8">
                                 <input type="password" id="repassword" class="form-control" name="repassword"
                                        placeholder="Подтвердите пароль"
-                                       required="">
+                                       required>
                             </div>
                         </div>
 
@@ -183,7 +182,7 @@
                     </form>
                 </div>
 
-                <div class="col-sm-6">
+                <div class="col-sm-6" id="welcome-message">
                     <blockquote>
                         <p>Добро пожаловать в систему персональной регистрации пользователей комплекса систем хранения и
                             проверок на
@@ -199,62 +198,66 @@
                             перемещены на
                             форму входа.</p>
                         <div class="text-end">
-                            <a href="/login" class="btn btn-primary btn-block">Авторизация</a>
+                            <a href="/login" class="btn btn-primary btn-block">Авторизоваться</a>
                         </div>
                     </blockquote>
                 </div>
 
-                <div id="success_registration">
-                </div>
+                <div id="success_registration"></div>
             </div>
         </div>
     </div>
 
 @endsection
 
-@section('scripts')
+            @section('scripts')
 
-    <script id="year_tmpl" type="text/x-jquery-tmpl">
+                <script id="year_tmpl" type="text/x-jquery-tmpl">
                     <option value="${id}" onclick="faculties(${id})">${year}</option>
 
 
 
+                </script>
 
-    </script>
-
-    <script id="faculty_tmpl" type="text/x-jquery-tmpl">
+                <script id="faculty_tmpl" type="text/x-jquery-tmpl">
                     <option value="${id}">${name}</option>
 
 
 
-
-    </script>
-    <script id="program_specialty_tmpl" type="text/x-jquery-tmpl">
+                </script>
+                <script id="program_specialty_tmpl" type="text/x-jquery-tmpl">
                 <option value="${id}">${code}|${name}</option>
 
+                </script>
 
-    </script>
-
-    <script id="department_list_tmpl" type="text/x-jquery-tmpl">
+                <script id="department_list_tmpl" type="text/x-jquery-tmpl">
                     <option value="${id}">${name}</option>
 
+                </script>
 
-    </script>
+                <script id="success_registration_tmpl" type="text/x-jquery-tmpl">
+                    <div class="alert px-0">
+                        <p>Вы успешно прошли регистрацию в комплексе систем по размещению и проверке работ на заимствования.</p>
 
-    <script id="success_registration_tmpl" type="text/x-jquery-tmpl">
-                    <div class="alert alert-success">
-                    <p>Вы успешно прошли регистрацию в комплексе систем по размещению и проверке работ на заимствования.</p>
-                    <p>Ваши учетные данные для авторизации на платформе:</p>
-                    <p>Имя пользователя: <strong id="reg-name">${login}</strong>
-                    </p><p>Пароль: <strong id="reg-password"></strong>
-                   </p>
-                   <p>Данные также были отправлены на адрес Вашей электронной почты.</p>
-                   <p><a href="/login" class="btn btn-lg btn-success">Авторизоваться по логину и паролю</a></p>
-                   </div>
+                        <p>Ваши учетные данные для авторизации на платформе:</p>
 
+                        <p>
+                            Имя пользователя:
+                            <strong id="reg-name">${login}</strong>
+                        </p>
+                        <p>
+                            Пароль: <strong id="reg-password"></strong>
+                        </p>
 
-    </script>
+                        <p>Данные также были отправлены на адрес Вашей электронной почты.</p>
 
-    <script src="/js/site/code-register.js"></script>
+                        <p class="mt-5">
+                            <a href="/login" class="btn btn-primary btn-block">Авторизоваться по логину и паролю</a>
+                        </p>
+                    </div>
+
+                </script>
+
+                <script src="/js/site/code-register.js"></script>
 @endsection
 

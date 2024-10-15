@@ -6,6 +6,10 @@
     font-size: 50px !important;
 }
 
+.offcanvas-end {
+    width: 600px;
+}
+
 .vertical-align-middle {
     vertical-align: middle;
 }
@@ -616,7 +620,7 @@ label {
 }
 
 .menu {
-    height: 160.7vh;
+    height: max(100%, 160vh);
     border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
