@@ -31,7 +31,7 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">SECRET KEY</label>
                         <div class="password">
-                            <input type="password" id="secret_key" class="form-control bg-grey-form"
+                            <input type="text" id="secret_key" class="form-control bg-grey-form"
                                    name="secret_key"
                                    value="{{$organization->secret_key}}" readonly>
                             <a href="#" class="password-control" onclick="return show_hide_password(this);"></a>

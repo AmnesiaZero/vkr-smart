@@ -391,7 +391,7 @@
             </script>
             <script id="undeleted_menu_tmpl" type="text/x-jquery-tmpl">
         <div class="d-flex cursor-p mb-2">
-        <img src="/images/copy.svg" alt="" class="pe-2">
+        <img src="/images/Copy.svg" alt="" class="pe-2">
         <p class="fs-14 lh-17 text-grey m-0" onclick="copyWork()">Сделать копию записи без создания файлов</p>
     </div>
     <div class="d-flex cursor-p mb-2">
