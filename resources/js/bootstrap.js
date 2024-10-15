@@ -30,6 +30,7 @@ window.Echo = new Echo({
     disableStats: true,
     forceTLS: true,
 
+
     wsHost: window.location.hostname,
     wsPort: 6001,
     wssPort: 443, // Порт для WSS (опционально)
