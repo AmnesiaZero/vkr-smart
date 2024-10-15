@@ -325,7 +325,7 @@
                                     <li>Оригинальность текста документа: <strong id="borrowings_percent" class="ng-binding">${unique_percent}%</strong></li>
                                 </ul>
                                 <ul>
-                                    <li>Код справки: <strong id="check_code" class="ng-binding">${id}-${check_code}%</strong></li>
+                                    <li>Код справки: <strong id="check_code" class="ng-binding">${id}-${check_code}</strong></li>
                                 </ul>
                             </li>
                         </ol>
@@ -343,10 +343,10 @@
                             @{{each report_assets}}
                             <tr>
                                 <td>
-                                    <a  class="ng-binding fs-14">${name}</a>
+                                    <a target="_blank" class="ng-binding fs-14" href="${link}">${name}</a>
                                 </td>
                                 <td>
-                                    <a target="_blank" href="${link}" class="ng-binding"></a>
+                                    <a target="_blank" href="${link}" class="ng-binding">${link}</a>
                                 </td>
                                 <td>
                                     Интернет
