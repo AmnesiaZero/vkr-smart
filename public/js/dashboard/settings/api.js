@@ -2,7 +2,7 @@ function generateApiKey() {
     console.log('Вошёл в функцию открытия canvas');
     const data = $("#generate_key_form").serialize();
     $.ajax({
-        url: "/dashboard/users/jwt/generate",
+        url: "/dashboard/organizations/jwt/generate",
         data: data,
         type: "POST",
         dataType: "json",
@@ -11,8 +11,8 @@ function generateApiKey() {
         },
         success: function (response) {
             if (response.success) {
-                const data = response.data;
-                $("#token_container").html($("#jwt_tmpl").tmpl(data));
+                const secretKey = response.data.secret_key;
+                $("#secret_key").val(secretKey);
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }

@@ -347,7 +347,7 @@ function showFacultyEditBlock(facultyId) {
     $('#edit_block_faculty_' + facultyId).toggleClass('d-block');
 }
 
-function facultyDepartments(facultyId) {
+function departments(facultyId) {
     console.log('Вошёл в faculties');
 
     //Подсвечивание активного элемента
@@ -363,12 +363,12 @@ function facultyDepartments(facultyId) {
         },
         success: function (response) {
             localStorage.setItem('faculty_id', facultyId);
-            const facultyDepartments = response.data.departments;
+            const departments = response.data.departments;
             console.log('fac departments');
-            console.log(facultyDepartments);
-            const facultyDepartmentsList = $("#departments_list");
-            facultyDepartmentsList.empty();
-            facultyDepartmentsList.html($("#department_tmpl").tmpl(facultyDepartments));
+            console.log(departments);
+            const departmentsList = $("#departments_list");
+            departmentsList.empty();
+            departmentsList.html($("#department_tmpl").tmpl(departments));
             console.log('Дошёл');
             $("#departments_container").css('display', 'block');
         },
@@ -435,14 +435,14 @@ function openUpdateDepartmentModal(id) {
         success: function (response) {
             if (response.success) {
                 const department = response.data.department;
-                $("#tmpl_container").html($("#update_year_tmpl").tmpl(year));
-                const modalElement = new bootstrap.Modal(document.getElementById('update_year'));
+                $("#tmpl_container").html($("#update_department_tmpl").tmpl(department));
+                const modalElement = new bootstrap.Modal(document.getElementById('update_department'));
                 modalElement.show();
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function (response) {
+        error: function () {
             $.notify("Возникла ошибка при редактировании года", "error");
         }
     });
@@ -823,38 +823,69 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function () {
-    $('#specialties_list').change(function () {
-        const specialtyId = $(this).val();
-        const programId = localStorage.getItem('program_id');
-        const data = {
-            specialty_id: specialtyId,
-            program_id: programId
-        };
-        $.ajax({
-            url: "/dashboard/organizations/programs/specialties/create",
-            dataType: "json",
-            type: "POST",
-            data: data,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-                if (response.success) {
-                    const programSpecialty = response.data.program_specialty;
-                    $(".specialties_table").append($("#specialty_tmpl").tmpl(programSpecialty));
-                    $.notify("Профиль успешно обновлен", "success");
-                } else {
-                    $.notify(response.data.title + ":" + response.data.message, "error");
-                }
-            },
-            error: function () {
-                $.notify("Ошибка при обновлении профиля. Обратитесь к системному администратору", "error");
-            }
-        });
+// $(document).ready(function () {
+//     $('#specialties_list').change(function () {
+//         const specialtyId = $(this).val();
+//         const programId = localStorage.getItem('program_id');
+//         const data = {
+//             specialty_id: specialtyId,
+//             program_id: programId
+//         };
+//         $.ajax({
+//             url: "/dashboard/organizations/programs/specialties/create",
+//             dataType: "json",
+//             type: "POST",
+//             data: data,
+//             headers: {
+//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//             },
+//             success: function (response) {
+//                 if (response.success) {
+//                     const programSpecialty = response.data.program_specialty;
+//                     $(".specialties_table").append($("#specialty_tmpl").tmpl(programSpecialty));
+//                     $.notify("Профиль успешно обновлен", "success");
+//                 } else {
+//                     $.notify(response.data.title + ":" + response.data.message, "error");
+//                 }
+//             },
+//             error: function () {
+//                 $.notify("Ошибка при обновлении профиля. Обратитесь к системному администратору", "error");
+//             }
+//         });
+//
+//     });
+// });
 
+function addSpecialty()
+{
+    let data = $("#specialties_form").serialize();
+    const programId = localStorage.getItem('program_id');
+    const additionalData = {
+        program_id: programId
+    };
+    data+='&' + $.param(additionalData);
+    $.ajax({
+        url: "/dashboard/organizations/programs/specialties/create",
+        dataType: "json",
+        type: "POST",
+        data: data,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (response) {
+            if (response.success) {
+                const programSpecialty = response.data.program_specialty;
+                $(".specialties_table").append($("#specialty_tmpl").tmpl(programSpecialty));
+                $.notify("Профиль успешно обновлен", "success");
+            } else {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function () {
+            $.notify("Ошибка при обновлении профиля. Обратитесь к системному администратору", "error");
+        }
     });
-});
+}
 
 function createProgramSpecialty() {
     let data = $("#create_program_specialty").serialize();

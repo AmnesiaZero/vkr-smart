@@ -47,6 +47,20 @@ class OrganizationsController extends Controller
         return view('templates.dashboard.settings.organizations_structure');
     }
 
+    public function generateApiKey(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required', 'integer', Rule::exists('users', 'id')],
+            'api_key' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        $apiKey = $request->api_key;
+        return $this->organizationsService->generateApiKey($id, $apiKey);
+    }
+
     public function view(Request $request)
     {
         $validator = Validator::make($request->all(), [

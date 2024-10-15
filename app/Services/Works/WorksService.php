@@ -433,6 +433,7 @@ class WorksService extends Services
         $report->get($documentId);
         $unique = $report->getUnique();
         Log::debug('unique = ' . $unique);
+        $checkCode =
         $data = [
             'report_status' => 1,
             'unique_percent' => $unique

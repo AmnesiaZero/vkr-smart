@@ -435,31 +435,6 @@ class UsersService extends Services
         return view('templates.dashboard.settings.user_management', ['years' => $years]);
     }
 
-    public function generateApiKey(int $id, string $apiKey, string $secretKey): JsonResponse
-    {
-        if (config('jwt.api_key') != $apiKey) {
-            return self::sendJsonResponse(false, [
-                'title' => 'Ошибка',
-                'message' => 'Неккоректный API ключ'
-            ]);
-        }
-        $you = Auth::user();
-        if ($you->secret_key != $secretKey) {
-            return self::sendJsonResponse(false, [
-                'title' => 'Ошибка',
-                'message' => 'Неккоректный secret key'
-            ]);
-        }
-        $payload = [
-            'user_id' => $id,
-            'expires_at' => time() + config('jwt.ex')
-        ];
-        $token = JWT::encode($payload, $secretKey, config('jwt.alg'));
-        return self::sendJsonResponse(true, [
-            'title' => 'Успешно',
-            'token' => $token
-        ]);
-    }
 
     public function teachersPortfoliosView()
     {
