@@ -47,6 +47,9 @@ Route::get('/', function () {
 Route::group([
     'prefix' => 'about'
 ], function () {
+    Route::get('how_use', function () {
+       return view('templates.site.about.how_use');
+    });
 
     Route::get('storage', function () {
         return view('templates.site.about.storage');
