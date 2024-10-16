@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\RedirectHelper;
 use App\Helpers\ValidatorHelper;
+use App\Models\User;
 use App\Services\Users\UsersService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -69,6 +71,12 @@ class UsersController extends Controller
         return $this->usersService->index($data);
     }
 
+    public function dashboard()
+    {
+        $you = Auth::user();
+        return RedirectHelper::userDashboard($you);
+    }
+
     public function addView()
     {
         return $this->usersService->addView();
@@ -90,21 +98,11 @@ class UsersController extends Controller
                 return back()->withErrors(['Вы заблокированы']);
             }
             $request->session()->regenerate();
-
-            if ($user->hasRole('admin')) {
-                return redirect('/dashboard/settings/organizations-structure');
-            } else if ($user->hasRole('employee')) {
-                return redirect('/dashboard/profile');
-            } else if ($user->hasRole('inspector')) {
-                return redirect('/dashboard/works/employees');
-            } else if ($user->hasRole('platformadmin')) {
-                return redirect('/dashboard/platform');
-            } else {
-                return redirect('/dashboard/personal-cabinet');
-            }
+            return RedirectHelper::userDashboard($user);
         }
         return back()->withErrors(['Предоставленные данные были некорректными']);
     }
+
 
 
     public function logout(Request $request)

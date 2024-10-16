@@ -149,6 +149,8 @@ Route::group([
     'prefix' => 'dashboard',
     'middleware' => ['web', 'auth']
 ], function () {
+
+    Route::get('/',[UsersController::class,'dashboard']);
     //личный кабинет для студентов и преподавателей,profile для сотрудников организации. Страницы там слишком разные,чтобы в одну вьюху вставлять
     Route::get('personal-cabinet', [UsersController::class, 'personalCabinetView']);
     Route::get('profile', [UsersController::class, 'profileView']);
@@ -387,6 +389,7 @@ Route::group([
             Route::post('restore', [DepartmentsController::class, 'restore'])->name('departments.restore');
             Route::get('by-user', [DepartmentsController::class, 'getByUserId']);
             Route::get('get-info', [DepartmentsController::class, 'find']);
+            Route::get('specialties',[DepartmentsController::class,'specialties']);
             Route::get('program-specialties', [DepartmentsController::class, 'getProgramSpecialties'])->withoutMiddleware(['web', 'auth']);;
         });
 

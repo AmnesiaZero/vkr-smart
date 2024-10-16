@@ -90,4 +90,15 @@ class EloquentDepartmentRepository implements DepartmentRepositoryInterface
         }
         return $query->paginate(config('pagination.per_page'), '*', 'page', $data['page']);
     }
+
+    public function specialties(array $departmentsIds)
+    {
+        $departments = Department::query()->whereIn('id',$departmentsIds)->get();
+        return $departments->flatMap(function ($department) {
+            return $department->programs->flatMap(function ($program) {
+                return $program->programSpecialties;
+            });
+        });
+
+    }
 }

@@ -146,6 +146,22 @@ class DepartmentsService extends Services
         ]);
     }
 
+    public function specialties(array $departmentsIds): JsonResponse
+    {
+        $specialties = $this->departmentRepository->specialties($departmentsIds);
+        if($specialties and is_iterable($specialties))
+        {
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'specialties' => $specialties
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'При поиске специальностей произошла ошибка'
+        ]);
+    }
+
     public function getProgramSpecialties(int $id): JsonResponse
     {
         $programSpecialties = $this->departmentRepository->getProgramSpecialties($id);

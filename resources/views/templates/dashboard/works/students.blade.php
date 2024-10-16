@@ -148,7 +148,7 @@
                 </ul>
             </nav>
         </div>
-        @include('layouts.dashboard.include.modal.add.works.admin')
+        @include('layouts.dashboard.include.modal.add.works.others')
         @include('layouts.dashboard.include.modal.update.work_specialty')
         @include('layouts.dashboard.include.modal.other.additional_file')
         @include('layouts.dashboard.include.modal.add.import-work')
@@ -161,58 +161,114 @@
             <script src="{{'/js/bootstrap-select.js'}}"></script>
             <script type="text/javascript"
                     src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-            <script id="work_tmpl" type="text/x-jquery-tmpl">
-            @{{if visibility & visibility==1}}
-                <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
-                    <th scope="row">
-                        @{{if specialty}}
-                            ${specialty.name}
-                        @{{else}}
-                            Не указано
-                        @{{/if}}
-                    </th>
-                    <td>${student}</td>
-                    <td>${group}</td>
-                    <td>${protect_date}</td>
-                    <td>${name} - ${work_type}</td>
-                    <td>${getAssessmentDescription(assessment)}</td>
-                    <td>${getSelfCheckDescription(self_check)}</td>
-                    <td>
-                        @{{if report_status==0}}
-                        <div class="mt-2">
-                        <span class="bg-waiting px-2 d-flex align-items-center">
-                        <div class="me-2 yellow-c">
-                        </div>
-                          В очереди на проверку
-                        </span>
-                        </div>
-                        @{{/if}}
-                        @{{if report_status==1}}
-                        <div class="mt-2" onclick="openReport(${id})">
-                        <span class="bg-active px-2 d-flex align-items-center">
-                        <div class="me-2 green-c">
-                        </div>
-                          Отчет
-                        </span>
-                        </div>
-                        @{{/if}}
-                        @{{if report_status==2}}
-                        <div>
-                            <span class="bg-error p-2 d-flex align-items-center gap-2">
-                                <span class="red-c"></span>
-                                Не&nbsp;проверена
-                            </span>
-                        </div>
-                        @{{/if}}
+            {{--            <script id="work_tmpl" type="text/x-jquery-tmpl">--}}
+            {{--            @{{if visibility & visibility==1}}--}}
+            {{--                <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>--}}
+            {{--                    <th scope="row">--}}
+            {{--                        @{{if specialty}}--}}
+            {{--                            ${specialty.name}--}}
+            {{--                        @{{else}}--}}
+            {{--                            Не указано--}}
+            {{--                        @{{/if}}--}}
+            {{--                    </th>--}}
+            {{--                    <td>${student}</td>--}}
+            {{--                    <td>${group}</td>--}}
+            {{--                    <td>${protect_date}</td>--}}
+            {{--                    <td>${name} - ${work_type}</td>--}}
+            {{--                    <td>${getAssessmentDescription(assessment)}</td>--}}
+            {{--                    <td>${getSelfCheckDescription(self_check)}</td>--}}
+            {{--                    <td>--}}
+            {{--                        @{{if report_status==0}}--}}
+            {{--                        <div class="mt-2">--}}
+            {{--                        <span class="bg-waiting px-2 d-flex align-items-center">--}}
+            {{--                        <div class="me-2 yellow-c">--}}
+            {{--                        </div>--}}
+            {{--                          В очереди на проверку--}}
+            {{--                        </span>--}}
+            {{--                        </div>--}}
+            {{--                        @{{/if}}--}}
+            {{--                        @{{if report_status==1}}--}}
+            {{--                        <div class="mt-2" onclick="openReport(${id})">--}}
+            {{--                        <span class="bg-active px-2 d-flex align-items-center">--}}
+            {{--                        <div class="me-2 green-c">--}}
+            {{--                        </div>--}}
+            {{--                          Отчет--}}
+            {{--                        </span>--}}
+            {{--                        </div>--}}
+            {{--                        @{{/if}}--}}
+            {{--                        @{{if report_status==2}}--}}
+            {{--                        <div>--}}
+            {{--                            <span class="bg-error p-2 d-flex align-items-center gap-2">--}}
+            {{--                                <span class="red-c"></span>--}}
+            {{--                                Не&nbsp;проверена--}}
+            {{--                            </span>--}}
+            {{--                        </div>--}}
+            {{--                        @{{/if}}--}}
 
-                    </td>
-                    <td>
-                        <img src="/images/three_dots.svg" alt="" id="work-menu-button" class="btn-info-box cursor-p dropdown-toggle"
-                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        @include('layouts.dashboard.include.menu.work.student')
-                    </td>
-                </tr>
-            @{{/if}}
+            {{--                    </td>--}}
+            {{--                    <td>--}}
+            {{--                        <img src="/images/three_dots.svg" alt="" id="work-menu-button" class="btn-info-box cursor-p dropdown-toggle"--}}
+            {{--                        type="button" data-bs-toggle="dropdown" aria-expanded="false">--}}
+            {{--                        @include('layouts.dashboard.include.menu.work.student')--}}
+            {{--                    </td>--}}
+            {{--                </tr>--}}
+            {{--            @{{/if}}--}}
+            {{--            </script>--}}
+
+
+            <script id="work_tmpl" type="text/x-jquery-tmpl">
+{{--      @{{if visibility==1}}--}}
+                <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
+               <th scope="row">@{{if specialty}}
+                                           ${specialty.name}
+                                           @{{else}}
+                                           Не указан
+                                           @{{/if}}
+                                           </th>
+               <td>${student}</td>
+               <td>${group}</td>
+               <td>${protect_date}</td>
+               <td>${name} - ${work_type}</td>
+               <td>${getAssessmentDescription(assessment)}</td>
+               <td>${getSelfCheckDescription(self_check)}</td>
+                   <td>
+                       @{{if report_status==0}}
+                       <div class="mt-2">
+                       <span class="bg-waiting px-2 d-flex align-items-center">
+                       <div class="me-2 yellow-c">
+                       </div>
+                         В очереди на проверку
+                       </span>
+                       </div>
+                       @{{/if}}
+                       @{{if report_status==1}}
+                       <div class="mt-2" onclick="openReport(${id})">
+                           <span class="bg-active p-2 d-flex align-items-center cursor-p">
+                               <div class="me-2 green-c"></div>
+                               Отчет
+                           </span>
+                       </div>
+                       @{{/if}}
+                       @{{if report_status==2}}
+                       <div>
+                           <span class="bg-error p-2 d-flex align-items-center gap-2">
+                               <span class="red-c"></span>
+                               Не&nbsp;проверена
+                           </span>
+                       </div>
+                       @{{/if}}
+
+                   </td>
+                   <td>
+                       <img src="/images/three_dots.svg" alt="" id="work-menu-button" class="btn-info-box cursor-p dropdown-toggle"
+                       type="button" onclick="openInfoBox(${id})"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+@include('layouts.dashboard.include.menu.work.employee')
+                </td>
+            </tr>
+{{--            @{{/if}}--}}
+
+
             </script>
 
 
@@ -413,6 +469,7 @@
                 </div>
             </div>
 
+
             </script>
 
 
@@ -420,7 +477,7 @@
 
 
 
-    <script id="comment_tmpl" type="text/x-jquery-tmpl">
+            <script id="comment_tmpl" type="text/x-jquery-tmpl">
         <div id="comment_${id}" class="mb-3" style="border-bottom: 1px solid #ccc">
             <div class="row row-comment">
                 <div class="col-sm-12">
@@ -446,7 +503,8 @@
                 </div>
             </div>
         </div>
-    </script>
+
+            </script>
     @include('layouts.dashboard.include.tmpls.works_page')
 @endsection
 

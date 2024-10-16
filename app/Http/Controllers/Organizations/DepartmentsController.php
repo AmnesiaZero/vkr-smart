@@ -224,6 +224,18 @@ class DepartmentsController extends Controller
         return $this->departmentsService->find($id);
     }
 
+    public function specialties(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'departments_ids.*' => ['required', 'integer', Rule::exists('departments', 'id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $departmentsIds = $request->departments_ids;
+        return $this->departmentsService->specialties($departmentsIds);
+    }
+
 
     public function getProgramSpecialties(Request $request): JsonResponse
     {
