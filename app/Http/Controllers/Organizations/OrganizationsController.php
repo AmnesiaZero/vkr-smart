@@ -33,7 +33,8 @@ class OrganizationsController extends Controller
         'is_blocked',
         'redirect',
         'with_trashed',
-        'page'
+        'page',
+        'paginate'
     ];
 
     public function __construct(OrganizationsService $organizationsService)
