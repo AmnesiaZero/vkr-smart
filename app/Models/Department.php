@@ -46,6 +46,6 @@ class Department extends Model
 
     public function year(): HasOne
     {
-        return $this->hasOne(OrganizationYear::class, 'id', 'year_id');
+        return $this->hasOne(Year::class, 'id', 'year_id');
     }
 }

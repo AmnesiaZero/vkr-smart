@@ -14,7 +14,7 @@
                     </div>
                     @{{/if}}
                 </div>
-                <p>${name}</p>
+                <p>@{{if name_visibility==1}}${name}@{{else}}********(скрыто настройками приватности)</p>
                 <div class="border-left ps-3 mb-3">
                     <p class="text-grey fs-14 mb-1">Группа:
                         ${group}

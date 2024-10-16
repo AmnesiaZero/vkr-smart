@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Organizations;
 
 use App\Helpers\ValidatorHelper;
 use App\Http\Controllers\Controller;
-use App\Services\OrganizationsYears\OrganizationsYearsService;
+use App\Services\Years\YearsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -20,9 +20,9 @@ class OrganizationsYearsController extends Controller
         'students_count',
         'organization_id'
     ];
-    private OrganizationsYearsService $organizationYearsService;
+    private YearsService $organizationYearsService;
 
-    public function __construct(OrganizationsYearsService $yearsService)
+    public function __construct(YearsService $yearsService)
     {
         $this->organizationYearsService = $yearsService;
     }

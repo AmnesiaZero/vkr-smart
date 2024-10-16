@@ -162,7 +162,7 @@
                                       <p class="text-grey fs-14 pt-4">${date_of_birth}</p>
                                       <p class="text-grey fs-14">${phone}</p>
                                       <p class="text-grey fs-14 mb-0">
-                                          @{{if email_visibility==1}}${email}@{{else}} *******@*******@{{/if}}
+                                          @{{if email_visibility==1}} ${email}@{{else}}*******@*******@{{/if}}
                                       </p>
                                       <a href="#" class="text-grey link-active-hover fs-14"
                                          onclick="resetUserPassword('${email}')">

@@ -5,7 +5,7 @@ namespace App\Services\Reports;
 use App\Models\CustomRole;
 use App\Models\User;
 use App\Services\Decorations\Repositories\DecorationRepositoryInterface;
-use App\Services\OrganizationsYears\Repositories\OrganizationYearRepositoryInterface;
+use App\Services\Years\Repositories\YearRepositoryInterface;
 use App\Services\Services;
 use App\Services\Users\Repositories\UserRepositoryInterface;
 use App\Services\Works\Repositories\WorkRepositoryInterface;
@@ -17,15 +17,15 @@ use jeremykenedy\LaravelRoles\Models\Role;
 
 class ReportsService extends Services
 {
-    private OrganizationYearRepositoryInterface $yearRepository;
+    private YearRepositoryInterface $yearRepository;
 
     private UserRepositoryInterface $userRepository;
 
     private WorkRepositoryInterface $workRepository;
 
 
-    public function __construct(OrganizationYearRepositoryInterface $yearRepository,
-                                UserRepositoryInterface             $userRepository, WorkRepositoryInterface $workRepository
+    public function __construct(YearRepositoryInterface $yearRepository,
+                                UserRepositoryInterface $userRepository, WorkRepositoryInterface $workRepository
     )
     {
         $this->yearRepository = $yearRepository;

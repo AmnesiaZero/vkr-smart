@@ -13,7 +13,7 @@ use App\Models\Organization;
 use App\Services\Departments\Repositories\DepartmentRepositoryInterface;
 use App\Services\InviteCodes\Repositories\InviteCodeRepositoryInterface;
 use App\Services\Organizations\Repositories\OrganizationRepositoryInterface;
-use App\Services\OrganizationsYears\Repositories\OrganizationYearRepositoryInterface;
+use App\Services\Years\Repositories\YearRepositoryInterface;
 use App\Services\Roles\Repositories\RoleRepositoryInterface;
 use App\Services\Services;
 use App\Services\Users\Repositories\UserRepositoryInterface;
@@ -40,7 +40,7 @@ class UsersService extends Services
 
     private RoleRepositoryInterface $roleRepository;
 
-    private OrganizationYearRepositoryInterface $yearRepository;
+    private YearRepositoryInterface $yearRepository;
 
     private DepartmentRepositoryInterface $departmentRepository;
 
@@ -52,7 +52,7 @@ class UsersService extends Services
 
     public function __construct(UserRepositoryInterface         $userRepository, RoleRepositoryInterface $roleRepository,
                                 DepartmentRepositoryInterface   $departmentRepository, InviteCodeRepositoryInterface $inviteCodeRepository,
-                                OrganizationRepositoryInterface $organizationRepository, OrganizationYearRepositoryInterface $yearRepository)
+                                OrganizationRepositoryInterface $organizationRepository, YearRepositoryInterface $yearRepository)
     {
         $this->_repository = $userRepository;
         $this->roleRepository = $roleRepository;
@@ -64,25 +64,28 @@ class UsersService extends Services
 
     public function register(array $data)
     {
-        $you = Auth::user();
-        $id = $you->id;
         $codeId =(int )Cookie::get('invite_code_id');
+        Log::debug('code id = '.$codeId);
         $code = $this->inviteCodeRepository->find($codeId);
         if($code and $code->id)
         {
-            $data['organization_id'] = $code->organization_id;
-            $data['login'] = $data['email'];
-            if (!is_numeric($data['organization_id'])) {
-                return self::sendJsonResponse(false, [
-                    'title' => 'Ошибка',
-                    'message' => 'У вас некорректно задан id организации'
-                ]);
-            }
-            $result = $this->_repository->update($id,$data);
-            if($result)
+            $organizationId = $code->organization_id;
+            if (isset($organizationId) and is_numeric($organizationId) and $this->organizationRepository->exist($organizationId))
             {
-                $user = $this->_repository->find($id);
-                if ($user and $user->id) {
+                $data['organization_id'] = $organizationId;
+                if($code->type==1)
+                {
+                    $data['role'] = 'user';
+                }
+                else
+                {
+                    $data['role'] = 'teacher';
+                }
+                $data['login'] = $data['email'];
+
+                $user = $this->_repository->create($data);
+                if($user and $user->id)
+                {
                     $userId = $user->id;
 
                     $code->delete();
@@ -92,6 +95,12 @@ class UsersService extends Services
                         foreach ($departmentsIds as $id) {
                             $user->departments()->attach($id);
                         }
+                    }
+                    if(isset($data['role']))
+                    {
+                        $slug = $data['role'];
+                        $role = $this->roleRepository->find($slug);
+                        $user->attachRole($role);
                     }
                     $updatedUser = $this->_repository->find($userId);
                     return self::sendJsonResponse(true, [
@@ -321,40 +330,16 @@ class UsersService extends Services
         return redirect('home');
     }
 
-    public function loginByCode(int $codeId, int $code)
+
+
+    public function registerRedirect(int $codeId, int $code)
     {
         Log::debug('1 code id = '.$codeId);
         if ($this->inviteCodeRepository->login($codeId, $code)) {
             $code = $this->inviteCodeRepository->find($codeId);
             if($code and $code->id)
             {
-                $organizationId = $code->organization_id;
-                $data = [
-                    'organization_id' => $organizationId
-                ];
-                if($code->type==1)
-                {
-                    $data['role'] = 'user';
-                }
-                else
-                {
-                    $data['role'] = 'teacher';
-                }
-                $user = $this->_repository->create($data);
-                if ($user and $user->id) {
-                    if (isset($data['role']))
-                    {
-                        Log::debug('role = ' . $data['role']);
-                        $role = $this->roleRepository->find($data['role']);
-                        Log::debug('role eloquent = ' . $role);
-                    } else
-                    {
-                        $role = $this->roleRepository->find('user');
-                    }
-                    $user->attachRole($role);
-                    Auth::login($user);
-                    return redirect('/registration/by-code')->withCookie(Cookie::make('invite_code_id',$codeId));
-                }
+                return redirect('/registration/by-code')->withCookie(Cookie::make('invite_code_id',$codeId));
             }
         }
         return back()->withErrors(['Данный регистрационный код некорректен']);
@@ -413,7 +398,7 @@ class UsersService extends Services
         }
     }
 
-    public function registerByCodeView(int $codeId)
+    public function registerView(int $codeId)
     {
         $code = $this->inviteCodeRepository->find($codeId);
         if($code and $code->id)

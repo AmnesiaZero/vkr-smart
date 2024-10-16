@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapFive();
         $repositories = [
             'Organization' => 'Organizations',
-            'OrganizationYear' => 'OrganizationsYears',
+            'Year' => 'Years',
             'User' => 'Users',
             'Faculty' => 'Faculties',
             'Department' => 'Departments',

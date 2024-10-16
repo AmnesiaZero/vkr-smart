@@ -41,7 +41,10 @@ class User extends Authenticatable
         'is_active',
         'secret_key',
         'avatar_path',
-        'avatar_file_name'
+        'avatar_file_name',
+        'email_visibility',
+        'name_visibility',
+        'portfolio_card_access'
     ];
 
     /**
@@ -92,7 +95,7 @@ class User extends Authenticatable
 
     public function year(): HasOne
     {
-        return $this->hasOne(OrganizationYear::class, 'id', 'year_id');
+        return $this->hasOne(Year::class, 'id', 'year_id');
     }
 
     public function faculty(): HasOne

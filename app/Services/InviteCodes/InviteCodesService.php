@@ -74,4 +74,20 @@ class InviteCodesService extends Services
         $this->_repository->delete($organizationId, $type);
         return $result;
     }
+
+    public function find(int $id): JsonResponse
+    {
+        $code = $this->_repository->find($id);
+        if($code and $code->id)
+        {
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'code' => $code
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'Возникла ошибка при получении кода'
+        ]);
+    }
 }
