@@ -345,7 +345,8 @@ Route::group([
         Route::group([
             'prefix' => 'years'
         ], function () {
-            Route::get('get', [OrganizationsYearsController::class, 'get'])->withoutMiddleware(['web', 'auth']);
+            Route::get('get', [OrganizationsYearsController::class, 'get']);
+            Route::get('get-without-auth',[OrganizationsYearsController::class,'get'])->withoutMiddleware(['web', 'auth']);
             Route::post('create', [OrganizationsYearsController::class, 'create']);
             Route::post('update', [OrganizationsYearsController::class, 'update']);
             Route::post('delete', [OrganizationsYearsController::class, 'delete']);
@@ -386,7 +387,7 @@ Route::group([
             Route::post('restore', [DepartmentsController::class, 'restore'])->name('departments.restore');
             Route::get('by-user', [DepartmentsController::class, 'getByUserId']);
             Route::get('get-info', [DepartmentsController::class, 'find']);
-            Route::get('program-specialties', [DepartmentsController::class, 'getProgramSpecialties']);
+            Route::get('program-specialties', [DepartmentsController::class, 'getProgramSpecialties'])->withoutMiddleware(['web', 'auth']);;
         });
 
         Route::group([
