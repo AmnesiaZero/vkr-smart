@@ -1,0 +1,57 @@
+@media print {
+	.container {
+		width:100% !important;
+	}
+	.tab-content>.tab-pane {
+		display: block;
+	}
+	.profile-usermenu {
+		display:none;
+	}
+	.btn-print {
+		display:none;
+	}
+	hr {
+		border:0 !important;
+		margin:5px 0 !important;
+	}
+	.form-group label {
+		color:#005f87 !important;
+		display:block;
+		opacity:1;
+	}
+	form.row-life label {
+		text-align: right;
+		color: #005f87;
+		font-size: 15px;
+		display:block;
+		font-weight: 500;
+	}
+}
+h2 {
+    color: #00A2B0 !important;
+    margin-bottom: 20px;
+    border-bottom: 1px #00A2B0 solid;
+    padding-bottom: 6px;
+}
+p.logotype-subtext {
+	margin-top:12px;
+	font-weight:600;
+	font-size:21px;
+}
+span.sub-text{
+	display:block;
+	text-transform:none;
+	color:#777;
+	font-size:15px;
+	font-weight:500;
+}
+.table-bordered {
+    border: 0;
+}
+.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+    border-bottom: 1px solid #78C2C9 !important;
+}
+.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+    border: 1px solid #78C2C9 !important;
+}
