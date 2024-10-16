@@ -41,7 +41,7 @@
         </li>
         <li class="mb-3">
             <span class="pb-1 text-grey">
-                <a href="/about/how_use" class="link @if(request()->is('about/how_use')) nav-link-active @endif"> Как пользоваться <br> платформой «ВКР-CМАРТ»?</a>
+                <a href="/about/how-use" class="link @if(request()->is('about/how-use')) nav-link-active @endif"> Как пользоваться <br> платформой «ВКР-CМАРТ»?</a>
             </span>
         </li>
     </ul>

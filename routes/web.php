@@ -47,7 +47,7 @@ Route::get('/', function () {
 Route::group([
     'prefix' => 'about'
 ], function () {
-    Route::get('how_use', function () {
+    Route::get('how-use', function () {
        return view('templates.site.about.how_use');
     });
 
