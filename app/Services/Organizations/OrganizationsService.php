@@ -106,7 +106,6 @@ class OrganizationsService extends Services
 
     public function view(array $data)
     {
-        $you = Auth::user();
         $additionalData = [
             'with_trashed' => true,
             'paginate' => true,

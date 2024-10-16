@@ -31,11 +31,13 @@ class YearsService extends Services
 
     public function get(array $data): JsonResponse
     {
-        if (isset($data['organization_id'])) {
+        if (isset($data['organization_id']))
+        {
             $organizationId = $data['organization_id'];
         }
         else {
             $user = Auth::user();
+            Log::debug('user = '.print_r($user,true));
             $organizationId = $user->organization_id;
         }
         $years = $this->_repository->get($organizationId);
