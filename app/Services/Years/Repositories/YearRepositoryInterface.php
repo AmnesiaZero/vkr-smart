@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\OrganizationsYears\Repositories;
+namespace App\Services\Years\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-interface OrganizationYearRepositoryInterface
+interface YearRepositoryInterface
 {
     /**
      * Создать новый год для организации

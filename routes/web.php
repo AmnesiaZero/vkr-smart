@@ -113,15 +113,15 @@ Route::group([
         return view('templates.site.auth.login');
     })->name('login');
     Route::post('/', [UsersController::class, 'login']);
-    Route::post('by-code', [UsersController::class, 'loginByCode']);
+    Route::post('by-code', [UsersController::class, 'registerRedirect']);
 });
 
 
 Route::group([
     'prefix' => 'registration',
 ], function () {
-    Route::get('by-code', [UsersController::class, 'registerByCodeView']);
-    Route::post('by-code', [UsersController::class, 'registerByCode']);
+    Route::get('by-code', [UsersController::class, 'registerView']);
+    Route::post('by-code', [UsersController::class, 'register']);
 });
 
 
@@ -342,7 +342,7 @@ Route::group([
         Route::group([
             'prefix' => 'years'
         ], function () {
-            Route::get('get', [OrganizationsYearsController::class, 'get']);
+            Route::get('get', [OrganizationsYearsController::class, 'get'])->withoutMiddleware(['web', 'auth']);
             Route::post('create', [OrganizationsYearsController::class, 'create']);
             Route::post('update', [OrganizationsYearsController::class, 'update']);
             Route::post('delete', [OrganizationsYearsController::class, 'delete']);
@@ -352,7 +352,7 @@ Route::group([
         Route::group([
             'prefix' => 'faculties'
         ], function () {
-            Route::get('get', [FacultiesController::class, 'get']);
+            Route::get('get', [FacultiesController::class, 'get'])->withoutMiddleware(['web', 'auth']);;
             Route::get('find',[FacultiesController::class,'find']);
             Route::post('create', [FacultiesController::class, 'create']);
             Route::post('update', [FacultiesController::class, 'update']);
@@ -368,7 +368,7 @@ Route::group([
             Route::get('search', [DepartmentsController::class, 'search']);
             Route::get('find', [DepartmentsController::class, 'find']);
             Route::get('all', [DepartmentsController::class, 'all']);
-            Route::get('get', [DepartmentsController::class, 'get']);
+            Route::get('get', [DepartmentsController::class, 'get'])->withoutMiddleware(['web', 'auth']);
             Route::post('create', [DepartmentsController::class, 'create']);
             Route::post('store', [DepartmentsController::class, 'store'])->name('departments.store');
             Route::group([
@@ -389,7 +389,7 @@ Route::group([
         Route::group([
             'prefix' => 'programs'
         ], function () {
-            Route::get('get', [ProgramsController::class, 'get']);
+            Route::get('get', [ProgramsController::class, 'get'])->withoutMiddleware(['web', 'auth']);;
             Route::post('create', [ProgramsController::class, 'create']);
             Route::post('delete', [ProgramsController::class, 'delete']);
             Route::post('update', [ProgramsController::class, 'update']);
@@ -397,7 +397,7 @@ Route::group([
             Route::group([
                 'prefix' => 'specialties'
             ], function () {
-                Route::post('create', [ProgramsSpecialtiesController::class, 'create']);
+                Route::post('create', [ProgramsSpecialtiesController::class, 'create'])->withoutMiddleware(['web', 'auth']);;
                 Route::get('get', [ProgramsSpecialtiesController::class, 'get']);
                 Route::get('get-by-department', [ProgramsSpecialtiesController::class, 'getByDepartment']);
                 Route::get('get-by-organization', [ProgramsSpecialtiesController::class, 'getByOrganization']);
@@ -408,7 +408,7 @@ Route::group([
         Route::group([
             'prefix' => 'specialties'
         ], function () {
-            Route::get('all', [SpecialtiesController::class, 'all']);
+            Route::get('all', [SpecialtiesController::class, 'all'])->withoutMiddleware(['web', 'auth']);;
         });
     });
 
@@ -468,6 +468,7 @@ Route::group([
     Route::group([
         'prefix' => 'invite-codes'
     ], function () {
+        Route::get('find',[InviteCodesController::class,'find'])->withoutMiddleware(['web', 'auth']);;
         Route::post('create', [InviteCodesController::class, 'create']);
         Route::get('get', [InviteCodesController::class, 'get']);
         Route::get('load', [InviteCodesController::class, 'loadExcel']);

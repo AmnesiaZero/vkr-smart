@@ -118,7 +118,7 @@ class UsersController extends Controller
         return redirect('login');
     }
 
-    public function loginByCode(Request $request)
+    public function registerRedirect(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'code' => 'required'
@@ -130,7 +130,7 @@ class UsersController extends Controller
         $codeArray = explode('-', $fullCode);
         $codeId = $codeArray[0];
         $code = $codeArray[1];
-        return $this->usersService->loginByCode($codeId, $code);
+        return $this->usersService->registerRedirect($codeId, $code);
     }
 
     public function resetPassword(Request $request): JsonResponse
@@ -145,13 +145,13 @@ class UsersController extends Controller
         return $this->usersService->resetPassword($email);
     }
 
-    public function registerByCodeView()
+    public function registerView()
     {
         $inviteCodeId = Cookie::get('invite_code_id');
 
         Log::debug('organization id in view = ' . $inviteCodeId);
 
-        return $this->usersService->registerByCodeView($inviteCodeId);
+        return $this->usersService->registerView($inviteCodeId);
     }
 
     public function get(Request $request): JsonResponse
@@ -169,7 +169,7 @@ class UsersController extends Controller
         return $this->usersService->get($data);
     }
 
-    public function registerByCode(Request $request): JsonResponse
+    public function register(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
