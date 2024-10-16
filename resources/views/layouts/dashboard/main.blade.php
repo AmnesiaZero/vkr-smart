@@ -18,7 +18,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}"/>
         @yield('styles')
     </head>
-<body>
+<body class="h-100">
 <header style="margin-bottom: 88px;">
     <nav class="desktop navbar navbar-expand-lg fixed-top header-nav bg-white brb-green-light-2 py-2 px-5">
         <button class="navbar-toggler collapsed box-shadow-none" type="button" data-bs-toggle="collapse"
@@ -47,8 +47,8 @@
         </div>
     </nav>
 </header>
-<main class="position-relative">
-    <div class="row me-md-1 me-0">
+<main class="position-relative h-100">
+    <div class="row me-md-1 me-0 h-100">
         <div class="col-xl-3 col-lg-4 col-md-5 col-12 pe-md-3 pe-0">
             <div class="bg-grey-light p-5 menu">
                 <div class="list-custom-1 accordion" id="accordionTwo">
