@@ -39,11 +39,6 @@
             <span class="pb-1 text-grey">
                 <a href="/about/roles" class="link @if(request()->is('about/roles')) nav-link-active @endif"> Роли пользователей </a></span>
         </li>
-        <li class="mb-3">
-            <span class="pb-1 text-grey">
-                <a href="/about/how-use" class="link @if(request()->is('about/how-use')) nav-link-active @endif"> Как пользоваться <br> платформой «ВКР-CМАРТ»?</a>
-            </span>
-        </li>
     </ul>
 
 </div>
