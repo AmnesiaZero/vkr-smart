@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('works', function (Blueprint $table) {
-//            $table->boolean('visibility')->default(1)->after('check_code');
+            $table->boolean('visibility')->default(1)->after('check_code');
         });
     }
 
