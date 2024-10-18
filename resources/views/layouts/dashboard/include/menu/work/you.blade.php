@@ -2,7 +2,9 @@
     <p class="fs-14 lh-17">Операции над работой</p>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/info.svg" alt="" class="pe-2">
-        <p class="fs-14 lh-17 text-grey m-0" onclick="workInfo()">Просмотр информации о работе</p>
+        <p class="fs-14 lh-17 text-grey m-0" onclick="workInfo()">
+            Просмотр информации о работе
+        </p>
     </div>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/down-arr.svg" alt="" class="pe-2">
@@ -35,9 +37,11 @@
     <p class="fs-14 lh-17">Дополнительные файлы</p>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/href_light.svg" alt="" class="pe-2">
-        <p class="fs-14 lh-17 text-grey m-0"
-           onclick="openModal('additional_files_modal');additionalFiles();return false">Открыть окно управления<br>
-            дополнительными файлами</p>
+        <p class="fs-14 lh-17 text-grey m-0" data-bs-target="#additional_files_modal" data-bs-toggle="modal"
+           onclick="openModal('additional_files_modal');additionalFiles();return false">
+            Открыть окно управления<br>
+            дополнительными файлами
+        </p>
     </div>
     <p class="fs-14 lh-17">Проверка ВКР-СМАРТ.РФ</p>
     <div class="d-flex cursor-p mb-2">

@@ -248,8 +248,8 @@
                <td>${getSelfCheckDescription(self_check)}</td>
                    <td>
                        @{{if report_status==0}}
-                       <div class="mt-2">
-                       <span class="bg-waiting px-2 d-flex align-items-center">
+                       <div>
+                       <span class="bg-waiting p-2 d-flex align-items-center gap-2">
                        <div class="me-2 yellow-c">
                        </div>
                          В очереди на проверку
@@ -257,7 +257,7 @@
                        </div>
                        @{{/if}}
                        @{{if report_status==1}}
-                       <div class="mt-2" onclick="openReport(${id})">
+                       <div onclick="openReport(${id})">
                            <span class="bg-active p-2 d-flex align-items-center cursor-p">
                                <div class="me-2 green-c"></div>
                                Отчет
