@@ -5,7 +5,7 @@ namespace App\Services\Works;
 use App\Exports\WorksExport;
 use App\Helpers\FilesHelper;
 use App\Imports\WorksImport;
-use App\Services\OrganizationsYears\Repositories\OrganizationYearRepositoryInterface;
+use App\Services\Years\Repositories\YearRepositoryInterface;
 use App\Services\ProgramsSpecialties\Repositories\ProgramSpecialtyRepositoryInterface;
 use App\Services\ReportsAssets\Repositories\ReportAssetRepositoryInterface;
 use App\Services\ScientificSupervisors\Repositories\ScientificSupervisorRepositoryInterface;
@@ -27,7 +27,7 @@ use Vkrsmart\Sdk\Models\Report;
 class WorksService extends Services
 {
 
-    private OrganizationYearRepositoryInterface $yearRepository;
+    private YearRepositoryInterface $yearRepository;
 
     private WorkRepositoryInterface $workRepository;
 
@@ -39,7 +39,7 @@ class WorksService extends Services
 
     private ReportAssetRepositoryInterface $reportAssetRepository;
 
-    public function __construct(WorkRepositoryInterface                 $workRepository, OrganizationYearRepositoryInterface $yearRepository,
+    public function __construct(WorkRepositoryInterface                 $workRepository, YearRepositoryInterface $yearRepository,
                                 ScientificSupervisorRepositoryInterface $scientificSupervisorRepository, ProgramSpecialtyRepositoryInterface $programSpecialtyRepository,
                                 WorksTypeRepositoryInterface            $worksTypeRepository, ReportAssetRepositoryInterface $reportAssetRepository)
     {

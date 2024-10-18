@@ -12,11 +12,37 @@
     </a>
 
     <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+        @role('admin')
         <li><a class="dropdown-item" href="/dashboard/settings/organizations-structure">Настройки</a></li>
         <li><a class="dropdown-item" href="/dashboard/works/employees">Работы</a></li>
         <li><a class="dropdown-item" href="/dashboard/portfolios/teachers">Электронное портфолио</a></li>
         <li><a class="dropdown-item" href="/dashboard/reports">Отчеты</a></li>
         <li><a class="dropdown-item" href="/dashboard/documentation">Документация</a></li>
+        @endrole
+
+        @role('teacher')
+        <li><a class="dropdown-item" href="/dashboard/settings/teacher-departments">Настройки</a></li>
+        <li><a class="dropdown-item" href="/dashboard/works/you">Работы</a></li>
+        <li><a class="dropdown-item" href="/dashboard/portfolios/achievements/you">Электронное портфолио</a></li>
+        @endrole
+
+        @role('user')
+        <li><a class="dropdown-item" href="/dashboard/works/you">Работы</a></li>
+        <li><a class="dropdown-item" href="/dashboard/portfolios/achievements/you">Электронное портфолио</a></li>
+        @endrole
+
+        @role('inspector')
+        <li><a class="dropdown-item" href="/dashboard/works/employees">Работы</a></li>
+        <li><a class="dropdown-item" href="/dashboard/reports">Отчеты</a></li>
+        @endrole
+
+        @role('employee')
+        <li><a class="dropdown-item" href="/dashboard/works/employees">Работы</a></li>
+        <li><a class="dropdown-item" href="/dashboard/portfolios/teachers">Электронное портфолио</a></li>
+        <li><a class="dropdown-item" href="/dashboard/reports">Отчеты</a></li>
+        <li><a class="dropdown-item" href="/dashboard/documentation">Документация</a></li>
+        @endrole
+
         <li><a class="dropdown-item" href="/dashboard/users/logout">Выйти</a></li>
         <li class="dropdown-item organization-info"></li>
     </ul>

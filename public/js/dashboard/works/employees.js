@@ -37,15 +37,22 @@ $(document).ready(function () {
                     console.log(user);
                     userId = response.data.you.id;
                     role = user.roles[0].slug;
-                    const departments = user.departments;
-                    if(departments)
-                    {
-                        departmentsIds.push(...departments.map(department => department.id));
-                    }
-                    const specialties = user.organization.inspectors_specialties;
-                    if(specialties)
-                    {
-                        specialtiesIds.push(...specialties.map(specialty => specialty.id));
+                    if (role!=='admin') {
+                        const departments = user.departments;
+                        if (departments) {
+                            departmentsIds.push(...departments.map(department => department.id));
+                        }
+                        if (role === 'teacher' || role == 'employee')
+                        {
+                            departmentsSpecialties(departmentsIds);
+                        }
+                        //Нужно по всем департаментам найти все специальности для преподавателей и сотрудников организаций
+                        const specialties = user.organization.inspectors_specialties;
+                        if(specialties)
+                        {
+                            specialtiesIds.push(...specialties.map(specialty => specialty.id));
+                        }
+
                     }
                     deferred.resolve(); // Сообщаем, что функция завершена
                 }
@@ -1101,6 +1108,36 @@ function updateSelfCheckStatus()
         }
     });
 
+}
+
+function departmentsSpecialties(departmentsIds)
+{
+    const data = {
+        departments_ids:departmentsIds
+    };
+    $.ajax({
+        url: "/dashboard/organizations/departments/specialties",
+        dataType: "json",
+        data: data,
+        type: "get",
+        success: function (response) {
+            if (response.success) {
+                const specialties = response.data.program_specialties;
+                console.log('specialties');
+                console.log(specialties);
+                const specialtiesList = $("#specialties_list");
+                specialtiesList.empty();
+                specialtiesList.selectpicker('destroy');
+                specialtiesList.html($("#specialty_tmpl").tmpl(specialties));
+                specialtiesList.selectpicker('render');
+            } else {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function () {
+            $.notify("Произошла ошибка при выборе факультета", "error");
+        }
+    });
 }
 
 function restore()

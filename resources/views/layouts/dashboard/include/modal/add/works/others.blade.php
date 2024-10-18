@@ -6,7 +6,7 @@
             </div>
             <form enctype="multipart/form-data" class="form form-horizontal" id="addWorkForm">
                 <div class="modal-body">
-
+                    @role('admin')
                     <div class="d-flex flex-column gap-3">
                         <div class="row">
                             <label class="col-sm-4">Год выпуска</label>
@@ -39,12 +39,15 @@
                                 </select>
                             </div>
                         </div>
+                        @endrole
                         <div class="row">
                             <label class="col-sm-4">Направление подготовки (специальность)</label>
                             <div class="col-sm-8">
                                 <select name="specialty_id" class="form-control" id="add_specialties_list" data-width="100%"
                                         title="Выбрать...">
+                                    @role('admin')
                                     <option value="" disabled="" selected="selected">Уточните кафедру</option>
+                                    @endrole
                                 </select>
                             </div>
                         </div>

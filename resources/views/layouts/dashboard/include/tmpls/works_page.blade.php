@@ -315,8 +315,13 @@
                 <div id="report_modal">
                     <span> Полный отчет по работе </span>
 
-                    <a ng-if="report.status_report !== '1'" ng-click="showFull()" class="btn btn-success ng-scope"><span class="glyphicon glyphicon-print"></span> Распечатать отчет</a>
-                    <a ng-if="report.status_report !== '1'" href="#/reference/530250/1/cd9640cd3f886e13072731fc90e66715" class="btn btn-warning ng-scope"><span class="glyphicon glyphicon-download"></span> Справка ВКР</a>
+                    <a ng-if="report.status_report !== '1'" ng-click="showFull()" class="btn btn-success ng-scope">
+                        <span class="glyphicon glyphicon-print"></span>
+                        Распечатать отчет
+                    </a>
+                    <a ng-if="report.status_report !== '1'" href="#/reference/530250/1/cd9640cd3f886e13072731fc90e66715"
+                       class="btn btn-warning ng-scope">
+                        <span class="glyphicon glyphicon-download"></span> Справка ВКР</a>
 
                     <div class="col-sm-8 mt-2">
                         <ol style="padding-left:15px;">

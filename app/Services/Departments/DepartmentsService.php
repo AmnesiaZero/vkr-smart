@@ -7,7 +7,7 @@ use App\Models\Organization;
 use App\Services\Departments\Repositories\DepartmentRepositoryInterface;
 use App\Services\Faculties\Repositories\FacultyRepositoryInterface;
 use App\Services\Organizations\Repositories\OrganizationRepositoryInterface;
-use App\Services\OrganizationsYears\Repositories\OrganizationYearRepositoryInterface;
+use App\Services\Years\Repositories\YearRepositoryInterface;
 use App\Services\Services;
 use App\Services\Users\Repositories\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
@@ -24,17 +24,17 @@ class DepartmentsService extends Services
 
     public FacultyRepositoryInterface $facultyRepository;
 
-    public OrganizationYearRepositoryInterface $yearRepository;
+    public YearRepositoryInterface $yearRepository;
 
     public UserRepositoryInterface $userRepository;
 
 
     public function __construct(
-        DepartmentRepositoryInterface       $departmentRepository,
-        FacultyRepositoryInterface          $facultyRepository,
-        UserRepositoryInterface             $userRepository,
-        OrganizationYearRepositoryInterface $yearRepository,
-        OrganizationRepositoryInterface     $organizationRepository
+        DepartmentRepositoryInterface   $departmentRepository,
+        FacultyRepositoryInterface      $facultyRepository,
+        UserRepositoryInterface         $userRepository,
+        YearRepositoryInterface         $yearRepository,
+        OrganizationRepositoryInterface $organizationRepository
     )
     {
         $this->departmentRepository = $departmentRepository;
@@ -143,6 +143,22 @@ class DepartmentsService extends Services
         return self::sendJsonResponse(true, [
             'title' => 'Успешно',
             'departments' => $departments
+        ]);
+    }
+
+    public function specialties(array $departmentsIds): JsonResponse
+    {
+        $specialties = $this->departmentRepository->specialties($departmentsIds);
+        if($specialties and is_iterable($specialties))
+        {
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно',
+                'specialties' => $specialties
+            ]);
+        }
+        return self::sendJsonResponse(false,[
+            'title' => 'Ошибка',
+            'message' => 'При поиске специальностей произошла ошибка'
         ]);
     }
 

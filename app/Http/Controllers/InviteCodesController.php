@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InviteCodesController extends Controller
@@ -21,6 +22,18 @@ class InviteCodesController extends Controller
     public function __construct(InviteCodesService $inviteCodesService)
     {
         $this->inviteCodesService = $inviteCodesService;
+    }
+
+    public function find(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+             'id' => ['required','integer',Rule::exists('invite_codes','id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->inviteCodesService->find($id);
     }
 
     public function create(Request $request): JsonResponse

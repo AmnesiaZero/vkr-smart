@@ -82,5 +82,11 @@ interface DepartmentRepositoryInterface
      */
     public function search(array $data): LengthAwarePaginator;
 
+    /**
+     * @param array $departmentsIds
+     * @return mixed
+     */
+    public function specialties(array $departmentsIds);
+
 
 }

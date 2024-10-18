@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class OrganizationYear extends Model
+class Year extends Model
 {
     use HasFactory, SoftDeletes, CascadeSoftDeletes, Cloneable;
 

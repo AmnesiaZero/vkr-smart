@@ -204,38 +204,41 @@
                 </div>
 
                 <div id="success_registration"></div>
+                <input id="code_id" style="display: none" value="{{\Illuminate\Support\Facades\Cookie::get('invite_code_id')}}">
             </div>
         </div>
     </div>
 
 @endsection
 
-            @section('scripts')
+@section('scripts')
 
-                <script id="year_tmpl" type="text/x-jquery-tmpl">
+    <script type="text/javascript" src="/js/jquery/jquery.cookie.js"></script>
+
+    <script id="year_tmpl" type="text/x-jquery-tmpl">
                     <option value="${id}" onclick="faculties(${id})">${year}</option>
 
 
 
                 </script>
 
-                <script id="faculty_tmpl" type="text/x-jquery-tmpl">
+    <script id="faculty_tmpl" type="text/x-jquery-tmpl">
                     <option value="${id}">${name}</option>
 
 
 
                 </script>
-                <script id="program_specialty_tmpl" type="text/x-jquery-tmpl">
+    <script id="program_specialty_tmpl" type="text/x-jquery-tmpl">
                 <option value="${id}">${code}|${name}</option>
 
                 </script>
 
-                <script id="department_list_tmpl" type="text/x-jquery-tmpl">
+    <script id="department_list_tmpl" type="text/x-jquery-tmpl">
                     <option value="${id}">${name}</option>
 
                 </script>
 
-                <script id="success_registration_tmpl" type="text/x-jquery-tmpl">
+    <script id="success_registration_tmpl" type="text/x-jquery-tmpl">
                     <div class="alert px-0">
                         <p>Вы успешно прошли регистрацию в комплексе систем по размещению и проверке работ на заимствования.</p>
 
@@ -258,6 +261,6 @@
 
                 </script>
 
-                <script src="/js/site/code-register.js"></script>
+    <script src="/js/site/code-register.js"></script>
 @endsection
 

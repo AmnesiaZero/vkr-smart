@@ -1,25 +1,21 @@
 <?php
 
-namespace App\Services\OrganizationsYears;
+namespace App\Services\Years;
 
 use App\Services\InviteCodes\Repositories\InviteCodeRepositoryInterface;
-use App\Services\OrganizationsYears\Repositories\OrganizationYearRepositoryInterface;
+use App\Services\Years\Repositories\YearRepositoryInterface;
 use App\Services\Services;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-class OrganizationsYearsService extends Services
+class YearsService extends Services
 {
     private $_repository;
 
-    private InviteCodeRepositoryInterface $inviteCodeRepository;
-
-
-    public function __construct(OrganizationYearRepositoryInterface $organizationYearRepository, InviteCodeRepositoryInterface $inviteCodeRepository)
+    public function __construct(YearRepositoryInterface $organizationYearRepository)
     {
         $this->_repository = $organizationYearRepository;
-        $this->inviteCodeRepository = $inviteCodeRepository;
     }
 
     public function create(array $data): JsonResponse
@@ -35,10 +31,13 @@ class OrganizationsYearsService extends Services
 
     public function get(array $data): JsonResponse
     {
-        if (isset($data['organization_id'])) {
+        if (isset($data['organization_id']))
+        {
             $organizationId = $data['organization_id'];
-        } else {
+        }
+        else {
             $user = Auth::user();
+            Log::debug('user = '.print_r($user,true));
             $organizationId = $user->organization_id;
         }
         $years = $this->_repository->get($organizationId);

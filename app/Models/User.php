@@ -95,7 +95,7 @@ class User extends Authenticatable
 
     public function year(): HasOne
     {
-        return $this->hasOne(OrganizationYear::class, 'id', 'year_id');
+        return $this->hasOne(Year::class, 'id', 'year_id');
     }
 
     public function faculty(): HasOne

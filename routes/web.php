@@ -47,6 +47,9 @@ Route::get('/', function () {
 Route::group([
     'prefix' => 'about'
 ], function () {
+    Route::get('how-use', function () {
+       return view('templates.site.about.how_use');
+    });
 
     Route::get('storage', function () {
         return view('templates.site.about.storage');
@@ -113,15 +116,15 @@ Route::group([
         return view('templates.site.auth.login');
     })->name('login');
     Route::post('/', [UsersController::class, 'login']);
-    Route::post('by-code', [UsersController::class, 'loginByCode']);
+    Route::post('by-code', [UsersController::class, 'registerRedirect']);
 });
 
 
 Route::group([
     'prefix' => 'registration',
 ], function () {
-    Route::get('by-code', [UsersController::class, 'registerByCodeView']);
-    Route::post('by-code', [UsersController::class, 'registerByCode']);
+    Route::get('by-code', [UsersController::class, 'registerView']);
+    Route::post('by-code', [UsersController::class, 'register']);
 });
 
 
@@ -146,6 +149,8 @@ Route::group([
     'prefix' => 'dashboard',
     'middleware' => ['web', 'auth']
 ], function () {
+
+    Route::get('/',[UsersController::class,'dashboard']);
     //личный кабинет для студентов и преподавателей,profile для сотрудников организации. Страницы там слишком разные,чтобы в одну вьюху вставлять
     Route::get('personal-cabinet', [UsersController::class, 'personalCabinetView']);
     Route::get('profile', [UsersController::class, 'profileView']);
@@ -343,6 +348,7 @@ Route::group([
             'prefix' => 'years'
         ], function () {
             Route::get('get', [OrganizationsYearsController::class, 'get']);
+            Route::get('get-without-auth',[OrganizationsYearsController::class,'get'])->withoutMiddleware(['web', 'auth']);
             Route::post('create', [OrganizationsYearsController::class, 'create']);
             Route::post('update', [OrganizationsYearsController::class, 'update']);
             Route::post('delete', [OrganizationsYearsController::class, 'delete']);
@@ -352,7 +358,7 @@ Route::group([
         Route::group([
             'prefix' => 'faculties'
         ], function () {
-            Route::get('get', [FacultiesController::class, 'get']);
+            Route::get('get', [FacultiesController::class, 'get'])->withoutMiddleware(['web', 'auth']);;
             Route::get('find',[FacultiesController::class,'find']);
             Route::post('create', [FacultiesController::class, 'create']);
             Route::post('update', [FacultiesController::class, 'update']);
@@ -368,7 +374,7 @@ Route::group([
             Route::get('search', [DepartmentsController::class, 'search']);
             Route::get('find', [DepartmentsController::class, 'find']);
             Route::get('all', [DepartmentsController::class, 'all']);
-            Route::get('get', [DepartmentsController::class, 'get']);
+            Route::get('get', [DepartmentsController::class, 'get'])->withoutMiddleware(['web', 'auth']);
             Route::post('create', [DepartmentsController::class, 'create']);
             Route::post('store', [DepartmentsController::class, 'store'])->name('departments.store');
             Route::group([
@@ -383,13 +389,14 @@ Route::group([
             Route::post('restore', [DepartmentsController::class, 'restore'])->name('departments.restore');
             Route::get('by-user', [DepartmentsController::class, 'getByUserId']);
             Route::get('get-info', [DepartmentsController::class, 'find']);
-            Route::get('program-specialties', [DepartmentsController::class, 'getProgramSpecialties']);
+            Route::get('specialties',[DepartmentsController::class,'specialties']);
+            Route::get('program-specialties', [DepartmentsController::class, 'getProgramSpecialties'])->withoutMiddleware(['web', 'auth']);;
         });
 
         Route::group([
             'prefix' => 'programs'
         ], function () {
-            Route::get('get', [ProgramsController::class, 'get']);
+            Route::get('get', [ProgramsController::class, 'get'])->withoutMiddleware(['web', 'auth']);;
             Route::post('create', [ProgramsController::class, 'create']);
             Route::post('delete', [ProgramsController::class, 'delete']);
             Route::post('update', [ProgramsController::class, 'update']);
@@ -397,7 +404,7 @@ Route::group([
             Route::group([
                 'prefix' => 'specialties'
             ], function () {
-                Route::post('create', [ProgramsSpecialtiesController::class, 'create']);
+                Route::post('create', [ProgramsSpecialtiesController::class, 'create'])->withoutMiddleware(['web', 'auth']);;
                 Route::get('get', [ProgramsSpecialtiesController::class, 'get']);
                 Route::get('get-by-department', [ProgramsSpecialtiesController::class, 'getByDepartment']);
                 Route::get('get-by-organization', [ProgramsSpecialtiesController::class, 'getByOrganization']);
@@ -408,7 +415,7 @@ Route::group([
         Route::group([
             'prefix' => 'specialties'
         ], function () {
-            Route::get('all', [SpecialtiesController::class, 'all']);
+            Route::get('all', [SpecialtiesController::class, 'all'])->withoutMiddleware(['web', 'auth']);;
         });
     });
 
@@ -468,6 +475,7 @@ Route::group([
     Route::group([
         'prefix' => 'invite-codes'
     ], function () {
+        Route::get('find',[InviteCodesController::class,'find'])->withoutMiddleware(['web', 'auth']);;
         Route::post('create', [InviteCodesController::class, 'create']);
         Route::get('get', [InviteCodesController::class, 'get']);
         Route::get('load', [InviteCodesController::class, 'loadExcel']);

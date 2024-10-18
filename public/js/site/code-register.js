@@ -1,5 +1,6 @@
 $(document).ready(function () {
     console.log('Страница загрузилась');
+    findCode();
     years();
     $('#years_list').change(function () {
         const yearId = $(this).val();
@@ -27,13 +28,42 @@ $(document).ready(function () {
     });
 });
 
+function findCode()
+{
+     const cookieId = $("#code_id").val();
+     console.log('cookie id = ' + cookieId);
+     const data = {
+         id:cookieId
+     };
+    $.ajax({
+        url: "/dashboard/invite-codes/find",
+        dataType: "json",
+        type: "get",
+        data: data,
+        success: function (response) {
+           const code = response.data.code;
+            console.log(code);
+            const organizationId = code.organization_id;
+            localStorage.setItem('organization_id',organizationId);
+        },
+        error: function (response) {
+            $.notify(response.data.title + ":" + response.data.message, "error");
+        }
+    });
+
+}
+
 
 function years() {
-    console.log('Вошёл в years');
+
+    const organizationId = localStorage.getItem('organization_id');
+    const data = {
+        organization_id:organizationId
+    };
     $.ajax({
-        url: "/dashboard/organizations/years/get",
+        url: "/dashboard/organizations/years/get-without-auth",
         dataType: "json",
-        data: "v=" + (new Date()).getTime(),
+        data: data,
         success: function (response) {
             const years = response.data.years;
             const yearsList = $("#years_list");
@@ -42,8 +72,8 @@ function years() {
             yearsList.html($("#year_tmpl").tmpl(years));
             yearsList.selectpicker('render');
         },
-        error: function (response) {
-            $.notify(response.data.title + ":" + response.data.message, "error");
+        error: function () {
+            $.notify("Произошла ошибка при выборе года", "error");
         }
     });
 }
@@ -70,7 +100,7 @@ function faculties(data, htmlId) {
             }
         },
         error: function () {
-            $.notify("Произошла ошибка при выборе года", "error");
+            $.notify("Произошла ошибка при выборе факультета", "error");
         }
     });
 }
@@ -104,7 +134,7 @@ function departments(data) {
             }
         },
         error: function () {
-            $.notify("Произошла ошибка при выборе факультета", "error");
+            $.notify("Произошла ошибка при выборе кафедры", "error");
         }
     });
 }
@@ -128,7 +158,7 @@ function programsSpecialties(data) {
             }
         },
         error: function () {
-            $.notify("Произошла ошибка при выборе факультета", "error");
+            $.notify("Произошла ошибка при выборе специальности", "error");
         }
     });
 
@@ -160,7 +190,6 @@ function registration() {
                 const user = response.data.user;
                 console.log('user = ' + user);
                 $("#success_registration").html($("#success_registration_tmpl").tmpl(user));
-                const password = data.password;
                 console.log('password - ' + password);
                 $("#reg-password").text(password);
             } else {
@@ -168,7 +197,7 @@ function registration() {
             }
         },
         error: function () {
-            $.notify("Произошла ошибка при выборе факультета", "error");
+            $.notify("Произошла ошибка при регистрации", "error");
         }
     });
 

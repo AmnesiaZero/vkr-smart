@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\RedirectHelper;
 use App\Helpers\ValidatorHelper;
+use App\Models\User;
 use App\Services\Users\UsersService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -69,6 +71,12 @@ class UsersController extends Controller
         return $this->usersService->index($data);
     }
 
+    public function dashboard()
+    {
+        $you = Auth::user();
+        return RedirectHelper::userDashboard($you);
+    }
+
     public function addView()
     {
         return $this->usersService->addView();
@@ -90,21 +98,11 @@ class UsersController extends Controller
                 return back()->withErrors(['Вы заблокированы']);
             }
             $request->session()->regenerate();
-
-            if ($user->hasRole('admin')) {
-                return redirect('/dashboard/settings/organizations-structure');
-            } else if ($user->hasRole('employee')) {
-                return redirect('/dashboard/profile');
-            } else if ($user->hasRole('inspector')) {
-                return redirect('/dashboard/works/employees');
-            } else if ($user->hasRole('platformadmin')) {
-                return redirect('/dashboard/platform');
-            } else {
-                return redirect('/dashboard/personal-cabinet');
-            }
+            return RedirectHelper::userDashboard($user);
         }
         return back()->withErrors(['Предоставленные данные были некорректными']);
     }
+
 
 
     public function logout(Request $request)
@@ -118,7 +116,7 @@ class UsersController extends Controller
         return redirect('login');
     }
 
-    public function loginByCode(Request $request)
+    public function registerRedirect(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'code' => 'required'
@@ -130,7 +128,7 @@ class UsersController extends Controller
         $codeArray = explode('-', $fullCode);
         $codeId = $codeArray[0];
         $code = $codeArray[1];
-        return $this->usersService->loginByCode($codeId, $code);
+        return $this->usersService->registerRedirect($codeId, $code);
     }
 
     public function resetPassword(Request $request): JsonResponse
@@ -145,13 +143,13 @@ class UsersController extends Controller
         return $this->usersService->resetPassword($email);
     }
 
-    public function registerByCodeView()
+    public function registerView()
     {
         $inviteCodeId = Cookie::get('invite_code_id');
 
         Log::debug('organization id in view = ' . $inviteCodeId);
 
-        return $this->usersService->registerByCodeView($inviteCodeId);
+        return $this->usersService->registerView($inviteCodeId);
     }
 
     public function get(Request $request): JsonResponse
@@ -169,7 +167,7 @@ class UsersController extends Controller
         return $this->usersService->get($data);
     }
 
-    public function registerByCode(Request $request): JsonResponse
+    public function register(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
