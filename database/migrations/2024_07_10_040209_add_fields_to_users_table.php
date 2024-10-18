@@ -11,8 +11,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('year_id')->nullable()->change();
-            $table->unsignedBigInteger('faculty_id')->nullable()->change();
+            $table->unsignedBigInteger('year_id')->nullable()->after('id');
+            $table->unsignedBigInteger('faculty_id')->nullable()->after('id');
         });
     }
 
@@ -22,7 +22,8 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn('year_id');
+            $table->dropColumn('faculty_id');
         });
     }
 };
