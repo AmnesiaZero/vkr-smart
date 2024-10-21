@@ -132,7 +132,7 @@
         <div class="d-flex mt-5">
             <button class="btn btn-secondary br-100 br-none text-grey fs-14 py-2 w-25 me-3"
                     onclick="openModal('add_work_modal')" data-bs-target="#add_work_modal" data-bs-toggle="modal">
-                Добавить
+                Добавить работу
                 <img src="/images/pl-green.svg" alt="" class="ps-2"></button>
         </div>
 
@@ -144,14 +144,14 @@
                 <table class="table fs-14">
                     <thead class="brt-green-light-2 brb-green-light-2 lh-17">
                     <tr class="text-grey">
-                        <th scope="col">Группа</th>
-                        <th scope="col">Дата защиты</th>
-                        <th scope="col">Наименование<br> работы - тип работы</th>
-                        <th scope="col">Описание</th>
-                        <th scope="col">Оценка</th>
-                        <th scope="col">Самопроверка по другим системам</th>
-                        <th scope="col">Проверка<br> ВКР-СМАРТка</th>
-                        <th scope="col"><img src="/images/nine_dots.svg" alt="" class="pb-2"></th>
+                        <th scope="col" class="align-middle">Группа</th>
+                        <th scope="col" class="align-middle">Дата защиты</th>
+                        <th scope="col" class="align-middle">Наименование<br> работы - тип работы</th>
+                        <th scope="col" class="align-middle">Описание</th>
+                        <th scope="col" class="align-middle">Оценка</th>
+                        <th scope="col" class="align-middle">Самопроверка по другим системам</th>
+                        <th scope="col" class="align-middle">Проверка<br> ВКР-СМАРТка</th>
+                        <th scope="col" class="align-middle"><img src="/images/nine_dots.svg" alt="" class="pb-2"></th>
                     </tr>
                     </thead>
                     <tbody class="lh-17 brb-green-light-2" id="works_table">
@@ -245,11 +245,13 @@
                 </div>
             @{{/if}}
         </td>
-        <td>
-            <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p" onclick="openInfoBox(${id})">
+    <td>
+        <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p"
+             data-bs-toggle="dropdown" onclick="openInfoBox(${id})">
+
         @include('layouts.dashboard.include.menu.work.you')
-                </td>
-            </tr>
+        </td>
+    </tr>
 
 
 

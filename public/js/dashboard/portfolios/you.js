@@ -12,6 +12,21 @@ $(document).ready(function () {
         formData.append('achievement_id', achievementId);
         formData.append('user_id', userId);
         formData.append('record_type_id', 1);
+
+
+        // Проверка заполнения обязательных полей
+        let isValid = true;
+
+        $('#add_file_form [data-reqiured="true"]').each(function () {
+            if(!this.val()) {
+                isValid = false
+            }
+        });
+
+        if(!isValid) {
+            return;
+        }
+
         $.ajax({
             url: "/dashboard/portfolios/achievements/records/create",
             data: formData,
@@ -21,10 +36,12 @@ $(document).ready(function () {
             },
             processData: false, // Не обрабатываем файлы (не превращаем в строку)
             contentType: false, // Не устанавливаем заголовок Content-Type
+
             success: function (response) {
                 if (response.success) {
                     const achievementRecord = response.data.achievement_record;
                     printAchievementRecord(achievementRecord);
+
                 } else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                 }
@@ -54,6 +71,8 @@ $(document).ready(function () {
                 if (response.success) {
                     const achievementRecord = response.data.achievement_record;
                     printAchievementRecord(achievementRecord);
+
+                    $('#add_work_modal').modal('hide');
                 } else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                 }
@@ -207,6 +226,12 @@ function openUpdateAchievementModal() {
             if (response.success) {
                 const achievement = response.data.achievement;
                 $("#tmpl_container").html($("#update_achievement_modal_tmpl").tmpl(achievement));
+
+                $('.selectpicker').selectpicker();
+
+                let modal = new bootstrap.Modal($('#update_achievement_modal'));
+                modal.show();
+
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -218,6 +243,20 @@ function openUpdateAchievementModal() {
 }
 
 function updateAchievement() {
+
+    // Проверка обязательных полей
+    let isValid = true;
+
+    $('#update_achievement_form [data-reqiured="true"]').each(function () {
+        if(!this.val()) {
+            isValid = false
+        }
+    });
+
+    if(!isValid) {
+        return;
+    }
+
     let data = $("#update_achievement_form").serialize();
     const additionalData = {
         id: achievementId
@@ -236,6 +275,8 @@ function updateAchievement() {
                 const achievement = response.data.achievement;
                 $("#achievement_" + achievementId).replaceWith($("#achievement_tmpl").tmpl(achievement));
                 $.notify(response.data.title + ":" + response.data.message, "success");
+
+                $('#update_achievement_modal').modal('hide');
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -247,7 +288,6 @@ function updateAchievement() {
 }
 
 function openInfoBox(id) {
-    $("#info_box").fadeToggle(100);
     achievementId = id;
 }
 
@@ -266,6 +306,7 @@ function deleteAchievement() {
             dataType: "json",
             success: function (response) {
                 if (response.success) {
+                    $("#achievement_" + achievementId).next().remove();
                     $("#achievement_" + achievementId).remove();
                     $.notify(response.data.title + ":" + response.data.message, "success");
                 } else {
@@ -281,6 +322,8 @@ function deleteAchievement() {
 
 function addRecord(recordTypeId) {
     let formId = '';
+    let modalId = '';
+
     const additionalData = {
         achievement_id: achievementId,
         user_id: userId,
@@ -289,13 +332,28 @@ function addRecord(recordTypeId) {
     switch (recordTypeId) {
         case 2:
             formId = $("#add_link_form");
+            modalId = $("#add_link_modal");
+
+            $('#add_link_form [data-reqiured="true"]').each(function () {
+                if(!this.val()) {
+                    return;
+                }
+            });
             break;
         case 3:
             formId = $("#add_text_form");
+            modalId = $("#add_text_modal");
+
+            $('#add_text_form [data-reqiured="true"]').each(function () {
+                if(!this.val()) {
+                    return;
+                }
+            });
             break;
     }
     let data = formId.serialize();
     data += '&' + $.param(additionalData);
+
     $.ajax({
         url: "/dashboard/portfolios/achievements/records/create",
         data: data,
@@ -308,6 +366,7 @@ function addRecord(recordTypeId) {
             if (response.success) {
                 const achievementRecord = response.data.achievement_record;
                 printAchievementRecord(achievementRecord);
+                modalId.modal('hide');
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }

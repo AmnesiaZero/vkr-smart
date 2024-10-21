@@ -10,15 +10,15 @@
 
                     <div class="d-flex flex-column gap-3">
                         <div class="row">
-                            <label class="col-sm-4">Введите наименование</label>
+                            <label class="col-sm-4 fs-16">Введите наименование</label>
                             <div class="col-sm-8">
-                                <input type="text" name="name" class="form-control fullwidth" required=""
+                                <input type="text" name="name" class="form-control fullwidth" required
                                        placeholder="Ввод...">
                             </div>
                         </div>
 
                         <div class="row">
-                            <label class="col-sm-4">Выберите тип деятельности:</label>
+                            <label class="col-sm-4 fs-16">Выберите тип деятельности:</label>
                             <div class="col-sm-8">
                                 <select name="achievement_mode_id" class="selectpicker bs-select-hidden w-100">
                                     @if(isset($modes) and is_iterable($modes))
@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-sm-4">Выберите тип документа:</label>
+                            <label class="col-sm-4 fs-16">Выберите тип документа:</label>
                             <div class="col-sm-8">
                                 <select name="achievement_type_id" class="selectpicker bs-select-hidden w-100">
                                     @if(isset($categories) and is_iterable($categories))
@@ -48,14 +48,14 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-sm-4">Загрузите файл</label>
+                            <label class="col-sm-4 fs-16">Загрузите файл</label>
                             <div class="col-sm-8">
                                 <input type="file" name="achievement_file" class="form-control fullwidth"
-                                       id="file_input" required="">
+                                       id="file_input" required>
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-sm-4">Кому доступен ресурс:</label>
+                            <label class="col-sm-4 fs-16">Кому доступен ресурс:</label>
                             <div class="col-sm-8">
                                 <select class="selectpicker bs-select-hidden w-100" name="access_id">
                                     <option value="1">Всем</option>
@@ -67,8 +67,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1"
-                            onclick="closeModal('add_file_modal')">
+                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1">
                         Добавить
                     </button>
                     <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"

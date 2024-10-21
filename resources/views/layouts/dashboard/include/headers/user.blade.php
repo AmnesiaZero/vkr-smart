@@ -14,7 +14,7 @@
             <ul class="list-custom-1 m-0">
                 <li class="list-select">
                     <a href="/dashboard/personal-cabinet"
-                       class="select-a @if(request()->is('*/personal-cabinet')) nav-link-active @endif">
+                       class="select-a @if(request()->is('*/personal-cabinet')) list-select-active @endif">
                         Профиль
                     </a>
                 </li>
@@ -37,7 +37,7 @@
             <ul class="list-custom-1 m-0">
                 <li class="list-select">
                     <a href="/dashboard/works/you"
-                       class="select-a @if(request()->is('*/works/you')) nav-link-active @endif">
+                       class="select-a @if(request()->is('*/works/you')) list-select-active @endif">
                         Загруженные<br>вами
                     </a>
                 </li>
@@ -61,7 +61,7 @@
             <ul class="list-custom-1 m-0">
                 <li class="list-select">
                     <a href="/dashboard/portfolios/achievements/you"
-                       class="select-a @if(request()->is('*/portfolios/achievements/you')) nav-link-active @endif">
+                       class="select-a @if(request()->is('*/portfolios/achievements/you')) list-select-active @endif">
                         Мои<br> достижения
                     </a>
                 </li>

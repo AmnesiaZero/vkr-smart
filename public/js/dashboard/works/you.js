@@ -28,39 +28,6 @@ function toggleInputAndSelect(inputName, selectName) {
 $(document).ready(function() {
     $('.selectpicker').selectpicker();
 
-    // Обработка отправки формы
-    $('#addWorkForm').on('submit', function(event) {
-        event.preventDefault(); // Останавливаем стандартное поведение формы
-
-        // Проверка валидности
-        var isValid = true;
-        $(this).find('input[required]:not([disabled]), select[required]:not([disabled])').each(function() {
-            if ($(this).val().trim() === '') {
-                isValid = false;
-                $(this).addClass('is-invalid'); // Отмечаем незаполненные поля
-            } else {
-                $(this).removeClass('is-invalid');
-            }
-        });
-
-        // Если все необходимые поля заполнены
-        if (isValid) {
-            // Закрытие модального окна
-            $('#add_work_modal').modal('hide');
-        }
-    });
-
-    // Убираем класс is-invalid при изменении поля
-    $('input[required], select[required]').on('input change', function() {
-        if ($(this).val().trim() !== '') {
-            $(this).removeClass('is-invalid');
-        }
-    });
-});
-
-$(document).ready(function() {
-    $('.selectpicker').selectpicker();
-
     // Применение функции к полям "Научный руководитель"
     toggleInputAndSelect('scientific_supervisor', 'scientific_supervisor');
 
@@ -175,6 +142,7 @@ $(document).ready(function () {
         $('#certificate_input').click(); // Открываем диалог выбора файла
     });
     $("#addWorkForm").on('submit', function (e) {
+        console.log(123)
         e.preventDefault(); // Предотвращаем стандартное поведение формы
 
         // Создаем объект FormData и добавляем в него данные формы
@@ -755,8 +723,6 @@ function openInfoBox(id) {
             }
         });
     }
-    $("#info_box").fadeToggle(100);
-
 }
 
 function checkDeleted() {

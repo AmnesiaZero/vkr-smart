@@ -2,9 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">×</span></button>
-                <h3>Информация о работе</h3>
+                <h3 class="modal-title">Информация о работе</h3>
             </div>
             <div class="modal-body">
                 <ul class="nav nav-tabs" role="tablist">
