@@ -404,7 +404,7 @@ Route::group([
             Route::group([
                 'prefix' => 'specialties'
             ], function () {
-                Route::post('create', [ProgramsSpecialtiesController::class, 'create'])->withoutMiddleware(['web', 'auth']);;
+                Route::post('create', [ProgramsSpecialtiesController::class, 'create']);
                 Route::get('get', [ProgramsSpecialtiesController::class, 'get']);
                 Route::get('get-by-department', [ProgramsSpecialtiesController::class, 'getByDepartment']);
                 Route::get('get-by-organization', [ProgramsSpecialtiesController::class, 'getByOrganization']);
