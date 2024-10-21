@@ -1,4 +1,4 @@
-function workInfoStudent(activeTabpanel) {
+function workInfoStudent() {
     const workId = localStorage.getItem('work_id');
     const data = {
         id: workId,

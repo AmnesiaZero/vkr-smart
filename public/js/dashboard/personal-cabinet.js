@@ -232,30 +232,33 @@ function addEducation()
 
 function deleteEducation(educationId)
 {
-    const data = {
-        id:educationId
-    };
-    $.ajax({
-        url: "/dashboard/portfolios/educations/delete",
-        data:data,
-        type: "POST",
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        dataType: "json",
-        success: function (response) {
-            if (response.success) {
-                $("#education_" + educationId).remove();
-                $.notify(response.data.title + ":" + response.data.message, "success");
+    if(confirm('Вы уверены,что хотите удалить информацию об образовании?'))
+    {
+        const data = {
+            id:educationId
+        };
+        $.ajax({
+            url: "/dashboard/portfolios/educations/delete",
+            data:data,
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    $("#education_" + educationId).remove();
+                    $.notify(response.data.title + ":" + response.data.message, "success");
+                }
+                else {
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                }
+            },
+            error: function () {
+                $.notify("Произошла ошибка при получении образований", "error");
             }
-            else {
-                $.notify(response.data.title + ":" + response.data.message, "error");
-            }
-        },
-        error: function () {
-            $.notify("Произошла ошибка при получении образований", "error");
-        }
-    });
+        });
+    }
 }
 
 function getEducationForm(educationFormId)

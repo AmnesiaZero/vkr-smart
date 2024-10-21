@@ -143,7 +143,8 @@
                     <div class="row pt-4 d-flex align-items-end">
                         <div class="col">
                             <div class="mt-auto">
-                                <button type="submit" class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 me-3">
+                                <button type="submit"
+                                        class="btn btn-secondary br-100 br-none text-grey fs-14 py-1 me-3">
                                     Применить
                                 </button>
                                 <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 me-3"
@@ -215,7 +216,7 @@
         <div id="report_container">
 
         </div>
-        @include('layouts.dashboard.include.modal.add.works.admin')
+        @include('layouts.dashboard.include.modal.add.works.others')
         @include('layouts.dashboard.include.modal.update.work_specialty')
         @include('layouts.dashboard.include.modal.other.additional_file')
         @include('layouts.dashboard.include.modal.add.import-work')
@@ -229,7 +230,7 @@
             <script type="text/javascript"
                     src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-            @include('layouts.dashboard.include.tmpls.works_page')
+            @include('layouts.dashboard.include.tmpls.works.works_page')
 
             <script id="work_tmpl" type="text/x-jquery-tmpl">
 {{--      @{{if visibility==1}}--}}
@@ -285,5 +286,7 @@
 
 
             </script>
+
+    @include('layouts.dashboard.include.tmpls.works.report')
 
 @endsection
