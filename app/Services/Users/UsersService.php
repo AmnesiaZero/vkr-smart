@@ -223,6 +223,12 @@ class UsersService extends Services
         if (empty($data)) {
             return back()->withErrors(['Пустой массив данных']);
         }
+        $data['paginate'] = true;
+
+        if(!isset($data['page']))
+        {
+            $data['page'] = 1;
+        }
         $you = Auth::user();
         $organizations = Organization::all();
         $users = $this->_repository->search($data);
