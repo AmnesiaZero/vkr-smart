@@ -468,7 +468,7 @@ Route::group([
         Route::get('filer', [UsersController::class, 'filter'])->name('users.filter');
         Route::get('you', [UsersController::class, 'you']);
         Route::post('configure-departments', [UsersController::class, 'configureDepartments']);
-        Route::get('logout', [UsersController::class, 'logout']);
+        Route::get('logout', [UsersController::class, 'logout'])->name('users.logout');
 
     });
 
