@@ -165,6 +165,7 @@ $(document).ready(function () {
     });
 
     $('#upload_certificate_button').on('click', function() {
+        console.log('Кнопка нажата');
         $('#certificate_input').click(); // Открываем диалог выбора файла
     });
 
@@ -199,6 +200,7 @@ $(document).ready(function () {
     });
 
     $('#certificate_input').on('change', function() {
+        console.log('Вошел в функцию загрузки сертификата')
         const file = this.files[0];
         if (file) {
             const workId = localStorage.getItem('work_id');
@@ -797,6 +799,11 @@ function searchWorks(page=1) {
         }
     });
 }
+
+// function click(objectId)
+// {
+//     $("#" + objectId).click();
+// }
 
 function resetEmployeeSearch() {
     // Очищаем сохраненные данные в localStorage

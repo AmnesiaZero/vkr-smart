@@ -279,7 +279,7 @@
                        <img src="/images/three_dots.svg" alt="" id="work-menu-button" class="btn-info-box cursor-p dropdown-toggle"
                        type="button" onclick="openInfoBox(${id})"
                        data-bs-toggle="dropdown" aria-expanded="false">
-@include('layouts.dashboard.include.menu.work.employee')
+                         @include('layouts.dashboard.include.menu.work.employee')
                 </td>
             </tr>
 {{--            @{{/if}}--}}

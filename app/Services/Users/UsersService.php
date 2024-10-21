@@ -136,9 +136,7 @@ class UsersService extends Services
         if ($user and $user->id) {
             $userId = $user->id;
             if (isset($data['role'])) {
-                Log::debug('role = ' . $data['role']);
                 $role = $this->roleRepository->find($data['role']);
-                Log::debug('role eloquent = ' . $role);
             } else {
                 $role = $this->roleRepository->find('user');
             }
@@ -364,11 +362,13 @@ class UsersService extends Services
         {
             if(FilesHelper::acceptableImage($data['avatar']))
             {
+                $directory = ceil($id/1000);
+                $directoryPath = 'public/avatars/'.$directory;
                 $avatar = $data['avatar'];
                 $extension = $avatar->extension();
                 $avatarFileName = $id.'.'.$extension;
-                $avatar->storeAs('public/avatars',$avatarFileName);
-                $data['avatar_path'] = 'storage/avatars/'.$avatarFileName;
+                $avatar->storeAs($directoryPath,$avatarFileName);
+                $data['avatar_path'] = 'storage/avatars/'.$directory.'/'.$avatarFileName;
             }
             else
             {
@@ -629,12 +629,14 @@ class UsersService extends Services
             $id = $user->id;
             if(isset($data['avatar']) and is_file($data['avatar']) and FilesHelper::acceptableImage($data['avatar']))
             {
+                $directory = ceil($id/1000);
                 $avatarFile = $data['avatar'];
-                $avatarDirectory = 'public/avatars';
+                $avatarDirectory = 'public/avatars/'.$directory;
                 Storage::makeDirectory($avatarDirectory);
                 $avatarFileName = $id.'.'.$avatarFile->extension();
-                $avatarPath =  $avatarFile->storeAs($avatarDirectory,$avatarFileName);
-                $updatedData['avatar_path'] = $avatarPath;
+                $avatarFile->storeAs($avatarDirectory,$avatarFileName);
+                $updatedData['avatar_path'] = 'storage/avatars/'.$directory.'/'.$avatarFileName;
+
                 $updatedData['avatar_file_name'] = $avatarFile->getClientOriginalName();
             }
             else
@@ -707,11 +709,12 @@ class UsersService extends Services
             if(is_file($data['avatar']) and FilesHelper::acceptableImage($data['avatar']))
             {
                 $avatarFile = $data['avatar'];
-                $avatarDirectory = 'public/avatars';
+                $directory = ceil($id/1000);
+                $avatarDirectory = 'public/avatars/'.$directory;
                 Storage::makeDirectory($avatarDirectory);
                 $avatarFileName = $id.'.'.$avatarFile->extension();
-                $avatarPath = $avatarFile->storeAs($avatarDirectory,$avatarFileName);
-                $data['avatar_path'] = $avatarPath;
+                $avatarFile->storeAs($avatarDirectory,$avatarFileName);
+                $data['avatar_path'] ='storage/avatars/'.$directory.'/'.$avatarFileName;
                 $data['avatar_file_name'] = $avatarFile->getClientOriginalName();
             }
             else
