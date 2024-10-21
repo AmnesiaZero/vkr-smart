@@ -70,7 +70,7 @@ class OrganizationsService extends Services
     {
         $organization = $this->_repository->find($id);
         try {
-            $organization->inspectorsSpecialties()->sync($specialtiesIds);
+            $organization->inspectors_specialties()->sync($specialtiesIds);
         } catch (QueryException $e) {
             return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
