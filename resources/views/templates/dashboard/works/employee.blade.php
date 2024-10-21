@@ -230,7 +230,7 @@
             <script type="text/javascript"
                     src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-            @include('layouts.dashboard.include.tmpls.works_page')
+            @include('layouts.dashboard.include.tmpls.works.works_page')
 
             <script id="work_tmpl" type="text/x-jquery-tmpl">
 {{--      @{{if visibility==1}}--}}
@@ -286,5 +286,7 @@
 
 
             </script>
+
+    @include('layouts.dashboard.include.tmpls.works.report')
 
 @endsection

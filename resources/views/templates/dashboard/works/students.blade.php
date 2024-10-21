@@ -470,6 +470,7 @@
             </div>
 
 
+
             </script>
 
 
@@ -504,8 +505,12 @@
             </div>
         </div>
 
+
             </script>
-    @include('layouts.dashboard.include.tmpls.works_page')
+    @include('layouts.dashboard.include.tmpls.works.works_page')
+    @include('layouts.dashboard.include.tmpls.works.report')
+
+
 @endsection
 
 
