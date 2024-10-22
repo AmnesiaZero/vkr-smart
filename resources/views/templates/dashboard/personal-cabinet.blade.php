@@ -450,6 +450,10 @@
             <input type="hidden" name="action" value="getFile">
         </form>
     </div>
+
+    <div id="loading" style="display: none;">
+        <div class="spinner"></div>
+    </div>
 @endsection
 
 

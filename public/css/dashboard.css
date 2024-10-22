@@ -1,6 +1,32 @@
 @import url("../fonts/stylesheet.css");
 
 
+#loading {
+    position: fixed; /* Фиксированное позиционирование, чтобы оставаться на экране */
+    top: 50%; /* На 50% от верхней границы */
+    left: 50%; /* На 50% от левой границы */
+    transform: translate(-50%, -50%); /* Сдвигаем на половину ширины и высоты */
+    display: flex; /* Включаем flex для центрирования содержимого */
+    justify-content: center; /* Центрируем спиннер */
+    align-items: center; /* Центрируем спиннер */
+    z-index: 1000; /* Чтобы индикатор был над другими элементами */
+}
+
+.spinner {
+    border: 8px solid #f3f3f3; /* Цвет фона */
+    border-top: 8px solid #3498db; /* Цвет спиннера */
+    border-radius: 50%;
+    width: 50px; /* Ширина */
+    height: 50px; /* Высота */
+    animation: spin 1s linear infinite; /* Анимация */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
 /* tooltips */
 .tooltip-inner {
     font-size: 50px !important;

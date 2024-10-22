@@ -38,6 +38,7 @@ $(document).ready(function () {
     });
 
     $('#avatar_input').on('change', function() {
+        $('#loading').show();
         const file = this.files[0];
 
         if (file) {
