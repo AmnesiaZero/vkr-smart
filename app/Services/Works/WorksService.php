@@ -183,6 +183,7 @@ class WorksService extends Services
                 ]);
             }
             $directory = 'works/' . ceil($work->id / 1000);
+            FilesHelper::clearDocuments($directory.'/'.$work->id);
             $workFile->storeAs($directory, $fileName);
             return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
@@ -331,16 +332,14 @@ class WorksService extends Services
         $work = $this->workRepository->find($id);
         if ($work and $work->id) {
             $fileName = $work->id . '.' . $certificate->extension();
-            $certificatePath = $work->certificate;
-            if (isset($certificatePath) and Storage::exists($certificatePath)) {
-                Storage::delete($certificatePath);
-                $directory = 'certificates/' . ceil($work->id / 1000);
-                $certificate->storeAs($directory, $fileName);
-                return self::sendJsonResponse(true, [
-                    'title' => 'Успешно',
-                    'message' => 'Файл сертификата успешно изменен'
-                ]);
-            }
+            $directory = 'certificates/' . ceil($work->id / 1000);
+            //Для очистки всех сертификатов с другим расширением
+            FilesHelper::clearDocuments($directory.'/'.$work->id);
+            $certificate->storeAs($directory, $fileName);
+            return self::sendJsonResponse(true, [
+                'title' => 'Успешно',
+                'message' => 'Файл сертификата успешно изменен'
+            ]);
         }
         return self::sendJsonResponse(false, [
             'title' => 'Ошибка',
@@ -366,10 +365,11 @@ class WorksService extends Services
         if ($work and $work->id) {
             $path = $work->path;
             if (isset($path) and Storage::exists($path)) {
+//                dd($work);
                 return Storage::download($path);
             }
         }
-        return back();
+        return back()->withErrors(['Возникла ошибка при загрузке работы']);
     }
 
     public function import(array $data): JsonResponse

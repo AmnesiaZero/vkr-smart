@@ -160,109 +160,77 @@ $(document).ready(function () {
     });
 
 
-    $('#upload_button').on('click', function() {
-        $('#file_input').click(); // Открываем диалог выбора файла
-    });
+    // $('#upload_button').on('click', function() {
+    //     $('#file_input').click(); // Открываем диалог выбора файла
+    // });
+    //
+    // $('#upload_certificate_button').on('click', function() {
+    //     console.log('Кнопка нажата');
+    //     $('#certificate_input').click(); // Открываем диалог выбора файла
+    // });
 
-    $('#upload_certificate_button').on('click', function() {
-        console.log('Кнопка нажата');
-        $('#certificate_input').click(); // Открываем диалог выбора файла
-    });
+    // $('#file_input').on('change', function() {
+    //     const file = this.files[0];
+    //     if (file) {
+    //         const workId = localStorage.getItem('work_id');
+    //         const formData = new FormData();
+    //         formData.append('id', workId);
+    //         formData.append('work_file', file);
+    //         $.ajax({
+    //             url: '/dashboard/works/upload', // URL к вашему серверному скрипту
+    //             type: 'POST',
+    //             data: formData,
+    //             headers: {
+    //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //             },
+    //             contentType: false, // Обязательно установить false для передачи данных как FormData
+    //             processData: false, // Обязательно установить false для передачи данных как FormData
+    //             success: function (response) {
+    //                 if (response.success) {
+    //                     $.notify(response.data.title + ":" + response.data.message, "success");
+    //                 } else {
+    //                     $.notify(response.data.title + ":" + response.data.message, "error");
+    //                 }
+    //             },
+    //             error: function () {
+    //                 $.notify("Произошла ошибка при загрузке файла", "error");
+    //             }
+    //         });
+    //     }
+    // });
 
-    $('#file_input').on('change', function() {
-        const file = this.files[0];
-        if (file) {
-            const workId = localStorage.getItem('work_id');
-            const formData = new FormData();
-            formData.append('id', workId);
-            formData.append('work_file', file);
-            $.ajax({
-                url: '/dashboard/works/upload', // URL к вашему серверному скрипту
-                type: 'POST',
-                data: formData,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                contentType: false, // Обязательно установить false для передачи данных как FormData
-                processData: false, // Обязательно установить false для передачи данных как FormData
-                success: function (response) {
-                    if (response.success) {
-                        $.notify(response.data.title + ":" + response.data.message, "success");
-                    } else {
-                        $.notify(response.data.title + ":" + response.data.message, "error");
-                    }
-                },
-                error: function () {
-                    $.notify("Произошла ошибка при загрузке файла", "error");
-                }
-            });
-        }
-    });
+    // $('#certificate_input').on('change', function() {
+    //     console.log('Вошел в функцию загрузки сертификата')
+    //     const file = this.files[0];
+    //     if (file) {
+    //         const workId = localStorage.getItem('work_id');
+    //         const formData = new FormData();
+    //         formData.append('id', workId);
+    //         formData.append('certificate_file', file);
+    //         $.ajax({
+    //             url: '/dashboard/works/certificates/upload', // URL к вашему серверному скрипту
+    //             type: 'POST',
+    //             data: formData,
+    //             headers: {
+    //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //             },
+    //             contentType: false, // Обязательно установить false для передачи данных как FormData
+    //             processData: false, // Обязательно установить false для передачи данных как FormData
+    //             success: function (response) {
+    //                 if (response.success) {
+    //                     $.notify(response.data.title + ":" + response.data.message, "success");
+    //                 } else {
+    //                     $.notify(response.data.title + ":" + response.data.message, "error");
+    //                 }
+    //             },
+    //             error: function () {
+    //                 $.notify("Произошла ошибка при загрузке файла", "error");
+    //             }
+    //         });
+    //     }
+    // });
 
-    $('#certificate_input').on('change', function() {
-        console.log('Вошел в функцию загрузки сертификата')
-        const file = this.files[0];
-        if (file) {
-            const workId = localStorage.getItem('work_id');
-            const formData = new FormData();
-            formData.append('id', workId);
-            formData.append('certificate_file', file);
-            $.ajax({
-                url: '/dashboard/works/certificates/upload', // URL к вашему серверному скрипту
-                type: 'POST',
-                data: formData,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                contentType: false, // Обязательно установить false для передачи данных как FormData
-                processData: false, // Обязательно установить false для передачи данных как FormData
-                success: function (response) {
-                    if (response.success) {
-                        $.notify(response.data.title + ":" + response.data.message, "success");
-                    } else {
-                        $.notify(response.data.title + ":" + response.data.message, "error");
-                    }
-                },
-                error: function () {
-                    $.notify("Произошла ошибка при загрузке файла", "error");
-                }
-            });
-        }
-    });
 
-    $("#upload_additional_file_form").on('submit', function(e) {
-        e.preventDefault(); // Предотвращаем стандартное поведение формы
-
-        // Создаем объект FormData и добавляем в него данные формы
-        const formData = new FormData(this);
-        const workId = localStorage.getItem('work_id');
-        formData.append('work_id',workId);
-
-        $.ajax({
-            url: '/dashboard/works/additional-files/create',
-            type: 'POST',
-            data: formData,
-            processData: false, // Не обрабатываем файлы (не превращаем в строку)
-            contentType: false, // Не устанавливаем заголовок Content-Type
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                if (response.success)
-                {
-                    const additionalFile = response.data.additional_file;
-                    $("#additional_files").append($("#additional_file_tmpl").tmpl(additionalFile));
-                }
-                else
-                {
-                    $.notify(response.data.title + ":" + response.data.message, "error");
-                }
-            },
-            error: function() {
-                $.notify("Ошибка при добавлении работы. Обратитесь к системному администратору", "error");
-            }
-        });
-    });
 
 
 
@@ -328,6 +296,127 @@ $(document).ready(function () {
         placeholder: "Выберите...",
     });
 });
+
+$(document).on('click', '#upload_button', function() {
+    console.log('Кнопка загрузки файла нажата');
+    $('#file_input').click(); // Открываем диалог выбора файла
+});
+$(document).on('change', '#file_input', function() {
+    const file = this.files[0];
+    if (file) {
+        const workId = localStorage.getItem('work_id');
+        const formData = new FormData();
+        formData.append('id', workId);
+        formData.append('work_file', file);
+        $.ajax({
+            url: '/dashboard/works/upload', // URL к вашему серверному скрипту
+            type: 'POST',
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            contentType: false, // Обязательно установить false для передачи данных как FormData
+            processData: false, // Обязательно установить false для передачи данных как FormData
+            success: function (response) {
+                if (response.success) {
+                    $.notify(response.data.title + ":" + response.data.message, "success");
+                } else {
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                }
+            },
+            error: function () {
+                $.notify("Произошла ошибка при загрузке файла", "error");
+            }
+        });
+    }
+});
+
+
+$(document).on('click', '#upload_certificate_button', function() {
+    $('#certificate_input').click(); // Открываем диалог выбора файла
+});
+
+$(document).on('change', '#certificate_input', function() {
+    console.log('Вошел в функцию загрузки сертификата')
+    const file = this.files[0];
+    if (file) {
+        const workId = localStorage.getItem('work_id');
+        const formData = new FormData();
+        formData.append('id', workId);
+        formData.append('certificate_file', file);
+        $.ajax({
+            url: '/dashboard/works/certificates/upload', // URL к вашему серверному скрипту
+            type: 'POST',
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            contentType: false, // Обязательно установить false для передачи данных как FormData
+            processData: false, // Обязательно установить false для передачи данных как FormData
+            success: function (response) {
+                if (response.success) {
+                    $.notify(response.data.title + ":" + response.data.message, "success");
+                } else {
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                }
+            },
+            error: function () {
+                $.notify("Произошла ошибка при загрузке файла", "error");
+            }
+        });
+    }
+});
+
+// $(document).on('submit', '#upload_additional_file_form', function(e) {
+//     e.preventDefault(); // Предотвращаем стандартное поведение формы
+//
+//     // Создаем объект FormData и добавляем в него данные формы
+//     const formData = new FormData(this);
+//     const workId = localStorage.getItem('work_id');
+//     formData.append('work_id',workId);
+//
+//     $.ajax({
+//         url: '/dashboard/works/additional-files/create',
+//         type: 'POST',
+//         data: formData,
+//         processData: false, // Не обрабатываем файлы (не превращаем в строку)
+//         contentType: false, // Не устанавливаем заголовок Content-Type
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         },
+//         success: function(response) {
+//             if (response.success)
+//             {
+//                 const additionalFile = response.data.additional_file;
+//                 $("#additional_files").append($("#additional_file_tmpl").tmpl(additionalFile));
+//             }
+//             else
+//             {
+//                 $.notify(response.data.title + ":" + response.data.message, "error");
+//             }
+//         },
+//         error: function() {
+//             $.notify("Ошибка при добавлении работы. Обратитесь к системному администратору", "error");
+//         }
+//     });
+// });
+
+$('#work-menu-button').on('click', function(event) {
+    event.stopPropagation(); // Останавливаем распространение события, чтобы не закрылось сразу
+    $('#work-menu').toggle(); // Переключаем видимость меню
+});
+
+
+// Закрытие меню при клике вне него
+$(document).on('click', function(event) {
+    if (!$(event.target).closest('#work-menu-button').length && !$(event.target).closest('#work_menu').length) {
+        console.log('Удалил');
+        $("[id^='info_box_']").empty();
+    }
+});
+
+
+
 
 
 
@@ -838,19 +927,9 @@ function resetEmployeeSearch() {
 
 function openInfoBox(id)
 {
+    console.log('info box');
     if(id)
     {
-        const deleted = $("#work_" + id).attr('class');
-        if(deleted)
-        {
-            console.log('true');
-            $("#added_menu").html($("#deleted_menu_tmpl").tmpl());
-        }
-        else
-        {
-            console.log('false');
-            $("#added_menu").html($("#undeleted_menu_tmpl").tmpl());
-        }
         const data = {
             id:id
         };
@@ -860,10 +939,24 @@ function openInfoBox(id)
             type: 'GET',
             data:data,
             dataType: "json",
+            cache: false, // Отключаем кэширование
             success: function(response) {
                 if (response.success)
                 {
                     const work = response.data.work;
+                    $("#info_box_" + id).html($("#info_box_tmpl").tmpl(work));
+                    const deleted = $("#work_" + id).attr('class');
+                    if(deleted)
+                    {
+                        console.log('true');
+                        $("#added_menu").html($("#deleted_menu_tmpl").tmpl());
+                    }
+                    else
+                    {
+                        console.log('false');
+                        $("#added_menu").html($("#undeleted_menu_tmpl").tmpl());
+                    }
+                    $("#work_menu").addClass('show');
                     const userId = work.user_id;
                     localStorage.setItem('work_id',id);
                     localStorage.setItem('user_id',userId);

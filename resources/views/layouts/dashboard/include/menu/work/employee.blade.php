@@ -1,4 +1,4 @@
-<div class="info-box dropdown-menu" id="info_box" aria-labelledby="work-menu-button">
+<div class="info-box dropdown-menu" aria-labelledby="work-menu-button">
     @role('admin|employee')
     <p class="fs-14 lh-17 mb-3">Направление подготовки обучающегося</p>
     <div class="d-flex align-items-center cursor-p mb-2">
