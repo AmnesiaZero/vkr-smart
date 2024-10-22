@@ -30,7 +30,7 @@ class FilesHelper
         return in_array($extension, $acceptableExtension);
     }
 
-    public static function clearDocuments(string $path)
+    public static function clearDocuments(string $path): void
     {
         $extensions = self::getAcceptableDocsExtensions();
         foreach ($extensions as $extension)
@@ -39,7 +39,16 @@ class FilesHelper
         }
     }
 
-    public static function getAcceptableImageExtensions()
+    public static function clearImages(string $path): void
+    {
+        $extensions = self::getAcceptableImageExtensions();
+        foreach ($extensions as $extension)
+        {
+            Storage::delete($path.'.'.$extension);
+        }
+    }
+
+    public static function getAcceptableImageExtensions(): array
     {
         return ['jpeg', 'jpg', 'png', 'webp'];
     }

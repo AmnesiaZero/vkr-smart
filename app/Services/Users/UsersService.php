@@ -364,6 +364,7 @@ class UsersService extends Services
             {
                 $directory = ceil($id/1000);
                 $directoryPath = 'public/avatars/'.$directory;
+                FilesHelper::clearImages($directoryPath.'/'.$id);
                 $avatar = $data['avatar'];
                 $extension = $avatar->extension();
                 $avatarFileName = $id.'.'.$extension;
@@ -710,11 +711,13 @@ class UsersService extends Services
             {
                 $avatarFile = $data['avatar'];
                 $directory = ceil($id/1000);
-                $avatarDirectory = 'public/avatars/'.$directory;
-                Storage::makeDirectory($avatarDirectory);
+                $storageDirectory = 'public/avatars/'.$directory;
+                Storage::makeDirectory($storageDirectory);
                 $avatarFileName = $id.'.'.$avatarFile->extension();
-                $avatarFile->storeAs($avatarDirectory,$avatarFileName);
-                $data['avatar_path'] ='storage/avatars/'.$directory.'/'.$avatarFileName;
+                $linkDirectory = 'storage/avatars/'.$directory;
+                FilesHelper::clearImages($storageDirectory.'/'.$id);
+                $avatarFile->storeAs($storageDirectory,$avatarFileName);
+                $data['avatar_path'] = $linkDirectory.'/'.$avatarFileName;
                 $data['avatar_file_name'] = $avatarFile->getClientOriginalName();
             }
             else
@@ -725,18 +728,14 @@ class UsersService extends Services
         $result = $this->_repository->update($id,$data);
         if($result)
         {
-            $user = $this->_repository->find($id);
-            $you = Auth::user();
+//            $user = $this->_repository->find($id);
+//            $you = Auth::user();
             if(isset($data['redirect']))
             {
                 return redirect('/dashboard/users/index');
             }
-            $organization = $this->_repository->find($id);
-            return view('templates.dashboard.platform.users.edit',[
-                'organization' => $organization,
-                'you' => $you,
-                'user' => $user
-            ]);
+//            $organization = $this->_repository->find($id);
+            return back();
         }
         return back()->withErrors(['Ошибка при обновлении организации']);
     }
