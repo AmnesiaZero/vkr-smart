@@ -6,7 +6,7 @@ namespace App\Services\Users;
 use App\Helpers\FilesHelper;
 use App\Helpers\JsonHelper;
 use App\Mail\ResetPassword;
-use App\Models\AchievementMode;
+use App\Models\ActivityType;
 use App\Models\AchievementTypeCategory;
 use App\Models\InviteCode;
 use App\Models\Organization;
@@ -65,7 +65,6 @@ class UsersService extends Services
     public function register(array $data)
     {
         $codeId =(int )Cookie::get('invite_code_id');
-        Log::debug('code id = '.$codeId);
         $code = $this->inviteCodeRepository->find($codeId);
         if($code and $code->id)
         {
@@ -136,9 +135,7 @@ class UsersService extends Services
         if ($user and $user->id) {
             $userId = $user->id;
             if (isset($data['role'])) {
-                Log::debug('role = ' . $data['role']);
                 $role = $this->roleRepository->find($data['role']);
-                Log::debug('role eloquent = ' . $role);
             } else {
                 $role = $this->roleRepository->find('user');
             }
@@ -147,7 +144,6 @@ class UsersService extends Services
             if (isset($data['departments_ids'])) {
                 $departmentsIds = $data['departments_ids'];
                 foreach ($departmentsIds as $id) {
-                    Log::debug('department id = ' . $id);
                     $user->departments()->attach($id);
                 }
             }
@@ -340,7 +336,6 @@ class UsersService extends Services
 
     public function registerRedirect(int $codeId, int $code)
     {
-        Log::debug('1 code id = '.$codeId);
         if ($this->inviteCodeRepository->login($codeId, $code)) {
             $code = $this->inviteCodeRepository->find($codeId);
             if($code and $code->id)
@@ -364,11 +359,14 @@ class UsersService extends Services
         {
             if(FilesHelper::acceptableImage($data['avatar']))
             {
+                $directory = ceil($id/1000);
+                $directoryPath = 'public/avatars/'.$directory;
+                FilesHelper::clearImages($directoryPath.'/'.$id);
                 $avatar = $data['avatar'];
                 $extension = $avatar->extension();
                 $avatarFileName = $id.'.'.$extension;
-                $avatar->storeAs('public/avatars',$avatarFileName);
-                $data['avatar_path'] = 'storage/avatars/'.$avatarFileName;
+                $avatar->storeAs($directoryPath,$avatarFileName);
+                $data['avatar_path'] = 'storage/avatars/'.$directory.'/'.$avatarFileName;
             }
             else
             {
@@ -629,12 +627,14 @@ class UsersService extends Services
             $id = $user->id;
             if(isset($data['avatar']) and is_file($data['avatar']) and FilesHelper::acceptableImage($data['avatar']))
             {
+                $directory = ceil($id/1000);
                 $avatarFile = $data['avatar'];
-                $avatarDirectory = 'public/avatars';
+                $avatarDirectory = 'public/avatars/'.$directory;
                 Storage::makeDirectory($avatarDirectory);
                 $avatarFileName = $id.'.'.$avatarFile->extension();
-                $avatarPath =  $avatarFile->storeAs($avatarDirectory,$avatarFileName);
-                $updatedData['avatar_path'] = $avatarPath;
+                $avatarFile->storeAs($avatarDirectory,$avatarFileName);
+                $updatedData['avatar_path'] = 'storage/avatars/'.$directory.'/'.$avatarFileName;
+
                 $updatedData['avatar_file_name'] = $avatarFile->getClientOriginalName();
             }
             else
@@ -707,11 +707,14 @@ class UsersService extends Services
             if(is_file($data['avatar']) and FilesHelper::acceptableImage($data['avatar']))
             {
                 $avatarFile = $data['avatar'];
-                $avatarDirectory = 'public/avatars';
-                Storage::makeDirectory($avatarDirectory);
+                $directory = ceil($id/1000);
+                $storageDirectory = 'public/avatars/'.$directory;
+                Storage::makeDirectory($storageDirectory);
                 $avatarFileName = $id.'.'.$avatarFile->extension();
-                $avatarPath = $avatarFile->storeAs($avatarDirectory,$avatarFileName);
-                $data['avatar_path'] = $avatarPath;
+                $linkDirectory = 'storage/avatars/'.$directory;
+                FilesHelper::clearImages($storageDirectory.'/'.$id);
+                $avatarFile->storeAs($storageDirectory,$avatarFileName);
+                $data['avatar_path'] = $linkDirectory.'/'.$avatarFileName;
                 $data['avatar_file_name'] = $avatarFile->getClientOriginalName();
             }
             else
@@ -722,18 +725,14 @@ class UsersService extends Services
         $result = $this->_repository->update($id,$data);
         if($result)
         {
-            $user = $this->_repository->find($id);
-            $you = Auth::user();
+//            $user = $this->_repository->find($id);
+//            $you = Auth::user();
             if(isset($data['redirect']))
             {
                 return redirect('/dashboard/users/index');
             }
-            $organization = $this->_repository->find($id);
-            return view('templates.dashboard.platform.users.edit',[
-                'organization' => $organization,
-                'you' => $you,
-                'user' => $user
-            ]);
+//            $organization = $this->_repository->find($id);
+            return back();
         }
         return back()->withErrors(['Ошибка при обновлении организации']);
     }

@@ -41,7 +41,7 @@
                 <i class="icon far fa-trash-alt"></i>
             </a>
         @else
-            <a href="{{ route('users.edit.view', $user->id) }}" class="d-inline mr-2">
+            <a href="{{ route('users.edit.view', ['id' => $user->id]) }}" class="d-inline mr-2">
                 <i class="icon fas fa-edit"></i>
             </a>
             <a href="{{ route('users.delete',['id' => $user->id]) }}" data-item-id="{{ $user->id }}"

@@ -70,7 +70,7 @@ class OrganizationsService extends Services
     {
         $organization = $this->_repository->find($id);
         try {
-            $organization->inspectorsSpecialties()->sync($specialtiesIds);
+            $organization->inspectors_specialties()->sync($specialtiesIds);
         } catch (QueryException $e) {
             return self::sendJsonResponse(false, [
                 'title' => 'Ошибка',
@@ -252,7 +252,6 @@ class OrganizationsService extends Services
     public function updateBasic(int $id): JsonResponse
     {
         $organization = $this->_repository->find($id);
-        Log::debug('organization = ' . print_r($organization, true));
         if ($organization and $organization->id) {
             $isBasic = $organization->is_basic;
             if ($isBasic == 0) {
@@ -261,7 +260,6 @@ class OrganizationsService extends Services
                 $organization->is_basic = 0;
             }
             $organization->save();
-            Log::debug('updated organization = ' . print_r($organization, true));
             return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'organization' => $organization

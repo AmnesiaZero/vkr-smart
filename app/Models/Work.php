@@ -56,7 +56,8 @@ class Work extends Model
         'work_status',
         'visibility',
         'check_code',
-        'unique_percent'
+        'unique_percent',
+        'activity_id'
     ];
 
     protected $casts = [

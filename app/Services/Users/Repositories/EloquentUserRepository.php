@@ -133,7 +133,6 @@ class EloquentUserRepository implements UserRepositoryInterface
                 $query = $query->whereIn('department_id', $departmentsIds);
             }
             else {
-                Log::debug('departments = '.print_r($departmentsIds,true));
                 $query = $query->whereHas('departments', function (Builder $builder) use ($departmentsIds) {
                     $builder->whereIn('departments.id', $departmentsIds);
                 });

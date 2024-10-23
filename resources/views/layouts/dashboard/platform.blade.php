@@ -121,8 +121,8 @@
                 <div class="navbar-right ">
                     <ul class="nav navbar-nav">
                         <li class="dropdown user-menu">
-                            <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                <img src="/images/no-user-image.jpg" class="user-image"
+                            <button href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                                <img src="/{{ \Illuminate\Support\Facades\Auth::user()->avatar_path }}" class="user-image"
                                      alt="{{ \Illuminate\Support\Facades\Auth::user()->name }}"/>
                                 <span
                                     class="d-none d-lg-inline-block">{{ \Illuminate\Support\Facades\Auth::user()->name }}</span>
@@ -130,7 +130,7 @@
                             <ul class="dropdown-menu dropdown-menu-right pb-2" style="left: auto">
                                 <!-- User image -->
                                 <li class="dropdown-header">
-                                    <img src="/images/no-user-image.jpg" class="img-circle"
+                                    <img src="/{{ \Illuminate\Support\Facades\Auth::user()->avatar_path }}" class="img-circle"
                                          alt="{{ \Illuminate\Support\Facades\Auth::user()->email }}"/>
                                     <div class="d-inline-block">
                                         {{ \Illuminate\Support\Facades\Auth::user()->name }} <small
@@ -138,8 +138,8 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <a href="user-profile.html">
-                                        <i class="mdi mdi-account"></i> Мой профиль
+                                    <a href="{{route('users.logout')}}">
+                                        <i class="mdi mdi-account"></i> Выйти
                                     </a>
                                 </li>
                             </ul>

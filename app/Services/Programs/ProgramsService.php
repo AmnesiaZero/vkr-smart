@@ -27,7 +27,6 @@ class ProgramsService extends Services
             ], 400);
         }
         $program = $this->_repository->create($data);
-        Log::debug('department = ' . $program);
         if ($program and $program->id) {
             return self::sendJsonResponse(true, [
                 'title' => 'Успешно',

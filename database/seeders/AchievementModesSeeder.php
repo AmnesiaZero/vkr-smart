@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\AchievementMode;
+use App\Models\ActivityType;
 use Illuminate\Database\Seeder;
 
 class AchievementModesSeeder extends Seeder
@@ -21,7 +21,7 @@ class AchievementModesSeeder extends Seeder
             ['name' => 'Спортивная деятельность']
         ];
         foreach ($achievementModes as $achievementMode) {
-            AchievementMode::factory()->create($achievementMode);
+            ActivityType::factory()->create($achievementMode);
         }
     }
 }

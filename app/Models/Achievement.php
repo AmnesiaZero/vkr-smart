@@ -30,7 +30,7 @@ class Achievement extends Model
 
     public function mode(): HasOne
     {
-        return $this->hasOne(AchievementMode::class, 'id', 'achievement_mode_id');
+        return $this->hasOne(ActivityType::class, 'id', 'achievement_mode_id');
     }
 
     public function records(): HasMany

@@ -37,7 +37,6 @@ class YearsService extends Services
         }
         else {
             $user = Auth::user();
-            Log::debug('user = '.print_r($user,true));
             $organizationId = $user->organization_id;
         }
         $years = $this->_repository->get($organizationId);
@@ -62,7 +61,6 @@ class YearsService extends Services
             ], 400);
         }
         $result = $this->_repository->update($id, $data);
-        Log::debug('result = ' . $result);
         if ($result) {
             $year = $this->_repository->find($id);
             return $this->sendJsonResponse(true, [
@@ -131,8 +129,6 @@ class YearsService extends Services
         }
 
         $year = $this->_repository->copy($id);
-
-        Log::debug($year);
 
         if ($year) {
             return $this->sendJsonResponse(true, [

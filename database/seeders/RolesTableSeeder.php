@@ -14,7 +14,6 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        Log::debug('Вошёл в roles seeder');
 
         /*
          * Role Types
@@ -68,7 +67,5 @@ class RolesTableSeeder extends Seeder
                 ]);
             }
         }
-        Log::debug('Вышел из roles seeder');
-
     }
 }

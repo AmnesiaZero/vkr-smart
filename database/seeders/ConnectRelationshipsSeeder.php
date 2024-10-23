@@ -14,7 +14,6 @@ class ConnectRelationshipsSeeder extends Seeder
      */
     public function run()
     {
-        Log::debug('Вошёл в connect relations seeder');
 
         /**
          * Get Available Permissions.
@@ -28,7 +27,6 @@ class ConnectRelationshipsSeeder extends Seeder
         foreach ($permissions as $permission) {
             $roleAdmin->attachPermission($permission);
         }
-        Log::debug('Вышел из connect relations seeder');
 
     }
 }

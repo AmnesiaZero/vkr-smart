@@ -38,6 +38,7 @@ $(document).ready(function () {
     });
 
     $('#avatar_input').on('change', function() {
+        $('#loading').show();
         const file = this.files[0];
 
         if (file) {
@@ -55,10 +56,13 @@ $(document).ready(function () {
                 contentType: false, // Обязательно установить false для передачи данных как FormData
                 processData: false, // Обязательно установить false для передачи данных как FormData
                 success: function (response) {
-                    if (response.success) {
-                        let avatarPath = response.data.user.avatar_path;
-                        $("#user_avatar").attr('src','/' + avatarPath);
-                    } else {
+                    if (response.success)
+                    {
+                        const avatarPath = response.data.user.avatar_path + "?time=" + new Date().getTime();
+                        $('#user_avatar').attr('src', avatarPath); // Обновляем изображение
+                        $.notify(response.data.title + ":" + response.data.message, "success");
+                    }
+                    else {
                         $.notify(response.data.title + ":" + response.data.message, "error");
                     }
                 },
@@ -66,6 +70,9 @@ $(document).ready(function () {
                     $.notify("Произошла ошибка при загрузке файла", "error");
                 }
             });
+        }
+        else {
+            $.notify("Некорректный файл изображения. Проверьте целостность файла", "error");
         }
     });
 });

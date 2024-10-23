@@ -2,7 +2,7 @@
 
 namespace App\Services\Achievements;
 
-use App\Models\AchievementMode;
+use App\Models\ActivityType;
 use App\Models\AchievementTypeCategory;
 use App\Services\Achievements\Repositories\AchievementRepositoryInterface;
 use App\Services\Services;
@@ -21,7 +21,7 @@ class AchievementsService extends Services
 
     public function youAchievementsView()
     {
-        $modes = AchievementMode::all();
+        $modes = ActivityType::all();
         $categories = AchievementTypeCategory::with('achievementsTypes')->get();
         return view('templates.dashboard.portfolios.you', [
             'categories' => $categories,
@@ -46,7 +46,7 @@ class AchievementsService extends Services
 
     public function view()
     {
-        $modes = AchievementMode::all();
+        $modes = ActivityType::all();
         $categories = AchievementTypeCategory::with('achievementsTypes')->get();
         return view('templates.dashboard.portfolios.achievements', [
             'categories' => $categories,

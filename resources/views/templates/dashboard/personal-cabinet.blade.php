@@ -25,7 +25,7 @@
                         <div class="profile-userpic d-flex align-items-center justify-content-center"
                              id="avatar_container">
                             <img id="user_avatar" src="/{{$user->avatar_path}}" alt=""
-                                 class="img-fluid img-responsive" style="border-radius: 6px;">
+                                 class="img-fluid img-responsive object-fit" style="border-radius: 6px;">
                         </div>
 
                         <div class="text-center">
@@ -450,6 +450,10 @@
             <input type="hidden" name="action" value="getFile">
         </form>
     </div>
+
+    <div id="loading" style="display: none;">
+        <div class="spinner"></div>
+    </div>
 @endsection
 
 
@@ -577,7 +581,7 @@
     </script>
 
     <script id="avatar_tmpl" type="text/x-jquery-tmpl">
-       <img id="user_avatar" src="${avatar_path}" alt="" class="img-responsive" style="border-radius: 6px;">
+       <img id="user_avatar" src="/${avatar_path}" alt="" class="img-responsive" style="border-radius: 6px;">
 
     </script>
 @endsection
