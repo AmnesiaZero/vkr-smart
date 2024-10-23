@@ -58,6 +58,8 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.success)
                     {
+                        const avatarPath = response.data.user.avatar_path + "?" + new Date().getTime();
+                        $('#user_avatar').attr('src', avatarPath); // Обновляем изображение
                         $.notify(response.data.title + ":" + response.data.message, "success");
                     }
                     else {
