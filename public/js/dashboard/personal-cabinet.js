@@ -56,13 +56,11 @@ $(document).ready(function () {
                 contentType: false, // Обязательно установить false для передачи данных как FormData
                 processData: false, // Обязательно установить false для передачи данных как FormData
                 success: function (response) {
-                    if (response.success) {
-                        // location.reload();
+                    if (response.success)
+                    {
                         $.notify(response.data.title + ":" + response.data.message, "success");
-                        // const user = response.data.user;
-                        // $("#avatar_container").html($("#avatar_tmpl").tmpl(user));
-
-                    } else {
+                    }
+                    else {
                         $.notify(response.data.title + ":" + response.data.message, "error");
                     }
                 },
