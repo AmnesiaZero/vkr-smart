@@ -57,7 +57,7 @@ $(document).ready(function () {
                 processData: false, // Обязательно установить false для передачи данных как FormData
                 success: function (response) {
                     if (response.success) {
-                        location.reload();
+                        // location.reload();
                         $.notify(response.data.title + ":" + response.data.message, "success");
                         // const user = response.data.user;
                         // $("#avatar_container").html($("#avatar_tmpl").tmpl(user));

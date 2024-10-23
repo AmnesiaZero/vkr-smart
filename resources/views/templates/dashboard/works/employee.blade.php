@@ -233,7 +233,7 @@
             @include('layouts.dashboard.include.tmpls.works.works_page')
 
             <script id="work_tmpl" type="text/x-jquery-tmpl">
-{{--      @{{if visibility==1}}--}}
+      @{{if visibility==1}}
                 <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
                <th scope="row">@{{if specialty}}
                                            ${specialty.name}
@@ -278,13 +278,11 @@
                    <td>
                        <img src="/images/three_dots.svg" alt="" id="work-menu-button" class="btn-info-box cursor-p dropdown-toggle"
                        type="button" onclick="openInfoBox(${id})"
-{{--                       data-bs-toggle="dropdown"--}}
                         aria-expanded="false">
                        <div id="info_box_${id}"> </div>
-{{--                         @include('layouts.dashboard.include.menu.work.employee')--}}
                 </td>
             </tr>
-{{--            @{{/if}}--}}
+            @{{/if}}
 
 
             </script>
