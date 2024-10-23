@@ -6,7 +6,7 @@ namespace App\Services\Users;
 use App\Helpers\FilesHelper;
 use App\Helpers\JsonHelper;
 use App\Mail\ResetPassword;
-use App\Models\AchievementMode;
+use App\Models\ActivityType;
 use App\Models\AchievementTypeCategory;
 use App\Models\InviteCode;
 use App\Models\Organization;

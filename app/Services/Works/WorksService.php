@@ -5,6 +5,7 @@ namespace App\Services\Works;
 use App\Exports\WorksExport;
 use App\Helpers\FilesHelper;
 use App\Imports\WorksImport;
+use App\Models\ActivityType;
 use App\Services\Years\Repositories\YearRepositoryInterface;
 use App\Services\ProgramsSpecialties\Repositories\ProgramSpecialtyRepositoryInterface;
 use App\Services\ReportsAssets\Repositories\ReportAssetRepositoryInterface;
@@ -87,11 +88,13 @@ class WorksService extends Services
         $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
         $scientificSupervisors = $this->scientificSupervisorRepository->get($organizationId);
         $worksTypes = $this->worksTypeRepository->get($organizationId);
+        $activitiesTypes = ActivityType::all();
         return view('templates.dashboard.works.you', [
             'years' => $years,
             'program_specialties' => $programSpecialties,
             'scientific_supervisors' => $scientificSupervisors,
-            'works_types' => $worksTypes
+            'works_types' => $worksTypes,
+            'activities_types'=> $activitiesTypes
         ]);
     }
 

@@ -222,6 +222,11 @@
                             <div class="col-sm-8">
                                 <select name="activity_id" class="form-control">
                                     <option value="">Выберите тип деятельности</option>
+                                    @if(isset($activities_types) and is_iterable($activities_types))
+                                        @foreach($activities_types as $activity_type)
+                                            <option value="{{$activity_type->id}}">{{$activity_type->name}}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>

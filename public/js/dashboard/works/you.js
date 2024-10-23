@@ -113,15 +113,31 @@ $(document).ready(function () {
 
         // Создаем объект FormData и добавляем в него данные формы
         const formData = new FormData(this);
-        const additionalData = {
-            user_id: userId,
-            year_id: user.year_id,
-            faculty_id: user.faculty_id,
-            specialty_id: user.specialty_id,
-            user_type: userType,
-            student: user.name
-        };
-        console.log(additionalData);
+        let additionalData = '';
+        //У студентов должны быть указаны все их структурные подразделения
+        if(userType===1)
+        {
+             additionalData = {
+                user_id: userId,
+                year_id: user.year_id,
+                faculty_id: user.faculty_id,
+                department_id:user.department_id,
+                specialty_id: user.specialty_id,
+                user_type: userType,
+                student: user.name
+            };
+        }
+        //У преподавателей только год и факультет
+        else
+        {
+             additionalData = {
+                user_id: userId,
+                year_id: user.year_id,
+                faculty_id: user.faculty_id,
+                user_type: userType,
+                student: user.name
+            };
+        }
         for (const key in additionalData) {
             if (additionalData.hasOwnProperty(key)) {
                 formData.append(key, additionalData[key]);
@@ -479,31 +495,6 @@ function updateWorkVisibility() {
 }
 
 
-function addWork(formData) {
-    $.ajax({
-        url: '/dashboard/works/create',
-        type: 'POST',
-        data: formData,
-        processData: false, // Не обрабатываем файлы (не превращаем в строку)
-        contentType: false, // Не устанавливаем заголовок Content-Type
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (response) {
-            if (response.success) {
-                const work = response.data.work;
-                $("#works_table").append($("#work_tmpl").tmpl(work));
-                updateWorksCount();
-            } else {
-                $.notify(response.data.title + ":" + response.data.message, "error");
-            }
-        },
-        error: function () {
-            $.notify("Ошибка при добавлении работы. Обратитесь к системному администратору", "error");
-
-        }
-    });
-}
 
 function getAssessmentDescription(assessment) {
     switch (assessment) {
