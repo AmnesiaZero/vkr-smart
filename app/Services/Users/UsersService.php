@@ -366,7 +366,7 @@ class UsersService extends Services
                 $extension = $avatar->extension();
                 $avatarFileName = $id.'.'.$extension;
                 $avatar->storeAs($directoryPath,$avatarFileName);
-                $data['avatar_path'] = 'storage/avatars/'.$directory.'/'.$avatarFileName;
+                $data['avatar_path'] = '/storage/avatars/'.$directory.'/'.$avatarFileName;
             }
             else
             {
@@ -633,7 +633,7 @@ class UsersService extends Services
                 Storage::makeDirectory($avatarDirectory);
                 $avatarFileName = $id.'.'.$avatarFile->extension();
                 $avatarFile->storeAs($avatarDirectory,$avatarFileName);
-                $updatedData['avatar_path'] = 'storage/avatars/'.$directory.'/'.$avatarFileName;
+                $updatedData['avatar_path'] = '/storage/avatars/'.$directory.'/'.$avatarFileName;
 
                 $updatedData['avatar_file_name'] = $avatarFile->getClientOriginalName();
             }
@@ -711,7 +711,7 @@ class UsersService extends Services
                 $storageDirectory = 'public/avatars/'.$directory;
                 Storage::makeDirectory($storageDirectory);
                 $avatarFileName = $id.'.'.$avatarFile->extension();
-                $linkDirectory = 'storage/avatars/'.$directory;
+                $linkDirectory = '/storage/avatars/'.$directory;
                 FilesHelper::clearImages($storageDirectory.'/'.$id);
                 $avatarFile->storeAs($storageDirectory,$avatarFileName);
                 $data['avatar_path'] = $linkDirectory.'/'.$avatarFileName;

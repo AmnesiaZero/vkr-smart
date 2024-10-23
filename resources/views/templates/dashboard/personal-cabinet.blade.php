@@ -24,7 +24,7 @@
 
                         <div class="profile-userpic d-flex align-items-center justify-content-center"
                              id="avatar_container">
-                            <img id="user_avatar" src="/{{$user->avatar_path}}" alt=""
+                            <img id="user_avatar" src="{{$user->avatar_path}}" alt=""
                                  class="img-fluid img-responsive object-fit" style="border-radius: 6px;">
                         </div>
 
