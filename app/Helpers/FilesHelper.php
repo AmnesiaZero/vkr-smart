@@ -37,7 +37,7 @@ class FilesHelper
             Storage::delete($path.'.'.$extension);
         }
     }
-
+    //Для удаления из storage всех изображений с одинаковым id,но разным расширением(чтобы при обновлении аватаров и прочего изобаржения не дублировались)
     public static function clearImages(string $path): void
     {
         $extensions = self::getAcceptableImageExtensions();
