@@ -233,7 +233,6 @@
             @include('layouts.dashboard.include.tmpls.works.works_page')
 
             <script id="work_tmpl" type="text/x-jquery-tmpl">
-      @{{if visibility==1}}
                 <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
                <th scope="row">@{{if specialty}}
                                            ${specialty.name}
@@ -282,9 +281,6 @@
                        <div id="info_box_${id}"> </div>
                 </td>
             </tr>
-            @{{/if}}
-
-
             </script>
 
             <script id="info_box_tmpl" type="text/x-jquery-tmpl">

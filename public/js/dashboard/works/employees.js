@@ -711,7 +711,8 @@ function works(page= 1)
 {
     let data = {
         page:page,
-        user_type:userType
+        user_type:userType,
+        visibility:1
     };
     let additionalData = '';
     if(role==='employee' || role==='teacher')
@@ -851,6 +852,7 @@ function searchWorks(page=1) {
     }
     additionalData['user_type'] = userType;
     additionalData['page'] = page;
+    additionalData['visibility'] = 1;
     data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/works/search",
@@ -944,7 +946,7 @@ function openInfoBox(id)
                 if (response.success)
                 {
                     const work = response.data.work;
-                    $("#info_box_" + id).html($("#info_box_tmpl").tmpl(work));
+                    $("#info_box_" + id).html($("#info_box_tmpl").tmpl());
                     const deleted = $("#work_" + id).attr('class');
                     if(deleted)
                     {

@@ -46,9 +46,9 @@ class WorksController extends Controller
         'work_status',
         'status',
         'user_id',
-        'visibility',
         'borrowings_percent',
-        'activity_id'
+        'activity_id',
+        'visibility'
     ];
 
     protected WorksService $worksService;
@@ -83,6 +83,7 @@ class WorksController extends Controller
             'selected_departments.*' => ['integer', Rule::exists('departments', 'id')],
             'user_id' => ['integer', Rule::exists('users', 'id')],
             'selected_specialties.*' => ['integer', Rule::exists('programs_specialties', 'id')],
+            'visibility' => 'integer|in:0,1'
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -168,7 +169,8 @@ class WorksController extends Controller
             'selected_departments.*' => ['integer', Rule::exists('departments', 'id')],
             'selected_specialties.*' => ['integer', Rule::exists('programs_specialties', 'id')],
             'user_id' => ['integer', Rule::exists('users', 'id')],
-            'activity_id' => ['integer',Rule::exists('activities_types','id')]
+            'activity_id' => ['integer',Rule::exists('activities_types','id')],
+            'visibility' => 'integer|in:0,1'
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);

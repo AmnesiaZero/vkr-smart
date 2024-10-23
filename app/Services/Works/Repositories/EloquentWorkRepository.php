@@ -53,6 +53,7 @@ class EloquentWorkRepository implements WorkRepositoryInterface
             }
         }
         $query->with(['specialty', 'faculty', 'department']);
+
         if (isset($data['user_id'])) {
             $query = $query->where('user_id', '=', $data['user_id']);
         }
