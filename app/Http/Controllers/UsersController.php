@@ -147,8 +147,6 @@ class UsersController extends Controller
     {
         $inviteCodeId = Cookie::get('invite_code_id');
 
-        Log::debug('organization id in view = ' . $inviteCodeId);
-
         return $this->usersService->registerView($inviteCodeId);
     }
 
@@ -226,8 +224,6 @@ class UsersController extends Controller
             return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
-        Log::debug('request data =' . print_r($data, true));
-
         $you = Auth::user();
         $organizationId = $you->organization_id;
         $data['organization_id'] = $organizationId;
@@ -413,9 +409,7 @@ class UsersController extends Controller
         }
         $you = Auth::user();
         $data = $request->only($this->fillable);
-        Log::debug('request data = ' . print_r($data, true));
         $data['organization_id'] = $you->organization_id;
-
         return $this->usersService->search($data);
     }
 
@@ -479,7 +473,6 @@ class UsersController extends Controller
 
     public function openPortfolio(int $id)
     {
-        Log::debug('Вошёл в openPortfolio');
         $validator = Validator::make(['id' => $id], [
             'id' => ['integer', Rule::exists('users', 'id')]
         ]);

@@ -25,7 +25,6 @@ class FilesHelper
     public static function acceptableImage(UploadedFile $image): bool
     {
         $extension = $image->extension();
-        Log::debug('extension = ' . $extension);
         $acceptableExtension = self::getAcceptableImageExtensions();
         return in_array($extension, $acceptableExtension);
     }

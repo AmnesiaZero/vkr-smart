@@ -25,7 +25,6 @@ class WorksImport implements ToCollection, WithFormatData
 
     public function collection(Collection $collection)
     {
-        Log::debug('data = ' . print_r($this->data, true));
         $collection = $collection->splice(1);
         foreach ($collection as $work) {
             $protectDate = Carbon::createFromFormat('d.m.Y', $work[5])->toDateString();
@@ -39,7 +38,6 @@ class WorksImport implements ToCollection, WithFormatData
                 'assessment' => $work[6],
             ];
             $allData = array_merge($workData, $this->data);
-            Log::debug('all data = ' . print_r($allData, true));
             Work::create($allData);
         }
     }

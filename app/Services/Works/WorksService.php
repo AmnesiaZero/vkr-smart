@@ -311,7 +311,6 @@ class WorksService extends Services
     {
         $work = $this->workRepository->find($id);
         if ($work and $work->id) {
-            Log::debug('id = ' . $id);
             $result = $this->workRepository->restore($id);
             if ($result) {
                 return self::sendJsonResponse(true, [
@@ -406,7 +405,6 @@ class WorksService extends Services
     public function export(array $data)
     {
         if (isset($data['date_range'])) {
-            Log::debug($data['date_range']);
             $protectDateRange = $data['date_range'];
             // Разделение строки на начальную и конечную даты
             $dateParts = explode(" - ", $protectDateRange);
@@ -430,12 +428,10 @@ class WorksService extends Services
 
     public function getReport(int $documentId): JsonResponse
     {
-        Log::debug('Вошёл в сервис getReport');
         $client = new MasterClient(config('sdk.master_key'));
         $report = new Report($client, true);
         $report->get($documentId);
         $unique = $report->getUnique();
-        Log::debug('unique = ' . $unique);
         $work = $this->workRepository->findByReportId($documentId);
         $workId = $work->id;
         $checkCode = rand(10000,99999);
@@ -456,11 +452,9 @@ class WorksService extends Services
                         'link' => $document['link'],
                         'borrowings_percent' => $document['percent']
                     ];
-                    Log::debug('report data = ' . print_r($data, true));
                     $this->reportAssetRepository->create($data);
                 }
             }
-            Log::debug('Отчет отправлен');
             return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
                 'message' => 'Репорт был успешно добавлен в систему'
@@ -475,7 +469,6 @@ class WorksService extends Services
     public function checkCode(string $checkCode): JsonResponse
     {
         $result = explode('-',$checkCode);
-        Log::debug('result = '.print_r($result,true));
         $workId = $result[0];
         $code = $result[1];
         if($this->workRepository->exist($workId))
@@ -567,9 +560,7 @@ class WorksService extends Services
 
     public function uploadWork(UploadedFile $workFile)
     {
-        Log::debug('work file = ' . $workFile);
         $masterKey = config('sdk.master_key');
-        Log::debug('master key = ' . $masterKey);
         $client = new MasterClient($masterKey);
         $document = new Document($client, true);
         if (!$document->uploadDocument($workFile)) {

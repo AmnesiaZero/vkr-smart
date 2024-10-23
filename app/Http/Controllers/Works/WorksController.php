@@ -222,7 +222,6 @@ class WorksController extends Controller
             return ValidatorHelper::error($validator);
         }
         $id = $request->id;
-        Log::debug('id = ' . $id);
         $data = $request->only($this->fillable);
         return $this->worksService->update($id, $data);
     }
@@ -365,7 +364,6 @@ class WorksController extends Controller
 
     public function getReport(Request $request): JsonResponse
     {
-        Log::debug('Вошёл в getReport');
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer'
         ]);

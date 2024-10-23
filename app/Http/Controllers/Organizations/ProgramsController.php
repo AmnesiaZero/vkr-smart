@@ -32,7 +32,6 @@ class ProgramsController extends Controller
 
     public function get(Request $request): JsonResponse
     {
-        Log::debug('Вошёл в get у faculty departments');
         $validator = Validator::make($request->all(), [
             'department_id' => ['required', 'integer']
         ]);
@@ -54,7 +53,6 @@ class ProgramsController extends Controller
         $data = $request->only($this->fillable);
         $user = Auth::user();
         $data = array_merge($data, ['user_id' => $user->id, 'organization_id' => $user->organization_id]);
-        Log::debug('request data = ' . print_r($data, true));
         return $this->programsService->create($data);
     }
 
@@ -68,7 +66,6 @@ class ProgramsController extends Controller
         }
         $id = $request->id;
         $data = $request->only($this->fillable);
-        Log::debug('data = ' . print_r($data, true));
         return $this->programsService->update($id, $data);
     }
 

@@ -68,7 +68,6 @@ class FacultiesController extends Controller
         }
         $user = Auth::user();
         $data = array_merge($data, ['user_id' => $user->id, 'organization_id' => $user->organization_id]);
-        Log::debug('request data = ' . print_r($data, true));
         return $this->facultiesService->create($data);
     }
 
@@ -82,7 +81,6 @@ class FacultiesController extends Controller
         }
         $facultyId = $request->id;
         $data = $request->only($this->fillable);
-        Log::debug('data = ' . print_r($data, true));
         return $this->facultiesService->update($facultyId, $data);
     }
 

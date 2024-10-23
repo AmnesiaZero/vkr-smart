@@ -32,11 +32,9 @@ class AchievementsRecordsService extends Services
         $data['organization_id'] = $organizationId;
         $achievementRecord = $this->achievementRecordRepository->create($data);
         if ($achievementRecord and $achievementRecord->id) {
-            Log::debug('Вошёл в условие create');
             $additionalData = [];
             $id = $achievementRecord->id;
             if (isset($data['achievement_file'])) {
-                Log::debug('Вошёл в условие file');
                 $file = $data['achievement_file'];
                 $directoryNumber = ceil($id / 1000);
                 $directory = 'achievements_records/' . $directoryNumber;
@@ -46,11 +44,9 @@ class AchievementsRecordsService extends Services
                 $additionalData['content'] = $path;
             }
             if (isset($data['work_id'])) {
-                Log::debug('Вошёл в условие work_id');
                 $work = $this->workRepository->find($id);
                 if ($work and $work->id) {
                     $path = $work->path;
-                    Log::debug('path = ' . $path);
                     if (isset($path) and Storage::exists($path)) {
                         $name = $work->name;
                         $additionalData = array_merge($additionalData, [

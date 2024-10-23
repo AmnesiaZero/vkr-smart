@@ -61,9 +61,7 @@ class OrganizationsYearsController extends Controller
             return ValidatorHelper::error($validator);
         }
         $yearId = $request->id;
-        Log::debug('Вошёл в create у organizations years');
         $data = $request->only($this->fillable);
-        Log::debug('data = ' . print_r($data, true));
         return $this->organizationYearsService->update($yearId, $data);
     }
 
@@ -76,9 +74,7 @@ class OrganizationsYearsController extends Controller
             return ValidatorHelper::error($validator);
         }
         $yearId = $request->id;
-        Log::debug('Вошёл в create у organizations years');
         $data = $request->only($this->fillable);
-        Log::debug('data = ' . print_r($data, true));
         return $this->organizationYearsService->delete($yearId);
     }
 

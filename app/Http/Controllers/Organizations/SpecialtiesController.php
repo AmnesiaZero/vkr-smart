@@ -37,7 +37,6 @@ class SpecialtiesController extends Controller
         }
         $user = Auth::user();
         $data = array_merge($data, ['user_id' => $user->id, 'organization_id' => $user->organization_id]);
-        Log::debug('request data = ' . print_r($data, true));
         return $this->specialtiesService->create($data);
     }
 
@@ -51,7 +50,6 @@ class SpecialtiesController extends Controller
         }
         $facultyDepartment = $request->id;
         $data = $request->only($this->fillable);
-        Log::debug('data = ' . print_r($data, true));
         return $this->specialtiesService->update($facultyDepartment, $data);
     }
 
@@ -69,9 +67,7 @@ class SpecialtiesController extends Controller
             return ValidatorHelper::error($validator);
         }
         $facultyId = $request->id;
-        Log::debug('Вошёл в create у faculties');
         $data = $request->only($this->fillable);
-        Log::debug('data = ' . print_r($data, true));
         return $this->specialtiesService->delete($facultyId);
     }
 }

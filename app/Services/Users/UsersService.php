@@ -65,7 +65,6 @@ class UsersService extends Services
     public function register(array $data)
     {
         $codeId =(int )Cookie::get('invite_code_id');
-        Log::debug('code id = '.$codeId);
         $code = $this->inviteCodeRepository->find($codeId);
         if($code and $code->id)
         {
@@ -145,7 +144,6 @@ class UsersService extends Services
             if (isset($data['departments_ids'])) {
                 $departmentsIds = $data['departments_ids'];
                 foreach ($departmentsIds as $id) {
-                    Log::debug('department id = ' . $id);
                     $user->departments()->attach($id);
                 }
             }
@@ -338,7 +336,6 @@ class UsersService extends Services
 
     public function registerRedirect(int $codeId, int $code)
     {
-        Log::debug('1 code id = '.$codeId);
         if ($this->inviteCodeRepository->login($codeId, $code)) {
             $code = $this->inviteCodeRepository->find($codeId);
             if($code and $code->id)

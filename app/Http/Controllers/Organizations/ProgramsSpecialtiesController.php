@@ -95,7 +95,6 @@ class ProgramsSpecialtiesController extends Controller
         }
         $facultyDepartment = $request->id;
         $data = $request->only($this->fillable);
-        Log::debug('data = ' . print_r($data, true));
         return $this->programsSpecialtiesService->update($facultyDepartment, $data);
     }
 
