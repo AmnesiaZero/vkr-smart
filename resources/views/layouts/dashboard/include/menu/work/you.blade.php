@@ -1,4 +1,4 @@
-<div class="dropdown-menu p-3" id="info_box">
+<div class="dropdown-menu p-3">
     <p class="fs-14 lh-17">Операции над работой</p>
 
     <div class="d-flex cursor-p mb-2">

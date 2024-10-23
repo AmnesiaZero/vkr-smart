@@ -148,7 +148,7 @@
                 </ul>
             </nav>
         </div>
-        @include('layouts.dashboard.include.modal.add.works.admin')
+        @include('layouts.dashboard.include.modal.add.works.others')
         @include('layouts.dashboard.include.modal.update.work_specialty')
         @include('layouts.dashboard.include.modal.other.additional_file')
         @include('layouts.dashboard.include.modal.add.import-work')
@@ -447,7 +447,7 @@
             </div>
         </div>
     </script>
-    @include('layouts.dashboard.include.tmpls.works_page')
+    @include('layouts.dashboard.include.tmpls.works.works_page')
 @endsection
 
 
