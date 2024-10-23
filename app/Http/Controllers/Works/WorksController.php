@@ -125,7 +125,7 @@ class WorksController extends Controller
             'work_file' => 'required|file',
             'self_check' => 'integer:in:1',
             'certificate_file' => 'file',
-            'activity_id' => ['integer',Rule::exists('activities_types')]
+            'activity_id' => ['integer',Rule::exists('activities_types','id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -168,7 +168,7 @@ class WorksController extends Controller
             'selected_departments.*' => ['integer', Rule::exists('departments', 'id')],
             'selected_specialties.*' => ['integer', Rule::exists('programs_specialties', 'id')],
             'user_id' => ['integer', Rule::exists('users', 'id')],
-            'activity_id' => ['integer',Rule::exists('activities_types')]
+            'activity_id' => ['integer',Rule::exists('activities_types','id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
