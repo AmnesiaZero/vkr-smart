@@ -3,13 +3,11 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" onclick="closeTmplModal('add_achievement_modal')">×</span></button>
                 <h3>Полный отчет по работе</h3>
 
             </div>
             <div class="modal-body">
                 <div id="report_modal">
-                    <span> Полный отчет по работе </span>
                     <div class="col-sm-8">
                         <ol style="padding-left:15px;">
                             <li>Результаты проверки по базам данных ВКР-СМАРТ:
@@ -52,4 +50,4 @@
 </div>
 
 
-            </script>
+</script>

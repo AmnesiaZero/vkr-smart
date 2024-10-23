@@ -35,5 +35,6 @@
 @section('scripts')
     <script src="/js/site/check_reference.js"></script>
 
-    @include('layouts.dashboard.include.tmpls.works.works_page')
+    @include('layouts.dashboard.include.tmpls.works.report')
+
 @endsection
