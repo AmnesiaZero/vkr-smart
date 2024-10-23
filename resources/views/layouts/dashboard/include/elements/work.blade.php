@@ -20,12 +20,10 @@
     }}
     </td>
     <td>
-        <div class="mt-2">
-            <span class="bg-active px-2 d-flex align-items-center">
-                <span class="me-2 green-c cursor-p"></span>
-                Отчет
-            </span>
-        </div>
+        <span class="bg-active p-2 d-flex align-items-center gap-2">
+            <span class="me-2 green-c cursor-p"></span>
+            Отчет
+        </span>
     </td>
     <td>
         <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p"></td>

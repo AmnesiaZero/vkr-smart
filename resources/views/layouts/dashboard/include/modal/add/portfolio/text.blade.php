@@ -4,15 +4,16 @@
             <div class="modal-header">
                 <h3 class="modal-title">Добавление текста</h3>
             </div>
-            <div class="modal-body">
-                <form id="add_text_form" onsubmit="addRecord(3); return false;" class="form-inline">
+
+            <form id="add_text_form" onsubmit="addRecord(3); return false;" class="form-inline">
+                <div class="modal-body">
                     <input type="hidden" name="record_type_id" value="1">
 
                     <div class="d-flex flex-column gap-3">
                         <div class="row">
                             <label class="col-sm-4">Введите наименование</label>
                             <div class="col-sm-8">
-                                <input type="text" name="name" class="form-control fullwidth" required=""
+                                <input type="text" name="name" class="form-control fullwidth" required
                                        placeholder="Ввод...">
                             </div>
                         </div>
@@ -52,7 +53,7 @@
                         <div class="row">
                             <label class="col-sm-4">Введите текст</label>
                             <div class="col-sm-8">
-                            <textarea name="content" placeholder="Ввод..." class="form-control w-100">
+                            <textarea name="content" placeholder="Ввод..." class="form-control w-100" required>
 
                             </textarea>
                             </div>
@@ -69,19 +70,18 @@
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-secondary fs-14 text-grey py-1"
-                        onclick="closeModal('add_text_modal')">
-                    Добавить
-                </button>
-                <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
-                        data-bs-dismiss="modal" aria-label="Close"
-                        onclick="closeModal('add_text_modal')">
-                    Закрыть
-                </button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1">
+                        Добавить
+                    </button>
+                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
+                            data-bs-dismiss="modal" aria-label="Close"
+                            onclick="closeModal('add_text_modal')">
+                        Закрыть
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

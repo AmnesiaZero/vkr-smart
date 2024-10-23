@@ -5,6 +5,39 @@ var user = '';
 var userType;
 
 
+function toggleInputAndSelect(inputName, selectName) {
+    // Обработка изменения состояния инпута
+    $('input[name="' + inputName + '"]').on('input', function() {
+        if ($(this).val().trim() !== '') {
+            $('select[name="' + selectName + '"]').prop('disabled', true);
+        } else {
+            $('select[name="' + selectName + '"]').prop('disabled', false);
+        }
+    });
+
+    // Обработка изменения состояния селекта
+    $('select[name="' + selectName + '"]').on('change', function() {
+        if ($(this).val() !== '') {
+            $('input[name="' + inputName + '"]').prop('disabled', true).val('');
+        } else {
+            $('input[name="' + inputName + '"]').prop('disabled', false);
+        }
+    });
+}
+
+$(document).ready(function() {
+    $('.selectpicker').selectpicker();
+
+    // Применение функции к полям "Научный руководитель"
+    toggleInputAndSelect('scientific_supervisor', 'scientific_supervisor');
+
+    // Применение функции к полям "Тип работы"
+    toggleInputAndSelect('work_type', 'work_type');
+
+    toggleInputAndSelect()
+});
+
+
 $(document).ready(function () {
     function getUser() {
         var deferred = $.Deferred();
@@ -109,6 +142,7 @@ $(document).ready(function () {
         $('#certificate_input').click(); // Открываем диалог выбора файла
     });
     $("#addWorkForm").on('submit', function (e) {
+        console.log(123)
         e.preventDefault(); // Предотвращаем стандартное поведение формы
 
         // Создаем объект FormData и добавляем в него данные формы
@@ -289,22 +323,18 @@ $(document).ready(function () {
         });
     });
 
-
     $(function () {
-        let start = moment();
-        let end = moment().add(29, 'days');
         $('input[name="daterange"]').daterangepicker({
-            startDate: start,
-            endDate: end,
+            autoUpdateInput: false, // Отключаем автоматическое заполнение поля
             "locale": {
                 "format": "DD.MM.YYYY",
                 "separator": " - ",
-                "applyLabel": "Apply",
-                "cancelLabel": "Cancel",
-                "fromLabel": "From",
-                "toLabel": "To",
-                "customRangeLabel": "Custom",
-                "weekLabel": "W",
+                "applyLabel": "Применить",
+                "cancelLabel": "Отмена",
+                "fromLabel": "С",
+                "toLabel": "По",
+                "customRangeLabel": "Выбрать период",
+                "weekLabel": "Н",
                 "daysOfWeek": [
                     "Вс",
                     "Пн",
@@ -332,9 +362,12 @@ $(document).ready(function () {
             },
             opens: 'left'
         }, function (start, end, label) {
+            // Обновляем значение инпута только при выборе
+            $('input[name="daterange"]').val(start.format('DD.MM.YYYY') + ' - ' + end.format('DD.MM.YYYY'));
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
     });
+
 
 
     $('#checking_specialties').change(function () {
@@ -629,12 +662,21 @@ function resetSearch() {
     localStorage.setItem('selected_years', '');
     localStorage.setItem('selected_faculties', '');
     localStorage.setItem('selected_departments', '');
+
     $(".out-kod").empty();
     $("#default_specialty").prop('selected', true);
     $("#student_input").val('');
     $("#work_name_input").val('');
     $("#group_input").val('');
     $("#work_type_input").val('');
+    $("#scientific_supervisors_list").val('').change();
+    $("#specialties_list").val('').change();
+    $("#delete_type").val('2').change();
+    $('input[name="daterange"]').val('');
+    $('input[name="daterange"]').data('daterangepicker').setStartDate(moment());
+    $('input[name="daterange"]').data('daterangepicker').setEndDate(moment());
+
+
     works();
 }
 
@@ -672,8 +714,6 @@ function openInfoBox(id) {
             }
         });
     }
-    $("#info_box").fadeToggle(100);
-
 }
 
 function checkDeleted() {
@@ -704,6 +744,9 @@ function workInfo() {
             if (response.success) {
                 const work = response.data.work;
                 $("#about_work").html($("#work_info_tmpl").tmpl(work));
+                const modalElement = new bootstrap.Modal(document.getElementById('work_info_modal'));
+                modalElement.show();
+
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -743,6 +786,17 @@ function openUpdateWorkModal() {
             if (response.success) {
                 const work = response.data.work;
                 $("#tmpl_modals").html($("#update_work_tmpl").tmpl(work));
+
+                $('.selectpicker').selectpicker();
+
+                // Применение функции к полям "Научный руководитель"
+                toggleInputAndSelect('scientific_supervisor', 'scientific_supervisor');
+
+                // Применение функции к полям "Тип работы"
+                toggleInputAndSelect('work_type', 'work_type');
+
+                let modal = new bootstrap.Modal($('#update_work_modal'))
+                modal.show();
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
