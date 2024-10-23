@@ -25,6 +25,10 @@ class EloquentWorkRepository implements WorkRepositoryInterface
         } else {
             $query = $query->where('organization_id', '=', $data['organization_id'])->where('user_type', '=', $data['user_type']);
         }
+        if (isset($data['visibility']))
+        {
+            $query = $query->where('visibility','=',$data['visibility']);
+        }
         if (isset($data['selected_departments'])) {
             $departmentsIds = $data['selected_departments'];
             $query = $query->whereIn('department_id', $departmentsIds);
@@ -53,6 +57,11 @@ class EloquentWorkRepository implements WorkRepositoryInterface
             }
         }
         $query->with(['specialty', 'faculty', 'department']);
+
+        if (isset($data['visibility']))
+        {
+            $query = $query->where('visibility','=',$data['visibility']);
+        }
 
         if (isset($data['user_id'])) {
             $query = $query->where('user_id', '=', $data['user_id']);
