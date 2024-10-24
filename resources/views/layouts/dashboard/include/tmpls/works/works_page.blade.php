@@ -14,6 +14,145 @@
 </script>
 
 
+<script id="check_tmpl" type="text/x-jquery-tmpl">
+    <div ng-if="success" class="ng-scope">
+        <div class="container certificate-container">
+            <div class="row">
+                <a href="#/report/full/530250/1/1957b164e91e32b26fc40a251fb6c696" class="btn btn-link btn-smart pointer"><span class="glyphicon glyphicon-chevron-left"></span>Назад</a>
+                <a href="#" onclick="window.print(); return false;" class="btn btn-link btn-smart"><span class="glyphicon glyphicon-print"></span> Распечатать справку</a>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 text-left">
+                    <img width="220px" src="http://www.vkr-vuz.ru/assets/templates/c/img/logo.png ">
+                </div>
+				<div class="col-sm-6 col-sm-offset-2 text-right">
+                    <img class="" style="max-height: 164px; float:right; margin-left:20px; margin-right:30px;" src="http://www.vkr-vuz.ru/logotypes/1/logo_1.jpg"><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h2>СПРАВКА</h2>
+                    <h3>о результатах проверки на наличие заимствований</h3>
+					<p style="color: #006f92;font-size: 16px;padding-top: 10px;" class="">Уникальный код справки: <strong class="ng-binding">1-243735-35349</strong></p>
+                </div>
+            </div><hr>
+{{--            <reference-row label="'Ф.И.О. автора проверяемой работы'" text="workInfo.info.fullname" class="ng-isolate-scope"><div class="row">--}}
+    <div class="col-sm-12 text-bolder ng-binding">
+        Ф.И.О. автора проверяемой работы: <span class="ng-binding">${work.student}</span>
+    </div>
+</div></reference-row>
+{{--<hr>--}}
+{{--            <reference-row label="'Тема работы'" text="workInfo.info.name" class="ng-isolate-scope"><div class="row">--}}
+{{--    <div class="col-sm-12 text-bolder ng-binding">--}}
+{{--        Тема работы: <span class="ng-binding">33</span>--}}
+{{--    </div>--}}
+{{--</div></reference-row><hr>--}}
+            <reference-row label="'Руководитель'" text="workInfo.info.scientific_adviser" class="ng-isolate-scope"><div class="row">
+    <div class="col-sm-12 text-bolder ng-binding">
+        Руководитель: <span class="ng-binding">${scientific_supervisor}</span>
+    </div>
+</div></reference-row>
+            <h3 class="text-center">Информация о документе:</h3>
+            <reference-row label="'Имя исходного файла'" text="workInfo.info.docname" class="ng-isolate-scope"><div class="row">
+    <div class="col-sm-12 text-bolder ng-binding">
+        Имя исходного файла: <span class="ng-binding">${document_name}</span>
+    </div>
+</div></reference-row><hr>
+            <reference-row label="'Тип документа'" text="workInfo.info.worktype" class="ng-isolate-scope"><div class="row">
+    <div class="col-sm-12 text-bolder ng-binding">
+        Тип документа: <span class="ng-binding">${work_type}</span>
+    </div>
+</div></reference-row><hr>
+            <div class="hide">
+			<reference-row label="'Дата загрузки'" text="workInfo.info.createdon" class="ng-isolate-scope"><div class="row">
+    <div class="col-sm-12 text-bolder ng-binding">
+        Дата загрузки: <span class="ng-binding">${created_at}</span>
+    </div>
+</div></reference-row><hr>
+            </div>
+			<div class="hide">
+			<reference-row label="'Дата защиты'" text="workInfo.info.protectdate" class="ng-isolate-scope"><div class="row">
+    <div class="col-sm-12 text-bolder ng-binding">
+        Дата защиты: <span class="ng-binding">${protect_date}</span>
+    </div>
+</div></reference-row><hr>
+			</div>
+            <div class="">
+				<h3 class="text-center">Источники цитирования *</h3>
+				<reference-table contents="sources.contents" headers="headers" class="ng-isolate-scope"><table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th ng-repeat="head in $ctrl.headers" class="ng-binding ng-scope">Доля в отчете</th>
+            <th ng-repeat="head in $ctrl.headers" class="ng-binding ng-scope">Источник (ссылка)</th>
+             <th ng-repeat="head in $ctrl.headers" class="ng-binding ng-scope">Где найдено (Модуль поиска)</th>
+
+        </tr>
+    </thead>
+    <tbody>
+         @{{each report_assets}}
+            <td class="ng-binding">${borrowings_percent}%</td>
+            <td class="ng-binding">"${name}"   @{{if link}} ${link} @{{else}} Ссылка не указана @{{/if}} </td>
+            <td>Модуль поиска Интернет</td>
+            @{{/each}}
+    </tbody>
+</table></reference-table>
+				<div class="row">
+					<div class="col-sm-12 text-bolder">
+						* Таблица формируется системой «ВКР-ВУЗ».
+					</div>
+				</div><hr>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 text-center ng-binding" style="font-size:28px">
+					Уникальность текста:  48.16%
+				</div>
+			</div>
+			<table class="table table-mini">
+				<tbody>
+					<tr>
+						<td><hr></td>
+						<td><hr></td>
+						<td><hr></td>
+						<td><hr></td>
+					</tr>
+					<tr>
+						<td class="">подпись студента</td>
+						<td>расшифровка подписи</td>
+						<td>подпись ответственного за проверку</td>
+						<td>расшифровка подписи</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><hr></td>
+						<td></td>
+						<td><hr></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>дата</td>
+						<td></td>
+						<td>дата</td>
+					</tr>
+				</tbody>
+			</table>
+        </div>
+    </div>
+</script>
+
+
+
 <script id="work_info_tmpl" type="text/x-jquery-tmpl">
         <div class="modal fade" id="work_info_modal">
             <div class="modal-dialog modal-lg">

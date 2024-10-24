@@ -787,6 +787,8 @@ function works(page= 1)
     });
 }
 
+
+
 function reloadWork(workId)
 {
     const data = {
@@ -843,6 +845,33 @@ function openReport(workId)
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
+}
+
+function openCheck()
+{
+    const workId = localStorage.getItem('work_id');
+    const data = {
+        id:workId
+    };
+    $.ajax({
+        url: "/dashboard/works/find",
+        type: 'GET',
+        data: data,
+        dataType: "json",
+        cache: false,
+        success: function(response) {
+            if (response.success) {
+                const work = response.data.work;
+                $("#report_modal_container").html($("#check_tmpl").tmpl(work));
+            } else {
+                $.notify(response.data.title + ": " + response.data.message, "error");
+            }
+        },
+        error: function() {
+            $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
+        }
+    });
+
 }
 
 function searchWorks(page=1) {
@@ -1017,6 +1046,9 @@ function openInfoBox(id) {
             success: function(response) {
                 if (response.success) {
                     const work = response.data.work;
+                    const userId = work.user_id;
+                    localStorage.setItem('work_id',id);
+                    localStorage.setItem('user_id',userId);
 
                     // Загрузить содержимое в нужный элемент
                     const $infoBox = $("#info_box_" + id);
@@ -1032,6 +1064,7 @@ function openInfoBox(id) {
 
                     // Показать меню
                     $("#work_menu").addClass('show'); // Показать или скрыть текущее меню
+
                 } else {
                     $.notify(response.data.title + ": " + response.data.message, "error");
                 }
