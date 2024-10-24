@@ -10,6 +10,26 @@ var specialtiesIds = [];
 
 
 
+// $(document).on('click', '.menu', function () {
+//     var workId = $(this).data('id');
+//     var $infoBox = $("#info_box_" + workId);
+//
+//     // Удаляем ранее открытые меню
+//     $('.info-box').remove();
+//
+//     // Рендерим меню в выбранный элемент
+//     $("#info_box_tmpl").tmpl().appendTo($infoBox);
+// });
+
+// // Закрытие меню при клике вне его
+// $(document).on('click', function (e) {
+//     if (!$(e.target).closest('.menu').length && !$(e.target).closest('.info-box').length) {
+//         $('.info-box').remove();
+//     }
+// });
+
+
+
 
 
 $(document).ready(function () {
@@ -401,19 +421,19 @@ $(document).on('change', '#certificate_input', function() {
 //     });
 // });
 
-$('#work-menu-button').on('click', function(event) {
-    event.stopPropagation(); // Останавливаем распространение события, чтобы не закрылось сразу
-    $('#work-menu').toggle(); // Переключаем видимость меню
-});
+// $('#work-menu-button').on('click', function(event) {
+//     event.stopPropagation(); // Останавливаем распространение события, чтобы не закрылось сразу
+//     $('#work-menu').toggle(); // Переключаем видимость меню
+// });
 
 
 // Закрытие меню при клике вне него
-$(document).on('click', function(event) {
-    if (!$(event.target).closest('#work-menu-button').length && !$(event.target).closest('#work_menu').length) {
-        console.log('Удалил');
-        $("[id^='info_box_']").empty();
-    }
-});
+// $(document).on('click', function(event) {
+//     if (!$(event.target).closest('#work-menu-button').length && !$(event.target).closest('#work_menu').length) {
+//         console.log('Удалил');
+//         $("[id^='info_box_']").empty();
+//     }
+// });
 
 
 
@@ -927,45 +947,91 @@ function resetEmployeeSearch() {
     works(); // Эта функция обновляет данные
 }
 
-function openInfoBox(id)
-{
-    console.log('info box');
-    if(id)
-    {
-        const data = {
-            id:id
-        };
+// function openInfoBox(id) {
+//     console.log('info box');
+//     if (id) {
+//         const data = {
+//             id: id
+//         };
+//
+//         $.ajax({
+//             url: "/dashboard/works/find",
+//             type: 'GET',
+//             data: data,
+//             dataType: "json",
+//             cache: false, // Отключаем кэширование
+//             success: function (response) {
+//                 if (response.success) {
+//                     const work = response.data.work;
+//
+//                     // Удаляем ранее открытые меню
+//                     $('.info-box').remove();
+//
+//                     // Рендерим новое меню
+//                     $("#info_box_" + id).html($("#info_box_tmpl").tmpl());
+//
+//                     // Если элемент "deleted", показываем одно меню, иначе другое
+//                     const deleted = $("#work_" + id).hasClass('deleted');
+//                     if (deleted) {
+//                         console.log('true');
+//                         $("#added_menu").html($("#deleted_menu_tmpl").tmpl());
+//                     } else {
+//                         console.log('false');
+//                         $("#added_menu").html($("#undeleted_menu_tmpl").tmpl());
+//                     }
+//
+//                     // Прямо после добавления шаблона показываем dropdown, используя стандартный Bootstrap механизм
+//                     // $("#info_box_" + id).find('.dropdown-toggle').dropdown('toggle');  // Используем метод dropdown
+// // Показать меню
+//                     $("info-box").toggle();
+//                     // Сохраняем ID в localStorage
+//                     const userId = work.user_id;
+//                     localStorage.setItem('work_id', id);
+//                     localStorage.setItem('user_id', userId);
+//                 } else {
+//                     $.notify(response.data.title + ": " + response.data.message, "error");
+//                 }
+//             },
+//             error: function () {
+//                 $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
+//             }
+//         });
+//     }
+// }
+
+function openInfoBox(id) {
+    // Закрыть все открытые меню
+    $(".info-box").remove();
+
+    if (id) {
+        const data = { id: id };
 
         $.ajax({
             url: "/dashboard/works/find",
             type: 'GET',
-            data:data,
+            data: data,
             dataType: "json",
-            cache: false, // Отключаем кэширование
+            cache: false,
             success: function(response) {
-                if (response.success)
-                {
+                if (response.success) {
                     const work = response.data.work;
-                    $("#info_box_" + id).html($("#info_box_tmpl").tmpl());
-                    const deleted = $("#work_" + id).attr('class');
-                    if(deleted)
-                    {
-                        console.log('true');
-                        $("#added_menu").html($("#deleted_menu_tmpl").tmpl());
+
+                    // Загрузить содержимое в нужный элемент
+                    const $infoBox = $("#info_box_" + id);
+                    $infoBox.html($("#info_box_tmpl").tmpl());
+
+                    // Проверяем статус удаления и обновляем меню
+                    const deleted = $("#work_" + id).hasClass('deleted');
+                    if (deleted) {
+                        $infoBox.find("#added_menu").html($("#deleted_menu_tmpl").tmpl());
+                    } else {
+                        $infoBox.find("#added_menu").html($("#undeleted_menu_tmpl").tmpl());
                     }
-                    else
-                    {
-                        console.log('false');
-                        $("#added_menu").html($("#undeleted_menu_tmpl").tmpl());
-                    }
-                    $("#work_menu").addClass('show');
-                    const userId = work.user_id;
-                    localStorage.setItem('work_id',id);
-                    localStorage.setItem('user_id',userId);
-                }
-                else
-                {
-                    $.notify(response.data.title + ":" + response.data.message, "error");
+
+                    // Показать меню
+                    $infoBox.addClass('show'); // Показать или скрыть текущее меню
+                } else {
+                    $.notify(response.data.title + ": " + response.data.message, "error");
                 }
             },
             error: function() {

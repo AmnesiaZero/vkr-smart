@@ -275,7 +275,7 @@
 
                    </td>
                    <td>
-                       <img src="/images/three_dots.svg" alt="" id="work-menu-button" class="btn-info-box cursor-p dropdown-toggle"
+                       <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p dropdown-toggle menu"
                        type="button" onclick="openInfoBox(${id})"
                         aria-expanded="false">
                        <div id="info_box_${id}"> </div>
