@@ -17,18 +17,6 @@
                                    class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="parent_id">Является связанной для организации:</label>
-                            <select id="parent_id" name="parent_id" class="form-control">
-                                <option value="0">--Выберите--</option>
-                                @if(isset($parents) && !empty($parents))
-                                    @foreach($parents as $parent)
-                                        <option value="{{ $parent->id }}"
-                                                @if($parent->id == $organization->parent_id) selected @endif>{{ $parent->name }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="logo">Логотип</label>
                             <div class="input-group">
                                 <input id="logo" type="text"
