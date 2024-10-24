@@ -49,7 +49,7 @@
                 <div class="col-sm-12 text-center">
                     <h2>СПРАВКА</h2>
                     <h3>о результатах проверки на наличие заимствований</h3>
-					<p style="color: #006f92;font-size: 16px;padding-top: 10px;" class="">Уникальный код справки: <strong class="ng-binding">1-243735-35349</strong></p>
+					<p style="color: #006f92;font-size: 16px;padding-top: 10px;" class="">Уникальный код справки: <strong class="ng-binding">${id}-${check_code}</strong></p>
                 </div>
             </div><hr>
              <div class="row">
