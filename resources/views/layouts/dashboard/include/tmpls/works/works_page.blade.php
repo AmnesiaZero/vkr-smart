@@ -34,7 +34,7 @@
     <div ng-if="success" class="ng-scope">
         <div class="container certificate-container">
             <div class="row">
-                <a href="#/report/full/530250/1/1957b164e91e32b26fc40a251fb6c696" class="btn btn-link btn-smart pointer"><span class="glyphicon glyphicon-chevron-left"></span>Назад</a>
+                <a class="btn btn-link btn-smart pointer" onclick="openReport(${id})"><span class="glyphicon glyphicon-chevron-left"></span>Назад</a>
                 <a href="#" onclick="window.print(); return false;" class="btn btn-link btn-smart"><span class="glyphicon glyphicon-print"></span> Распечатать справку</a>
             </div>
             <div class="row">
