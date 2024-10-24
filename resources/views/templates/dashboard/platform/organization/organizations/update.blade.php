@@ -61,7 +61,7 @@
                             <label for="start_date">Дата начала доступа</label>
                             <div class="input-group">
                                 <input id="date_timepicker_start" type="date" name="start_date"
-                                       value="@if($organization->start_date) {{ \Carbon\Carbon::parse($organization->start_date)->format('d.m.Y') }} @endif"
+                                       @if($organization->start_date) value="{{\Carbon\Carbon::parse(trim($organization->start_date))->format('Y-m-d')}}" @endif
                                        aria-describedby="date-start" class="form-control">
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                             <label for="end_date">Дата окончания доступа</label>
                             <div class="input-group">
                                 <input id="date_timepicker_end" type="date" name="end_date"
-                                       value="@if($organization->end_date) {{ \Carbon\Carbon::parse($organization->end_date)->format('d.m.Y') }} @endif"
+                                       @if($organization->end_date) value="{{\Carbon\Carbon::parse(trim($organization->end_date))->format('Y-m-d')}}" @endif
                                        aria-describedby="date-end" class="form-control">
                             </div>
                         </div>

@@ -25,7 +25,7 @@ class Organization extends Model
         'email',
         'info',
         'start_date',
-        'end_data',
+        'end_date',
         'is_head',
         'is_premium',
         'is_testing',
