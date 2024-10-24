@@ -57,6 +57,9 @@
         Ф.И.О. автора проверяемой работы: <span class="ng-binding">${student}</span>
     </div>
 </div>
+<div class="col-sm-12 text-bolder ng-binding">
+        Тема работы: <span class="ng-binding">${name}</span>
+    </div>
  <div class="row">
     <div class="col-sm-12 text-bolder ng-binding">
         Руководитель: <span class="ng-binding">${scientific_supervisor}</span>
@@ -96,9 +99,9 @@
 			<table class="table table-bordered table-condensed">
     <thead>
         <tr>
-            <th ng-repeat="head in $ctrl.headers" class="ng-binding ng-scope">Доля в отчете</th>
-            <th ng-repeat="head in $ctrl.headers" class="ng-binding ng-scope">Источник (ссылка)</th>
-             <th ng-repeat="head in $ctrl.headers" class="ng-binding ng-scope">Где найдено (Модуль поиска)</th>
+            <th class="ng-binding ng-scope">Доля в отчете</th>
+            <th class="ng-binding ng-scope">Источник (ссылка)</th>
+             <th  class="ng-binding ng-scope">Где найдено (Модуль поиска)</th>
 
         </tr>
     </thead>

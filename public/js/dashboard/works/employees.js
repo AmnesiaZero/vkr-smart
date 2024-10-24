@@ -818,6 +818,7 @@ function reloadWork(workId)
 
 function openReport(workId)
 {
+    localStorage.setItem('work_id',workId);
     const data = {
         id:workId
     };
