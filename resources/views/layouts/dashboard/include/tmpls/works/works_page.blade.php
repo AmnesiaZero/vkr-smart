@@ -38,7 +38,7 @@
             </div><hr>
 {{--            <reference-row label="'Ф.И.О. автора проверяемой работы'" text="workInfo.info.fullname" class="ng-isolate-scope"><div class="row">--}}
     <div class="col-sm-12 text-bolder ng-binding">
-        Ф.И.О. автора проверяемой работы: <span class="ng-binding">${work.student}</span>
+        Ф.И.О. автора проверяемой работы: <span class="ng-binding">${student}</span>
     </div>
 </div></reference-row>
 {{--<hr>--}}
