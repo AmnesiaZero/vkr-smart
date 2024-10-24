@@ -1031,7 +1031,7 @@ function openInfoBox(id) {
                     }
 
                     // Показать меню
-                    $infoBox.addClass('show'); // Показать или скрыть текущее меню
+                    $("#work_menu").addClass('show'); // Показать или скрыть текущее меню
                 } else {
                     $.notify(response.data.title + ": " + response.data.message, "error");
                 }
