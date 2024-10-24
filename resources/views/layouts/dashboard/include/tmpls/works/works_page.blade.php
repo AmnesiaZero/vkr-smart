@@ -121,7 +121,7 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12 text-center ng-binding" style="font-size:28px">
-					Уникальность текста:  48.16%
+					Уникальность текста:  ${unique_percent}%
 				</div>
 			</div>
 			<table class="table table-mini">
