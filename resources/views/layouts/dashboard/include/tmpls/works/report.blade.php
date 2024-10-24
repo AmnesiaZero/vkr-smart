@@ -5,7 +5,44 @@
                 <h3 class="modal-title">Полный отчет по работе</h3>
             </div>
             <div class="modal-body">
-                <!-- Основное содержимое будет динамически подставляться через JS -->
+                <div id="report_content">
+                    <p> Полный отчет по работе </p>
+                    <div class="d-flex justify-content-between">
+                        <a ng-if="report.status_report !== '1'" id="print_report" class="btn btn-success">
+                            <span class="glyphicon glyphicon-print"></span>
+                            Распечатать отчет
+                        </a>
+                        <a ng-if="report.status_report !== '1'" id="vkr_reference" class="btn btn-warning">
+                            <span class="glyphicon glyphicon-download"></span>
+                            Справка ВКР
+                        </a>
+                    </div>
+                    <div class="col-sm-8 mt-2">
+                        <ol style="padding-left:15px;">
+                            <li>Результаты проверки по базам данных ВКР-СМАРТ:
+                                <ul>
+                                    <li>Оригинальность текста документа: <strong id="borrowings_percent">${unique_percent}%</strong></li>
+                                </ul>
+                                <ul>
+                                    <li>Код справки: <strong id="check_code">${id}-${check_code}</strong></li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                    <table class="table table-mini table-bordered table-condensed mt-4">
+                        <thead>
+                        <tr>
+                            <th>Источник</th>
+                            <th>Ссылка на источник</th>
+                            <th>Коллекция/модуль поиска</th>
+                            <th>Доля в отчете</th>
+                        </tr>
+                        </thead>
+                        <tbody id="report_assets_list">
+                        <!-- Пример данных из шаблона -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть окно</button>

@@ -1,79 +1,4 @@
-function openReport() {
-    const data = $("#check_form").serialize();
-    $.ajax({
-        url: "/dashboard/works/check-code",
-        type: 'GET',
-        data: data,
-        dataType: "json",
-        success: function (response) {
-            if (response.success) {
-                const work = response.data.work;
-
-                $("#report_container").html($("#report_tmpl").tmpl(work));
-
-                const modalElement = new bootstrap.Modal(document.getElementById('report_modal'));
-
-                modalElement.show();
-            } else {
-                $.notify(response.data.title + ":" + response.data.message, "error");
-            }
-        },
-        error: function () {
-            $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
-        }
-    });
-}
-
-
-let isFirstOpen = true;
-
-$('#report_modal').on('shown.bs.modal', function () {
-    if (isFirstOpen) {
-        $('#report_modal .modal-body').html(`
-            <div id="report_content">
-                <p> Полный отчет по работе </p>
-                <div class="d-flex justify-content-between">
-                    <a ng-if="report.status_report !== '1'" id="print_report" class="btn btn-success">
-                        <span class="glyphicon glyphicon-print"></span>
-                        Распечатать отчет
-                    </a>
-                    <a ng-if="report.status_report !== '1'" id="vkr_reference" class="btn btn-warning">
-                        <span class="glyphicon glyphicon-download"></span>
-                        Справка ВКР
-                    </a>
-                </div>
-                <div class="col-sm-8 mt-2">
-                    <ol style="padding-left:15px;">
-                        <li>Результаты проверки по базам данных ВКР-СМАРТ:
-                            <ul>
-                                <li>Оригинальность текста документа: <strong id="borrowings_percent">${unique_percent}%</strong></li>
-                            </ul>
-                            <ul>
-                                <li>Код справки: <strong id="check_code">${id}-${check_code}</strong></li>
-                            </ul>
-                        </li>
-                    </ol>
-                </div>
-                <table class="table table-mini table-bordered table-condensed mt-4">
-                    <thead>
-                        <tr>
-                            <th>Источник</th>
-                            <th>Ссылка на источник</th>
-                            <th>Коллекция/модуль поиска</th>
-                            <th>Доля в отчете</th>
-                        </tr>
-                    </thead>
-                    <tbody id="report_assets_list">
-                        <!-- Пример данных из шаблона -->
-                    </tbody>
-                </table>
-            </div>
-        `);
-        isFirstOpen = false;
-    }
-});
-
-$(document).on('click', '#vkr_reference', function() {
+function addFunctionalToReference() {
     $('#report_modal .modal-body').html(`
         <div ng-view="" class="view-animate ng-scope" autoscroll="">
             <div class="container certificate-container">
@@ -151,8 +76,38 @@ $(document).on('click', '#vkr_reference', function() {
             </div>
         </div>
     `);
-});
+}
 
-$(document).on('click', '#print_report', function() {
-    window.print();  // Вызов функции печати браузера
-});
+
+function openReport() {
+    const data = $("#check_form").serialize();
+    $.ajax({
+        url: "/dashboard/works/check-code",
+        type: 'GET',
+        data: data,
+        dataType: "json",
+        success: function (response) {
+            if (response.success) {
+                const work = response.data.work;
+
+                $("#report_container").html($("#report_tmpl").tmpl(work));
+
+                addFunctionalToReference();
+
+                $('#report_modal #print_report').click(function () {
+                    window.print();
+                });
+
+
+                const modalElement = new bootstrap.Modal(document.getElementById('report_modal'));
+                modalElement.show();
+            } else {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function () {
+            $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
+        }
+    });
+}
+
