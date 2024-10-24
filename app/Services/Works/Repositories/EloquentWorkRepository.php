@@ -121,7 +121,7 @@ class EloquentWorkRepository implements WorkRepositoryInterface
 
     public function find(int $id): Model
     {
-        return Work::withTrashed()->with(['specialty', 'year', 'faculty', 'department', 'user', 'reportAssets'])->find($id);
+        return Work::withTrashed()->with(['specialty', 'year', 'faculty', 'department', 'user', 'report_assets'])->find($id);
     }
 
     public function destroy(int $id): bool
