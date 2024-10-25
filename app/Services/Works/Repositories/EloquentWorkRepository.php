@@ -106,11 +106,11 @@ class EloquentWorkRepository implements WorkRepositoryInterface
             $specialtiesIds = $data['selected_specialties'];
             $query = $query->whereIn('specialty_id', $specialtiesIds);
         }
-        if (isset($data['no_paginate']))
+        if (isset($data['paginate']) and $data['paginate'])
         {
-            return $query->get();
+            return $query->paginate(config('pagination.per_page'), '*', 'page', $data['page']);
         }
-        return $query->paginate(config('pagination.per_page'), '*', 'page', $data['page']);
+        return $query->get();
     }
 
     public function copy(int $id)

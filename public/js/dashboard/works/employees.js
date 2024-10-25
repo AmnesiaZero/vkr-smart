@@ -905,6 +905,7 @@ function searchWorks(page=1) {
     additionalData['user_type'] = userType;
     additionalData['page'] = page;
     additionalData['visibility'] = 1;
+    additionalData['paginate'] = true;
     data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/works/search",

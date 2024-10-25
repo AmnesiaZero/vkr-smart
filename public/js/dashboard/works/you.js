@@ -620,7 +620,8 @@ function searchWorks(page = 1) {
     data = serializeRemoveNull(data);
     const additionalData = {
         page: page,
-        user_id: userId
+        user_id: userId,
+        paginate: true
     };
     data += '&' + $.param(additionalData);
     $.ajax({
