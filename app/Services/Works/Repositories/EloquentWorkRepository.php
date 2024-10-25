@@ -45,7 +45,7 @@ class EloquentWorkRepository implements WorkRepositoryInterface
         return Work::query()->create($data);
     }
 
-    public function search(array $data): LengthAwarePaginator
+    public function search(array $data): LengthAwarePaginator|Collection
     {
         $query = Work::query();
         if (isset($data['delete_type'])) {

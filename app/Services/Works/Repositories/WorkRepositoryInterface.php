@@ -35,9 +35,9 @@ interface WorkRepositoryInterface
 
     /**
      * @param array $data
-     * @return LengthAwarePaginator
+     * @return LengthAwarePaginator|Collection
      */
-    public function search(array $data): LengthAwarePaginator;
+    public function search(array $data): LengthAwarePaginator|Collection;
 
 
     /**
