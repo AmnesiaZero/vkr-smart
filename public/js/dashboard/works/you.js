@@ -4,6 +4,13 @@ var user = '';
 
 var userType;
 
+$(document).on('click', '#upload_button', function() {
+    console.log('Кнопка загрузки файла нажата');
+    $('#file_input').click(); // Открываем диалог выбора файла
+});
+$(document).on('click', '#upload_certificate_button', function() {
+    $('#certificate_input').click(); // Открываем диалог выбора файла
+});
 
 function toggleInputAndSelect(inputName, selectName) {
     // Обработка изменения состояния инпута
@@ -133,14 +140,6 @@ $(document).ready(function () {
         deleteTreeElement($(this));
     })
 
-
-    $('#upload_button').on('click', function () {
-        $('#file_input').click(); // Открываем диалог выбора файла
-    });
-
-    $('#upload_certificate_button').on('click', function () {
-        $('#certificate_input').click(); // Открываем диалог выбора файла
-    });
     $("#addWorkForm").on('submit', function (e) {
         console.log(123)
         e.preventDefault(); // Предотвращаем стандартное поведение формы
@@ -680,16 +679,11 @@ function resetSearch() {
     works();
 }
 
-function openInfoBox(id) {
+function openInfoBox(element, id) {
+    // Закрыть все открытые меню
+    $(".info-box").remove();
+
     if (id) {
-        const deleted = $("#work_" + id).attr('class');
-        if (deleted) {
-            console.log('true');
-            $("#added_menu").html($("#deleted_menu_tmpl").tmpl());
-        } else {
-            console.log('false');
-            $("#added_menu").html($("#undeleted_menu_tmpl").tmpl());
-        }
         const data = {
             id: id
         };
@@ -701,10 +695,28 @@ function openInfoBox(id) {
             dataType: "json",
             success: function (response) {
                 if (response.success) {
+
                     const work = response.data.work;
                     const userId = work.user_id;
                     localStorage.setItem('work_id', id);
                     localStorage.setItem('user_id', userId);
+
+                    const $infoBox = $("#info_box_" + id);
+                    $infoBox.html($("#info_box_tmpl").tmpl());
+
+                    const deleted = $("#work_" + id).attr('class');
+
+                    if (deleted) {
+                        console.log('true');
+                        $("#added_menu").html($("#deleted_menu_tmpl").tmpl());
+                    } else {
+                        console.log('false');
+                        $("#added_menu").html($("#undeleted_menu_tmpl").tmpl());
+                    }
+
+                    // Показать меню
+                    $(element).next().find('.info-box').toggleClass('show');
+
                 } else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                 }
@@ -771,6 +783,7 @@ function downloadWork() {
     const workId = localStorage.getItem('work_id');
     window.location.href = '/dashboard/works/download?id=' + workId;
 }
+
 
 function openUpdateWorkModal() {
     const workId = localStorage.getItem('work_id');
@@ -900,31 +913,61 @@ function destroyWork() {
     }
 }
 
-function updateSelfCheckStatus() {
+// function updateSelfCheckStatus() {
+//     const workId = localStorage.getItem('work_id');
+//     const data = {
+//         id: workId
+//     };
+//     $.ajax({
+//         url: "/dashboard/works/update/self-check",
+//         type: 'POST',
+//         data: data,
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         },
+//         dataType: "json",
+//         success: function (response) {
+//             if (response.success) {
+//                 $.notify(response.data.title + ":" + response.data.message, "success");
+//             } else {
+//                 $.notify(response.data.title + ":" + response.data.message, "error");
+//             }
+//         },
+//         error: function () {
+//             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
+//         }
+//     });
+// }
+function updateSelfCheckStatus()
+{
     const workId = localStorage.getItem('work_id');
     const data = {
-        id: workId
+        id:workId
     };
     $.ajax({
         url: "/dashboard/works/update/self-check",
         type: 'POST',
-        data: data,
+        data:data,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         dataType: "json",
-        success: function (response) {
-            if (response.success) {
+        success: function(response) {
+            if (response.success)
+            {
+                const selfCheckStatus = getSelfCheckDescription(response.data.self_check);
+                $("#self_check_value").text(selfCheckStatus);
                 $.notify(response.data.title + ":" + response.data.message, "success");
-            } else {
+            }
+            else
+            {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function () {
+        error: function() {
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
-
 }
 
 function restore() {
@@ -1052,7 +1095,6 @@ function updateWorksCount() {
     }
 }
 
-
-
-
-
+$(document).click(function() {
+    $('.info-box').remove();
+});

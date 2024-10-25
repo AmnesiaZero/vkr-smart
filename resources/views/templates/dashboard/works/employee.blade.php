@@ -276,15 +276,15 @@
                    </td>
                    <td>
                        <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p dropdown-toggle menu"
-                       type="button" onclick="openInfoBox(${id})"
-                        aria-expanded="false">
-                       <div id="info_box_${id}"> </div>
+                            type="button" onclick="openInfoBox(this,${id})" aria-expanded="false">
+
+                       <div id="info_box_${id}"></div>
                 </td>
             </tr>
             </script>
 
 <script id="info_box_tmpl" type="text/x-jquery-tmpl">
-    <div class="info-box dropdown-menu" id="work_menu" aria-labelledby="work-menu-button">
+    <div class="info-box dropdown-menu" id="work_menu" data-popper-placement="bottom-start">
         @role('admin|employee')
             <p class="fs-14 lh-17 mb-3">Направление подготовки обучающегося</p>
 
@@ -298,6 +298,7 @@
                 </p>
         </div>
         <p class="fs-14 lh-17 mt-4 mb-3">Операции над работой</p>
+
         <div class="d-flex align-items-center cursor-p mb-2">
             <img src="/images/info.svg" alt="" class="pe-3">
             <p class="fs-14 lh-17 text-grey m-0"
