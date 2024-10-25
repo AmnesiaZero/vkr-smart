@@ -45,7 +45,7 @@ class EloquentWorkRepository implements WorkRepositoryInterface
         return Work::query()->create($data);
     }
 
-    public function search(array $data): LengthAwarePaginator
+    public function search(array $data): LengthAwarePaginator|Collection
     {
         $query = Work::query();
         if (isset($data['delete_type'])) {
@@ -106,7 +106,11 @@ class EloquentWorkRepository implements WorkRepositoryInterface
             $specialtiesIds = $data['selected_specialties'];
             $query = $query->whereIn('specialty_id', $specialtiesIds);
         }
-        return $query->paginate(config('pagination.per_page'), '*', 'page', $data['page']);
+        if (isset($data['paginate']) and $data['paginate'])
+        {
+            return $query->paginate(config('pagination.per_page'), '*', 'page', $data['page']);
+        }
+        return $query->get();
     }
 
     public function copy(int $id)
@@ -121,7 +125,7 @@ class EloquentWorkRepository implements WorkRepositoryInterface
 
     public function find(int $id): Model
     {
-        return Work::withTrashed()->with(['specialty', 'year', 'faculty', 'department', 'user', 'reportAssets'])->find($id);
+        return Work::withTrashed()->with(['specialty', 'year', 'faculty', 'department', 'user', 'report_assets'])->find($id);
     }
 
     public function destroy(int $id): bool

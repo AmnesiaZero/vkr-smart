@@ -11,6 +11,15 @@
                             <p class="my-4 text-grey fs-14 lh-17">Для авторизации в системе введите данные, полученные
                                 от Вашего персонального менеджера или полученные в виде текстового сообщения на адрес
                                 электронной почты</p>
+                            @if ($errors->any())
+                                <div class="alert alert-danger mb-0">
+                                    <ul style="list-style-type: none;">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                         </div>
                         <form class="auth" action="/login" method="POST">
                             @csrf

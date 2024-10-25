@@ -422,6 +422,7 @@ class WorksService extends Services
             $formattedEndDate = $endDate->toDateString();
             $data['start_date'] = $formattedStartDate;
             $data['end_date'] = $formattedEndDate;
+            $data['no_paginate'] = true;
         }
         return Excel::download(new WorksExport($data), 'Экспорт работ.xlsx');
     }
