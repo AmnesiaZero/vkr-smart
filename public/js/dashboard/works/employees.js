@@ -9,28 +9,10 @@ var departmentsIds = [];
 var specialtiesIds = [];
 
 
-
-// $(document).on('click', '.menu', function () {
-//     var workId = $(this).data('id');
-//     var $infoBox = $("#info_box_" + workId);
-//
-//     // Удаляем ранее открытые меню
-//     $('.info-box').remove();
-//
-//     // Рендерим меню в выбранный элемент
-//     $("#info_box_tmpl").tmpl().appendTo($infoBox);
-// });
-
-// // Закрытие меню при клике вне его
-// $(document).on('click', function (e) {
-//     if (!$(e.target).closest('.menu').length && !$(e.target).closest('.info-box').length) {
-//         $('.info-box').remove();
-//     }
-// });
-
-
-
-
+// Закрываем меню при клике вне дропдауна
+$(document).click(function() {
+    $('.info-box').remove();
+});
 
 $(document).ready(function () {
     $('.selectpicker').selectpicker();
@@ -787,8 +769,6 @@ function works(page= 1)
     });
 }
 
-
-
 function reloadWork(workId)
 {
     const data = {
@@ -818,7 +798,6 @@ function reloadWork(workId)
 
 function openReport(workId)
 {
-    localStorage.setItem('work_id',workId);
     const data = {
         id:workId
     };
@@ -846,33 +825,6 @@ function openReport(workId)
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
-}
-
-function openCheck()
-{
-    const workId = localStorage.getItem('work_id');
-    const data = {
-        id:workId
-    };
-    $.ajax({
-        url: "/dashboard/works/find",
-        type: 'GET',
-        data: data,
-        dataType: "json",
-        cache: false,
-        success: function(response) {
-            if (response.success) {
-                const work = response.data.work;
-                $("#report_modal_container").html($("#check_tmpl").tmpl(work));
-            } else {
-                $.notify(response.data.title + ": " + response.data.message, "error");
-            }
-        },
-        error: function() {
-            $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
-        }
-    });
-
 }
 
 function searchWorks(page=1) {
@@ -905,7 +857,6 @@ function searchWorks(page=1) {
     additionalData['user_type'] = userType;
     additionalData['page'] = page;
     additionalData['visibility'] = 1;
-    additionalData['paginate'] = true;
     data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/works/search",
@@ -1032,9 +983,10 @@ function resetEmployeeSearch() {
 //     }
 // }
 
-function openInfoBox(id) {
+function openInfoBox(element, id){
     // Закрыть все открытые меню
     $(".info-box").remove();
+    localStorage.setItem('work_id',id);
 
     if (id) {
         const data = { id: id };
@@ -1047,10 +999,6 @@ function openInfoBox(id) {
             cache: false,
             success: function(response) {
                 if (response.success) {
-                    const work = response.data.work;
-                    const userId = work.user_id;
-                    localStorage.setItem('work_id',id);
-                    localStorage.setItem('user_id',userId);
 
                     // Загрузить содержимое в нужный элемент
                     const $infoBox = $("#info_box_" + id);
@@ -1065,7 +1013,7 @@ function openInfoBox(id) {
                     }
 
                     // Показать меню
-                    $("#work_menu").addClass('show'); // Показать или скрыть текущее меню
+                    $(element).next().find('.info-box').toggleClass('show');
 
                 } else {
                     $.notify(response.data.title + ": " + response.data.message, "error");
@@ -1100,6 +1048,8 @@ function workInfo()
     const data = {
         id: workId,
     };
+    console.log(workId)
+
     $.ajax({
         url: "/dashboard/works/find",
         type: 'GET',
