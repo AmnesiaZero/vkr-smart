@@ -106,7 +106,7 @@ class EloquentWorkRepository implements WorkRepositoryInterface
             $specialtiesIds = $data['selected_specialties'];
             $query = $query->whereIn('specialty_id', $specialtiesIds);
         }
-        if (isset($data['no_paginate']) and $data['no_paginate'])
+        if (isset($data['no_paginate']))
         {
             return $query->get();
         }
