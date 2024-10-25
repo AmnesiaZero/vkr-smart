@@ -67,11 +67,7 @@
                     <div class="form-group">
                         <label for="date_start">Дата начала доступа</label>
                         <div class="input-group mb-0">
-                            <div class="input-group-prepend">
-                                <span id="date-start" class="input-group-text" style="font-size: 16px;"><i
-                                        class="far fa-calendar-alt"></i></span>
-                            </div>
-                            <input id="date_timepicker_start" type="text" name="date_start"
+                            <input id="date_timepicker_start" type="date" name="date_start"
                                    aria-describedby="date-start" class="form-control" autocomplete="off">
                         </div>
                         <small id="emailHelp" class="form-text text-muted">Укажите дату в формате
@@ -80,11 +76,7 @@
                     <div class="form-group">
                         <label for="date_end">Дата окончания доступа</label>
                         <div class="input-group mb-0">
-                            <div class="input-group-prepend">
-                                <span id="date-end" class="input-group-text" style="font-size: 16px;"><i
-                                        class="far fa-calendar-alt"></i></span>
-                            </div>
-                            <input id="date_timepicker_end" type="text" name="date_end" aria-describedby="date-end"
+                            <input id="date_timepicker_end" type="date" name="date_end" aria-describedby="date-end"
                                    class="form-control" autocomplete="off">
                         </div>
                         <small id="emailHelp" class="form-text text-muted">Укажите дату в формате

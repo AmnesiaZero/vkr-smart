@@ -9,6 +9,7 @@ use App\Services\Users\UsersService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
@@ -96,6 +97,14 @@ class UsersController extends Controller
             //Надо будет изменить
             if ($user->is_active == 0) {
                 return back()->withErrors(['Вы заблокированы']);
+            }
+            if ($user->roles[0]->slug!='platformadmin')
+            {
+                $organization = $user->organization;
+                if(!isset($organization) or Carbon::parse($organization->end_date)->format('Y-m-d') < now()->format('Y-m-d'))
+                {
+                    return back()->withErrors(['Авторизация невозможна. Срок доступа данного аккаунта(в рамках подписки) подошел к концу. Обратитесь за помощью в библиотеку вашей организации и службу поддержки']);
+                }
             }
             $request->session()->regenerate();
             return RedirectHelper::userDashboard($user);
