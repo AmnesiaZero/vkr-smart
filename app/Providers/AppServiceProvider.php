@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Services\Decorations\Repositories\DecorationRepositoryInterface;
 use App\Services\Decorations\Repositories\EloquentDecorationRepository;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -23,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        URL::forceScheme('https');
         Paginator::useBootstrapFive();
         $repositories = [
             'Organization' => 'Organizations',

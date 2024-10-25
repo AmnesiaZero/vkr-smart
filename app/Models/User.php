@@ -74,7 +74,8 @@ class User extends Authenticatable
         'faculty',
         'departments',
         'department',
-        'specialty'
+        'specialty',
+        'organization'
     ];
 
 

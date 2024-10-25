@@ -5,16 +5,16 @@
                <div class="modal-header">
                    <h3 class="modal-title">Полный отчет по работе</h3>
                </div>
-               <div class="modal-body">
+               <div class="modal-body" id="report_modal_container">
                    <div id="report_modal">
                        <p> Полный отчет по работе </p>
 
                        <div class="d-flex justify-content-between">
-                           <a ng-if="report.status_report !== '1'" ng-click="showFull()" class="btn btn-success ng-scope">
+                           <a ng-if="report.status_report !== '1'"  class="btn btn-success ng-scope">
                                <span class="glyphicon glyphicon-print"></span>
                                Распечатать отчет
                            </a>
-                           <a ng-if="report.status_report !== '1'" href="#/reference/530250/1/cd9640cd3f886e13072731fc90e66715" class="btn btn-warning ng-scope">
+                           <a ng-if="report.status_report !== '1'" onclick="openCheck()" class="btn btn-warning ng-scope">
                                <span class="glyphicon glyphicon-download"></span>
                                Справка ВКР
                            </a>
@@ -45,10 +45,10 @@
                                @{{each report_assets}}
                                <tr>
                                    <td>
-                                       <a target="_blank" class="ng-binding fs-14" href="${link}">${name}</a>
+                                       <a target="_blank" class="ng-binding fs-14" @{{if link}} href="${link}" @{{/if}}>${name}</a>
                                    </td>
                                    <td>
-                                       <a target="_blank" href="${link}" class="ng-binding">${link}</a>
+                                       <a target="_blank" @{{if link}} href="${link}" @{{/if}} class="ng-binding">@{{if link}} ${link} @{{else}} Ссылка не указана @{{/if}}</a>
                                    </td>
                                    <td>
                                        Интернет
