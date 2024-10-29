@@ -623,23 +623,27 @@ class UsersService extends Services
         }
         $data['secret_key'] = Str::random(10);
         $user = $this->_repository->create($data);
+        $updatedData = [];
         if ($user and $user->id) {
             $id = $user->id;
-            if(isset($data['avatar']) and is_file($data['avatar']) and FilesHelper::acceptableImage($data['avatar']))
+            if(isset($data['avatar']))
             {
-                $directory = ceil($id/1000);
-                $avatarFile = $data['avatar'];
-                $avatarDirectory = 'public/avatars/'.$directory;
-                Storage::makeDirectory($avatarDirectory);
-                $avatarFileName = $id.'.'.$avatarFile->extension();
-                $avatarFile->storeAs($avatarDirectory,$avatarFileName);
-                $updatedData['avatar_path'] = '/storage/avatars/'.$directory.'/'.$avatarFileName;
+                if(is_file($data['avatar']) and FilesHelper::acceptableImage($data['avatar']))
+                {
+                    $directory = ceil($id/1000);
+                    $avatarFile = $data['avatar'];
+                    $avatarDirectory = 'public/avatars/'.$directory;
+                    Storage::makeDirectory($avatarDirectory);
+                    $avatarFileName = $id.'.'.$avatarFile->extension();
+                    $avatarFile->storeAs($avatarDirectory,$avatarFileName);
+                    $updatedData['avatar_path'] = '/storage/avatars/'.$directory.'/'.$avatarFileName;
 
-                $updatedData['avatar_file_name'] = $avatarFile->getClientOriginalName();
-            }
-            else
-            {
-                return back()->withErrors(['Некорректный файл логотипа. Проверьте расширение файла. Допустимые расширения : jpeg,png,webp,jpg']);
+                    $updatedData['avatar_file_name'] = $avatarFile->getClientOriginalName();
+                }
+                else
+                {
+                    return back()->withErrors(['Некорректный файл логотипа. Проверьте расширение файла. Допустимые расширения : jpeg,png,webp,jpg']);
+                }
             }
 
             $result = $this->_repository->update($id,$updatedData);
@@ -654,16 +658,11 @@ class UsersService extends Services
                 }
                 $user->attachRole($role);
 
-                $you = Auth::user();
-                $updatedUser = $this->_repository->find($id);
                 if(isset($data['redirect']))
                 {
                     return redirect('/dashboard/users/index');
                 }
-                return view('templates.dashboard.platform.users.index', [
-                    'user' => $updatedUser,
-                    'you' => $you
-                ]);
+                return back();
             }
         }
         return back()->withErrors(['Возникла ошибка при создании пользователя']);

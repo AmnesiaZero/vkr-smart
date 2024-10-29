@@ -105,6 +105,7 @@ function faculties(data, htmlId) {
                 facultiesList.selectpicker('destroy');
                 facultiesList.html($("#faculty_tmpl").tmpl(faculties));
                 facultiesList.selectpicker('render');
+                facultiesList.prepend('<option value="" selected>Выберите.......</option>');
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }

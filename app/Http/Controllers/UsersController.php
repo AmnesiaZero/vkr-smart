@@ -52,7 +52,8 @@ class UsersController extends Controller
         'paginate',
         'email_visibility',
         'name_visibility',
-        'portfolio_card_access'
+        'portfolio_card_access',
+        'redirect'
     ];
 
     public function __construct(UsersService $usersService)
@@ -96,15 +97,23 @@ class UsersController extends Controller
             $user = Auth::user();
             //Надо будет изменить
             if ($user->is_active == 0) {
+                Auth::logout();
                 return back()->withErrors(['Вы заблокированы']);
             }
             if ($user->roles[0]->slug!='platformadmin')
             {
                 $organization = $user->organization;
+                if(!isset($organization) or $organization->is_blocked)
+                {
+                    Auth::logout();
+                    return back()->withErrors(['Авторизация невозможна. Организация заблокирована']);
+                }
                 if(!isset($organization) or Carbon::parse($organization->end_date)->format('Y-m-d') < now()->format('Y-m-d'))
                 {
+                    Auth::logout();
                     return back()->withErrors(['Авторизация невозможна. Срок доступа данного аккаунта(в рамках подписки) подошел к концу. Обратитесь за помощью в библиотеку вашей организации и службу поддержки']);
                 }
+
             }
             $request->session()->regenerate();
             return RedirectHelper::userDashboard($user);

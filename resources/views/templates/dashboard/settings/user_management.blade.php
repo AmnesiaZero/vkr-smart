@@ -119,6 +119,9 @@
             </nav>
         </div>
     </div>
+    <div id="report_container">
+
+    </div>
     @include('layouts.dashboard.include.elements.works_menu')
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEdit">
@@ -137,6 +140,7 @@
     <script src="/js/dashboard/settings/user_management.js">
 
     </script>
+    <script src="/js/app.js"></script>
     <script src="/js/user.js"></script>
     <script id="user_tmpl" type="text/x-jquery-tmpl">
             <div class="col-xl-3 col-lg-4 col-sm-6 col-12" id="user_${id}">
@@ -193,6 +197,9 @@
 
 
     </script>
+
+    @include('layouts.dashboard.include.tmpls.works.report')
+
     <script type="text/x-jquery-tmpl" id="off_canvas_user">
         <div class="px-4">
         <form onsubmit="updateUser(${id});return false" id="update_user_form">

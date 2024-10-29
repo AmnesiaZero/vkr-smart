@@ -22,7 +22,7 @@ class WorksExport implements FromView
     public function __construct(array $data)
     {
         $this->data = $data;
-        $this->workRepository = app(WorkRepositoryInterface::class);;
+        $this->workRepository = app(WorkRepositoryInterface::class);
     }
 
 

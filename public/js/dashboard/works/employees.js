@@ -440,7 +440,9 @@ function faculties(data,htmlId) {
                 facultiesList.empty();
                 facultiesList.selectpicker('destroy');
                 facultiesList.html($("#faculty_tmpl").tmpl(faculties));
+                facultiesList.prepend('<option selected>Выберите.......</option>');
                 facultiesList.selectpicker('render');
+
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -466,6 +468,8 @@ function departments(data,htmlId) {
                 departmentsList.selectpicker('destroy');
                 departmentsList.html($("#department_tmpl").tmpl(departments));
                 departmentsList.selectpicker('render');
+                departmentsList.prepend('<option value="" selected>Выберите.......</option>');
+
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -494,6 +498,8 @@ function specialties(data,htmlId) {
                 specialtiesList.selectpicker('destroy');
                 specialtiesList.html($("#specialty_tmpl").tmpl(specialties));
                 specialtiesList.selectpicker('render');
+                specialtiesList.prepend('<option value="" selected>Выберите.......</option>');
+
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -667,23 +673,7 @@ function addWork(formData)
     });
 }
 
-function getAssessmentDescription(assessment)
-{
-    switch (assessment) {
-        case 0:
-            return 'Без оценки';
-        case 2:
-            return 'Неудовлетворительно';
-        case 3:
-            return 'Удовлетворительно';
-        case 4:
-            return 'Хорошо';
-        case 5:
-            return 'Отлично';
-        default:
-            return 'Неизвестно';
-    }
-}
+
 
 function getAgreementDescription(agreement)
 {
@@ -697,17 +687,6 @@ function getAgreementDescription(agreement)
     }
 }
 
-function getSelfCheckDescription(selfCheck)
-{
-    switch (selfCheck) {
-        case 0:
-            return 'Не пройдена';
-        case 1:
-            return 'Пройдена';
-        default:
-            return 'Неизвестно';
-    }
-}
 
 function works(page= 1)
 {
@@ -796,36 +775,6 @@ function reloadWork(workId)
     });
 }
 
-function openReport(workId)
-{
-    const data = {
-        id:workId
-    };
-    $.ajax({
-        url: "/dashboard/works/find",
-        type: 'GET',
-        data:data,
-        dataType: "json",
-        success: function(response) {
-            if (response.success)
-            {
-                const work = response.data.work;
-                $("#report_container").html($("#report_tmpl").tmpl(work));
-
-                const modalElement = new bootstrap.Modal(document.getElementById('report_modal'));
-
-                modalElement.show();
-            }
-            else
-            {
-                $.notify(response.data.title + ":" + response.data.message, "error");
-            }
-        },
-        error: function() {
-            $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
-        }
-    });
-}
 
 function searchWorks(page=1) {
     let data = $("#search_form").serialize();
@@ -856,6 +805,7 @@ function searchWorks(page=1) {
     }
     additionalData['user_type'] = userType;
     additionalData['page'] = page;
+    additionalData['paginate'] = true;
     additionalData['visibility'] = 1;
     data += '&' + $.param(additionalData);
     $.ajax({
@@ -1025,6 +975,7 @@ function openInfoBox(element, id){
         });
     }
 }
+
 
 function checkDeleted()
 {
