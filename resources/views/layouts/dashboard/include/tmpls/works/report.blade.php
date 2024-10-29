@@ -118,60 +118,73 @@
                     <h3>о результатах проверки на наличие заимствований</h3>
 					<p style="color: #006f92;font-size: 16px;padding-top: 10px;" class="">Уникальный код справки: <strong class="ng-binding">${id}-${check_code}</strong></p>
                 </div>
-            </div><hr>
-             <div class="row">
-    <div class="col-sm-12 text-bolder ng-binding">
-        Ф.И.О. автора проверяемой работы: <span class="ng-binding">${student}</span>
-    </div>
-</div>
-<div class="col-sm-12 text-bolder ng-binding">
-        Тема работы: <span class="ng-binding">${name}</span>
-    </div>
- <div class="row">
-    <div class="col-sm-12 text-bolder ng-binding">
-        Руководитель: <span class="ng-binding">@{{if scientific_supervisor}} ${scientific_supervisor} @{{else}} Не указан @{{/if}}</span>
-    </div>
-</div>
-            <h3 class="text-center fs-16 mt-3">Информация о документе:</h3>
-<hr>
-<hr>
-            <div class="hide">
-	<div class="row">
-    <div class="col-sm-12 text-bolder ng-binding">
-        Дата загрузки: <span class="ng-binding">${created_at}</span>
-    </div>
-</div>
-><hr>
             </div>
-			<div class="hide">
-	<div class="row">
-    <div class="col-sm-12 text-bolder ng-binding">
-        Дата защиты: <span class="ng-binding">${protect_date}</span>
-    </div>
-</div>
-<hr>
-			</div>
-            <div class="">
-				<h3 class="text-center fs-16">Источники цитирования *</h3>
-			<table class="table table-bordered table-condensed">
-    <thead>
-        <tr>
-            <th class="ng-binding ng-scope">Доля в отчете</th>
-            <th class="ng-binding ng-scope">Источник (ссылка)</th>
-             <th  class="ng-binding ng-scope">Где найдено (Модуль поиска)</th>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12 text-bolder ng-binding">
+                    Ф.И.О. автора проверяемой работы: <span class="ng-binding">${student}</span>
+                </div>
+            </div>
 
-        </tr>
-    </thead>
-    <tbody>
-         @{{each report_assets}}
-            <td class="ng-binding">${borrowings_percent}%</td>
-            <td class="ng-binding">"${name}"   @{{if link}} ${link} @{{else}} Ссылка не указана @{{/if}} </td>
-            <td>Модуль поиска Интернет</td>
-            @{{/each}}
-    </tbody>
-</table>
+            <hr>
+
+            <div class="col-sm-12 text-bolder ng-binding">
+                Тема работы: <span class="ng-binding">${name}</span>
+            </div>
+
+            <hr>
+
+             <div class="row">
+                <div class="col-sm-12 text-bolder ng-binding">
+                    Руководитель: <span class="ng-binding">@{{if scientific_supervisor}} ${scientific_supervisor} @{{else}} Не указан @{{/if}}</span>
+                </div>
+            </div>
+
+
+
+            <h3 class="text-center fs-16 mt-3">Информация о документе:</h3>
+
+            <div class="hide">
+                <div class="row">
+                    <div class="col-sm-12 text-bolder ng-binding">
+                        Дата загрузки: <span class="ng-binding">${created_at}</span>
+                    </div>
+                </div>
+
+                <hr>
+            </div>
+
+			<div class="hide">
+                <div class="row">
+                    <div class="col-sm-12 text-bolder ng-binding">
+                        Дата защиты: <span class="ng-binding">${protect_date}</span>
+                    </div>
+                </div>
+                <hr>
+			</div>
+
+            <div class="">
+				<h3 class="text-center fs-16 mt-3">Источники цитирования *</h3>
+
+			    <table class="table table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="ng-binding ng-scope">Доля в отчете</th>
+                            <th class="ng-binding ng-scope">Источник (ссылка)</th>
+                             <th  class="ng-binding ng-scope">Где найдено (Модуль поиска)</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                         @{{each report_assets}}
+                            <td class="ng-binding">${borrowings_percent}%</td>
+                            <td class="ng-binding">"${name}"   @{{if link}} ${link} @{{else}} Ссылка не указана @{{/if}} </td>
+                            <td>Модуль поиска Интернет</td>
+                            @{{/each}}
+                    </tbody>
+                </table>
 				<div class="row">
-					<div class="col-sm-12 text-bolder">
+					<div class="col-sm-12 text-bolder fs-13">
 						* Таблица формируется системой «ВКР-ВУЗ».
 					</div>
 				</div><hr>
@@ -180,8 +193,8 @@
 				<div class="col-sm-12 text-center ng-binding" style="font-size:28px">
 					Уникальность текста:  ${unique_percent}%
 				</div>
-			</div>
-			<table class="table table-mini table-borderless">
+			</div>и
+			<table class="table table-mini table-borderless mt-3">
 				<tbody>
 					<tr>
 						<td class="br-none"><hr></td>
