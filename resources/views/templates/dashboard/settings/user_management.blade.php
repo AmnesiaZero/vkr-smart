@@ -194,6 +194,9 @@
 
 
     </script>
+
+    @include('layouts.dashboard.include.tmpls.works.report')
+
     <script type="text/x-jquery-tmpl" id="off_canvas_user">
         <div class="px-4">
         <form onsubmit="updateUser(${id});return false" id="update_user_form">
