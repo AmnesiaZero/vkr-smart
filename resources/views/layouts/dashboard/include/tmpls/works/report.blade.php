@@ -190,11 +190,12 @@
 						<td><hr></td>
 					</tr>
 					<tr>
-						<td class="">подпись студента</td>
-						<td>расшифровка подписи</td>
-						<td>подпись ответственного <br> за проверку</td>
-						<td>расшифровка подписи</td>
+						<td class="text-center br-none">подпись студента</td>
+						<td class="text-center br-none">расшифровка подписи</td>
+						<td class="text-center br-none">подпись ответственного <br> за проверку</td>
+						<td class="text-center br-none">расшифровка подписи</td>
 					</tr>
+
 					<tr>
 						<td></td>
 						<td></td>
@@ -215,9 +216,9 @@
 					</tr>
 					<tr>
 						<td></td>
-						<td>дата</td>
+						<td class="text-center br-none">дата</td>
 						<td></td>
-						<td>дата</td>
+						<td class="text-center br-none">дата</td>
 					</tr>
 				</tbody>
 			</table>
