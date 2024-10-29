@@ -94,11 +94,11 @@
         <div class="container certificate-container">
             <div class="row gap-3">
                 <a class="cursor-p text-green w-auto" onclick="openReport(${id})">
-                    <i class="bi bi-arrow-left"></i> Назад
+                    <span class="glyphicon glyphicon-chevron-left"></span>
                     Назад
                 </a>
                 <a href="#" onclick="window.print(); return false;" class="cursor-p text-green w-auto">
-                    <i class="bi bi-print"></i> Печать
+                    <span class="glyphicon glyphicon-print"></span>
                     Распечатать справку
                 </a>
             </div>
