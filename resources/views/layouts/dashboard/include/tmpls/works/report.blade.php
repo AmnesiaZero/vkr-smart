@@ -9,13 +9,12 @@
                    <div id="report_modal">
                        <p> Полный отчет по работе </p>
 
-                       <div class="d-flex justify-content-between">
-                           <a ng-if="report.status_report !== '1'"  class="btn btn-success ng-scope">
-                               <i class="bi bi-print"></i>
+                       <div class="d-flex gap-3">
+                           <a ng-if="report.status_report !== '1'"  class="btn btn-primary">
                                Распечатать отчет
                            </a>
-                           <a ng-if="report.status_report !== '1'" onclick="openCheck()" class="btn btn-warning ng-scope">
-                               <i class="bi bi-download"></i>
+                           <a ng-if="report.status_report !== '1'" onclick="openCheck()"
+                                class="btn btn-grey">
                                Справка ВКР
                            </a>
                        </div>
@@ -94,11 +93,9 @@
         <div class="container certificate-container">
             <div class="row gap-3">
                 <a class="cursor-p text-green w-auto" onclick="openReport(${id})">
-                    <i class="bi bi-chevron-left"></i>
                     Назад
                 </a>
                 <a href="#" onclick="window.print(); return false;" class="cursor-p text-green w-auto">
-                    <i class="bi bi-print"></i>
                     Распечатать справку
                 </a>
             </div>
