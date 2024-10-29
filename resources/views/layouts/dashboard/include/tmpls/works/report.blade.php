@@ -11,11 +11,11 @@
 
                        <div class="d-flex justify-content-between">
                            <a ng-if="report.status_report !== '1'"  class="btn btn-success ng-scope">
-                               <i class="bi bi-print"></i>ggg
+                               <i class="bi bi-print"></i>
                                Распечатать отчет
                            </a>
                            <a ng-if="report.status_report !== '1'" onclick="openCheck()" class="btn btn-warning ng-scope">
-                               <span class="glyphicon glyphicon-download"></span>
+                               <i class="bi bi-download"></i>
                                Справка ВКР
                            </a>
                        </div>
@@ -94,11 +94,11 @@
         <div class="container certificate-container">
             <div class="row gap-3">
                 <a class="cursor-p text-green w-auto" onclick="openReport(${id})">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <i class="bi bi-chevron-left"></i>
                     Назад
                 </a>
                 <a href="#" onclick="window.print(); return false;" class="cursor-p text-green w-auto">
-                    <span class="glyphicon glyphicon-print"></span>
+                    <i class="bi bi-print"></i>
                     Распечатать справку
                 </a>
             </div>
@@ -189,7 +189,7 @@
 				<div class="col-sm-12 text-center ng-binding" style="font-size:28px">
 					Уникальность текста:  ${unique_percent}%
 				</div>
-			</div>и
+			</div>
 			<table class="table table-mini table-borderless mt-3">
 				<tbody>
 					<tr>
