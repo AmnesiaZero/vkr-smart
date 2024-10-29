@@ -92,9 +92,15 @@
 </style>
     <div ng-if="success" class="ng-scope">
         <div class="container certificate-container">
-            <div class="row">
-                <a class="btn btn-link btn-smart pointer" onclick="openReport(${id})"><span class="glyphicon glyphicon-chevron-left"></span>Назад</a>
-                <a href="#" onclick="window.print(); return false;" class="btn btn-link btn-smart"><span class="glyphicon glyphicon-print"></span> Распечатать справку</a>
+            <div class="row gap-3">
+                <a class="cursor-p text-green w-auto" onclick="openReport(${id})">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    Назад
+                </a>
+                <a href="#" onclick="window.print(); return false;" class="cursor-p text-green w-auto">
+                    <span class="glyphicon glyphicon-print"></span>
+                    Распечатать справку
+                </a>
             </div>
             <div class="row">
                 <div class="col-sm-4 text-left">
@@ -124,7 +130,7 @@
         Руководитель: <span class="ng-binding">@{{if scientific_supervisor}} ${scientific_supervisor} @{{else}} Не указан @{{/if}}</span>
     </div>
 </div>
-            <h3 class="text-center">Информация о документе:</h3>
+            <h3 class="text-center fs-16 mt-3">Информация о документе:</h3>
 <hr>
 <hr>
             <div class="hide">
@@ -144,7 +150,7 @@
 <hr>
 			</div>
             <div class="">
-				<h3 class="text-center">Источники цитирования *</h3>
+				<h3 class="text-center fs-16">Источники цитирования *</h3>
 			<table class="table table-bordered table-condensed">
     <thead>
         <tr>
