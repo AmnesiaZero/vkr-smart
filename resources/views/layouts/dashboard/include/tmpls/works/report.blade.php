@@ -184,10 +184,10 @@
 			<table class="table table-mini table-borderless">
 				<tbody>
 					<tr>
-						<td><hr></td>
-						<td><hr></td>
-						<td><hr></td>
-						<td><hr></td>
+						<td class="br-none"><hr></td>
+						<td class="br-none"><hr></td>
+						<td class="br-none"><hr></td>
+						<td class="br-none"><hr></td>
 					</tr>
 					<tr>
 						<td class="text-center br-none">подпись студента</td>
@@ -197,27 +197,27 @@
 					</tr>
 
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td class="br-none"></td>
+						<td class="br-none"></td>
+						<td class="br-none"></td>
+						<td class="br-none"></td>
 					</tr>
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td class="br-none"></td>
+						<td class="br-none"></td>
+						<td class="br-none"></td>
+						<td class="br-none"></td>
 					</tr>
 					<tr>
-						<td></td>
-						<td><hr></td>
-						<td></td>
-						<td><hr></td>
+						<td class="br-none"></td>
+						<td class="br-none"><hr></td>
+						<td class="br-none"></td>
+						<td class="br-none"><hr></td>
 					</tr>
 					<tr>
-						<td></td>
+						<td class="br-none"></td>
 						<td class="text-center br-none">дата</td>
-						<td></td>
+						<td class="br-none"></td>
 						<td class="text-center br-none">дата</td>
 					</tr>
 				</tbody>
