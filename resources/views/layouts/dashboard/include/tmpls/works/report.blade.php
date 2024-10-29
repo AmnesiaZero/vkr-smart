@@ -11,7 +11,7 @@
 
                        <div class="d-flex justify-content-between">
                            <a ng-if="report.status_report !== '1'"  class="btn btn-success ng-scope">
-                               <span class="glyphicon glyphicon-print"></span>
+                               <i class="bi bi-print"></i>ggg
                                Распечатать отчет
                            </a>
                            <a ng-if="report.status_report !== '1'" onclick="openCheck()" class="btn btn-warning ng-scope">
@@ -102,9 +102,9 @@
                     Распечатать справку
                 </a>
             </div>
-            <div class="row">
+            <div class="row mt-4">
                 <div class="col-sm-4 text-left"></div>
-				<div class="col-sm-8 col-sm-offset-2 text-END">
+				<div class="col-sm-8 col-sm-offset-2 text-end">
                     <img src="/images/VKR.svg">
                 </div>
             </div>
