@@ -94,22 +94,18 @@
         <div class="container certificate-container">
             <div class="row gap-3">
                 <a class="cursor-p text-green w-auto" onclick="openReport(${id})">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <i class="bi bi-arrow-left"></i> Назад
                     Назад
                 </a>
                 <a href="#" onclick="window.print(); return false;" class="cursor-p text-green w-auto">
-                    <span class="glyphicon glyphicon-print"></span>
+                    <i class="bi bi-print"></i> Печать
                     Распечатать справку
                 </a>
             </div>
             <div class="row">
-                <div class="col-sm-4 text-left">
-                    <img width="220px" src="http://www.vkr-vuz.ru/assets/templates/c/img/logo.png ">
-                </div>
-				<div class="col-sm-6 col-sm-offset-2 text-right">
-                    <img style="max-height: 164px; float:right; margin-left:20px; margin-right:30px;"
-                         src="/images/VKR.svg">
-                    <br>
+                <div class="col-sm-4 text-left"></div>
+				<div class="col-sm-8 col-sm-offset-2 text-END">
+                    <img src="/images/VKR.svg">
                 </div>
             </div>
             <div class="row">

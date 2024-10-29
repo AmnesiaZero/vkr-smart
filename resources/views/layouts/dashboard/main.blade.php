@@ -15,6 +15,7 @@
               type="text/css"/>
         <link rel="stylesheet" type="text/css" href="{{'/css/dashboard.css'}}">
         <link rel="stylesheet" type="text/css" href="{{'/css/fancy_style.css'}}">
+        <link rel="stylesheet" type="text/css" href="{{'/css/bootstrap-icons'}}">
         <meta name="csrf-token" content="{{ csrf_token() }}"/>
         @yield('styles')
     </head>
