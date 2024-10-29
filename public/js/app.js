@@ -268,6 +268,35 @@ function openReport(workId)
 }
 
 
+function openCheck()
+{
+    const workId = localStorage.getItem('work_id');
+    const data = {
+        id:workId
+    };
+    $.ajax({
+        url: "/dashboard/works/find",
+        type: 'GET',
+        data: data,
+        dataType: "json",
+        cache: false,
+        success: function(response) {
+            if (response.success) {
+                const work = response.data.work;
+                $("#report_modal_container").html($("#check_tmpl").tmpl(work));
+            } else {
+                $.notify(response.data.title + ": " + response.data.message, "error");
+            }
+        },
+        error: function() {
+            $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
+        }
+    });
+
+}
+
+
+
 function deleteTreeElement(id) {
     console.log('id = ' + id);
     const match = id.match(/\d+/);

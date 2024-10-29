@@ -976,6 +976,7 @@ function openInfoBox(element, id){
     }
 }
 
+
 function checkDeleted()
 {
     return  localStorage.getItem('deleted');
