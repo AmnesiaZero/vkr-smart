@@ -96,7 +96,7 @@ class UsersController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             $user = Auth::user();
             //Надо будет изменить
-            if ($user->is_active == 0) {
+            if ($user->is_blocked) {
                 Auth::logout();
                 return back()->withErrors(['Вы заблокированы']);
             }

@@ -189,7 +189,7 @@ Route::group([
             Route::post('/', [WorksController::class, 'update']);
         });
         Route::post('update', [WorksController::class, 'update']);
-        Route::get('find', [WorksController::class, 'find']);
+        Route::get('find', [WorksController::class, 'find'])->withoutMiddleware(['web', 'auth']);;
         Route::get('download', [WorksController::class, 'download']);
         Route::post('upload', [WorksController::class, 'upload']);
         Route::post('copy', [WorksController::class, 'copy']);
