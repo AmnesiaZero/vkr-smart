@@ -119,6 +119,9 @@
             </nav>
         </div>
     </div>
+    <div id="report_container">
+
+    </div>
     @include('layouts.dashboard.include.elements.works_menu')
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEdit">
