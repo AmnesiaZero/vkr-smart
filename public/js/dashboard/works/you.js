@@ -292,9 +292,10 @@ $(document).ready(function () {
     });
 
     $("#upload_additional_file_form").on('submit', function (e) {
+        console.log('Зашел');
         e.preventDefault(); // Предотвращаем стандартное поведение формы
 
-        // Создаем объект FormData и добавляем в него данные формы
+        // // Создаем объект FormData и добавляем в него данные формы
         const formData = new FormData(this);
         const workId = localStorage.getItem('work_id');
         formData.append('work_id', workId);
