@@ -114,7 +114,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <h2>СПРАВКА</h2>
+                    <h2 class="mt-5">СПРАВКА</h2>
                     <h3>о результатах проверки на наличие заимствований</h3>
 					<p style="color: #006f92;font-size: 16px;padding-top: 10px;" class="">Уникальный код справки: <strong class="ng-binding">${id}-${check_code}</strong></p>
                 </div>
@@ -181,7 +181,7 @@
 					Уникальность текста:  ${unique_percent}%
 				</div>
 			</div>
-			<table class="table table-mini">
+			<table class="table table-mini table-borderless">
 				<tbody>
 					<tr>
 						<td><hr></td>
@@ -192,7 +192,7 @@
 					<tr>
 						<td class="">подпись студента</td>
 						<td>расшифровка подписи</td>
-						<td>подпись ответственного за проверку</td>
+						<td>подпись ответственного <br> за проверку</td>
 						<td>расшифровка подписи</td>
 					</tr>
 					<tr>
