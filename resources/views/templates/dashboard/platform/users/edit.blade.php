@@ -81,6 +81,7 @@
                             <textarea id="info" name="info" rows="7" class="form-control">{{ $user->info }}</textarea>
                         </div>
                     </div>
+                    <input type="checkbox" name="redirect" id="redirect" style="display: none">
                 </div>
             </div>
         </form>

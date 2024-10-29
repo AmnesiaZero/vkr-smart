@@ -52,7 +52,8 @@ class UsersController extends Controller
         'paginate',
         'email_visibility',
         'name_visibility',
-        'portfolio_card_access'
+        'portfolio_card_access',
+        'redirect'
     ];
 
     public function __construct(UsersService $usersService)

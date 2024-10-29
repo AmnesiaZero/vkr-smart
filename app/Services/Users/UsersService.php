@@ -660,7 +660,7 @@ class UsersService extends Services
 
                 if(isset($data['redirect']))
                 {
-                    return redirect(route('users.index'));
+                    return redirect('/dashboard/users/index');
                 }
                 return back();
             }

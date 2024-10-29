@@ -440,7 +440,9 @@ function faculties(data,htmlId) {
                 facultiesList.empty();
                 facultiesList.selectpicker('destroy');
                 facultiesList.html($("#faculty_tmpl").tmpl(faculties));
+                facultiesList.prepend('<option selected>Выберите.......</option>');
                 facultiesList.selectpicker('render');
+
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -466,6 +468,8 @@ function departments(data,htmlId) {
                 departmentsList.selectpicker('destroy');
                 departmentsList.html($("#department_tmpl").tmpl(departments));
                 departmentsList.selectpicker('render');
+                departmentsList.prepend('<option value="" selected>Выберите.......</option>');
+
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -494,6 +498,8 @@ function specialties(data,htmlId) {
                 specialtiesList.selectpicker('destroy');
                 specialtiesList.html($("#specialty_tmpl").tmpl(specialties));
                 specialtiesList.selectpicker('render');
+                specialtiesList.prepend('<option value="" selected>Выберите.......</option>');
+
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
