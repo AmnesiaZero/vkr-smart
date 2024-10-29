@@ -121,21 +121,11 @@
     </div>
  <div class="row">
     <div class="col-sm-12 text-bolder ng-binding">
-        Руководитель: <span class="ng-binding">${scientific_supervisor}</span>
+        Руководитель: <span class="ng-binding">@{{if scientific_supervisor}} ${scientific_supervisor} @{{else}} Не указан @{{/if}}</span>
     </div>
 </div>
             <h3 class="text-center">Информация о документе:</h3>
- <div class="row">
-    <div class="col-sm-12 text-bolder ng-binding">
-        Имя исходного файла: <span class="ng-binding">${document_name}</span>
-    </div>
-</div>
 <hr>
- <div class="row">
-    <div class="col-sm-12 text-bolder ng-binding">
-        Тип документа: <span class="ng-binding">${work_type}</span>
-    </div>
-</div>
 <hr>
             <div class="hide">
 	<div class="row">

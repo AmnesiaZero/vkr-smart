@@ -238,6 +238,7 @@ const addBadge = function (clickedElement) {
 
 function openReport(workId)
 {
+    localStorage.setItem('work_id',workId);
     const data = {
         id:workId
     };
