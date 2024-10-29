@@ -496,22 +496,6 @@ function openAddWorksModal() {
     works();
 }
 
-function getAssessmentDescription(assessment) {
-    switch (assessment) {
-        case 0:
-            return 'Без оценки';
-        case 2:
-            return 'Неудовлетворительно';
-        case 3:
-            return 'Удовлетворительно';
-        case 4:
-            return 'Хорошо';
-        case 5:
-            return 'Отлично';
-        default:
-            return 'Неизвестно';
-    }
-}
 
 
 function works(page = 1) {

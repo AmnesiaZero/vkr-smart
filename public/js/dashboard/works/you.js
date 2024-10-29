@@ -528,22 +528,6 @@ function updateWorkVisibility() {
 
 
 
-function getAssessmentDescription(assessment) {
-    switch (assessment) {
-        case 0:
-            return 'Без оценки';
-        case 2:
-            return 'Неудовлетворительно';
-        case 3:
-            return 'Удовлетворительно';
-        case 4:
-            return 'Хорошо';
-        case 5:
-            return 'Отлично';
-        default:
-            return 'Неизвестно';
-    }
-}
 
 function getAgreementDescription(agreement) {
     switch (agreement) {
@@ -556,16 +540,6 @@ function getAgreementDescription(agreement) {
     }
 }
 
-function getSelfCheckDescription(selfCheck) {
-    switch (selfCheck) {
-        case 0:
-            return 'Не пройдена';
-        case 1:
-            return 'Пройдена';
-        default:
-            return 'Неизвестно';
-    }
-}
 
 
 function reloadWork(workId) {

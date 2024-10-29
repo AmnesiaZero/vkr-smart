@@ -137,6 +137,7 @@
     <script src="/js/dashboard/settings/user_management.js">
 
     </script>
+    <script src="/js/app.js"></script>
     <script src="/js/user.js"></script>
     <script id="user_tmpl" type="text/x-jquery-tmpl">
             <div class="col-xl-3 col-lg-4 col-sm-6 col-12" id="user_${id}">
