@@ -233,7 +233,7 @@
             @include('layouts.dashboard.include.tmpls.works.works_page')
 
             <script id="work_tmpl" type="text/x-jquery-tmpl">
-                <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
+                <tr id="work_${id}" @{{if deleted_at}} class="deleted" @{{/if}}>
                <th scope="row">@{{if specialty}}
                                            ${specialty.name}
                                            @{{else}}
@@ -244,8 +244,8 @@
                <td>${group}</td>
                <td>${protect_date}</td>
                <td>${name} - ${work_type}</td>
-               <td>${getAssessmentDescription(assessment)}</td>
-               <td>${getSelfCheckDescription(self_check)}</td>
+               <td> @{{if assessment}} ${getAssessmentDescription(assessment)} @{{/if}}</td>
+               <td>@{{if self_check}} ${getSelfCheckDescription(self_check)} @{{/if}}</td>
                    <td>
                        @{{if report_status==0}}
                        <div>

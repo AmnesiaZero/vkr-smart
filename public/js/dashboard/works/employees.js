@@ -805,6 +805,7 @@ function searchWorks(page=1) {
     }
     additionalData['user_type'] = userType;
     additionalData['page'] = page;
+    additionalData['paginate'] = true;
     additionalData['visibility'] = 1;
     data += '&' + $.param(additionalData);
     $.ajax({
