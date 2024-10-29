@@ -9,13 +9,12 @@
                    <div id="report_modal">
                        <p> Полный отчет по работе </p>
 
-                       <div class="d-flex justify-content-between">
-                           <a ng-if="report.status_report !== '1'"  class="btn btn-success ng-scope">
-                               <span class="glyphicon glyphicon-print"></span>
+                       <div class="d-flex gap-3">
+                           <a ng-if="report.status_report !== '1'"  class="btn btn-primary">
                                Распечатать отчет
                            </a>
-                           <a ng-if="report.status_report !== '1'" onclick="openCheck()" class="btn btn-warning ng-scope">
-                               <span class="glyphicon glyphicon-download"></span>
+                           <a ng-if="report.status_report !== '1'" onclick="openCheck()"
+                                class="btn btn-grey">
                                Справка ВКР
                            </a>
                        </div>
@@ -92,78 +91,93 @@
 </style>
     <div ng-if="success" class="ng-scope">
         <div class="container certificate-container">
-            <div class="row">
-                <a class="btn btn-link btn-smart pointer" onclick="openReport(${id})"><span class="glyphicon glyphicon-chevron-left"></span>Назад</a>
-                <a href="#" onclick="window.print(); return false;" class="btn btn-link btn-smart"><span class="glyphicon glyphicon-print"></span> Распечатать справку</a>
+            <div class="row gap-3">
+                <a class="cursor-p text-green w-auto" onclick="openReport(${id})">
+                    Назад
+                </a>
+                <a href="#" onclick="window.print(); return false;" class="cursor-p text-green w-auto">
+                    Распечатать справку
+                </a>
             </div>
-            <div class="row">
-                <div class="col-sm-4 text-left">
-                    <img width="220px" src="http://www.vkr-vuz.ru/assets/templates/c/img/logo.png ">
-                </div>
-				<div class="col-sm-6 col-sm-offset-2 text-right">
-                    <img class="" style="max-height: 164px; float:right; margin-left:20px; margin-right:30px;" src="http://www.vkr-vuz.ru/logotypes/1/logo_1.jpg"><br>
+            <div class="row mt-4">
+                <div class="col-sm-4 text-left"></div>
+				<div class="col-sm-8 col-sm-offset-2 text-end">
+                    <img src="/images/VKR.svg">
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <h2>СПРАВКА</h2>
+                    <h2 class="mt-5">СПРАВКА</h2>
                     <h3>о результатах проверки на наличие заимствований</h3>
 					<p style="color: #006f92;font-size: 16px;padding-top: 10px;" class="">Уникальный код справки: <strong class="ng-binding">${id}-${check_code}</strong></p>
                 </div>
-            </div><hr>
-             <div class="row">
-    <div class="col-sm-12 text-bolder ng-binding">
-        Ф.И.О. автора проверяемой работы: <span class="ng-binding">${student}</span>
-    </div>
-</div>
-<div class="col-sm-12 text-bolder ng-binding">
-        Тема работы: <span class="ng-binding">${name}</span>
-    </div>
- <div class="row">
-    <div class="col-sm-12 text-bolder ng-binding">
-        Руководитель: <span class="ng-binding">@{{if scientific_supervisor}} ${scientific_supervisor} @{{else}} Не указан @{{/if}}</span>
-    </div>
-</div>
-            <h3 class="text-center">Информация о документе:</h3>
-<hr>
-<hr>
-            <div class="hide">
-	<div class="row">
-    <div class="col-sm-12 text-bolder ng-binding">
-        Дата загрузки: <span class="ng-binding">${created_at}</span>
-    </div>
-</div>
-><hr>
             </div>
-			<div class="hide">
-	<div class="row">
-    <div class="col-sm-12 text-bolder ng-binding">
-        Дата защиты: <span class="ng-binding">${protect_date}</span>
-    </div>
-</div>
-<hr>
-			</div>
-            <div class="">
-				<h3 class="text-center">Источники цитирования *</h3>
-			<table class="table table-bordered table-condensed">
-    <thead>
-        <tr>
-            <th class="ng-binding ng-scope">Доля в отчете</th>
-            <th class="ng-binding ng-scope">Источник (ссылка)</th>
-             <th  class="ng-binding ng-scope">Где найдено (Модуль поиска)</th>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12 text-bolder ng-binding">
+                    Ф.И.О. автора проверяемой работы: <span class="ng-binding">${student}</span>
+                </div>
+            </div>
 
-        </tr>
-    </thead>
-    <tbody>
-         @{{each report_assets}}
-            <td class="ng-binding">${borrowings_percent}%</td>
-            <td class="ng-binding">"${name}"   @{{if link}} ${link} @{{else}} Ссылка не указана @{{/if}} </td>
-            <td>Модуль поиска Интернет</td>
-            @{{/each}}
-    </tbody>
-</table>
+            <hr>
+
+            <div class="col-sm-12 text-bolder ng-binding">
+                Тема работы: <span class="ng-binding">${name}</span>
+            </div>
+
+            <hr>
+
+             <div class="row">
+                <div class="col-sm-12 text-bolder ng-binding">
+                    Руководитель: <span class="ng-binding">@{{if scientific_supervisor}} ${scientific_supervisor} @{{else}} Не указан @{{/if}}</span>
+                </div>
+            </div>
+
+
+
+            <h3 class="text-center fs-16 mt-3">Информация о документе:</h3>
+
+            <div class="hide">
+                <div class="row">
+                    <div class="col-sm-12 text-bolder ng-binding">
+                        Дата загрузки: <span class="ng-binding">${created_at}</span>
+                    </div>
+                </div>
+
+                <hr>
+            </div>
+
+			<div class="hide">
+                <div class="row">
+                    <div class="col-sm-12 text-bolder ng-binding">
+                        Дата защиты: <span class="ng-binding">${protect_date}</span>
+                    </div>
+                </div>
+                <hr>
+			</div>
+
+            <div class="">
+				<h3 class="text-center fs-16 mt-3">Источники цитирования *</h3>
+
+			    <table class="table table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="ng-binding ng-scope">Доля в отчете</th>
+                            <th class="ng-binding ng-scope">Источник (ссылка)</th>
+                             <th  class="ng-binding ng-scope">Где найдено (Модуль поиска)</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                         @{{each report_assets}}
+                            <td class="ng-binding">${borrowings_percent}%</td>
+                            <td class="ng-binding">"${name}"   @{{if link}} ${link} @{{else}} Ссылка не указана @{{/if}} </td>
+                            <td>Модуль поиска Интернет</td>
+                            @{{/each}}
+                    </tbody>
+                </table>
 				<div class="row">
-					<div class="col-sm-12 text-bolder">
+					<div class="col-sm-12 text-bolder fs-13">
 						* Таблица формируется системой «ВКР-ВУЗ».
 					</div>
 				</div><hr>
@@ -173,43 +187,44 @@
 					Уникальность текста:  ${unique_percent}%
 				</div>
 			</div>
-			<table class="table table-mini">
+			<table class="table table-mini table-borderless mt-3">
 				<tbody>
 					<tr>
-						<td><hr></td>
-						<td><hr></td>
-						<td><hr></td>
-						<td><hr></td>
+						<td class="br-none"><hr></td>
+						<td class="br-none"><hr></td>
+						<td class="br-none"><hr></td>
+						<td class="br-none"><hr></td>
 					</tr>
 					<tr>
-						<td class="">подпись студента</td>
-						<td>расшифровка подписи</td>
-						<td>подпись ответственного за проверку</td>
-						<td>расшифровка подписи</td>
+						<td class="text-center br-none">подпись студента</td>
+						<td class="text-center br-none">расшифровка подписи</td>
+						<td class="text-center br-none">подпись ответственного <br> за проверку</td>
+						<td class="text-center br-none">расшифровка подписи</td>
+					</tr>
+
+					<tr>
+						<td class="br-none"></td>
+						<td class="br-none"></td>
+						<td class="br-none"></td>
+						<td class="br-none"></td>
 					</tr>
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td class="br-none"></td>
+						<td class="br-none"></td>
+						<td class="br-none"></td>
+						<td class="br-none"></td>
 					</tr>
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td class="br-none"></td>
+						<td class="br-none"><hr></td>
+						<td class="br-none"></td>
+						<td class="br-none"><hr></td>
 					</tr>
 					<tr>
-						<td></td>
-						<td><hr></td>
-						<td></td>
-						<td><hr></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>дата</td>
-						<td></td>
-						<td>дата</td>
+						<td class="br-none"></td>
+						<td class="text-center br-none">дата</td>
+						<td class="br-none"></td>
+						<td class="text-center br-none">дата</td>
 					</tr>
 				</tbody>
 			</table>

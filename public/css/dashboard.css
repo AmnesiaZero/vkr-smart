@@ -177,6 +177,10 @@ td.list-group .dropdown {
     font-size: 12px !important;
 }
 
+.fs-13 {
+    font-size: 13px !important;
+}
+
 .fs-14 {
     font-size: 14px !important;
 }
@@ -1094,17 +1098,17 @@ html {
 }
 
 .info-box {
-    background: #FFFFFF;
-    border: 1px solid #D9F1F3;
+    background: #FFFFFF !important;
+    border: 1px solid #D9F1F3 !important;
     /*box-shadow: 0px 45px 18px rgba(108, 132, 137, 0.01), 0px 25px 15px rgba(108, 132, 137, 0.03), 0px 11px 11px*/
     /*            rgba(108, 132, 137, 0.06), 0px 3px 6px rgba(108, 132, 137, 0.07), 0px 0px 0px rgba(108, 132, 137, 0.07);*/
-    border-radius: 15px;
-    width: 350px;
-    padding: 1rem;
-    position: absolute;
-    z-index: 10;
-    bottom: 2%;
-    right: 3%;
+    border-radius: 15px !important;
+    width: 350px !important;
+    padding: 1rem !important;
+    position: absolute !important;
+    z-index: 10 !important;
+    bottom: 2% !important;
+    right: 3% !important;
     /*display: none;*/
 }
 

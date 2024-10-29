@@ -12,8 +12,8 @@
                                 от Вашего персонального менеджера или полученные в виде текстового сообщения на адрес
                                 электронной почты</p>
                             @if ($errors->any())
-                                <div class="alert alert-danger mb-0">
-                                    <ul style="list-style-type: none;">
+                                <div class="alert alert-danger mb-3">
+                                    <ul style="list-style-type: none;" class="ps-0">
                                         @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
                                         @endforeach
