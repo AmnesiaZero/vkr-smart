@@ -28,34 +28,11 @@
                             </div>
                         </div>
                         <div class="col-xl-6">
-                            <p class="text-grey mb-2 fs-14">ФИО обучающегося</p>
-                            <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
-                                <input type="text" name="student" value=""
-                                       class="form-control search br-none fs-14 form-small-p" placeholder="Введите..."
-                                       id="student_input">
-                                <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
-                                    <img src="/images/Search.svg" alt="search">
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
                             <p class="text-grey mb-2 fs-14">Название работы</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
                                 <input type="text" name="name" value=""
                                        class="form-control search br-none fs-14 form-small-p" placeholder="Введите..."
                                        id="work_name_input">
-                                <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
-                                    <img src="/images/Search.svg" alt="search">
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-6">
-                            <p class="text-grey mb-2 fs-14">Группа</p>
-                            <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
-                                <input type="text" name="group" value=""
-                                       class="form-control search br-none fs-14 form-small-p" placeholder="Введите..."
-                                       id="group_input">
                                 <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                                     <img src="/images/Search.svg" alt="search">
                                 </button>
@@ -70,20 +47,6 @@
                                 <button class="btn pe-3 py-0 fs-14" type="submit" id="search">
                                     <img src="/images/Search.svg" alt="search">
                                 </button>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <p class="fs-14 mb-2 text-grey">УГНП</p>
-                            <div id="bg-white_1">
-                                <select class="js-example-basic-single w-100" name="specialty_id" id="specialties_list">
-                                    <option value="" id="default_specialty">Выбрать</option>
-                                    @if(isset($program_specialties) and is_iterable($program_specialties))
-                                        @foreach($program_specialties as $program_specialty)
-                                            <option
-                                                value="{{$program_specialty->id}}">{{$program_specialty->name}}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
                             </div>
                         </div>
                         <div class="col-xl-6">
@@ -194,6 +157,8 @@
 
             </script>
 
+        @include('layouts.dashboard.include.tmpls.works.report')
+
             <script id="department_tmpl" type="text/x-jquery-tmpl">
      <option value="${id}">${name}</option>
 
@@ -210,48 +175,54 @@
             </script>
 
             <script id="work_tmpl" type="text/x-jquery-tmpl">
-     <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
-    <td>${group}</td>
-    <td>${protect_date}</td>
-    <td>${name}</td>
-    <td>${description}</td>
-    <td>${getAssessmentDescription(assessment)}</td>
-    <td>${getSelfCheckDescription(self_check)}</td>
-        <td>
-            @{{if report_status==0}}
-                <div>
-                    <span class="bg-error p-2 d-flex align-items-center gap-2">
-                        <div class="me-2 yellow-c"></div>
-                        В очереди на проверку
-                    </span>
-                </div>
-            @{{/if}}
+                <tr id="work_${id}" @{{if deleted_at}} class="deleted" @{{/if}}>
+               <th scope="row">@{{if specialty}}
+                                           ${specialty.name}
+                                           @{{else}}
+                                           Не указан
+                                           @{{/if}}
+                                           </th>
+               <td>${student}</td>
+               <td>${group}</td>
+               <td>${protect_date}</td>
+               <td>${name} - ${work_type}</td>
+               <td> @{{if assessment}} ${getAssessmentDescription(assessment)} @{{/if}}</td>
+               <td>@{{if self_check}} ${getSelfCheckDescription(self_check)} @{{/if}}</td>
+                   <td>
+                       @{{if report_status==0}}
+                       <div>
+                       <span class="bg-waiting p-2 d-flex align-items-center gap-2">
+                       <div class="me-2 yellow-c">
+                       </div>
+                         В очереди на проверку
+                       </span>
+                       </div>
+                       @{{/if}}
+                       @{{if report_status==1}}
+                       <div onclick="openReport(${id})">
+                           <span class="bg-active p-2 d-flex align-items-center cursor-p">
+                               <div class="me-2 green-c"></div>
+                               Отчет
+                           </span>
+                       </div>
+                       @{{/if}}
+                       @{{if report_status==2}}
+                       <div>
+                           <span class="bg-error p-2 d-flex align-items-center gap-2">
+                               <span class="red-c"></span>
+                               Не&nbsp;проверена
+                           </span>
+                       </div>
+                       @{{/if}}
 
-            @{{if report_status==1}}
-                <div onclick="openReport(${id})">
-                    <span class="bg-error p-2 d-flex align-items-center gap-2">
-                        <div class="me-2 green-c"></div>
-                        Отчет
-                    </span>
-                </div>
-            @{{/if}}
+                   </td>
+                   <td>
+                       <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p dropdown-toggle menu"
+                            type="button" onclick="openInfoBox(this,${id})" aria-expanded="false">
 
-            @{{if report_status==2}}
-                <div>
-                    <span class="bg-error p-2 d-flex align-items-center gap-2">
-                        <div class="me-2 red-c"></div>
-                        Не проверена
-                    </span>
-                </div>
-            @{{/if}}
-        </td>
-    <td>
-        <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p dropdown-toggle menu"
-             type="button" onclick="openInfoBox(this,${id})" aria-expanded="false">
-
-       <div id="info_box_${id}"></div>
-    </td>
-</tr>
+                       <div id="info_box_${id}"></div>
+                </td>
+            </tr>
             </script>
 
     <script id="info_box_tmpl" type="text/x-jquery-tmpl">
@@ -627,61 +598,5 @@
 </div>
 </script>
 
-
-<script id="report_tmpl" type="text/x-jquery-tmpl">
- <div id="report_modal" class="modal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" onclick="closeTmplModal('add_achievement_modal')">×</span></button>
-                <h3>Полный отчет по работе</h3>
-
-            </div>
-            <div class="modal-body">
-                <div id="report_modal">
-                    <span> Полный отчет по работе </span>
-                    <div class="col-sm-8">
-                        <ol style="padding-left:15px;">
-                            <li>Результаты проверки по базам данных ВКР-СМАРТ:
-                                <ul>
-                                    <li>Оригинальность текста документа: <strong id="borrowings_percent" class="ng-binding">${unique_percent}%</strong></li>
-
-                                </ul>
-                            </li>
-                        </ol>
-                    </div>
-                    <table class="table table-mini table-bordered table-condensed ng-scope">
-                        <thead>
-                        <tr>
-                            <th>Источник</th>
-                            <th>Ссылка на источник</th>
-                            <th>Коллекция/модуль поиска</th>
-                            <th>Доля в отчете</th>
-                        </tr>
-                        </thead>
-                        <table>
-                            <tbody id="report_assets_list">
-                            @{{each reportAssets}}
-                            <tr>
-                                <td><a  class="ng-binding">${value.name}</a></td>
-                                <td><a target="_blank" href="${value.link}" class="ng-binding"></a></td>
-                                <td>Интернет</td>
-                                <td class="ng-binding">${value.borrowings_percent}%</td>
-                            </tr>
-                            @{{/each}}
-                            </tbody>
-                        </table>
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" onclick="closeTmplModal('add_achievement_modal')">Закрыть окно</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-            </script>
 
 @endsection

@@ -598,6 +598,7 @@ function accessSpecialties(yearId) {
                 const specialtiesList = $("#specialties_list");
                 specialtiesList.empty();
                 specialtiesList.selectpicker('destroy');
+                let flag = false;
                 faculties.forEach(faculty => {
                     const departments = faculty.departments;
                     departments.forEach(department => {
@@ -605,6 +606,10 @@ function accessSpecialties(yearId) {
                         programs.forEach(program => {
                             const programSpecialties = program.program_specialties;
                             programSpecialties.forEach(specialty => {
+                                if(!flag)
+                                {
+                                    flag = true;
+                                }
                                 specialtiesList.append(`<div className="list-group-item">
                                   <label className="text-success">
                                       <input type="checkbox" class="specialty_checkbox" value="${specialty.id}"> ${faculty.name} / ${department.name} / ${program.name} /${specialty.code} | ${specialty.name}
@@ -614,6 +619,10 @@ function accessSpecialties(yearId) {
                         });
                     });
                 });
+                if (!flag)
+                {
+                    specialtiesList.html("<div> У этого года не были найдены специальности </div>")
+                }
 
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
