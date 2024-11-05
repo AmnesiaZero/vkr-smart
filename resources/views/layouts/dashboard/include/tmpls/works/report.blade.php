@@ -1,5 +1,5 @@
 <script id="report_tmpl" type="text/x-jquery-tmpl">
-    <div class="modal fade"  id="report_modal">
+    <div class="modal fade" id="report_modal">
        <div class="modal-dialog modal-lg modal-dialog-centered">
            <div class="modal-content">
                <div class="modal-header">
@@ -9,12 +9,11 @@
                    <div id="report_modal">
                        <p> Полный отчет по работе </p>
 
-                       <div class="d-flex gap-3">
-                           <a ng-if="report.status_report !== '1'"  class="btn btn-primary">
+                       <div class="d-flex gap-3 my-4">
+                           <a class="btn btn-primary print-btn" onclick="window.print(); return false;">
                                Распечатать отчет
                            </a>
-                           <a ng-if="report.status_report !== '1'" onclick="openCheck()"
-                                class="btn btn-grey">
+                           <a onclick="openCheck()" class="btn btn-grey">
                                Справка ВКР
                            </a>
                        </div>
@@ -23,7 +22,9 @@
                            <ol style="padding-left:15px;">
                                <li>Результаты проверки по базам данных ВКР-СМАРТ:
                                    <ul>
-                                       <li>Оригинальность текста документа: <strong id="borrowings_percent" class="ng-binding">${unique_percent}%</strong></li>
+                                       <li>Оригинальность текста документа:
+                                           <strong id="borrowings_percent" class="ng-binding">${unique_percent}%</strong>
+                                       </li>
                                    </ul>
                                    <ul>
                                        <li>Код справки: <strong id="check_code" class="ng-binding">${id}-${check_code}</strong></li>
