@@ -48,6 +48,9 @@ class EloquentWorkRepository implements WorkRepositoryInterface
     public function search(array $data): LengthAwarePaginator|Collection
     {
         $query = Work::query();
+
+        $query = $query->where('organization_id','=',$data['organization_id']);
+
         if (isset($data['delete_type'])) {
             $deleteType = $data['delete_type'];
             if ($deleteType == 1) {

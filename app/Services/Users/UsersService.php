@@ -722,6 +722,15 @@ class UsersService extends Services
             }
         }
         $result = $this->_repository->update($id,$data);
+        if(isset($data['role']))
+        {
+            $user = $this->_repository->find($id);
+            if($user and $user->id)
+            {
+                $role = $this->roleRepository->find($data['role']);
+                $user->roles()->sync($role);
+            }
+        }
         if($result)
         {
 //            $user = $this->_repository->find($id);

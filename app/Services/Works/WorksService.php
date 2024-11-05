@@ -152,6 +152,8 @@ class WorksService extends Services
             $data['start_date'] = $formattedStartDate;
             $data['end_date'] = $formattedEndDate;
         }
+        $you = Auth::user();
+        $data['organization_id'] = $you;
         $works = $this->workRepository->search($data);
         if ($works) {
             return self::sendJsonResponse(true, [

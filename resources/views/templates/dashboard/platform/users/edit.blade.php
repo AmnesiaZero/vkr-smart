@@ -53,7 +53,7 @@
                                 @isset($roles)
                                     @foreach($roles as $role)
                                         <option value="{{ $role->slug }}"
-                                                @if($user->roles[0]->slug == $role->slug) selected @endif>{{ $role->name }}</option>
+                                                @if(isset($user->roles[0]) and $user->roles[0]->slug == $role->slug) selected @endif>{{ $role->name }}</option>
                                     @endforeach
                                 @endisset
                             </select>
