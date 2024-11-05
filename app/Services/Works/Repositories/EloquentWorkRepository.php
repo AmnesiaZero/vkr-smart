@@ -63,6 +63,18 @@ class EloquentWorkRepository implements WorkRepositoryInterface
             $query = $query->where('visibility','=',$data['visibility']);
         }
 
+        if(isset($data['file_uploaded']))
+        {
+            if($data['file_uploaded'])
+            {
+                 $query = $query->where('path','!=',null);
+            }
+            else
+            {
+                $query = $query->where('path','=',null);
+            }
+        }
+
         if (isset($data['user_id'])) {
             $query = $query->where('user_id', '=', $data['user_id']);
         }

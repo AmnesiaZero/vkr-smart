@@ -628,9 +628,10 @@ function resetSearch() {
     $('input[name="daterange"]').val('');
     $('input[name="daterange"]').data('daterangepicker').setStartDate(moment());
     $('input[name="daterange"]').data('daterangepicker').setEndDate(moment());
-
-
+    $("#scientific_supervisors_list").val('').change();
     works();
+
+
 }
 
 function openInfoBox(element, id) {

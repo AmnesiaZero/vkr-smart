@@ -28,6 +28,16 @@
                             </div>
                         </div>
                         <div class="col-xl-6">
+                            <p class="fs-14 mb-2 text-grey">Наличие файла</p>
+                            <div id="bg-white" class="bg-white">
+                                <select class="js-example-basic-single w-100" name="file_uploaded" id="file_uploaded_field">
+                                     <option selected>Все работы</option>
+                                    <option value="0">Файл работы отсутствует</option>
+                                    <option value="1">Файл работы загружен</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
                             <p class="text-grey mb-2 fs-14">Название работы</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form">
                                 <input type="text" name="name" value=""
