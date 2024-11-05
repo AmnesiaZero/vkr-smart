@@ -217,68 +217,75 @@
             </script>
 
             <script id="info_box_tmpl" type="text/x-jquery-tmpl">
-                <div class="info-box dropdown-menu" id="work_menu" data-popper-placement="bottom-start">
-                    @role('admin|employee')
-                        <p class="fs-14 lh-17 mb-3">Направление подготовки обучающегося</p>
+               <div class="info-box dropdown-menu" id="student_info_box">
+    @role('user|admin')
+    <p class="fs-14 lh-17">Операции над работой</p>
+    <div class="d-flex cursor-p mb-2">
+        <img src="/images/info.svg" alt="" class="pe-2">
+        <p class="fs-14 lh-17 text-grey m-0" onclick="workInfoStudent('main-information')"
+           data-bs-target="work_info_student" data-bs-toggle="modal">
+            Просмотр информации о работе
+        </p>
+    </div>
+    <div class="d-flex cursor-p mb-2">
+        <img src="/images/Chat.svg" alt="" class="pe-2">
+        <p class="fs-14 lh-17 text-grey m-0" onclick="workInfoStudent('comments')">Оставить комментарий</p>
+    </div>
+    @endrole
 
-                        <div class="d-flex align-items-center cursor-p mb-2">
+    @role('admin')
+    <div class="d-flex cursor-p mb-2">
+        <img src="/images/Edit_Pencil.svg" alt="" class="pe-2">
+        <p class="fs-14 lh-17 text-grey m-0" onclick="openModal('update_work_modal')">Изменить информацию о работе</p>
+    </div>
+    <div id="added_menu">
 
-                        <img src="/images/Edit_Pencil.svg" alt="" class="pe-3">
+    </div>
+    <div class="d-flex cursor-p mb-2">
+        <img src="/images/down-arr.svg" alt="" class="pe-2">
+        <p class="fs-14 lh-17 text-grey m-0" onclick="downloadWork()">Скачать файл работы</p>
+    </div>
+    <div class="d-flex cursor-p mb-2 pt-2 brt-black-grey">
+        <img src="/images/download.svg" alt="" class="pe-2">
+        <p class="fs-14 lh-17 text-grey m-0" id="upload_button">Заменить файл работы</p>
+    </div>
+    <div class="d-flex cursor-p mb-2">
+        <img src="/images/File_Remove.svg" alt="" class="pe-2">
+        <p class="fs-14 lh-17 text-grey m-0" onclick="acceptWork();return false">Принять работу</p>
+    </div>
+    <div class="d-flex cursor-p mb-2">
+        <img src="/images/File_Remove.svg" alt="" class="pe-2">
+        <p class="fs-14 lh-17 text-grey m-0" onclick="declineWork();return false">Отклонить работу (отправить на
+            доработку)</p>
+    </div>
+    <div class="d-flex cursor-p mb-2">
+        <img src="/images/clock_grey.svg" alt="" class="pe-2">
+        <p class="fs-14 lh-17 text-grey m-0" onclick="putWorkOnWait();return false">Перевести статус работы в режим
+            ожидания</p>
+    </div>
+    <p class="fs-14 lh-17">Самопроверка</p>
+    <div class="d-flex cursor-p mb-2">
+        <img src="/images/close_grey.svg" alt="" class="pe-2">
+        <p class="fs-14 lh-17 text-grey m-0" onclick="updateSelfCheckStatus()">Изменить статус самопроверки</p>
+    </div>
+    <p class="fs-14 lh-17">Согласие на размещение</p>
+    <div class="d-flex cursor-p mb-2">
+        <img src="/images/close_grey.svg" alt="" class="pe-2">
+        <p class="fs-14 lh-17 text-grey m-0">Файл согласия не загружен</p>
+    </div>
+    @endrole
 
-                        <p class="fs-14 lh-17 text-grey m-0"
-                            data-bs-target="#update_work_specialty_modal" data-bs-toggle="modal">
-                                Изменить направление подготовки
-                            </p>
-                    </div>
-                    <p class="fs-14 lh-17 mt-4 mb-3">Операции над работой</p>
+    @role('admin|inspector')
+    <p class="fs-14 lh-17">Дополнительные файлы</p>
+    <div class="d-flex cursor-p mb-2">
+        <img src="/images/href_light.svg" alt="" class="pe-2">
+        <p class="fs-14 lh-17 text-grey m-0"
+           onclick="openModal('additional_files_modal');additionalFiles();return false">Открыть окно управления<br>
+            дополнительными файлами</p>
+    </div>
+    @endrole
+</div>
 
-                    <div class="d-flex align-items-center cursor-p mb-2">
-                        <img src="/images/info.svg" alt="" class="pe-3">
-                        <p class="fs-14 lh-17 text-grey m-0"
-                           onclick="workInfo()">Просмотр информации о работе</p>
-                    </div>
-                    <div class="d-flex align-items-center cursor-p mb-2">
-                        <img src="/images/down-arr.svg" alt="" class="pe-3">
-                        <p class="fs-14 lh-17 text-grey m-0" onclick="downloadWork()">Скачать файл работы</p>
-                    </div>
-                    <div class="d-flex align-items-center cursor-p mb-2">
-                        <img src="/images/download.svg" alt="" class="pe-3">
-                        <input type="file" id="file_input" style="display: none">
-                        <p class="fs-14 lh-17 text-grey m-0" id="upload_button">Загрузить или заменить файл работы</p>
-                    </div>
-                    <div class="d-flex align-items-center cursor-p mb-2">
-                        <img src="/images/Edit_Pencil.svg" alt="" class="pe-3">
-                        <p class="fs-14 lh-17 text-grey m-0"
-                           onclick="openUpdateWorkModal()">
-                            Изменить информацию о работе
-                        </p>
-                    </div>
-                    <p class="fs-14 lh-17 mt-4 mb-3">Самопроверка</p>
-                    <div class="d-flex align-items-center cursor-p mb-2">
-                        <img src="/images/Edit_Pencil.svg" alt="" class="pe-3">
-                        <p class="fs-14 lh-17 text-grey m-0" onclick="updateSelfCheckStatus()">Изменить статус самопроверки</p>
-                    </div>
-                    <div id="added_menu">
-
-                    </div>
-                    <div class="d-flex align-items-center cursor-p mb-2">
-                        <img src="/images/download.svg" alt="" class="pe-3">
-                        <input type="file" id="certificate_input" style="display: none">
-                        <p id="upload_certificate_button" class="fs-14 lh-17 text-grey m-0" >Загрузить или заменить справку<br> о
-                            самопроверке по другим
-                            системам</p>
-                    </div>
-                    @endrole
-                    <p class="fs-14 lh-17 mt-2 mt-4 mb-3">Дополнительные файлы</p>
-                    <div class="d-flex align-items-center cursor-p mb-2">
-                        <img src="/images/href_light.svg" alt="" class="pe-3">
-                        <p class="fs-14 lh-17 text-grey m-0"
-                           onclick="openModal('additional_files_modal');additionalFiles();return false"
-                           data-bs-target="#additional_files_modal" data-bs-toggle="modal">
-                            Открыть окно управления<br> дополнительными файлами
-                        </p>
-                    </div>
-                </div>
             </script>
 
 
