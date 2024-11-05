@@ -103,4 +103,16 @@ class OrganizationsYearsController extends Controller
         return $this->organizationYearsService->find($yearId);
     }
 
+    public function specialties(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required', 'integer', Rule::exists('organizations_years', 'id')]
+        ]);
+        if ($validator->fails()) {
+            return ValidatorHelper::error($validator);
+        }
+        $id = $request->id;
+        return $this->organizationYearsService->specialties($id);
+    }
+
 }

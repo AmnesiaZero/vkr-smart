@@ -354,6 +354,7 @@ Route::group([
             Route::post('delete', [OrganizationsYearsController::class, 'delete']);
             Route::post('copy', [OrganizationsYearsController::class, 'copy']);
             Route::get('find', [OrganizationsYearsController::class, 'find']);
+            Route::get('specialties',[OrganizationsYearsController::class,'specialties']);
         });
         Route::group([
             'prefix' => 'faculties'

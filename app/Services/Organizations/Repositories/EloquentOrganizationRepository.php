@@ -17,7 +17,7 @@ class EloquentOrganizationRepository implements OrganizationRepositoryInterface
 
     public function find(int $id): Model
     {
-        return Organization::query()->find($id);
+        return Organization::with('inspectors_specialties')->find($id);
     }
 
     public function update(int $id, array $data)

@@ -31,11 +31,9 @@ class YearsService extends Services
 
     public function get(array $data): JsonResponse
     {
-        if (isset($data['organization_id']))
-        {
+        if (isset($data['organization_id'])) {
             $organizationId = $data['organization_id'];
-        }
-        else {
+        } else {
             $user = Auth::user();
             $organizationId = $user->organization_id;
         }
@@ -143,4 +141,14 @@ class YearsService extends Services
             ]);
         }
     }
+
+    public function specialties(int $id)
+    {
+        $specialties = $this->_repository->specialties($id);
+        if ($specialties and is_iterable($specialties))
+        {
+
+        }
+    }
+
 }
