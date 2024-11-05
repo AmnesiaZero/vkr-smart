@@ -13,7 +13,7 @@
                     <div class="post">
                         <div class="form-group">
                             <label for="title">Название организации</label>
-                            <input id="title" type="text" name="name" class="form-control">
+                            <input id="title" type="text" name="name" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="logo">Логотип</label>
@@ -45,7 +45,7 @@
                         </div>
                         <div class="form-group">
                             <label for="email">E-mail</label>
-                            <input id="email" type="text" name="email" class="form-control">
+                            <input id="email" type="text" name="email" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="info">Дополнительная информация</label>
@@ -59,7 +59,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label for="is_blocked">Организация заблокирована</label>
-                        <select id="is_blocked" name="is_blocked" class="form-control">
+                        <select id="is_blocked" name="is_blocked" class="form-control" required>
                             <option value="0">Нет</option>
                             <option value="1">Да</option>
                         </select>

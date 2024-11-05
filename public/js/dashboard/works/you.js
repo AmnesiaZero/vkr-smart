@@ -292,9 +292,10 @@ $(document).ready(function () {
     });
 
     $("#upload_additional_file_form").on('submit', function (e) {
+        console.log('Зашел');
         e.preventDefault(); // Предотвращаем стандартное поведение формы
 
-        // Создаем объект FormData и добавляем в него данные формы
+        // // Создаем объект FormData и добавляем в него данные формы
         const formData = new FormData(this);
         const workId = localStorage.getItem('work_id');
         formData.append('work_id', workId);
@@ -565,28 +566,6 @@ function reloadWork(workId) {
     });
 }
 
-function openReport(workId) {
-    const data = {
-        id: workId
-    };
-    $.ajax({
-        url: "/dashboard/works/find",
-        type: 'GET',
-        data: data,
-        dataType: "json",
-        success: function (response) {
-            if (response.success) {
-                const work = response.data.work;
-                $("#report_container").html($("#record_tmpl").tmpl(work));
-            } else {
-                $.notify(response.data.title + ":" + response.data.message, "error");
-            }
-        },
-        error: function () {
-            $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
-        }
-    });
-}
 
 function searchWorks(page = 1) {
     let data = $("#search_form").serialize();
@@ -649,9 +628,10 @@ function resetSearch() {
     $('input[name="daterange"]').val('');
     $('input[name="daterange"]').data('daterangepicker').setStartDate(moment());
     $('input[name="daterange"]').data('daterangepicker').setEndDate(moment());
-
-
+    $("#scientific_supervisors_list").val('').change();
     works();
+
+
 }
 
 function openInfoBox(element, id) {

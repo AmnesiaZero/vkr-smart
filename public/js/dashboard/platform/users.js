@@ -1,15 +1,25 @@
+var usersForm = $('#users_form');
+
 $(document).ready(function () {
 
     $('#save-close').on('click', function () {
-        // Здесь можно добавить логику для закрытия формы или перехода на другую страницу
         $('#redirect').prop('checked', true);
 
-        $('#users_form').submit(); // Сабмит формы
+        if (usersForm[0].checkValidity()) {
+            usersForm.submit();
+        }
+        else {
+            usersForm[0].reportValidity(); // Показать сообщение об ошибке
+        }
     });
 
     $('#save').on('click', function () {
-        // Здесь можно добавить логику для сохранения данных без закрытия
-        $('#users_form').submit(); // Сабмит формы
+        if (usersForm[0].checkValidity()) {
+            usersForm.submit();
+        }
+        else {
+            usersForm[0].reportValidity(); // Показать сообщение об ошибке
+        }
     });
 
     $('#close').on('click', function () {

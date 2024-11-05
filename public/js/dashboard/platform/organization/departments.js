@@ -1,19 +1,28 @@
 var mainPageUrl = '/dashboard/organizations/departments';
 
+var departmentsForm = $("#departments_form");
+
 $(document).ready(function () {
 
     $('#save-close').on('click', function () {
-        // Здесь можно добавить логику для закрытия формы или перехода на другую страницу
         $('#redirect').prop('checked', true);
 
-        $('#departments_form').submit(); // Сабмит формы
+        if (departmentsForm[0].checkValidity()) {
+            departmentsForm.submit();
+        }
+        else {
+            departmentsForm[0].reportValidity(); // Показать сообщение об ошибке
+        }
     });
 
     $('#save').on('click', function () {
-        // Здесь можно добавить логику для сохранения данных без закрытия
-        $('#departments_form').submit(); // Сабмит формы
+        if (departmentsForm[0].checkValidity()) {
+            departmentsForm.submit();
+        }
+        else {
+            departmentsForm[0].reportValidity(); // Показать сообщение об ошибке
+        }
     });
-
     $('#close').on('click', function () {
         // Здесь можно добавить логику для отмены, например, переход на другую страницу
         window.location.href = '/dashboard/platform/organizations/departments'; // Перенаправление на главную страницу

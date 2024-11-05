@@ -49,7 +49,8 @@ class WorksController extends Controller
         'borrowings_percent',
         'activity_id',
         'visibility',
-        'paginate'
+        'paginate',
+        'file_uploaded'
     ];
 
     protected WorksService $worksService;
@@ -171,12 +172,14 @@ class WorksController extends Controller
             'selected_specialties.*' => ['integer', Rule::exists('programs_specialties', 'id')],
             'user_id' => ['integer', Rule::exists('users', 'id')],
             'activity_id' => ['integer',Rule::exists('activities_types','id')],
-            'visibility' => 'integer|in:0,1'
+            'visibility' => 'integer|in:0,1',
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
-        $data = $request->only($this->fillable);
+        $data = array_filter($request->only($this->fillable), function ($value) {
+            return !is_null($value);
+        });
         return $this->worksService->search($data);
     }
 

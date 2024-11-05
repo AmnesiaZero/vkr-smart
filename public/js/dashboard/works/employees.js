@@ -369,39 +369,39 @@ $(document).on('change', '#certificate_input', function() {
     }
 });
 
-// $(document).on('submit', '#upload_additional_file_form', function(e) {
-//     e.preventDefault(); // Предотвращаем стандартное поведение формы
-//
-//     // Создаем объект FormData и добавляем в него данные формы
-//     const formData = new FormData(this);
-//     const workId = localStorage.getItem('work_id');
-//     formData.append('work_id',workId);
-//
-//     $.ajax({
-//         url: '/dashboard/works/additional-files/create',
-//         type: 'POST',
-//         data: formData,
-//         processData: false, // Не обрабатываем файлы (не превращаем в строку)
-//         contentType: false, // Не устанавливаем заголовок Content-Type
-//         headers: {
-//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//         },
-//         success: function(response) {
-//             if (response.success)
-//             {
-//                 const additionalFile = response.data.additional_file;
-//                 $("#additional_files").append($("#additional_file_tmpl").tmpl(additionalFile));
-//             }
-//             else
-//             {
-//                 $.notify(response.data.title + ":" + response.data.message, "error");
-//             }
-//         },
-//         error: function() {
-//             $.notify("Ошибка при добавлении работы. Обратитесь к системному администратору", "error");
-//         }
-//     });
-// });
+$(document).on('submit', '#upload_additional_file_form', function(e) {
+    e.preventDefault(); // Предотвращаем стандартное поведение формы
+
+    // Создаем объект FormData и добавляем в него данные формы
+    const formData = new FormData(this);
+    const workId = localStorage.getItem('work_id');
+    formData.append('work_id',workId);
+
+    $.ajax({
+        url: '/dashboard/works/additional-files/create',
+        type: 'POST',
+        data: formData,
+        processData: false, // Не обрабатываем файлы (не превращаем в строку)
+        contentType: false, // Не устанавливаем заголовок Content-Type
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            if (response.success)
+            {
+                const additionalFile = response.data.additional_file;
+                $("#additional_files").append($("#additional_file_tmpl").tmpl(additionalFile));
+            }
+            else
+            {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function() {
+            $.notify("Ошибка при добавлении работы. Обратитесь к системному администратору", "error");
+        }
+    });
+});
 
 // $('#work-menu-button').on('click', function(event) {
 //     event.stopPropagation(); // Останавливаем распространение события, чтобы не закрылось сразу
