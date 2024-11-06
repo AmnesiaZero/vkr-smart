@@ -43,7 +43,7 @@
                         <div class="col-xxl-6">
                             <p class="fs-14 m-0 text-grey">Статус</p>
                             <div class="form-check mt-2">
-                                <input class="form-check-input green" type="radio" name="is_active" id="status1"
+                                <input class="form-check-input green" type="radio" name="is_active" id="default_status"
                                        value="1"
                                        checked>
                                 <label class="form-check-label" for="status1">
@@ -62,7 +62,7 @@
                         <div class="col-xxl-6">
                             <p class="fs-14 m-0 text-grey">Тип пользователя</p>
                             <div class="form-check mt-2">
-                                <input class="form-check-input green" type="radio" name="role" id="user_type1"
+                                <input class="form-check-input green" type="radio" name="role" id="default_type"
                                        value="user"
                                        checked>
                                 <label class="form-check-label" for="user_type1">
@@ -79,21 +79,21 @@
                         </div>
                     </div>
                     <div class="input-group input-group-lg br-100 br-green-light-2 focus-form mt-3">
-                        <input type="text" name="name" class="form-control search br-none fs-14 form-small-p"
+                        <input type="text" name="name" id="name_input" class="form-control search br-none fs-14 form-small-p"
                                placeholder="Поиск по имени">
                         <button class="btn pe-3 py-0 d-flex align-items-center" type="submit" id="search">
                             <img src="/images/Search.svg" alt="search">
                         </button>
                     </div>
                     <div class="input-group input-group-lg br-100 br-green-light-2 focus-form mt-3">
-                        <input type="text" name="email" class="form-control search br-none fs-14 form-small-p"
+                        <input type="text" name="email" id="email_input" class="form-control search br-none fs-14 form-small-p"
                                placeholder="Поиск по email">
                         <button class="btn pe-3 py-0 d-flex align-items-center" type="submit" id="search">
                             <img src="/images/Search.svg" alt="search">
                         </button>
                     </div>
                     <div class="input-group input-group-lg br-100 br-green-light-2 focus-form mt-3">
-                        <input type="text" name="group" class="form-control search br-none fs-14 form-small-p"
+                        <input type="text" name="group" id="group_input" class="form-control search br-none fs-14 form-small-p"
                                placeholder="Группа">
                         <button class="btn pe-3 py-0 d-flex align-items-center" type="submit" id="search">
                             <img src="/images/Search.svg" alt="search">
@@ -102,6 +102,13 @@
                     <button type="submit" class="btn btn-secondary w-100 text-grey fs-14 br-100 br-none mt-4 mb-5">
                         Применить
                     </button>
+
+                    <button class="btn btn-secondary br-green-light-2 w-100 text-grey fs-14 br-100 br-none mt-4 mb-5" onclick="resetSearch()">
+                        Сбросить
+                    </button>
+{{--                    <button class="btn br-green-light-2 br-100 text-grey fs-14 py-1 me-3" onclick="resetEmployeeSearch();return false">--}}
+{{--                        Сбросить--}}
+{{--                    </button>--}}
                 </form>
                 <div class="out-kod"></div>
             </div>
@@ -236,7 +243,7 @@
             <div class="mb-3">
                 <label for="date_registration">Дата регистрации</label>
                 <input type="text" class="form-control bg-grey-form fs-16 text-grey" id="date_registration"
-                       value="06.11.2019" readonly>
+                       value="${created_at}" readonly>
             </div>
             <button type="submit" class="btn btn-secondary w-100 text-grey fs-14 br-100 br-none mt-4 mb-5">Применить</button>
             </form>

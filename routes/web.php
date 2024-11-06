@@ -42,7 +42,7 @@ Route::get('home', function () {
 });
 Route::get('/', function () {
     return view('templates.site.index');
-});
+})->name('home');;
 
 Route::group([
     'prefix' => 'about'
