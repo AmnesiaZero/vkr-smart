@@ -50,7 +50,8 @@ class WorksController extends Controller
         'activity_id',
         'visibility',
         'paginate',
-        'file_uploaded'
+        'file_uploaded',
+        'work_status'
     ];
 
     protected WorksService $worksService;
@@ -173,6 +174,7 @@ class WorksController extends Controller
             'user_id' => ['integer', Rule::exists('users', 'id')],
             'activity_id' => ['integer',Rule::exists('activities_types','id')],
             'visibility' => 'integer|in:0,1',
+
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);

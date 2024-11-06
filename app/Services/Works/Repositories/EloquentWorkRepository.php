@@ -82,6 +82,11 @@ class EloquentWorkRepository implements WorkRepositoryInterface
             }
         }
 
+        if (isset($data['work_status']) and $data['work_status']!=3)
+        {
+            $query = $query->where('work_status','=',$data['work_status']);
+        }
+
         if (isset($data['user_id'])) {
             $query = $query->where('user_id', '=', $data['user_id']);
         }

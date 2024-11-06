@@ -40,7 +40,8 @@
                         <div class="col-xl-6">
                             <p class="fs-14 mb-2 text-grey">Статус работы</p>
                             <div id="bg-white" class="bg-white">
-                                <select class="js-example-basic-single w-100" name="state">
+                                <select class="js-example-basic-single w-100" name="work_status">
+                                    <option value="3"> Все работы </option>
                                     <option value="0">Ожидает одобрения</option>
                                     <option value="1">Одобрена</option>
                                     <option value="2">Отклонена (отправлена на доработку)</option>
