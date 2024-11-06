@@ -154,6 +154,10 @@
         @include('layouts.dashboard.include.modal.add.import-work')
         @endsection
 
+        <div id="report_container">
+
+        </div>
+
         @section('scripts')
             <script src="/js/dashboard/works/employees.js"></script>
             <script src="/js/bootstrap.js"></script>
