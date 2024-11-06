@@ -39,8 +39,8 @@
         </div>
 
         <div class="row pt-4 px-0 px-sm-4 mx-sm-0 mx-4">
-            <div class="col-xl-6 col-lg-8 col-md-10 col-12" id="works_types_list">
-                <div class="br-green-light-2 br-15 p-3 mb-3">
+            <div class="col-xl-6 col-lg-8 col-md-10 col-12">
+                <div class="br-green-light-2 br-15 p-3 mb-3" id="works_types_list">
                     <div class="d-flex align-items-center gap-2 mb-3">
                         <img src="/images/Lock.svg" alt="">
                         <p class="m-0">Неизменяемые типы работ:</p>
@@ -57,9 +57,8 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-8 col-md-10 col-12"
-                 id="scientific_supervisors_list">
-                <div class="br-green-light-2 br-15 p-3 mb-3">
+            <div class="col-xl-6 col-lg-8 col-md-10 col-12">
+                <div class="br-green-light-2 br-15 p-3 mb-3" id="scientific_supervisors_list">
                     <div class="d-flex align-items-center gap-2 mb-3">
                         <img src="/images/Lock.svg" alt="">
                         <p class="m-0">Научные руководители:</p>
@@ -85,16 +84,17 @@
     </script>
 
     <script id="scientific_supervisor_tmpl" type="text/x-jquery-tmpl">
-       <div class="badge text-black-black bg-green-light br-100 fs-14 me-1 mb-1" onclick="deleteScientificSupervisor(${id})" id="scientific_supervisor_${id}">
+       <div class="badge text-black-black bg-green-light br-100 fs-14 me-1 mb-1" id="scientific_supervisor_${id}">
        ${name}
-         <i class="fa fa-times ms-2 cursor-p text-black fs-12" onclick="deleteWorkType(${id})"></i>
+         <i class="fa fa-times ms-2 cursor-p text-black fs-12" onclick="deleteScientificSupervisor(${id})"></i>
        </div>
     </script>
 
     <script id="works_type_tmpl" type="text/x-jquery-tmpl">
-       <div class="badge text-black-black bg-green-light br-100 fs-14 me-1 mb-1" onclick="deleteWorkType(${id})" id="work_type_${id}">
-       ${name}
+       <div class="badge text-black-black bg-green-light br-100 fs-14 me-1 mb-1"
+                                 id="work_type_${id}">
+                                ${name}
         <i class="fa fa-times ms-2 cursor-p text-black fs-12" onclick="deleteWorkType(${id})"></i>
-       </div>
+                            </div>
     </script>
 @endsection
