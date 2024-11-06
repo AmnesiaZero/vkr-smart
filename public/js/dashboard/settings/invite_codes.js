@@ -266,12 +266,14 @@ function downloadStudentsCodes()
 {
     window.location.href = '/dashboard/invite-codes/load?type=1';
     $("#students_codes_list").html($("#empty_tmpl").tmpl({id:'students_empty'}));
+    $("#students_codes_pagination").empty();
 }
 
 function downloadTeachersCodes()
 {
     window.location.href = '/dashboard/invite-codes/load?type=2';
     $("#teachers_codes_list").html($("#empty_tmpl").tmpl({id:'teachers_empty'}));
+    $("#teachers_codes_pagination").empty();
 }
 
 

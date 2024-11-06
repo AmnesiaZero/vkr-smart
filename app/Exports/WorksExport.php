@@ -6,6 +6,7 @@ use App\Models\Work;
 use App\Services\Works\Repositories\WorkRepositoryInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromQuery;
@@ -21,6 +22,8 @@ class WorksExport implements FromView
 
     public function __construct(array $data)
     {
+        $you = Auth::user();
+        $data['organization_id'] = $you;
         $this->data = $data;
         $this->workRepository = app(WorkRepositoryInterface::class);
     }
