@@ -276,13 +276,15 @@
     @endrole
 
     @role('admin|inspector')
-    <p class="fs-14 lh-17">Дополнительные файлы</p>
-    <div class="d-flex cursor-p mb-2">
-        <img src="/images/href_light.svg" alt="" class="pe-2">
-        <p class="fs-14 lh-17 text-grey m-0"
-           onclick="openModal('additional_files_modal');additionalFiles();return false">Открыть окно управления<br>
-            дополнительными файлами</p>
-    </div>
+   <p class="fs-14 lh-17 mt-2 mt-4 mb-3">Дополнительные файлы</p>
+        <div class="d-flex align-items-center cursor-p mb-2">
+            <img src="/images/href_light.svg" alt="" class="pe-3">
+            <p class="fs-14 lh-17 text-grey m-0"
+               onclick="openModal('additional_files_modal');additionalFiles();return false"
+               data-bs-target="#additional_files_modal" data-bs-toggle="modal">
+                Открыть окно управления<br> дополнительными файлами
+            </p>
+        </div>
     @endrole
 </div>
 

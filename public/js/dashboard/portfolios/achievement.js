@@ -25,6 +25,7 @@ $(document).ready(function () {
                 if (response.success) {
                     const achievementRecord = response.data.achievement_record;
                     printAchievementRecord(achievementRecord);
+                    $('#add_file_form').modal('hide'); // Закрываем модальное окно
                 }
                 else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
@@ -55,6 +56,8 @@ $(document).ready(function () {
                 if (response.success) {
                     const achievementRecord = response.data.achievement_record;
                     printAchievementRecord(achievementRecord);
+                    $('#add_work_form').modal('hide'); // Закрываем модальное окно
+
                 }
                 else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
@@ -295,7 +298,8 @@ function deleteAchievement()
 
 function addRecord(recordTypeId)
 {
-    let formId = '';
+    let form = '';
+    let modal = '';
     const additionalData = {
         achievement_id:achievementId,
         user_id:userId,
@@ -304,13 +308,15 @@ function addRecord(recordTypeId)
     switch (recordTypeId)
     {
         case 2:
-            formId = $("#add_link_form");
+            form = $("#add_link_form");
+            modal = $("#add_link_modal");
             break;
         case 3:
-            formId = $("#add_text_form");
+            form = $("#add_text_form");
+            modal = $("#add_text_modal");
             break;
     }
-    let data = formId.serialize();
+    let data = form.serialize();
     data += '&' + $.param(additionalData);
     $.ajax({
         url: "/dashboard/portfolios/achievements/records/create",
@@ -324,6 +330,7 @@ function addRecord(recordTypeId)
             if (response.success) {
                 const achievementRecord = response.data.achievement_record;
                 printAchievementRecord(achievementRecord);
+                modal.modal('hide'); // Закрываем модальное окно
             }
             else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
