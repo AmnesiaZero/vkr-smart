@@ -222,8 +222,8 @@
             </script>
 
             <script id="info_box_tmpl" type="text/x-jquery-tmpl">
-               <div class="info-box dropdown-menu" id="student_info_box">
-    @role('user|admin')
+               <div class="info-box dropdown-menu" id="work_menu">
+    @role('user|admin|teacher')
     <p class="fs-14 lh-17">Операции над работой</p>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/info.svg" alt="" class="pe-2">
@@ -268,17 +268,18 @@
         <p class="fs-14 lh-17 text-grey m-0" onclick="putWorkOnWait();return false">Перевести статус работы в режим
             ожидания</p>
     </div>
-    <p class="fs-14 lh-17">Самопроверка</p>
-    <div class="d-flex cursor-p mb-2">
-        <img src="/images/close_grey.svg" alt="" class="pe-2">
-        <p class="fs-14 lh-17 text-grey m-0" onclick="updateSelfCheckStatus()">Изменить статус самопроверки</p>
-    </div>
     <p class="fs-14 lh-17">Согласие на размещение</p>
     <div class="d-flex cursor-p mb-2">
         <img src="/images/close_grey.svg" alt="" class="pe-2">
         <p class="fs-14 lh-17 text-grey m-0">Файл согласия не загружен</p>
     </div>
     @endrole
+
+     <p class="fs-14 lh-17">Самопроверка</p>
+    <div class="d-flex cursor-p mb-2">
+        <img src="/images/close_grey.svg" alt="" class="pe-2">
+        <p class="fs-14 lh-17 text-grey m-0" onclick="updateSelfCheckStatus()">Изменить статус самопроверки</p>
+    </div>
 
     @role('admin|inspector')
    <p class="fs-14 lh-17 mt-2 mt-4 mb-3">Дополнительные файлы</p>
