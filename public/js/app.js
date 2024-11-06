@@ -353,7 +353,7 @@ function updateWorksPagination(pagination) {
 
     const totalItems = pagination.total; // Общее количество элементов
     const itemsPerPage = pagination.per_page; // Элементов на странице
-    const displayedPages = pagination.links.length - 2; // Без Previous и Next
+    const displayedPages = pagination.last_page; // Без Previous и Next
     $("#works_count").text(totalItems);
 
     // Проверяем, если только одна страница
