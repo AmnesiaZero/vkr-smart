@@ -68,6 +68,7 @@ class WorksService extends Services
         $organizationId = $you->organization_id;
         $data['organization_id'] = $organizationId;
         $works = $this->workRepository->getPaginate($data);
+
         if ($works and is_iterable($works)) {
             return self::sendJsonResponse(true, [
                 'title' => 'Успешно',
@@ -153,7 +154,8 @@ class WorksService extends Services
             $data['end_date'] = $formattedEndDate;
         }
         $you = Auth::user();
-        $data['organization_id'] = $you;
+        $data['organization_id'] = $you->organization_id;
+        Log::debug('data = '.print_r($data,true));
         $works = $this->workRepository->search($data);
         if ($works) {
             return self::sendJsonResponse(true, [

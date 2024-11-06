@@ -20,6 +20,9 @@ class EloquentWorkRepository implements WorkRepositoryInterface
     public function getPaginate(array $data): LengthAwarePaginator
     {
         $query = Work::withTrashed()->with(['faculty', 'specialty']);
+
+        $query = $query->where('organization_id','=',$data['organization_id']);
+
         if (isset($data['user_id'])) {
             $query = $query->where('user_id', '=', $data['user_id']);
         } else {
@@ -49,8 +52,6 @@ class EloquentWorkRepository implements WorkRepositoryInterface
     {
         $query = Work::query();
 
-        $query = $query->where('organization_id','=',$data['organization_id']);
-
         if (isset($data['delete_type'])) {
             $deleteType = $data['delete_type'];
             if ($deleteType == 1) {
@@ -59,7 +60,10 @@ class EloquentWorkRepository implements WorkRepositoryInterface
                 $query = Work::withTrashed();
             }
         }
-        $query->with(['specialty', 'faculty', 'department']);
+
+        $query = $query->where('organization_id','=',$data['organization_id']);
+
+        $query =  $query->with(['specialty', 'faculty', 'department']);
 
         if (isset($data['visibility']))
         {
