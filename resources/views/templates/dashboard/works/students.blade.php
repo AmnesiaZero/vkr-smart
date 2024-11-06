@@ -188,13 +188,12 @@
                         </div>
                         @{{/if}}
                         @{{if report_status==1}}
-                        <div onclick="openReport(${id})">
-                        <span class="bg-active p-2 d-flex align-items-center gap-2">
-                        <div class="me-2 green-c">
-                        </div>
-                          Отчет
-                        </span>
-                        </div>
+                         <div onclick="openReport(${id})">
+                           <span class="bg-active p-2 d-flex align-items-center cursor-p">
+                               <div class="me-2 green-c"></div>
+                               Отчет
+                           </span>
+                       </div>
                         @{{/if}}
                         @{{if report_status==2}}
                         <div>
@@ -524,6 +523,8 @@
         </div>
     </script>
     @include('layouts.dashboard.include.tmpls.works.works_page')
+    @include('layouts.dashboard.include.tmpls.works.report')
+
 @endsection
 
 
