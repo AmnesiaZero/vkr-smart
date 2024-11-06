@@ -65,8 +65,7 @@
                                 <select class="js-example-basic-single w-100" name="specialty_id">
                                     @if(isset($specialties) and is_iterable($specialties))
                                         @foreach($specialties as $specialty)
-                                            <option value="{{$specialty->id}}">{{$specialty->code}}
-                                                | {{$specialty->name}}</option>
+                                            <option value="{{$specialty->id}}">{{$specialty->name}}</option>
                                         @endforeach
                                     @endif
                                 </select>

@@ -53,14 +53,6 @@ class WorksService extends Services
 
     }
 
-    public function studentsWorksView()
-    {
-        $you = Auth::user();
-        $organizationId = $you->organization_id;
-        $years = $this->yearRepository->get($organizationId);
-        $programSpecialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
-        return view('templates.dashboard.works.students', ['years' => $years, 'program_specialties' => $programSpecialties]);
-    }
 
     public function get(array $data): JsonResponse
     {
@@ -114,6 +106,15 @@ class WorksService extends Services
             'works_types' => $worksTypes
         ]);
 
+    }
+
+    public function studentsWorksView()
+    {
+        $you = Auth::user();
+        $organizationId = $you->organization_id;
+        $years = $this->yearRepository->get($organizationId);
+        $specialties = $this->programSpecialtyRepository->getByOrganization($organizationId);
+        return view('templates.dashboard.works.students', ['years' => $years, 'specialties' => $specialties]);
     }
 
     public function getUserWorks(int $userId, int $pageNumber)
