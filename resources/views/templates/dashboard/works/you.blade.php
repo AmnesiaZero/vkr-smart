@@ -120,7 +120,6 @@
                         <th scope="col" class="align-middle">Группа</th>
                         <th scope="col" class="align-middle">Дата защиты</th>
                         <th scope="col" class="align-middle">Наименование<br> работы - тип работы</th>
-                        <th scope="col" class="align-middle">Описание</th>
                         <th scope="col" class="align-middle">Оценка</th>
                         <th scope="col" class="align-middle">Самопроверка по другим системам</th>
                         <th scope="col" class="align-middle">Проверка<br> ВКР-СМАРТка</th>
@@ -186,18 +185,16 @@
 
             <script id="work_tmpl" type="text/x-jquery-tmpl">
                 <tr id="work_${id}" @{{if deleted_at}} class="deleted" @{{/if}}>
-               <th scope="row">@{{if specialty}}
-                                           ${specialty.name}
+               <th scope="row">@{{if group}}
+                                           ${group}
                                            @{{else}}
-                                           Не указан
+                                           Не указана
                                            @{{/if}}
                                            </th>
-               <td>${student}</td>
-               <td>${group}</td>
                <td>${protect_date}</td>
                <td>${name} - ${work_type}</td>
                <td> @{{if assessment}} ${getAssessmentDescription(assessment)} @{{/if}}</td>
-               <td>@{{if self_check}} ${getSelfCheckDescription(self_check)} @{{/if}}</td>
+               <td> ${getSelfCheckDescription(self_check)}</td>
                    <td>
                        @{{if report_status==0}}
                        <div>

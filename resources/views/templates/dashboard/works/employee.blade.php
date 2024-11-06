@@ -245,7 +245,7 @@
                <td>${protect_date}</td>
                <td>${name} - ${work_type}</td>
                <td> @{{if assessment}} ${getAssessmentDescription(assessment)} @{{/if}}</td>
-               <td>@{{if self_check}} ${getSelfCheckDescription(self_check)} @{{/if}}</td>
+               <td> ${getSelfCheckDescription(self_check)}</td>
                    <td>
                        @{{if report_status==0}}
                        <div>
