@@ -40,8 +40,6 @@ app021_dev_vkr_smart_ru:
     - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan cache:clear"
     - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan route:clear"
     - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan config:cache"
-    - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan db:seed --class='InspectorRole'"
-
   only:
     refs:
       - dev
