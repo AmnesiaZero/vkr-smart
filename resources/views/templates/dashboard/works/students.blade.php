@@ -431,9 +431,11 @@
                                             </div>
                                             <div class="row">
                                                 <label class="col-sm-4 fs-16 fw-bold">Отчет о заимствованиях по базам ВКР-СМАРТ</label>
-                                                @{{if borrowings_percent}}
-                                                <div class="col-sm-8" id="value_percent_person">Фактических некорректных заимствований: ${borrowings_percent}</div>
-                                                @{{/if}}
+                                                 @{{if unique_percent}}
+                                    <div class="col-sm-8" id="value_percent_person">Оригинальность работы: ${unique_percent}%</div>
+                                    @{{else}}
+                                         <div class="col-sm-8" id="value_percent_person">Работа не прошла проверку по базам ВКР-СМАРТ</div>
+                                    @{{/if}}
                                             </div>
                                         </div>
 
