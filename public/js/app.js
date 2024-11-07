@@ -250,12 +250,17 @@ function openReport(workId)
         success: function(response) {
             if (response.success)
             {
+                if ($('.modal-backdrop').length) {
+                    $('.modal-backdrop').remove();
+                }
+
                 const work = response.data.work;
                 $("#report_container").html($("#report_tmpl").tmpl(work));
 
                 const modalElement = new bootstrap.Modal(document.getElementById('report_modal'));
 
-                $('.modal').modal('hide');
+                $('#report_modal').modal('hide');
+
                 modalElement.show();
             }
             else
