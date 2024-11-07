@@ -12,10 +12,6 @@
     z-index: 1000; /* Чтобы индикатор был над другими элементами */
 }
 
-.modal-backdrop {
-    z-index: 1000 !important;
-}
-
 .spinner {
     border: 8px solid #f3f3f3; /* Цвет фона */
     border-top: 8px solid #3498db; /* Цвет спиннера */

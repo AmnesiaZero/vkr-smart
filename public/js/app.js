@@ -254,12 +254,9 @@ function openReport(workId)
                 $("#report_container").html($("#report_tmpl").tmpl(work));
 
                 const modalElement = new bootstrap.Modal(document.getElementById('report_modal'));
-                const modalEl = $('#report_modal');
 
-                if (!modalEl.hasClass('show')) {
-                    modalElement.show();
-                    console.log(123)
-                }
+                $('.modal').modal('hide');
+                modalElement.show();
             }
             else
             {
@@ -299,11 +296,6 @@ function openCheck()
         }
     });
 
-}
-
-
-function closeTestE() {
-    $('#report_modal').modal('hide');
 }
 
 
