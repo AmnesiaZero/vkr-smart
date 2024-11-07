@@ -466,19 +466,10 @@ function updateUserPagination(pagination) {
     }
 }
 function printModalContent() {
-    // Получаем элементы модального окна и основной страницы
-    var modal = document.getElementById("report_modal");
-    var bodyContent = document.body.innerHTML;
+    let modalContent = $('#report_modal').html();
+    let win = window.open('', 'print');
 
-    // Заменяем содержимое body только модальным окном
-    document.innerHTML = modal.innerHTML;
-
-    // Печать страницы
-    window.print();
-
-    // Восстанавливаем оригинальное содержимое body
-    document.body.innerHTML = bodyContent;
-
-    // Восстанавливаем события и другие элементы страницы
-    location.reload(); // перезагружаем страницу, чтобы вернуть события и состояния
+    win.document.write('<html><head><title>Print</title></head><body>' + content + '</body></html>')
+    win.document.close();
+    win.print();
 }
