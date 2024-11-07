@@ -250,9 +250,7 @@ function openReport(workId)
         success: function(response) {
             if (response.success)
             {
-                if ($('.modal-backdrop').length) {
-                    $('.modal-backdrop').remove();
-                }
+                $('.modal').modal('hide');
 
                 const work = response.data.work;
                 $("#report_container").html($("#report_tmpl").tmpl(work));
