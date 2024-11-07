@@ -236,10 +236,6 @@ const addBadge = function (clickedElement) {
     }
 }
 
-function closeModalTest(modalId) {
-    $('#' + modalId).modal('hide');
-}
-
 function openReport(workId)
 {
     localStorage.setItem('work_id',workId);

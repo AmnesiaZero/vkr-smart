@@ -14,6 +14,10 @@ $(document).click(function() {
     $('.info-box').remove();
 });
 
+function testCloseModal() {
+    $('#report_modal').modal('hide');
+}
+
 $(document).ready(function () {
     $('.selectpicker').selectpicker();
 

@@ -1,5 +1,5 @@
 <script id="report_tmpl" type="text/x-jquery-tmpl">
-    <div class="modal fade" id="report_modal" tabindex="-1">
+    <div class="modal fade" id="report_modal">
        <div class="modal-dialog modal-lg modal-dialog-centered">
            <div class="modal-content">
                <div class="modal-header">
@@ -64,7 +64,7 @@
                </div>
                <div class="modal-footer">
                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
-                           onclick="closeModalTest('report_modal')" aria-label="Close">
+                           onclick="testCloseModal()">
                        Закрыть окно
                    </button>
                </div>
