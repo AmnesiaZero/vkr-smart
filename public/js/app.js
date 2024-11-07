@@ -465,3 +465,34 @@ function updateUserPagination(pagination) {
         $("#users_pagination").show(); // Показываем пагинацию
     }
 }
+function printModalContent() {
+    // Получаем содержимое модального окна
+    var printContent = document.getElementById("report_modal").innerHTML;
+
+    // Создаем временное окно для печати
+    var printWindow = window.open("", "_blank", "width=800,height=600");
+
+    // Добавляем стили и содержимое модального окна
+    printWindow.document.write(`
+            <html>
+                <head>
+                    <title>Печать отчета</title>
+                    <style>
+                        /* Подключите CSS или добавьте стили вручную */
+                        body { font-family: Arial, sans-serif; }
+                        .table { width: 100%; border-collapse: collapse; }
+                        .table th, .table td { border: 1px solid black; padding: 8px; }
+                    </style>
+                </head>
+                <body>
+                    ${printContent}
+                </body>
+            </html>
+        `);
+
+    // Завершаем документ и печатаем
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+}
