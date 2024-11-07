@@ -238,7 +238,6 @@ const addBadge = function (clickedElement) {
 
 function openReport(workId)
 {
-    console.log(123);
     localStorage.setItem('work_id',workId);
     const data = {
         id:workId
@@ -255,6 +254,7 @@ function openReport(workId)
                 $("#report_container").html($("#report_tmpl").tmpl(work));
 
                 const modalElement = new bootstrap.Modal(document.getElementById('report_modal'));
+                const modalEl = $('#report_modal');
 
                 if (!modalEl.hasClass('show')) {
                     modalElement.show();
