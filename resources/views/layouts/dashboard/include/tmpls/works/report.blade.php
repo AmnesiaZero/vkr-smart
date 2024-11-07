@@ -64,7 +64,7 @@
                </div>
                <div class="modal-footer">
                    <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"
-                           data-bs-dismiss="modal" aria-label="Close">
+                           onclick="closeTestE();" aria-label="Close">
                        Закрыть окно
                    </button>
                </div>

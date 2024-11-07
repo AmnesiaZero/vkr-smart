@@ -302,6 +302,10 @@ function openCheck()
 }
 
 
+function closeTestE() {
+    $('#report_modal').modal('hide');
+}
+
 
 function deleteTreeElement(id) {
     console.log('id = ' + id);
