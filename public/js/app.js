@@ -284,6 +284,9 @@ function openCheck()
         success: function(response) {
             if (response.success) {
                 const work = response.data.work;
+
+                $('.modal').modal('hide');
+
                 $("#report_modal_container").html($("#check_tmpl").tmpl(work));
             } else {
                 $.notify(response.data.title + ": " + response.data.message, "error");
@@ -461,4 +464,5 @@ function updateUserPagination(pagination) {
         $("#users_pagination").show(); // Показываем пагинацию
     }
 }
+
 
