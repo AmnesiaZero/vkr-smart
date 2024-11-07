@@ -33,7 +33,6 @@ class InviteCodesExport implements FromView
         }
 
         $inviteCodes = $query->get();
-        Log::debug('invite codes = ' . $inviteCodes);
         return view('exports.codes', [
             'invite_codes' => $inviteCodes
         ]);

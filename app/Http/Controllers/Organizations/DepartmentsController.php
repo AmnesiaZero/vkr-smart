@@ -107,7 +107,6 @@ class DepartmentsController extends Controller
             return ValidatorHelper::redirectError($validator);
         }
         $data = $request->only($this->fillable);
-        Log::debug('data = ' . print_r($data, true));
         return $this->departmentsService->store($data);
     }
 

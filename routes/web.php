@@ -42,7 +42,7 @@ Route::get('home', function () {
 });
 Route::get('/', function () {
     return view('templates.site.index');
-});
+})->name('home');;
 
 Route::group([
     'prefix' => 'about'
@@ -189,7 +189,7 @@ Route::group([
             Route::post('/', [WorksController::class, 'update']);
         });
         Route::post('update', [WorksController::class, 'update']);
-        Route::get('find', [WorksController::class, 'find']);
+        Route::get('find', [WorksController::class, 'find'])->withoutMiddleware(['web', 'auth']);;
         Route::get('download', [WorksController::class, 'download']);
         Route::post('upload', [WorksController::class, 'upload']);
         Route::post('copy', [WorksController::class, 'copy']);
@@ -354,6 +354,7 @@ Route::group([
             Route::post('delete', [OrganizationsYearsController::class, 'delete']);
             Route::post('copy', [OrganizationsYearsController::class, 'copy']);
             Route::get('find', [OrganizationsYearsController::class, 'find']);
+            Route::get('specialties',[OrganizationsYearsController::class,'specialties']);
         });
         Route::group([
             'prefix' => 'faculties'
@@ -404,7 +405,7 @@ Route::group([
             Route::group([
                 'prefix' => 'specialties'
             ], function () {
-                Route::post('create', [ProgramsSpecialtiesController::class, 'create'])->withoutMiddleware(['web', 'auth']);;
+                Route::post('create', [ProgramsSpecialtiesController::class, 'create']);
                 Route::get('get', [ProgramsSpecialtiesController::class, 'get']);
                 Route::get('get-by-department', [ProgramsSpecialtiesController::class, 'getByDepartment']);
                 Route::get('get-by-organization', [ProgramsSpecialtiesController::class, 'getByOrganization']);
@@ -468,7 +469,7 @@ Route::group([
         Route::get('filer', [UsersController::class, 'filter'])->name('users.filter');
         Route::get('you', [UsersController::class, 'you']);
         Route::post('configure-departments', [UsersController::class, 'configureDepartments']);
-        Route::get('logout', [UsersController::class, 'logout']);
+        Route::get('logout', [UsersController::class, 'logout'])->name('users.logout');
 
     });
 

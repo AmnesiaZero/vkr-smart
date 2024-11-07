@@ -70,8 +70,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1"
-                            onclick="closeModal('add_link_modal')">
+                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1">
                         Добавить
                     </button>
                     <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"

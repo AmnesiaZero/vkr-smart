@@ -314,6 +314,15 @@
 
     </script>
 
+    <script id="specialty_tmpl" type="text/x-jquery-tmpl">
+        <div className="list-group-item">
+                                  <label className="text-success">
+                                      <input type="checkbox" class="specialty_checkbox" value="${specialty.id}"> ${faculty.name} / ${department.name} / ${program.name} /${specialty.code} | ${specialty.name}
+                                  </label>
+                              </div>
+
+    </script>
+
 
     <script type="text/x-jquery-tmpl" id="off_canvas_user_update">
         <div class="px-4">

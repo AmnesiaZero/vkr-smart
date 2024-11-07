@@ -57,6 +57,12 @@ interface YearRepositoryInterface
      */
     public function copy(int $id): Model;
 
+    /**
+     * @param int $id
+     * @return Collection
+     */
+    public function specialties(int $id):Collection;
+
 
     /**
      * @param int $id

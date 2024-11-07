@@ -55,10 +55,13 @@ $(document).ready(function () {
                 contentType: false, // Обязательно установить false для передачи данных как FormData
                 processData: false, // Обязательно установить false для передачи данных как FormData
                 success: function (response) {
-                    if (response.success) {
-                        let avatarPath = response.data.user.avatar_path;
-                        $("#user_avatar").attr('src','/' + avatarPath);
-                    } else {
+                    if (response.success)
+                    {
+                        const avatarPath = response.data.user.avatar_path + "?time=" + new Date().getTime();
+                        $('#user_avatar').attr('src', avatarPath); // Обновляем изображение
+                        $.notify(response.data.title + ":" + response.data.message, "success");
+                    }
+                    else {
                         $.notify(response.data.title + ":" + response.data.message, "error");
                     }
                 },
@@ -66,6 +69,9 @@ $(document).ready(function () {
                     $.notify("Произошла ошибка при загрузке файла", "error");
                 }
             });
+        }
+        else {
+            $.notify("Некорректный файл изображения. Проверьте целостность файла", "error");
         }
     });
 });
@@ -232,30 +238,33 @@ function addEducation()
 
 function deleteEducation(educationId)
 {
-    const data = {
-        id:educationId
-    };
-    $.ajax({
-        url: "/dashboard/portfolios/educations/delete",
-        data:data,
-        type: "POST",
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        dataType: "json",
-        success: function (response) {
-            if (response.success) {
-                $("#education_" + educationId).remove();
-                $.notify(response.data.title + ":" + response.data.message, "success");
+    if(confirm('Вы уверены,что хотите удалить информацию об образовании?'))
+    {
+        const data = {
+            id:educationId
+        };
+        $.ajax({
+            url: "/dashboard/portfolios/educations/delete",
+            data:data,
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    $("#education_" + educationId).remove();
+                    $.notify(response.data.title + ":" + response.data.message, "success");
+                }
+                else {
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                }
+            },
+            error: function () {
+                $.notify("Произошла ошибка при получении образований", "error");
             }
-            else {
-                $.notify(response.data.title + ":" + response.data.message, "error");
-            }
-        },
-        error: function () {
-            $.notify("Произошла ошибка при получении образований", "error");
-        }
-    });
+        });
+    }
 }
 
 function getEducationForm(educationFormId)

@@ -4,6 +4,46 @@ var user = '';
 
 var userType;
 
+$(document).on('click', '#upload_button', function() {
+    console.log('Кнопка загрузки файла нажата');
+    $('#file_input').click(); // Открываем диалог выбора файла
+});
+$(document).on('click', '#upload_certificate_button', function() {
+    $('#certificate_input').click(); // Открываем диалог выбора файла
+});
+
+function toggleInputAndSelect(inputName, selectName) {
+    // Обработка изменения состояния инпута
+    $('input[name="' + inputName + '"]').on('input', function() {
+        if ($(this).val().trim() !== '') {
+            $('select[name="' + selectName + '"]').prop('disabled', true);
+        } else {
+            $('select[name="' + selectName + '"]').prop('disabled', false);
+        }
+    });
+
+    // Обработка изменения состояния селекта
+    $('select[name="' + selectName + '"]').on('change', function() {
+        if ($(this).val() !== '') {
+            $('input[name="' + inputName + '"]').prop('disabled', true).val('');
+        } else {
+            $('input[name="' + inputName + '"]').prop('disabled', false);
+        }
+    });
+}
+
+$(document).ready(function() {
+    $('.selectpicker').selectpicker();
+
+    // Применение функции к полям "Научный руководитель"
+    toggleInputAndSelect('scientific_supervisor', 'scientific_supervisor');
+
+    // Применение функции к полям "Тип работы"
+    toggleInputAndSelect('work_type', 'work_type');
+
+    toggleInputAndSelect()
+});
+
 
 $(document).ready(function () {
     function getUser() {
@@ -100,28 +140,37 @@ $(document).ready(function () {
         deleteTreeElement($(this));
     })
 
-
-    $('#upload_button').on('click', function () {
-        $('#file_input').click(); // Открываем диалог выбора файла
-    });
-
-    $('#upload_certificate_button').on('click', function () {
-        $('#certificate_input').click(); // Открываем диалог выбора файла
-    });
     $("#addWorkForm").on('submit', function (e) {
+        console.log(123)
         e.preventDefault(); // Предотвращаем стандартное поведение формы
 
         // Создаем объект FormData и добавляем в него данные формы
         const formData = new FormData(this);
-        const additionalData = {
-            user_id: userId,
-            year_id: user.year_id,
-            faculty_id: user.faculty_id,
-            specialty_id: user.specialty_id,
-            user_type: userType,
-            student: user.name
-        };
-        console.log(additionalData);
+        let additionalData = '';
+        //У студентов должны быть указаны все их структурные подразделения
+        if(userType===1)
+        {
+             additionalData = {
+                user_id: userId,
+                year_id: user.year_id,
+                faculty_id: user.faculty_id,
+                department_id:user.department_id,
+                specialty_id: user.specialty_id,
+                user_type: userType,
+                student: user.name
+            };
+        }
+        //У преподавателей только год и факультет
+        else
+        {
+             additionalData = {
+                user_id: userId,
+                year_id: user.year_id,
+                faculty_id: user.faculty_id,
+                user_type: userType,
+                student: user.name
+            };
+        }
         for (const key in additionalData) {
             if (additionalData.hasOwnProperty(key)) {
                 formData.append(key, additionalData[key]);
@@ -243,9 +292,10 @@ $(document).ready(function () {
     });
 
     $("#upload_additional_file_form").on('submit', function (e) {
+        console.log('Зашел');
         e.preventDefault(); // Предотвращаем стандартное поведение формы
 
-        // Создаем объект FormData и добавляем в него данные формы
+        // // Создаем объект FormData и добавляем в него данные формы
         const formData = new FormData(this);
         const workId = localStorage.getItem('work_id');
         formData.append('work_id', workId);
@@ -273,22 +323,18 @@ $(document).ready(function () {
         });
     });
 
-
     $(function () {
-        let start = moment();
-        let end = moment().add(29, 'days');
         $('input[name="daterange"]').daterangepicker({
-            startDate: start,
-            endDate: end,
+            autoUpdateInput: false, // Отключаем автоматическое заполнение поля
             "locale": {
                 "format": "DD.MM.YYYY",
                 "separator": " - ",
-                "applyLabel": "Apply",
-                "cancelLabel": "Cancel",
-                "fromLabel": "From",
-                "toLabel": "To",
-                "customRangeLabel": "Custom",
-                "weekLabel": "W",
+                "applyLabel": "Применить",
+                "cancelLabel": "Отмена",
+                "fromLabel": "С",
+                "toLabel": "По",
+                "customRangeLabel": "Выбрать период",
+                "weekLabel": "Н",
                 "daysOfWeek": [
                     "Вс",
                     "Пн",
@@ -316,9 +362,12 @@ $(document).ready(function () {
             },
             opens: 'left'
         }, function (start, end, label) {
+            // Обновляем значение инпута только при выборе
+            $('input[name="daterange"]').val(start.format('DD.MM.YYYY') + ' - ' + end.format('DD.MM.YYYY'));
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
     });
+
 
 
     $('#checking_specialties').change(function () {
@@ -479,48 +528,7 @@ function updateWorkVisibility() {
 }
 
 
-function addWork(formData) {
-    $.ajax({
-        url: '/dashboard/works/create',
-        type: 'POST',
-        data: formData,
-        processData: false, // Не обрабатываем файлы (не превращаем в строку)
-        contentType: false, // Не устанавливаем заголовок Content-Type
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (response) {
-            if (response.success) {
-                const work = response.data.work;
-                $("#works_table").append($("#work_tmpl").tmpl(work));
-                updateWorksCount();
-            } else {
-                $.notify(response.data.title + ":" + response.data.message, "error");
-            }
-        },
-        error: function () {
-            $.notify("Ошибка при добавлении работы. Обратитесь к системному администратору", "error");
 
-        }
-    });
-}
-
-function getAssessmentDescription(assessment) {
-    switch (assessment) {
-        case 0:
-            return 'Без оценки';
-        case 2:
-            return 'Неудовлетворительно';
-        case 3:
-            return 'Удовлетворительно';
-        case 4:
-            return 'Хорошо';
-        case 5:
-            return 'Отлично';
-        default:
-            return 'Неизвестно';
-    }
-}
 
 function getAgreementDescription(agreement) {
     switch (agreement) {
@@ -533,16 +541,6 @@ function getAgreementDescription(agreement) {
     }
 }
 
-function getSelfCheckDescription(selfCheck) {
-    switch (selfCheck) {
-        case 0:
-            return 'Не пройдена';
-        case 1:
-            return 'Пройдена';
-        default:
-            return 'Неизвестно';
-    }
-}
 
 
 function reloadWork(workId) {
@@ -568,35 +566,14 @@ function reloadWork(workId) {
     });
 }
 
-function openReport(workId) {
-    const data = {
-        id: workId
-    };
-    $.ajax({
-        url: "/dashboard/works/find",
-        type: 'GET',
-        data: data,
-        dataType: "json",
-        success: function (response) {
-            if (response.success) {
-                const work = response.data.work;
-                $("#report_container").html($("#record_tmpl").tmpl(work));
-            } else {
-                $.notify(response.data.title + ":" + response.data.message, "error");
-            }
-        },
-        error: function () {
-            $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
-        }
-    });
-}
 
 function searchWorks(page = 1) {
     let data = $("#search_form").serialize();
     data = serializeRemoveNull(data);
     const additionalData = {
         page: page,
-        user_id: userId
+        user_id: userId,
+        paginate: true
     };
     data += '&' + $.param(additionalData);
     $.ajax({
@@ -638,25 +615,30 @@ function resetSearch() {
     localStorage.setItem('selected_years', '');
     localStorage.setItem('selected_faculties', '');
     localStorage.setItem('selected_departments', '');
+
     $(".out-kod").empty();
     $("#default_specialty").prop('selected', true);
     $("#student_input").val('');
     $("#work_name_input").val('');
     $("#group_input").val('');
     $("#work_type_input").val('');
+    $("#scientific_supervisors_list").val('').change();
+    $("#specialties_list").val('').change();
+    $("#delete_type").val('2').change();
+    $('input[name="daterange"]').val('');
+    $('input[name="daterange"]').data('daterangepicker').setStartDate(moment());
+    $('input[name="daterange"]').data('daterangepicker').setEndDate(moment());
+    $("#scientific_supervisors_list").val('').change();
     works();
+
+
 }
 
-function openInfoBox(id) {
+function openInfoBox(element, id) {
+    // Закрыть все открытые меню
+    $(".info-box").remove();
+
     if (id) {
-        const deleted = $("#work_" + id).attr('class');
-        if (deleted) {
-            console.log('true');
-            $("#added_menu").html($("#deleted_menu_tmpl").tmpl());
-        } else {
-            console.log('false');
-            $("#added_menu").html($("#undeleted_menu_tmpl").tmpl());
-        }
         const data = {
             id: id
         };
@@ -668,10 +650,28 @@ function openInfoBox(id) {
             dataType: "json",
             success: function (response) {
                 if (response.success) {
+
                     const work = response.data.work;
                     const userId = work.user_id;
                     localStorage.setItem('work_id', id);
                     localStorage.setItem('user_id', userId);
+
+                    const $infoBox = $("#info_box_" + id);
+                    $infoBox.html($("#info_box_tmpl").tmpl());
+
+                    const deleted = $("#work_" + id).attr('class');
+
+                    if (deleted) {
+                        console.log('true');
+                        $("#added_menu").html($("#deleted_menu_tmpl").tmpl());
+                    } else {
+                        console.log('false');
+                        $("#added_menu").html($("#undeleted_menu_tmpl").tmpl());
+                    }
+
+                    // Показать меню
+                    $(element).next().find('.info-box').toggleClass('show');
+
                 } else {
                     $.notify(response.data.title + ":" + response.data.message, "error");
                 }
@@ -681,8 +681,6 @@ function openInfoBox(id) {
             }
         });
     }
-    $("#info_box").fadeToggle(100);
-
 }
 
 function checkDeleted() {
@@ -713,6 +711,9 @@ function workInfo() {
             if (response.success) {
                 const work = response.data.work;
                 $("#about_work").html($("#work_info_tmpl").tmpl(work));
+                const modalElement = new bootstrap.Modal(document.getElementById('work_info_modal'));
+                modalElement.show();
+
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -738,6 +739,7 @@ function downloadWork() {
     window.location.href = '/dashboard/works/download?id=' + workId;
 }
 
+
 function openUpdateWorkModal() {
     const workId = localStorage.getItem('work_id');
     const data = {
@@ -752,6 +754,17 @@ function openUpdateWorkModal() {
             if (response.success) {
                 const work = response.data.work;
                 $("#tmpl_modals").html($("#update_work_tmpl").tmpl(work));
+
+                $('.selectpicker').selectpicker();
+
+                // Применение функции к полям "Научный руководитель"
+                toggleInputAndSelect('scientific_supervisor', 'scientific_supervisor');
+
+                // Применение функции к полям "Тип работы"
+                toggleInputAndSelect('work_type', 'work_type');
+
+                let modal = new bootstrap.Modal($('#update_work_modal'))
+                modal.show();
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -855,31 +868,61 @@ function destroyWork() {
     }
 }
 
-function updateSelfCheckStatus() {
+// function updateSelfCheckStatus() {
+//     const workId = localStorage.getItem('work_id');
+//     const data = {
+//         id: workId
+//     };
+//     $.ajax({
+//         url: "/dashboard/works/update/self-check",
+//         type: 'POST',
+//         data: data,
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         },
+//         dataType: "json",
+//         success: function (response) {
+//             if (response.success) {
+//                 $.notify(response.data.title + ":" + response.data.message, "success");
+//             } else {
+//                 $.notify(response.data.title + ":" + response.data.message, "error");
+//             }
+//         },
+//         error: function () {
+//             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
+//         }
+//     });
+// }
+function updateSelfCheckStatus()
+{
     const workId = localStorage.getItem('work_id');
     const data = {
-        id: workId
+        id:workId
     };
     $.ajax({
         url: "/dashboard/works/update/self-check",
         type: 'POST',
-        data: data,
+        data:data,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         dataType: "json",
-        success: function (response) {
-            if (response.success) {
+        success: function(response) {
+            if (response.success)
+            {
+                const selfCheckStatus = getSelfCheckDescription(response.data.self_check);
+                $("#self_check_value").text(selfCheckStatus);
                 $.notify(response.data.title + ":" + response.data.message, "success");
-            } else {
+            }
+            else
+            {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
         },
-        error: function () {
+        error: function() {
             $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
         }
     });
-
 }
 
 function restore() {
@@ -1007,7 +1050,6 @@ function updateWorksCount() {
     }
 }
 
-
-
-
-
+$(document).click(function() {
+    $('.info-box').remove();
+});

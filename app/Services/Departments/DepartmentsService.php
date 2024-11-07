@@ -203,7 +203,6 @@ class DepartmentsService extends Services
     public function get(array $data): JsonResponse
     {
         $departments = $this->departmentRepository->get($data);
-        Log::debug('departments = ' . $departments);
         return self::sendJsonResponse(true, [
             'title' => 'Успешно получены кафедры',
             'departments' => $departments
@@ -306,7 +305,6 @@ class DepartmentsService extends Services
             ]);
         }
         $department = $this->departmentRepository->create($data);
-        Log::debug('department = ' . $department);
         if ($department and $department->id) {
             return self::sendJsonResponse(true, [
                 'title' => 'Успешно',

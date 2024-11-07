@@ -5,6 +5,7 @@
 
         <div class="row g-4 pt-5 px-0 px-sm-4 mx-sm-0 mx-4">
 
+            {{-- Год выпуска --}}
             <div class="col-xxl-4 col-xl-6 col-12">
                 <div class="br-green-light-2 br-15 py-3">
                     <div class="row">
@@ -27,6 +28,28 @@
             @include('layouts.dashboard.include.modal.create.year')
             @include('layouts.dashboard.include.modal.update.year')
 
+            {{-- Подразделения --}}
+            <div class="col-xxl-4 col-xl-6 col-12">
+                <div class="br-green-light-2 br-15 py-3" id="faculties_container" style="display: none">
+                    <div class="row">
+                        <div class="col">
+                            <p class="mb-2 fw-600 px-3">Подразделения</p>
+
+                            <form method="post" id="faculty_form" onsubmit="createFaculty();return false;">
+                                <div class="btn-group p-2 w-100">
+                                    <input id="faculty-name" name="name" type="text" class="form-control fs-14" placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
+                                    <button type="submit" class="fs-14 btn text-grey btn-secondary">Добавить</button>
+                                </div>
+                            </form>
+
+                            <div id="faculties_list" class="blue-scroll"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @include('layouts.dashboard.include.modal.update.faculty')
+
+            {{-- Кафедры --}}
             <div class="col-xxl-4 col-xl-6 col-12">
                 <div class="br-green-light-2 br-15 py-3" style="display: none"
                      id="departments_container">
@@ -49,6 +72,7 @@
             </div>
             @include('layouts.dashboard.include.modal.update.department')
 
+            {{-- Профили обучения --}}
             <div class="col-xxl-4 col-xl-6 col-12">
                 <div class="br-green-light-2 br-15 py-3" style="display: none" id="programs_container">
                     <div class="row">
@@ -70,25 +94,6 @@
             </div>
             @include('layouts.dashboard.include.modal.create.program')
 
-            <div class="col-xxl-4 col-xl-6 col-12">
-                <div class="br-green-light-2 br-15 py-3" id="faculties_container" style="display: none">
-                    <div class="row">
-                        <div class="col">
-                            <p class="mb-2 fw-600 px-3">Подразделения</p>
-
-                            <form method="post" id="faculty_form" onsubmit="createFaculty();return false;">
-                                <div class="btn-group p-2 w-100">
-                                    <input id="faculty-name" name="name" type="text" class="form-control fs-14" placeholder="Введите наименование..." style="border-radius: 5px 0 0 5px">
-                                    <button type="submit" class="fs-14 btn text-grey btn-secondary">Добавить</button>
-                                </div>
-                            </form>
-
-                            <div id="faculties_list" class="blue-scroll"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @include('layouts.dashboard.include.modal.update.faculty')
         </div>
 
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEdit">

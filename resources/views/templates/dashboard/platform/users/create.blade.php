@@ -19,19 +19,19 @@
                     <div class="col-lg-8">
                         <div class="form-group">
                             <label for="name">ФИО пользователя</label>
-                            <input id="name" type="text" name="name" class="form-control">
+                            <input id="name" type="text" name="name" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="email">E-mail</label>
-                            <input id="email" type="text" name="email" class="form-control">
+                            <input id="email" type="text" name="email" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="login">Логин</label>
-                            <input id="login" type="text" name="login" class="form-control">
+                            <input id="login" type="text" name="login" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="organization_id">Организация</label>
-                            <select id="organization_id" name="organization_id" class="form-control">
+                            <select id="organization_id" name="organization_id" class="form-control" required>
                                 <option value="">-- Выберите --</option>
                                 @isset($organizations)
                                     @foreach($organizations as $organization)
@@ -42,18 +42,18 @@
                         </div>
                         <div class="form-group">
                             <label for="password">Пароль</label>
-                            <input id="password" type="password" name="password" class="form-control">
+                            <input id="password" type="password" name="password" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="password_confirmation">Подтвердите пароль</label>
                             <input id="password_confirmation" type="password" name="password_confirmation"
-                                   class="form-control">
+                                   class="form-control" required>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="role">Тип учетной записи</label>
-                            <select id="role" name="role" class="form-control">
+                            <select id="role" name="role" class="form-control" required>
                                 <option value="">-- Выберите --</option>
                                 @isset($roles)
                                     @foreach($roles as $role)
@@ -87,13 +87,14 @@
                         <div class="form-group">
                             <input type="hidden" name="id" value="0">
                         </div>
+                        <input type="checkbox" name="redirect" id="redirect" style="display: none">
                     </div>
                 </div>
             </div>
         </form>
         <div class="form-group">
             <button id="save-close" class="btn btn-primary">Сохранить и закрыть</button>
-            <button id="save" class="btn btn-primary">Сохранить</button>
+            <button id="save" class="btn btn-primary" type="submit">Сохранить</button>
             <button id="close" class="btn btn-secondary">Отмена</button>
         </div>
     </div>

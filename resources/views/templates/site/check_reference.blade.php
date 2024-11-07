@@ -14,7 +14,7 @@
                                            required="">
                                 </div>
                                 <div class="form-group mt-3">
-                                    <button class="btn  btn-lg btn-block btn-success" type="submit">Проверить</button>
+                                    <button class="btn  btn-lg btn-block btn-primary px-5" type="submit">Проверить</button>
                                 </div>
 
                             </form>
@@ -35,5 +35,6 @@
 @section('scripts')
     <script src="/js/site/check_reference.js"></script>
 
-    @include('layouts.dashboard.include.tmpls.works_page')
+    @include('layouts.dashboard.include.tmpls.works.report')
+
 @endsection

@@ -49,7 +49,19 @@
             @else
                 <td>Не загружен</td>
             @endif
-            <td>{{$work->assesment}}</td>
+            <td>
+                @if(isset($work->assessment))
+                    @if($work->assessment==2)
+                        Неудовлетворительно
+                    @elseif($work->assessment==3)
+                        Удовлетворительно
+                    @elseif($work->assessment==4)
+                        Хорошо
+                    @elseif($work->assessment==5)
+                        Отлично
+                    @endif
+                @endif
+            </td>
             <td>{{ceil($work->borrowings_percent)}}%</td>
             <td>{{$work->work_type}}</td>
 

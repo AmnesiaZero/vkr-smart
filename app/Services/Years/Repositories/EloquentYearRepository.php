@@ -51,6 +51,35 @@ class EloquentYearRepository implements YearRepositoryInterface
 
     }
 
+    public function specialties(int $id): Collection
+    {
+        return $this->find($id)
+            ->departments()
+            ->with([
+                'programs' => function ($query) {
+                    // Загрузка специальностей с их департаментами и факультетами
+                    $query->with([
+                        'programSpecialties',
+                        'department.faculty'
+                    ]);
+                }
+            ])
+            ->get()
+            ->map(function ($department) {
+                return $department->programs->map(function ($program) {
+                    return $program->programSpecialties->map(function ($specialty) use ($program) {
+                        return [
+                            'specialty' => $specialty,
+                            'department' => $program->department->name,
+                            'faculty' => $program->department->faculty->name,
+                            'year' => $program->year,
+                        ];
+                    });
+                });
+            })
+            ->flatten(2); // Уровень flatten зависит от глубины вложенности коллекции
+    }
+
     public function get(int $organizationId): Collection
     {
         return Year::with('departments')->where('organization_id', '=', $organizationId)->get();

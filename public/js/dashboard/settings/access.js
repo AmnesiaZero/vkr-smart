@@ -1,7 +1,39 @@
+var you;
+
+var inspectorsSpecialtiesIds;
+
 $(document).ready(function () {
     users();
     years('years_list');
-    getYou();
+
+
+    function getYou() {
+        var deferred = $.Deferred();
+        $.ajax({
+            url: "/dashboard/users/you",
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    you = response.data.you;
+                    console.log(you);
+                    $("#you").html($("#you_tmpl").tmpl(you));
+                    deferred.resolve(); // Сообщаем, что функция завершена
+
+                } else {
+                    $.notify(response.data.title + ":" + response.data.message, "error");
+                    deferred.reject(); // Сообщаем об ошибке
+                }
+            },
+            error: function () {
+                $.notify("При загрузке информации об организации произошла ошибка", "error");
+                deferred.reject(); // Сообщаем об ошибке
+            }
+        });
+        return deferred.promise();
+    }
+    $.when(getYou()).done(function() {
+        organization();
+    });
     $('.js-example-basic-single').select2({
         placeholder: "Выберите...",
     });
@@ -50,14 +82,21 @@ $(document).ready(function () {
 });
 
 
-function getYou() {
+
+function organization()
+{
+    const data = {
+        id:you.organization_id
+    };
     $.ajax({
-        url: "/dashboard/users/you",
+        url: "/dashboard/organizations/find",
+        data:data,
         dataType: "json",
         success: function (response) {
             if (response.success) {
-                const you = response.data.you;
-                $("#you").html($("#you_tmpl").tmpl(you));
+                const organization = response.data.organization;
+                const inspectorsSpecialties = organization.inspectors_specialties;
+                inspectorsSpecialtiesIds = inspectorsSpecialties.map(item => item.id);
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -67,6 +106,7 @@ function getYou() {
         }
     });
 }
+
 
 function years(htmlId) {
     $.ajax({
@@ -105,6 +145,7 @@ function faculties(data, htmlId) {
                 facultiesList.selectpicker('destroy');
                 facultiesList.html($("#faculty_tmpl").tmpl(faculties));
                 facultiesList.selectpicker('render');
+                facultiesList.prepend('<option value="" selected>Выберите.......</option>');
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
             }
@@ -597,6 +638,7 @@ function accessSpecialties(yearId) {
                 const specialtiesList = $("#specialties_list");
                 specialtiesList.empty();
                 specialtiesList.selectpicker('destroy');
+                let flag = false;
                 faculties.forEach(faculty => {
                     const departments = faculty.departments;
                     departments.forEach(department => {
@@ -604,15 +646,34 @@ function accessSpecialties(yearId) {
                         programs.forEach(program => {
                             const programSpecialties = program.program_specialties;
                             programSpecialties.forEach(specialty => {
-                                specialtiesList.append(`<div className="list-group-item">
+                                if(!flag)
+                                {
+                                    flag = true;
+                                }
+                                // Проверка наличия элемента в массиве
+                                 if (inspectorsSpecialtiesIds.includes(specialty.id)){
+                                    // Если элемент найден, добавляем параметр в JSON-объект
+                                    specialtiesList.append(`<div className="list-group-item">
+                                  <label className="text-success">
+                                      <input type="checkbox" class="specialty_checkbox" value="${specialty.id}" checked> ${faculty.name} / ${department.name} / ${program.name} /${specialty.code} | ${specialty.name}
+                                  </label>
+                              </div>`);
+                                }
+                                else {
+                                    specialtiesList.append(`<div className="list-group-item">
                                   <label className="text-success">
                                       <input type="checkbox" class="specialty_checkbox" value="${specialty.id}"> ${faculty.name} / ${department.name} / ${program.name} /${specialty.code} | ${specialty.name}
                                   </label>
                               </div>`);
+                                }
                             });
                         });
                     });
                 });
+                if (!flag)
+                {
+                    specialtiesList.html("<div> У этого года не были найдены специальности </div>")
+                }
 
             } else {
                 $.notify(response.data.title + ":" + response.data.message, "error");

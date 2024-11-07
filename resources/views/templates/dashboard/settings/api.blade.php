@@ -37,6 +37,7 @@
                             <a href="#" class="password-control" onclick="return show_hide_password(this);"></a>
                         </div>
                     </div>
+                    <div id="form_submit_container">
                     @if(isset($organization->secret_key))
                         Ранее вы уже выполнили запрос на их получение..
                     @else
@@ -44,6 +45,7 @@
                             Создать ключ защиты API
                         </button>
                     @endif
+                    </div>
                 </div>
                 <div id="vkr-logo" class="col-xxl-6 col-lg-10 col-12">
                     <div class="br-green-light-2 br-15 p-3 mb-3">
@@ -69,9 +71,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="token_container">
-
                     </div>
                 </div>
             </form>

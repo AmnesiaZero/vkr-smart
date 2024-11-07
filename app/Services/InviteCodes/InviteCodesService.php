@@ -35,7 +35,6 @@ class InviteCodesService extends Services
             'status' => true
         ];
         $data = array_merge($data, $additionalData);
-        Log::debug(print_r($data, true));
         if (!isset($data['amount'])) {
             $data['amount'] = 1;
         }

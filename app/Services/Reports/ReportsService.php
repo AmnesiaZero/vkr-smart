@@ -152,7 +152,6 @@ class ReportsService extends Services
 
         $rolesWorks['all_works'] = 0;
         foreach ($results as $result) {
-            Log::debug('result = '.print_r($result,true));
             if (!isset($rolesWorks[$result->role_id])) {
                 $rolesWorks[$result->role_id] = [
                     'role_id' => $result->role_id,
@@ -227,7 +226,6 @@ class ReportsService extends Services
 
         $results = $achievementsQuery->get();
 
-        Log::debug('achievements results = ' . print_r($results, true));
 
         // Группировка пользователей по ролям
         $rolesAchievements = [];
