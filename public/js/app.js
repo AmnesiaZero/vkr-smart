@@ -258,6 +258,7 @@ function openReport(workId)
 
                 if (!modalEl.hasClass('show')) {
                     modalElement.show();
+                    console.log(123)
                 }
             }
             else
