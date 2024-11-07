@@ -10,7 +10,7 @@
                        <p> Полный отчет по работе </p>
 
                        <div class="d-flex gap-3 my-4">
-                           <a class="btn btn-primary print-btn" onclick="printModalContent(); return false;">>
+                           <a class="btn btn-primary" onclick="window.print(); return false;">>
                                Распечатать отчет
                            </a>
                            <a onclick="openCheck()" class="btn btn-grey">

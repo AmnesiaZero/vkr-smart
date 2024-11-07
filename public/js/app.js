@@ -465,11 +465,3 @@ function updateUserPagination(pagination) {
         $("#users_pagination").show(); // Показываем пагинацию
     }
 }
-function printModalContent() {
-    let modalContent = $('#report_modal').html();
-    let win = window.open('', 'print');
-
-    win.document.write('<html><head><title>Print</title></head><body>' + content + '</body></html>')
-    win.document.close();
-    win.print();
-}
