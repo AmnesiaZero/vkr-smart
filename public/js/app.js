@@ -255,7 +255,9 @@ function openReport(workId)
 
                 const modalElement = new bootstrap.Modal(document.getElementById('report_modal'));
 
-                modalElement.show();
+                if (!modalEl.hasClass('show')) {
+                    modalElement.show();
+                }
             }
             else
             {
