@@ -236,6 +236,10 @@ const addBadge = function (clickedElement) {
     }
 }
 
+function closeModalTest(modalId) {
+    $('#' + modalId).modal('hide');
+}
+
 function openReport(workId)
 {
     localStorage.setItem('work_id',workId);
@@ -252,8 +256,6 @@ function openReport(workId)
             {
                 const work = response.data.work;
                 $("#report_container").html($("#report_tmpl").tmpl(work));
-
-                $('.modal').modal('hide');
 
                 const modalElement = new bootstrap.Modal(document.getElementById('report_modal'));
 
@@ -286,8 +288,6 @@ function openCheck()
         success: function(response) {
             if (response.success) {
                 const work = response.data.work;
-
-                $('.modal').modal('hide');
 
                 $("#report_modal_container").html($("#check_tmpl").tmpl(work));
             } else {
