@@ -41,10 +41,9 @@ Deploy vkrsmrt-dev-www:
     - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan route:clear"
     - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan config:cache"
     - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan config:cache"
-
   only:
     refs:
-      - dev
+      - develop
 
 
 Deploy vkrsmrt-www:
