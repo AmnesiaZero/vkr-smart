@@ -471,7 +471,7 @@ function printModalContent() {
     var bodyContent = document.body.innerHTML;
 
     // Заменяем содержимое body только модальным окном
-    document.body.innerHTML = modal.innerHTML;
+    document.innerHTML = modal.innerHTML;
 
     // Печать страницы
     window.print();
