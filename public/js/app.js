@@ -238,6 +238,7 @@ const addBadge = function (clickedElement) {
 
 function openReport(workId)
 {
+    console.log(123);
     localStorage.setItem('work_id',workId);
     const data = {
         id:workId
@@ -464,5 +465,3 @@ function updateUserPagination(pagination) {
         $("#users_pagination").show(); // Показываем пагинацию
     }
 }
-
-
