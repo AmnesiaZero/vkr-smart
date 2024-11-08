@@ -250,10 +250,14 @@ function openReport(workId)
         success: function(response) {
             if (response.success)
             {
+                $('.modal').modal('hide');
+
                 const work = response.data.work;
                 $("#report_container").html($("#report_tmpl").tmpl(work));
 
                 const modalElement = new bootstrap.Modal(document.getElementById('report_modal'));
+
+                $('#report_modal').modal('hide');
 
                 modalElement.show();
             }
@@ -284,6 +288,7 @@ function openCheck()
         success: function(response) {
             if (response.success) {
                 const work = response.data.work;
+
                 $("#report_modal_container").html($("#check_tmpl").tmpl(work));
             } else {
                 $.notify(response.data.title + ": " + response.data.message, "error");
@@ -295,7 +300,6 @@ function openCheck()
     });
 
 }
-
 
 
 function deleteTreeElement(id) {
@@ -461,4 +465,3 @@ function updateUserPagination(pagination) {
         $("#users_pagination").show(); // Показываем пагинацию
     }
 }
-
