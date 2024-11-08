@@ -22,6 +22,16 @@ class DatabaseSeeder extends Seeder
         $this->call(SetAdminSeeder::class);
         $this->call(SpecialtySeader::class);
         $this->call(OrganizationsTableSeeder::class);
+        $this->call(AchievementModesSeeder::class);
+        $this->call(AchievementTypeSeeder::class);
+        $this->call(AchievementTypeCategorySeeder::class);
+        $this->call(AddPlatformAdminRole::class);
+        $this->call(CreateTeacherRole::class);
+        $this->call(InspectorRole::class);
+        $this->call(RecordTypeSeeder::class);
+
+
+
 
 
         Model::reguard();
