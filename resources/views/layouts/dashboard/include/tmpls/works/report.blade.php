@@ -180,9 +180,11 @@
                     </thead>
                     <tbody>
                          @{{each report_assets}}
+                         <tr>
                             <td class="ng-binding">${borrowings_percent}%</td>
                             <td class="ng-binding">"${name}"   @{{if link}} ${link} @{{else}} Ссылка не указана @{{/if}} </td>
                             <td>Модуль поиска Интернет</td>
+                            </tr>
                             @{{/each}}
                     </tbody>
                 </table>
