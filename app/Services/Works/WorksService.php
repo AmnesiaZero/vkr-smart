@@ -520,7 +520,8 @@ class WorksService extends Services
                     $documentId = $this->uploadWork($workFile);
                     if ($documentId and is_numeric($documentId)) {
                         $updatedData['report_id'] = $documentId;
-                    } else {
+                    }
+                    else {
                         return self::sendJsonResponse(false, [
                             'title' => 'Ошибка',
                             'message' => 'Возникла ошибка при отправке работы на проверочный сервер'
