@@ -60,20 +60,6 @@
                             </div>
                         </div>
                         <div class="col-xl-6">
-                            <p class="fs-14 mb-2 text-grey">УГНП</p>
-                            <div id="bg-white_1">
-                                <select class="js-example-basic-single w-100" name="specialty_id" id="specialties_list" data-placeholder="Выбрать">
-                                    <option value="" id="default_specialty" selected></option>
-                                    @if(isset($program_specialties) and is_iterable($program_specialties))
-                                        @foreach($program_specialties as $program_specialty)
-                                            <option
-                                                value="{{$program_specialty->id}}">{{$program_specialty->name}}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
                             <p class="fs-14 mb-2 text-grey">Период загрузки работ</p>
                             <div class="input-group input-group-lg br-100 br-green-light-2 focus-form pe-2">
                                 <button class="btn pe-3 py-0 fs-14" disabled>
