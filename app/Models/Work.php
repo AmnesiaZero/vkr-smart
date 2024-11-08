@@ -11,10 +11,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class Work extends Model
 {
-    use HasFactory, SoftDeletes, CascadeSoftDeletes, Cloneable, BroadcastsEvents;
+    use HasFactory, SoftDeletes, CascadeSoftDeletes, Cloneable;
 
     protected $fillable = [
         'created',
@@ -106,14 +107,14 @@ class Work extends Model
     }
 
 
-    /**
-     * Get the channels that model events should broadcast on.
-     *
-     * @return Channel
-     */
-    public function broadcastOn(string $event)
-    {
-        return new Channel('works.' . $this->id);
-    }
+//    /**
+//     * Get the channels that model events should broadcast on.
+//     *
+//     * @return Channel
+//     */
+//    public function broadcastOn()
+//    {
+//        return new Channel('works.' . $this->id);
+//    }
 
 }

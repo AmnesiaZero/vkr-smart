@@ -13150,9 +13150,9 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: '1c0d73f2452a1f8c84a4',
   cluster: 'eu',
-  encrypted: true,
+  encrypted: false,
   disableStats: true,
-  forceTLS: true,
+  forceTLS: false,
   wsHost: window.location.hostname,
   wsPort: 6001,
   wssPort: 443 // Порт для WSS (опционально)

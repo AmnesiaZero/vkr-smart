@@ -18,3 +18,8 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 
+Broadcast::channel('works.{workId}', function ($user, $workId) {
+    // Например, проверяем доступ пользователя к работе
+    return true;
+});
+

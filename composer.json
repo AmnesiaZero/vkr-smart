@@ -56,9 +56,6 @@
             "Tests\\": "tests/"
         }
     },
-    "github-oauth": {
-        "github.com": "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"
-    },
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

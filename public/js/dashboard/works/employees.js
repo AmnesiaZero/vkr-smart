@@ -816,6 +816,8 @@ function searchWorks(page=1) {
         success: function(response) {
             if (response.success)
             {
+                console.log('Echo');
+                console.log(window.Echo);
                 const pagination = response.data.works;
                 const works = pagination.data;
                 console.log(works);

@@ -10,15 +10,17 @@ class WorkUpdated implements ShouldBroadcast
 {
     use SerializesModels;
 
+    public $work;
+
 
     /**
      * Create a new event instance.
      */
     public function __construct(
-        public $work,
+         $work,
     )
     {
-
+      $this->work = $work;
     }
 
     /**
