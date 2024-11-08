@@ -41,7 +41,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/AmnesiaZero/vkr-smart-sdk"
+            "url": "https://git.iprmedia.ru/gitlab/vkrsmrt/vkrsmrt-sdk.git"
         }
     ],
     "autoload": {
