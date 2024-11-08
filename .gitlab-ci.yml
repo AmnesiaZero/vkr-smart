@@ -20,26 +20,26 @@ after_script:
 Deploy vkrsmrt-dev-www:
   stage: deploy
   variables:
-    DST_PATH: "/srv/app021_dev_vkr_smart_ru"
-    PHP_HOST: "192.168.19.157"
-    PHP_PATH: "/usr/bin/php8.1"
+    TARGET_PATH: "/srv/app021_dev_vkr_smart_ru"
+    TARGET_HOST: "192.168.19.157"
+    TARGET_PHP_PATH: "/usr/bin/php8.1"
   script:
     - echo "Do your build here"
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client rsync -y )'
     - eval $(ssh-agent -s)
-    - echo "$CI_PRIVKEY_DRIVE1" | tr -d '\r' | ssh-add -
+    - echo "$TARGET_PRIVKEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan $PHP_HOST >> ~/.ssh/known_hosts
+    - ssh-keyscan $TARGET_HOST >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - rsync -ar $PWD/* $PHP_HOST:$DST_PATH
-    - ssh $PHP_HOST "cd $DST_PATH/ && composer update"
-    - ssh $PHP_HOST "cd $DST_PATH/ && composer install"
-    - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan migrate"
-    - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan view:clear"
-    - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan cache:clear"
-    - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan route:clear"
-    - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan config:cache"
+    - rsync -ar $PWD/* $TARGET_HOST:$TARGET_PATH
+    - ssh $TARGET_HOST "cd $TARGET_PATH/ && composer update"
+    - ssh $TARGET_HOST "cd $TARGET_PATH/ && composer install"
+    - ssh $TARGET_HOST "$TARGET_PHP_PATH $TARGET_PATH/artisan migrate"
+    - ssh $TARGET_HOST "$TARGET_PHP_PATH $TARGET_PATH/artisan view:clear"
+    - ssh $TARGET_HOST "$TARGET_PHP_PATH $TARGET_PATH/artisan cache:clear"
+    - ssh $TARGET_HOST "$TARGET_PHP_PATH $TARGET_PATH/artisan route:clear"
+    - ssh $TARGET_HOST "$TARGET_PHP_PATH $TARGET_PATH/artisan config:cache"
   only:
     refs:
       - develop
@@ -83,7 +83,7 @@ get dev log:
   script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
-    - echo "$CI_PRIVKEY_DRIVE1" | tr -d '\r' | ssh-add -
+    - echo "$TARGET_PRIVKEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - ssh-keyscan $SRC_HOST >> ~/.ssh/known_hosts
