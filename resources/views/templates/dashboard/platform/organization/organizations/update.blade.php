@@ -17,18 +17,6 @@
                                    class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="parent_id">Является связанной для организации:</label>
-                            <select id="parent_id" name="parent_id" class="form-control">
-                                <option value="0">--Выберите--</option>
-                                @if(isset($parents) && !empty($parents))
-                                    @foreach($parents as $parent)
-                                        <option value="{{ $parent->id }}"
-                                                @if($parent->id == $organization->parent_id) selected @endif>{{ $parent->name }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="logo">Логотип</label>
                             <div class="input-group">
                                 <input id="logo" type="text"
@@ -73,7 +61,7 @@
                             <label for="start_date">Дата начала доступа</label>
                             <div class="input-group">
                                 <input id="date_timepicker_start" type="date" name="start_date"
-                                       value="@if($organization->start_date) {{ \Carbon\Carbon::parse($organization->start_date)->format('d.m.Y') }} @endif"
+                                       @if($organization->start_date) value="{{\Carbon\Carbon::parse(trim($organization->start_date))->format('Y-m-d')}}" @endif
                                        aria-describedby="date-start" class="form-control">
                             </div>
                         </div>
@@ -81,7 +69,7 @@
                             <label for="end_date">Дата окончания доступа</label>
                             <div class="input-group">
                                 <input id="date_timepicker_end" type="date" name="end_date"
-                                       value="@if($organization->end_date) {{ \Carbon\Carbon::parse($organization->end_date)->format('d.m.Y') }} @endif"
+                                       @if($organization->end_date) value="{{\Carbon\Carbon::parse(trim($organization->end_date))->format('Y-m-d')}}" @endif
                                        aria-describedby="date-end" class="form-control">
                             </div>
                         </div>

@@ -53,7 +53,7 @@
                                 @isset($roles)
                                     @foreach($roles as $role)
                                         <option value="{{ $role->slug }}"
-                                                @if($user->roles[0]->slug == $role->slug) selected @endif>{{ $role->name }}</option>
+                                                @if(isset($user->roles[0]) and $user->roles[0]->slug == $role->slug) selected @endif>{{ $role->name }}</option>
                                     @endforeach
                                 @endisset
                             </select>
@@ -81,6 +81,7 @@
                             <textarea id="info" name="info" rows="7" class="form-control">{{ $user->info }}</textarea>
                         </div>
                     </div>
+                    <input type="checkbox" name="redirect" id="redirect" style="display: none">
                 </div>
             </div>
         </form>

@@ -9,6 +9,7 @@ use App\Services\Users\UsersService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
@@ -51,7 +52,8 @@ class UsersController extends Controller
         'paginate',
         'email_visibility',
         'name_visibility',
-        'portfolio_card_access'
+        'portfolio_card_access',
+        'redirect'
     ];
 
     public function __construct(UsersService $usersService)
@@ -94,8 +96,24 @@ class UsersController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             $user = Auth::user();
             //Надо будет изменить
-            if ($user->is_active == 0) {
+            if ($user->is_blocked) {
+                Auth::logout();
                 return back()->withErrors(['Вы заблокированы']);
+            }
+            if ($user->roles[0]->slug!='platformadmin')
+            {
+                $organization = $user->organization;
+                if(!isset($organization) or $organization->is_blocked)
+                {
+                    Auth::logout();
+                    return back()->withErrors(['Авторизация невозможна. Организация заблокирована']);
+                }
+                if(!isset($organization) or Carbon::parse($organization->end_date)->format('Y-m-d') < now()->format('Y-m-d'))
+                {
+                    Auth::logout();
+                    return back()->withErrors(['Авторизация невозможна. Срок доступа данного аккаунта(в рамках подписки) подошел к концу. Обратитесь за помощью в библиотеку вашей организации и службу поддержки']);
+                }
+
             }
             $request->session()->regenerate();
             return RedirectHelper::userDashboard($user);
@@ -146,8 +164,6 @@ class UsersController extends Controller
     public function registerView()
     {
         $inviteCodeId = Cookie::get('invite_code_id');
-
-        Log::debug('organization id in view = ' . $inviteCodeId);
 
         return $this->usersService->registerView($inviteCodeId);
     }
@@ -226,8 +242,6 @@ class UsersController extends Controller
             return ValidatorHelper::error($validator);
         }
         $data = $request->only($this->fillable);
-        Log::debug('request data =' . print_r($data, true));
-
         $you = Auth::user();
         $organizationId = $you->organization_id;
         $data['organization_id'] = $organizationId;
@@ -413,9 +427,7 @@ class UsersController extends Controller
         }
         $you = Auth::user();
         $data = $request->only($this->fillable);
-        Log::debug('request data = ' . print_r($data, true));
         $data['organization_id'] = $you->organization_id;
-
         return $this->usersService->search($data);
     }
 
@@ -479,7 +491,6 @@ class UsersController extends Controller
 
     public function openPortfolio(int $id)
     {
-        Log::debug('Вошёл в openPortfolio');
         $validator = Validator::make(['id' => $id], [
             'id' => ['integer', Rule::exists('users', 'id')]
         ]);

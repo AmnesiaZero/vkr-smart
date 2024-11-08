@@ -9,7 +9,7 @@
                       class="form-inline form-well well-form">
                     <div class="d-flex gap-4 align-items-center">
                         <div class="col-sm-9">
-                            <input type="file" name="additional_file" class="form-control">
+                            <input type="file" name="additional_file" class="form-control" required>
                         </div>
                         <div class="col-sm-3">
                             <button type="submit" class="btn btn-primary btn-block">Прикрепить файл</button>

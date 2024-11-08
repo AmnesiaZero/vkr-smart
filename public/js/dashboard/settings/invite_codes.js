@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     loadTeachersCodes();
-    studentsCodes();
+    loadStudentsCodes();
 });
 function copyInviteCode() {
     // Найдем ближайший input элемент с классом .content, относительно кнопки, на которую нажали
@@ -107,11 +107,7 @@ function loadTeachersCodes()
                 else{
                     teachersCodesList.html($("#empty_tmpl").tmpl({id:'teachers_empty'}));
                 }
-                const currentPage = pagination.current_page;
-                const perPage = pagination.per_page;
-                const totalItems = pagination.total;
-                const totalPages = pagination.links.length;
-                updateTeachersPagination(currentPage,totalItems,totalPages,perPage);
+                updateTeachersPagination(pagination);
             }
             else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
@@ -141,11 +137,7 @@ function teachersCodes(pageNumber= 1)
                 const inviteCodes = pagination.data;
                 const teachersCodesList = $("#teachers_codes_list");
                 teachersCodesList.html($("#invite_code_tmpl").tmpl(inviteCodes));
-                const currentPage = pagination.current_page;
-                const perPage = pagination.per_page;
-                const totalItems = pagination.total;
-                const totalPages = pagination.links.length - 2;
-                updateTeachersPagination(currentPage,totalItems,totalPages,perPage);
+                updateTeachersPagination(pagination);
             }
             else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
@@ -158,7 +150,12 @@ function teachersCodes(pageNumber= 1)
 }
 
 
-function updateTeachersPagination(currentPage,totalItems,totalPages,itemsPerPage) {
+function updateTeachersPagination(pagination) {
+    const currentPage = pagination.current_page;
+    const itemsPerPage = pagination.per_page;
+    const totalItems = pagination.total;
+    const totalPages = pagination.links.length;
+
     if (totalPages > 1) {
         $("#teachers_codes_pagination").pagination({
             items: totalItems,
@@ -202,11 +199,7 @@ function loadStudentsCodes()
                 else{
                     studentsCodesList.html($("#empty_tmpl").tmpl({id:'students_empty'}));
                 }
-                const currentPage = pagination.current_page;
-                const perPage = pagination.per_page;
-                const totalItems = pagination.total;
-                const totalPages = pagination.links.length - 2;
-                updateStudentsCodesPagination(currentPage,totalItems,totalPages,perPage);
+                updateStudentsCodesPagination(pagination);
             }
             else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
@@ -234,11 +227,7 @@ function studentsCodes(pageNumber= 1)
                 const inviteCodes = pagination.data;
                 const studentsCodesList = $("#students_codes_list");
                 studentsCodesList.html($("#invite_code_tmpl").tmpl(inviteCodes));
-                const currentPage = pagination.current_page;
-                const perPage = pagination.per_page;
-                const totalItems = pagination.total;
-                const totalPages = pagination.links.length - 2;
-                updateStudentsCodesPagination(currentPage,totalItems,totalPages,perPage);
+                updateStudentsCodesPagination(pagination);
             }
             else {
                 $.notify(response.data.title + ":" + response.data.message, "error");
@@ -251,31 +240,40 @@ function studentsCodes(pageNumber= 1)
 }
 
 
-function updateStudentsCodesPagination(page,totalItems,totalPages,itemsPerPage) {
-    console.log(totalItems, totalPages, itemsPerPage)
-    $("#students_codes_pagination").pagination({
-        items: totalItems,
-        prevText: '<span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>',
-        nextText: '<span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>',
-        itemsOnPage: itemsPerPage,
-        currentPage: page, // Установка текущей страницы в начало после добавления новых элементов
-        displayedPages: totalPages,
-        onPageClick: function (pageNumber, event) {
-            studentsCodes(pageNumber);
-        }
-    });
+function updateStudentsCodesPagination(pagination) {
+
+    const totalPages = pagination.last_page;
+    if(totalPages>1)
+    {
+        const currentPage = pagination.current_page;
+        const itemsPerPage = pagination.per_page;
+        const totalItems = pagination.total;
+        $("#students_codes_pagination").pagination({
+            items: totalItems,
+            prevText: '<span aria-hidden="true"><img src="/images/Chevron_Left.svg" alt=""></span>',
+            nextText: '<span aria-hidden="true"><img src="/images/Chevron_Right.svg" alt=""></span>',
+            itemsOnPage: itemsPerPage,
+            currentPage: currentPage, // Установка текущей страницы в начало после добавления новых элементов
+            displayedPages: totalPages,
+            onPageClick: function (pageNumber, event) {
+                studentsCodes(pageNumber);
+            }
+        });
+    }
 }
 
 function downloadStudentsCodes()
 {
     window.location.href = '/dashboard/invite-codes/load?type=1';
     $("#students_codes_list").html($("#empty_tmpl").tmpl({id:'students_empty'}));
+    $("#students_codes_pagination").empty();
 }
 
 function downloadTeachersCodes()
 {
     window.location.href = '/dashboard/invite-codes/load?type=2';
     $("#teachers_codes_list").html($("#empty_tmpl").tmpl({id:'teachers_empty'}));
+    $("#teachers_codes_pagination").empty();
 }
 
 

@@ -14,13 +14,13 @@
                                 <table class="table fs-14">
                                     <thead class="brt-green-light-2 brb-green-light-2 lh-17">
                                     <tr class="text-grey">
-                                        <th scope="col">Выберите</th>
-                                        <th scope="col">Направление подготовки</th>
-                                        <th scope="col">Обучающийся</th>
-                                        <th scope="col">Группа</th>
-                                        <th scope="col">Дата защиты</th>
-                                        <th scope="col">Наименование<br> работы - тип работы</th>
-                                        <th scope="col">Оценка</th>
+                                        <th scope="col" class="align-middle">Выберите</th>
+                                        <th scope="col" class="align-middle">Направление подготовки</th>
+                                        <th scope="col" class="align-middle">Обучающийся</th>
+                                        <th scope="col" class="align-middle">Группа</th>
+                                        <th scope="col" class="align-middle">Дата защиты</th>
+                                        <th scope="col" class="align-middle">Наименование<br> работы - тип работы</th>
+                                        <th scope="col" class="align-middle">Оценка</th>
                                     </tr>
                                     </thead>
                                     <tbody class="lh-17 brb-green-light-2" id="works_table">
@@ -61,8 +61,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1"
-                            onclick="closeModal('add_work_modal')">
+                    <button type="submit" class="btn btn-secondary fs-14 text-grey py-1">
                         Добавить
                     </button>
                     <button type="button" class="btn btn-grey border-radius-5 fs-14 text-grey py-1"

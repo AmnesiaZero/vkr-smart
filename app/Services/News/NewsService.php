@@ -284,7 +284,7 @@ class NewsService extends Services
                     return back()->withErrors(['Ошибка при загрузке изображения новости']);
                 }
             }
-            if (isset($date['redirect'])) {
+            if (isset($data['redirect'])) {
                 return redirect(route('news.index'));
             }
             return view('templates.dashboard.platform.news.create', [
@@ -372,10 +372,13 @@ class NewsService extends Services
      * @param int $id
      * @return JsonResponse
      */
-    public function destroy(int $id): JsonResponse
+    public function unpublished(int $id): JsonResponse
     {
         if (!$id) {
-            return back()->withErrors(['Не указан id ресурса']);
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Некорректно указан id ресурса'
+            ]);
         }
 
         $unpublished = $this->_repository->unpublished($id);
@@ -407,35 +410,47 @@ class NewsService extends Services
      * Восстановление удаленного ресурса
      *
      * @param int $id
-     * @return JsonResponse
      */
-    public function restore(int $id): JsonResponse
+    public function restore(int $id)
     {
         if (!$id) {
-            return response()->json([
-                'error' => true,
-                'errorCode' => '#0001',
-                'errorMessage' => 'Не указан ID ресурса'
-            ]);
+            return back()->withErrors(['Некорректно указанный id ресурса']);
         }
 
         $result = $this->_repository->restore($id);
 
         if ($result) {
-            return response()->json([
-                'error' => false,
-                'successTitle' => 'Успешно!',
-                'successMessage' => 'Ресурс восстановлен успешно',
-                'updateStatusLink' => route('dashboard.news.togglePublished', ['item' => $id]),
-                'editLink' => route('dashboard.news.edit', ['id' => $id]),
-                'destroyLink' => route('dashboard.news.destroy', ['id' => $id]),
-                'published' => $result
+            return back();
+        }
+        return back()->withErrors(['Не удалось восстановить ресурс']);
+    }
+
+    /**
+     * Мягкое удаление ресурса
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function delete(int $id): JsonResponse
+    {
+        if (!$id) {
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Неверно указан id ресурса'
+            ]);
+        }
+
+        $result = $this->_repository->delete($id);
+
+        if ($result) {
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно!',
+                'message' => 'Ресурс удален успешно',
             ]);
         } else {
-            return response()->json([
-                'error' => true,
-                'errorCode' => '#0004',
-                'errorMessage' => 'Не удалось восстановить ресурс'
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Не удалось удалить ресурс'
             ]);
         }
     }
@@ -446,29 +461,26 @@ class NewsService extends Services
      * @param int $id
      * @return JsonResponse
      */
-    public function delete(int $id): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
         if (!$id) {
-            return response()->json([
-                'error' => true,
-                'errorCode' => '#0001',
-                'errorMessage' => 'Не указан ID ресурса'
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Неверно указан id ресурса'
             ]);
         }
 
-        $result = $this->_repository->delete($id);
+        $result = $this->_repository->destroy($id);
 
         if ($result) {
-            return response()->json([
-                'error' => false,
-                'successTitle' => 'Успешно!',
-                'successMessage' => 'Ресурс удален успешно',
+            return self::sendJsonResponse(true,[
+                'title' => 'Успешно!',
+                'message' => 'Ресурс удален успешно',
             ]);
         } else {
-            return response()->json([
-                'error' => true,
-                'errorCode' => '#0003',
-                'errorMessage' => 'Не удалось удалить ресурс'
+            return self::sendJsonResponse(false,[
+                'title' => 'Ошибка',
+                'message' => 'Не удалось удалить ресурс'
             ]);
         }
     }

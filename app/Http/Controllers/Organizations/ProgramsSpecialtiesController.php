@@ -81,7 +81,6 @@ class ProgramsSpecialtiesController extends Controller
             $specialty = $this->specialtiesService->find($specialtyId);
             $data = array_merge($data, $specialty->only('name', 'code'));
         }
-        Log::debug('request data = ' . print_r($data, true));
         return $this->programsSpecialtiesService->create($data);
     }
 
@@ -96,7 +95,6 @@ class ProgramsSpecialtiesController extends Controller
         }
         $facultyDepartment = $request->id;
         $data = $request->only($this->fillable);
-        Log::debug('data = ' . print_r($data, true));
         return $this->programsSpecialtiesService->update($facultyDepartment, $data);
     }
 

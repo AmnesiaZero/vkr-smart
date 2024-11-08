@@ -1,4 +1,4 @@
-function workInfoStudent(activeTabpanel) {
+function workInfoStudent() {
     const workId = localStorage.getItem('work_id');
     const data = {
         id: workId,
@@ -178,6 +178,48 @@ $(function () {
         console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
     });
 });
+function openInfoBox(element, id) {
+    // Закрыть все открытые меню
+    $(".info-box").remove();
+    localStorage.setItem('work_id',id);
+
+    if (id) {
+        const data = { id: id };
+
+        $.ajax({
+            url: "/dashboard/works/find",
+            type: 'GET',
+            data: data,
+            dataType: "json",
+            cache: false,
+            success: function(response) {
+                if (response.success) {
+
+                    // Загрузить содержимое в нужный элемент
+                    const $infoBox = $("#info_box_" + id);
+                    $infoBox.html($("#info_box_tmpl").tmpl());
+
+                    // Проверяем статус удаления и обновляем меню
+                    const deleted = $("#work_" + id).hasClass('deleted');
+                    if (deleted) {
+                        $infoBox.find("#added_menu").html($("#deleted_menu_tmpl").tmpl());
+                    } else {
+                        $infoBox.find("#added_menu").html($("#undeleted_menu_tmpl").tmpl());
+                    }
+
+                    // Показать меню
+                    $(element).next().find('.info-box').toggleClass('show');
+
+                } else {
+                    $.notify(response.data.title + ": " + response.data.message, "error");
+                }
+            },
+            error: function() {
+                $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
+            }
+        });
+    }
+}
 
 
 function resetStudentSearch() {

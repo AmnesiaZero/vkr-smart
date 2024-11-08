@@ -27,7 +27,6 @@ class SpecialtiesService extends Services
             ], 400);
         }
         $specialty = $this->_repository->create($data);
-        Log::debug('department = ' . $specialty);
         if ($specialty and $specialty->id) {
             return self::sendJsonResponse(true, [
                 'title' => 'Успешно',

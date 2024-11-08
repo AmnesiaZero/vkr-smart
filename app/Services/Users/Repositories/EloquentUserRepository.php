@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class EloquentUserRepository implements UserRepositoryInterface
 {
@@ -130,7 +131,8 @@ class EloquentUserRepository implements UserRepositoryInterface
             $departmentsIds = $data['selected_departments'];
             if ($roles[0] == 'student') {
                 $query = $query->whereIn('department_id', $departmentsIds);
-            } else {
+            }
+            else {
                 $query = $query->whereHas('departments', function (Builder $builder) use ($departmentsIds) {
                     $builder->whereIn('departments.id', $departmentsIds);
                 });

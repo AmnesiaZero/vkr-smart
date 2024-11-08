@@ -4,8 +4,8 @@
         <th scope="col" style="width: 50px">
             <input type="checkbox" name="books" class="select-all"/>
         </th>
-        <th scope="col">Название книги</th>
-        <th scope="col" class="book-title text-center" style="width: 125px">Действия</th>
+        <th scope="col" class="align-middle">Название книги</th>
+        <th scope="col" class="book-title text-center align-middle" style="width: 125px">Действия</th>
     </tr>
     </thead>
     <tbody>

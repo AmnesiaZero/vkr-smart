@@ -40,7 +40,6 @@ Deploy vkrsmrt-dev-www:
     - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan cache:clear"
     - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan route:clear"
     - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan config:cache"
-    - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan config:cache"
   only:
     refs:
       - develop
@@ -49,28 +48,29 @@ Deploy vkrsmrt-dev-www:
 Deploy vkrsmrt-www:
   stage: deploy
   variables:
-    DST_PATH: "/srv/vkrsmrt-www"
-    PHP_HOST: "192.168.19.157"
-    PHP_PATH: "/usr/bin/php8.1"
+    TARGET_PATH: "/srv/vkrsmrt-www"
+    TARGET_HOST: "5.188.137.225"
+    TARGET_SSH_PORT: "133"
+    TARGET_PHP_PATH: "/usr/bin/php8.2"
   script:
     - echo "Do your build here"
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client rsync -y )'
     - eval $(ssh-agent -s)
-    - echo "$CI_PRIVKEY_DRIVE1" | tr -d '\r' | ssh-add -
+    - echo "$TARGET_PRIVKEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan $PHP_HOST >> ~/.ssh/known_hosts
+    - ssh-keyscan -p$TARGET_SSH_PORT $TARGET_HOST >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - rsync -ar $PWD/* $PHP_HOST:$DST_PATH
-    - ssh $PHP_HOST "cd $DST_PATH/ && composer update"
-    - ssh $PHP_HOST "cd $DST_PATH/ && composer install"
-    - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan migrate"
-    - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan view:clear"
-    - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan cache:clear"
-    - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan route:clear"
-    - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan config:cache"
-    - ssh $PHP_HOST "$PHP_PATH $DST_PATH/artisan config:cache"
-    - ssh $PHP_HOST "/usr/bin/IPRdjango \"На vkr-smart.ru задеплоен комит https://git.iprmedia.ru/gitlab/2023/vkr-smart.ru/-/commit/$CI_COMMIT_SHA\" developers"
+    - rsync -ar -e "ssh -p $TARGET_SSH_PORT" $PWD/* $TARGET_HOST:$TARGET_PATH
+    - ssh -p$TARGET_SSH_PORT $TARGET_HOST "cd $TARGET_PATH/ && composer update"
+    - ssh -p$TARGET_SSH_PORT $TARGET_HOST "cd $TARGET_PATH/ && composer install"
+    - ssh -p$TARGET_SSH_PORT $TARGET_HOST "$TARGET_PHP_PATH $TARGET_PATH/artisan migrate"
+    - ssh -p$TARGET_SSH_PORT $TARGET_HOST "$TARGET_PHP_PATH $TARGET_PATH/artisan view:clear"
+    - ssh -p$TARGET_SSH_PORT $TARGET_HOST "$TARGET_PHP_PATH $TARGET_PATH/artisan cache:clear"
+    - ssh -p$TARGET_SSH_PORT $TARGET_HOST "$TARGET_PHP_PATH $TARGET_PATH/artisan route:clear"
+    - ssh -p$TARGET_SSH_PORT $TARGET_HOST "$TARGET_PHP_PATH $TARGET_PATH/artisan config:cache"
+    - ssh -p$TARGET_SSH_PORT $TARGET_HOST "$TARGET_PHP_PATH $TARGET_PATH/artisan config:cache"
+    - ssh -p$TARGET_SSH_PORT $TARGET_HOST "/usr/bin/IPRdjango \"На vkr-smart.ru задеплоен комит https://git.iprmedia.ru/gitlab/vkrsmrt/vkrsmrt-www/-/commit/$CI_COMMIT_SHA\" developers"
   only:
     refs:
       - master

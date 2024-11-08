@@ -1,6 +1,32 @@
 @import url("../fonts/stylesheet.css");
 
 
+#loading {
+    position: fixed; /* Фиксированное позиционирование, чтобы оставаться на экране */
+    top: 50%; /* На 50% от верхней границы */
+    left: 50%; /* На 50% от левой границы */
+    transform: translate(-50%, -50%); /* Сдвигаем на половину ширины и высоты */
+    display: flex; /* Включаем flex для центрирования содержимого */
+    justify-content: center; /* Центрируем спиннер */
+    align-items: center; /* Центрируем спиннер */
+    z-index: 1000; /* Чтобы индикатор был над другими элементами */
+}
+
+.spinner {
+    border: 8px solid #f3f3f3; /* Цвет фона */
+    border-top: 8px solid #3498db; /* Цвет спиннера */
+    border-radius: 50%;
+    width: 50px; /* Ширина */
+    height: 50px; /* Высота */
+    animation: spin 1s linear infinite; /* Анимация */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
 /* tooltips */
 .tooltip-inner {
     font-size: 50px !important;
@@ -149,6 +175,10 @@ td.list-group .dropdown {
 
 .fs-12 {
     font-size: 12px !important;
+}
+
+.fs-13 {
+    font-size: 13px !important;
 }
 
 .fs-14 {
@@ -1068,17 +1098,18 @@ html {
 }
 
 .info-box {
-    background: #FFFFFF;
-    border: 1px solid #D9F1F3;
-    box-shadow: 0px 45px 18px rgba(108, 132, 137, 0.01), 0px 25px 15px rgba(108, 132, 137, 0.03), 0px 11px 11px rgba(108, 132, 137, 0.06), 0px 3px 6px rgba(108, 132, 137, 0.07), 0px 0px 0px rgba(108, 132, 137, 0.07);
-    border-radius: 15px;
-    width: 350px;
-    padding: 1rem;
-    position: absolute;
-    z-index: 10;
-    bottom: 2%;
-    right: 3%;
-    display: none;
+    background: #FFFFFF !important;
+    border: 1px solid #D9F1F3 !important;
+    /*box-shadow: 0px 45px 18px rgba(108, 132, 137, 0.01), 0px 25px 15px rgba(108, 132, 137, 0.03), 0px 11px 11px*/
+    /*            rgba(108, 132, 137, 0.06), 0px 3px 6px rgba(108, 132, 137, 0.07), 0px 0px 0px rgba(108, 132, 137, 0.07);*/
+    border-radius: 15px !important;
+    width: 350px !important;
+    padding: 1rem !important;
+    position: absolute !important;
+    z-index: 10 !important;
+    bottom: 2% !important;
+    right: 3% !important;
+    /*display: none;*/
 }
 
 .bg-error {

@@ -20,10 +20,17 @@ class EloquentWorkRepository implements WorkRepositoryInterface
     public function getPaginate(array $data): LengthAwarePaginator
     {
         $query = Work::withTrashed()->with(['faculty', 'specialty']);
+
+        $query = $query->where('organization_id','=',$data['organization_id']);
+
         if (isset($data['user_id'])) {
             $query = $query->where('user_id', '=', $data['user_id']);
         } else {
             $query = $query->where('organization_id', '=', $data['organization_id'])->where('user_type', '=', $data['user_type']);
+        }
+        if (isset($data['visibility']))
+        {
+            $query = $query->where('visibility','=',$data['visibility']);
         }
         if (isset($data['selected_departments'])) {
             $departmentsIds = $data['selected_departments'];
@@ -41,9 +48,10 @@ class EloquentWorkRepository implements WorkRepositoryInterface
         return Work::query()->create($data);
     }
 
-    public function search(array $data): LengthAwarePaginator
+    public function search(array $data): LengthAwarePaginator|Collection
     {
         $query = Work::query();
+
         if (isset($data['delete_type'])) {
             $deleteType = $data['delete_type'];
             if ($deleteType == 1) {
@@ -52,7 +60,33 @@ class EloquentWorkRepository implements WorkRepositoryInterface
                 $query = Work::withTrashed();
             }
         }
-        $query->with(['specialty', 'faculty', 'department']);
+
+        $query = $query->where('organization_id','=',$data['organization_id']);
+
+        $query =  $query->with(['specialty', 'faculty', 'department']);
+
+        if (isset($data['visibility']))
+        {
+            $query = $query->where('visibility','=',$data['visibility']);
+        }
+
+        if(isset($data['file_uploaded']))
+        {
+            if($data['file_uploaded'])
+            {
+                 $query = $query->where('path','!=',null);
+            }
+            else
+            {
+                $query = $query->where('path','=',null);
+            }
+        }
+
+        if (isset($data['work_status']) and $data['work_status']!=3)
+        {
+            $query = $query->where('work_status','=',$data['work_status']);
+        }
+
         if (isset($data['user_id'])) {
             $query = $query->where('user_id', '=', $data['user_id']);
         }
@@ -81,12 +115,10 @@ class EloquentWorkRepository implements WorkRepositoryInterface
             $query = $query->whereBetween('created_at', [$data['start_date'], $data['end_date']]);
         }
         if (isset($data['selected_faculties']) and count($data['selected_faculties']) > 0) {
-            Log::debug('selected_faculties = ' . print_r($data['selected_faculties'], true));
             $facultiesIds = $data['selected_faculties'];
             $query = $query->whereIn('faculty_id', $facultiesIds);
         }
         if (isset($data['selected_years']) and count($data['selected_years']) > 0) {
-            Log::debug('вошёл в selected_years');
             $yearsIds = $data['selected_years'];
             $query = $query->whereIn('year_id', $yearsIds);
         }
@@ -98,7 +130,11 @@ class EloquentWorkRepository implements WorkRepositoryInterface
             $specialtiesIds = $data['selected_specialties'];
             $query = $query->whereIn('specialty_id', $specialtiesIds);
         }
-        return $query->paginate(config('pagination.per_page'), '*', 'page', $data['page']);
+        if (isset($data['paginate']) and $data['paginate'])
+        {
+            return $query->paginate(config('pagination.per_page'), '*', 'page', $data['page']);
+        }
+        return $query->get();
     }
 
     public function copy(int $id)
@@ -113,7 +149,7 @@ class EloquentWorkRepository implements WorkRepositoryInterface
 
     public function find(int $id): Model
     {
-        return Work::withTrashed()->with(['specialty', 'year', 'faculty', 'department', 'user', 'reportAssets'])->find($id);
+        return Work::withTrashed()->with(['specialty', 'year', 'faculty', 'department', 'user', 'report_assets'])->find($id);
     }
 
     public function destroy(int $id): bool

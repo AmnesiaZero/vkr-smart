@@ -332,7 +332,7 @@ class EloquentNewsRepository implements NewsRepositoryInterface
      */
     public function find(int $id): Model
     {
-        return News::query()->find($id);
+        return News::withTrashed()->find($id);
     }
 
     /**

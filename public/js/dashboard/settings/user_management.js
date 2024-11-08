@@ -124,7 +124,18 @@ function openUpdateUserCanvas(id) {
     });
 }
 
+function resetSearch() {
+    localStorage.setItem('selected_years', '');
+    localStorage.setItem('selected_departments', '');
 
+    $("#default_type").prop('checked',true);
+    $("#default_status").prop('checked',true);
+
+    $("#name_input").val('');
+    $("#email_input").val('');
+    $("#group_input").val('');
+    users();
+}
 
 
 

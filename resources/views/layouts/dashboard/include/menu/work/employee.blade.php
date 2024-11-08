@@ -1,4 +1,4 @@
-<div class="info-box dropdown-menu" id="info_box" aria-labelledby="work-menu-button">
+<div class="info-box dropdown-menu" aria-labelledby="work-menu-button">
     @role('admin|employee')
     <p class="fs-14 lh-17 mb-3">Направление подготовки обучающегося</p>
     <div class="d-flex align-items-center cursor-p mb-2">
@@ -38,10 +38,10 @@
     <div id="added_menu">
 
     </div>
-    <div class="d-flex align-items-center cursor-p mb-2">
+    <div class="d-flex align-items-center cursor-p mb-2" id="upload_certificate_button">
         <img src="/images/download.svg" alt="" class="pe-3">
         <input type="file" id="certificate_input" style="display: none">
-        <p class="fs-14 lh-17 text-grey m-0" id="upload_certificate_button">Загрузить или заменить справку<br> о
+        <p class="fs-14 lh-17 text-grey m-0" >Загрузить или заменить справку<br> о
             самопроверке по другим
             системам</p>
     </div>

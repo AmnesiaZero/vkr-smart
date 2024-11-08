@@ -236,6 +236,71 @@ const addBadge = function (clickedElement) {
     }
 }
 
+function openReport(workId)
+{
+    localStorage.setItem('work_id',workId);
+    const data = {
+        id:workId
+    };
+    $.ajax({
+        url: "/dashboard/works/find",
+        type: 'GET',
+        data:data,
+        dataType: "json",
+        success: function(response) {
+            if (response.success)
+            {
+                $('.modal').modal('hide');
+
+                const work = response.data.work;
+                $("#report_container").html($("#report_tmpl").tmpl(work));
+
+                const modalElement = new bootstrap.Modal(document.getElementById('report_modal'));
+
+                $('#report_modal').modal('hide');
+
+                modalElement.show();
+            }
+            else
+            {
+                $.notify(response.data.title + ":" + response.data.message, "error");
+            }
+        },
+        error: function() {
+            $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
+        }
+    });
+}
+
+
+function openCheck()
+{
+    const workId = localStorage.getItem('work_id');
+    const data = {
+        id:workId
+    };
+    $.ajax({
+        url: "/dashboard/works/find",
+        type: 'GET',
+        data: data,
+        dataType: "json",
+        cache: false,
+        success: function(response) {
+            if (response.success) {
+                const work = response.data.work;
+
+                $("#report_modal_container").html($("#check_tmpl").tmpl(work));
+            } else {
+                $.notify(response.data.title + ": " + response.data.message, "error");
+            }
+        },
+        error: function() {
+            $.notify("Ошибка при поиске работ. Обратитесь к системному администратору", "error");
+        }
+    });
+
+}
+
 
 function deleteTreeElement(id) {
     console.log('id = ' + id);
@@ -292,7 +357,7 @@ function updateWorksPagination(pagination) {
 
     const totalItems = pagination.total; // Общее количество элементов
     const itemsPerPage = pagination.per_page; // Элементов на странице
-    const displayedPages = pagination.links.length - 2; // Без Previous и Next
+    const displayedPages = pagination.last_page; // Без Previous и Next
     $("#works_count").text(totalItems);
 
     // Проверяем, если только одна страница
@@ -323,6 +388,35 @@ function updateWorksPagination(pagination) {
 function toggleFile(htmlId)
 {
     $('#' + htmlId).click(); // Открываем диалог выбора файла
+}
+
+function getAssessmentDescription(assessment)
+{
+    switch (assessment) {
+        case 0:
+            return 'Без оценки';
+        case 2:
+            return 'Неудовлетворительно';
+        case 3:
+            return 'Удовлетворительно';
+        case 4:
+            return 'Хорошо';
+        case 5:
+            return 'Отлично';
+        default:
+            return 'Неизвестно';
+    }
+}
+
+function getSelfCheckDescription(selfCheck) {
+    switch (selfCheck) {
+        case 0:
+            return 'Не пройдена';
+        case 1:
+            return 'Пройдена';
+        default:
+            return 'Неизвестно';
+    }
 }
 
 function selectFileWithCKFinder( elementId ) {
@@ -371,4 +465,3 @@ function updateUserPagination(pagination) {
         $("#users_pagination").show(); // Показываем пагинацию
     }
 }
-

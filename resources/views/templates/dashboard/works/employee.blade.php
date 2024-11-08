@@ -107,8 +107,8 @@
                         <div class="col-xl-6">
                             <p class="fs-14 mb-2 text-grey">УГНП</p>
                             <div id="bg-white_1">
-                                <select class="js-example-basic-single w-100" name="specialty_id" id="specialties_list">
-                                    <option value="" id="default_specialty">Выбрать</option>
+                                <select class="js-example-basic-single w-100" name="specialty_id" id="specialties_list" data-placeholder="Выбрать">
+                                    <option value="" id="default_specialty" selected></option>
                                     @if(isset($program_specialties) and is_iterable($program_specialties))
                                         @foreach($program_specialties as $program_specialty)
                                             <option
@@ -189,15 +189,15 @@
                 <table class="table fs-14">
                     <thead class="brt-green-light-2 brb-green-light-2 lh-17">
                     <tr class="text-grey">
-                        <th scope="col">Направление подготовки</th>
-                        <th scope="col">Обучающийся</th>
-                        <th scope="col">Группа</th>
-                        <th scope="col">Дата защиты</th>
-                        <th scope="col">Наименование<br> работы - тип работы</th>
-                        <th scope="col">Оценка</th>
-                        <th scope="col">Самопроверка <br> по другим системам</th>
-                        <th scope="col">Проверка<br> ВКР-СМАРТ</th>
-                        <th scope="col"><img src="/images/nine_dots.svg" alt="" class="pb-2"></th>
+                        <th scope="col" class="align-middle">Направление подготовки</th>
+                        <th scope="col" class="align-middle">Обучающийся</th>
+                        <th scope="col" class="align-middle">Группа</th>
+                        <th scope="col" class="align-middle">Дата защиты</th>
+                        <th scope="col" class="align-middle">Наименование<br> работы - тип работы</th>
+                        <th scope="col" class="align-middle">Оценка</th>
+                        <th scope="col" class="align-middle">Самопроверка <br> по другим системам</th>
+                        <th scope="col" class="align-middle">Проверка<br> ВКР-СМАРТ</th>
+                        <th scope="col" class="align-middle"><img src="/images/nine_dots.svg" alt="" class="pb-2"></th>
                     </tr>
                     </thead>
                     <tbody class="lh-17 brb-green-light-2" id="works_table">
@@ -227,14 +227,12 @@
             <script src="/js/dashboard/works/employees.js"></script>
             <script src="/js/bootstrap.js"></script>
             <script type="text/javascript" src="/js/jquery/moment.min.js"></script>
-            <script type="text/javascript"
-                    src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-            @include('layouts.dashboard.include.tmpls.works_page')
+            @include('layouts.dashboard.include.tmpls.works.works_page')
 
             <script id="work_tmpl" type="text/x-jquery-tmpl">
-{{--      @{{if visibility==1}}--}}
-                <tr id="work_${id}" @{{if deleted_at!=null}} class="deleted" @{{/if}}>
+                <tr id="work_${id}" @{{if deleted_at}} class="deleted" @{{/if}}>
                <th scope="row">@{{if specialty}}
                                            ${specialty.name}
                                            @{{else}}
@@ -245,12 +243,12 @@
                <td>${group}</td>
                <td>${protect_date}</td>
                <td>${name} - ${work_type}</td>
-               <td>${getAssessmentDescription(assessment)}</td>
-               <td>${getSelfCheckDescription(self_check)}</td>
+               <td> @{{if assessment}} ${getAssessmentDescription(assessment)} @{{/if}}</td>
+               <td> ${getSelfCheckDescription(self_check)}</td>
                    <td>
                        @{{if report_status==0}}
-                       <div class="mt-2">
-                       <span class="bg-waiting px-2 d-flex align-items-center">
+                       <div>
+                       <span class="bg-waiting p-2 d-flex align-items-center gap-2">
                        <div class="me-2 yellow-c">
                        </div>
                          В очереди на проверку
@@ -258,7 +256,7 @@
                        </div>
                        @{{/if}}
                        @{{if report_status==1}}
-                       <div class="mt-2" onclick="openReport(${id})">
+                       <div onclick="openReport(${id})">
                            <span class="bg-active p-2 d-flex align-items-center cursor-p">
                                <div class="me-2 green-c"></div>
                                Отчет
@@ -276,15 +274,79 @@
 
                    </td>
                    <td>
-                       <img src="/images/three_dots.svg" alt="" id="work-menu-button" class="btn-info-box cursor-p dropdown-toggle"
-                       type="button" onclick="openInfoBox(${id})"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-@include('layouts.dashboard.include.menu.work.employee')
+                       <img src="/images/three_dots.svg" alt="" class="btn-info-box cursor-p dropdown-toggle menu"
+                            type="button" onclick="openInfoBox(this,${id})" aria-expanded="false">
+
+                       <div id="info_box_${id}"></div>
                 </td>
             </tr>
-{{--            @{{/if}}--}}
-
-
             </script>
+
+<script id="info_box_tmpl" type="text/x-jquery-tmpl">
+    <div class="info-box dropdown-menu" id="work_menu" data-popper-placement="bottom-start">
+        @role('admin|employee')
+            <p class="fs-14 lh-17 mb-3">Направление подготовки обучающегося</p>
+
+            <div class="d-flex align-items-center cursor-p mb-2">
+
+            <img src="/images/Edit_Pencil.svg" alt="" class="pe-3">
+
+            <p class="fs-14 lh-17 text-grey m-0"
+                data-bs-target="#update_work_specialty_modal" data-bs-toggle="modal">
+                    Изменить направление подготовки
+                </p>
+        </div>
+        <p class="fs-14 lh-17 mt-4 mb-3">Операции над работой</p>
+
+        <div class="d-flex align-items-center cursor-p mb-2">
+            <img src="/images/info.svg" alt="" class="pe-3">
+            <p class="fs-14 lh-17 text-grey m-0"
+               onclick="workInfo()">Просмотр информации о работе</p>
+        </div>
+        <div class="d-flex align-items-center cursor-p mb-2">
+            <img src="/images/down-arr.svg" alt="" class="pe-3">
+            <p class="fs-14 lh-17 text-grey m-0" onclick="downloadWork()">Скачать файл работы</p>
+        </div>
+        <div class="d-flex align-items-center cursor-p mb-2">
+            <img src="/images/download.svg" alt="" class="pe-3">
+            <input type="file" id="file_input" style="display: none">
+            <p class="fs-14 lh-17 text-grey m-0" id="upload_button">Загрузить или заменить файл работы</p>
+        </div>
+        <div class="d-flex align-items-center cursor-p mb-2">
+            <img src="/images/Edit_Pencil.svg" alt="" class="pe-3">
+            <p class="fs-14 lh-17 text-grey m-0"
+               onclick="openUpdateWorkModal()">
+                Изменить информацию о работе
+            </p>
+        </div>
+        <p class="fs-14 lh-17 mt-4 mb-3">Самопроверка</p>
+        <div class="d-flex align-items-center cursor-p mb-2">
+            <img src="/images/Edit_Pencil.svg" alt="" class="pe-3">
+            <p class="fs-14 lh-17 text-grey m-0" onclick="updateSelfCheckStatus()">Изменить статус самопроверки</p>
+        </div>
+        <div id="added_menu">
+
+        </div>
+        <div class="d-flex align-items-center cursor-p mb-2">
+            <img src="/images/download.svg" alt="" class="pe-3">
+            <input type="file" id="certificate_input" style="display: none">
+            <p id="upload_certificate_button" class="fs-14 lh-17 text-grey m-0" >Загрузить или заменить справку<br> о
+                самопроверке по другим
+                системам</p>
+        </div>
+        @endrole
+        <p class="fs-14 lh-17 mt-2 mt-4 mb-3">Дополнительные файлы</p>
+        <div class="d-flex align-items-center cursor-p mb-2">
+            <img src="/images/href_light.svg" alt="" class="pe-3">
+            <p class="fs-14 lh-17 text-grey m-0"
+               onclick="openModal('additional_files_modal');additionalFiles();return false"
+               data-bs-target="#additional_files_modal" data-bs-toggle="modal">
+                Открыть окно управления<br> дополнительными файлами
+            </p>
+        </div>
+    </div>
+</script>
+
+    @include('layouts.dashboard.include.tmpls.works.report')
 
 @endsection

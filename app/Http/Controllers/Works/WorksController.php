@@ -46,8 +46,12 @@ class WorksController extends Controller
         'work_status',
         'status',
         'user_id',
+        'borrowings_percent',
+        'activity_id',
         'visibility',
-        'borrowings_percent'
+        'paginate',
+        'file_uploaded',
+        'work_status'
     ];
 
     protected WorksService $worksService;
@@ -82,6 +86,7 @@ class WorksController extends Controller
             'selected_departments.*' => ['integer', Rule::exists('departments', 'id')],
             'user_id' => ['integer', Rule::exists('users', 'id')],
             'selected_specialties.*' => ['integer', Rule::exists('programs_specialties', 'id')],
+            'visibility' => 'integer|in:0,1'
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -123,7 +128,8 @@ class WorksController extends Controller
             'agreement' => 'integer:in:1',
             'work_file' => 'required|file',
             'self_check' => 'integer:in:1',
-            'certificate_file' => 'file'
+            'certificate_file' => 'file',
+            'activity_id' => ['integer',Rule::exists('activities_types','id')]
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
@@ -165,12 +171,17 @@ class WorksController extends Controller
             'selected_years.*' => ['integer', Rule::exists('organizations_years', 'id')],
             'selected_departments.*' => ['integer', Rule::exists('departments', 'id')],
             'selected_specialties.*' => ['integer', Rule::exists('programs_specialties', 'id')],
-            'user_id' => ['integer', Rule::exists('users', 'id')]
+            'user_id' => ['integer', Rule::exists('users', 'id')],
+            'activity_id' => ['integer',Rule::exists('activities_types','id')],
+            'visibility' => 'integer|in:0,1',
+
         ]);
         if ($validator->fails()) {
             return ValidatorHelper::error($validator);
         }
-        $data = $request->only($this->fillable);
+        $data = array_filter($request->only($this->fillable), function ($value) {
+            return !is_null($value);
+        });
         return $this->worksService->search($data);
     }
 
@@ -219,7 +230,6 @@ class WorksController extends Controller
             return ValidatorHelper::error($validator);
         }
         $id = $request->id;
-        Log::debug('id = ' . $id);
         $data = $request->only($this->fillable);
         return $this->worksService->update($id, $data);
     }
@@ -362,7 +372,6 @@ class WorksController extends Controller
 
     public function getReport(Request $request): JsonResponse
     {
-        Log::debug('Вошёл в getReport');
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer'
         ]);

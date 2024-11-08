@@ -64,7 +64,7 @@ class AchievementsController
             'name' => 'required|max:250',
             'record_date' => 'required|date',
             'description' => 'max:250',
-            'achievement_mode_id' => ['required', 'integer', Rule::exists('achievement_modes', 'id')],
+            'achievement_mode_id' => ['required', 'integer', Rule::exists('activities_types', 'id')],
             'access_level' => 'required',
             'educational_level' => 'required'
         ]);

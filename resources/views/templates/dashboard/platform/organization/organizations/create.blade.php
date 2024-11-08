@@ -13,18 +13,7 @@
                     <div class="post">
                         <div class="form-group">
                             <label for="title">Название организации</label>
-                            <input id="title" type="text" name="name" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="parent_id">Является связанной для организации:</label>
-                            <select id="parent_id" name="parent_id" class="form-control">
-                                <option value="">--Выберите--</option>
-                                @if(isset($parents) && !empty($parents))
-                                    @foreach($parents as $parent)
-                                        <option value="{{ $parent->id }}">{{ $parent->name }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
+                            <input id="title" type="text" name="name" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="logo">Логотип</label>
@@ -56,7 +45,7 @@
                         </div>
                         <div class="form-group">
                             <label for="email">E-mail</label>
-                            <input id="email" type="text" name="email" class="form-control">
+                            <input id="email" type="text" name="email" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="info">Дополнительная информация</label>
@@ -70,7 +59,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label for="is_blocked">Организация заблокирована</label>
-                        <select id="is_blocked" name="is_blocked" class="form-control">
+                        <select id="is_blocked" name="is_blocked" class="form-control" required>
                             <option value="0">Нет</option>
                             <option value="1">Да</option>
                         </select>
@@ -78,11 +67,7 @@
                     <div class="form-group">
                         <label for="date_start">Дата начала доступа</label>
                         <div class="input-group mb-0">
-                            <div class="input-group-prepend">
-                                <span id="date-start" class="input-group-text" style="font-size: 16px;"><i
-                                        class="far fa-calendar-alt"></i></span>
-                            </div>
-                            <input id="date_timepicker_start" type="text" name="date_start"
+                            <input id="date_timepicker_start" type="date" name="date_start"
                                    aria-describedby="date-start" class="form-control" autocomplete="off">
                         </div>
                         <small id="emailHelp" class="form-text text-muted">Укажите дату в формате
@@ -91,11 +76,7 @@
                     <div class="form-group">
                         <label for="date_end">Дата окончания доступа</label>
                         <div class="input-group mb-0">
-                            <div class="input-group-prepend">
-                                <span id="date-end" class="input-group-text" style="font-size: 16px;"><i
-                                        class="far fa-calendar-alt"></i></span>
-                            </div>
-                            <input id="date_timepicker_end" type="text" name="date_end" aria-describedby="date-end"
+                            <input id="date_timepicker_end" type="date" name="date_end" aria-describedby="date-end"
                                    class="form-control" autocomplete="off">
                         </div>
                         <small id="emailHelp" class="form-text text-muted">Укажите дату в формате

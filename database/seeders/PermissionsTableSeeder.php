@@ -14,7 +14,6 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        Log::debug('Вошёл в permissions seeder');
         /*
          * Permission Types
          *
@@ -62,6 +61,5 @@ class PermissionsTableSeeder extends Seeder
                 ]);
             }
         }
-        Log::debug('Вышел из permissions seeder');
     }
 }

@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AchievementMode>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ActivityType>
  */
 class AchievementModeFactory extends Factory
 {

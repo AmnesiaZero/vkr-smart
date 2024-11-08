@@ -56,7 +56,9 @@ class Work extends Model
         'work_status',
         'visibility',
         'check_code',
-        'unique_percent'
+        'unique_percent',
+        'activity_id',
+        'visibility'
     ];
 
     protected $casts = [
@@ -98,7 +100,7 @@ class Work extends Model
         return $this->hasMany(Comment::class, 'work_id');
     }
 
-    public function reportAssets(): HasMany
+    public function report_assets(): HasMany
     {
         return $this->hasMany(ReportAsset::class, 'work_id', 'id');
     }

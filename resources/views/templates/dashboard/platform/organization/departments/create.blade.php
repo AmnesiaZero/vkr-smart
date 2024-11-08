@@ -12,7 +12,7 @@
                     <div class="post">
                         <div class="form-group">
                             <label for="organizations_list">Выберите организацию</label>
-                            <select id="organizations_list" name="organization_id" class="form-control">
+                            <select id="organizations_list" name="organization_id" class="form-control" required>
                                 <option value="">-- Выберите организацию --</option>
                                 @if(isset($organizations) && !empty($organizations))
                                     @foreach($organizations as $organization)
@@ -24,19 +24,19 @@
 
                         <div class="form-group">
                             <label for="years_list">Выберите год выпуска:</label>
-                            <select id="years_list" name="year_id" class="form-control">
+                            <select id="years_list" name="year_id" class="form-control" required>
                                 <option> Выберите организацию</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="faculties_list">Выберите факультет:</label>
-                            <select id="faculties_list" name="faculty_id" class="form-control">
+                            <select id="faculties_list" name="faculty_id" class="form-control" required>
                                 <option> Выберите год выпуска</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="title">Название отделения</label>
-                            <input id="title" type="text" name="name" class="form-control">
+                            <input id="title" type="text" name="name" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="description">Дополнительная информация</label>
